@@ -2,6 +2,19 @@
 Various small programs and tools which use the Reticulum Network Stack RNS from https://github.com/markqvist/Reticulum
 
 
+## General Information for all tools/programs
+
+
+### Current Status:
+It should currently be considered beta software and still work in progress.
+
+All core features are implemented and functioning, but additions will probably occur as real-world use is explored.
+
+There may be errors or the compatibility after an update is no longer guaranteed.
+
+The full documentation is not yet available. Due to lack of time I can also not say when this will be further processed.
+
+
 ## Support / Donations
 You can help support the continued development by donating via one of the following channels:
 
