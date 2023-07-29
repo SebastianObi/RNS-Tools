@@ -1,0 +1,18 @@
+# This is the user configuration file to override the default configuration file.
+# All settings made here have precedence.
+# This file can be used to clearly summarize all settings that deviate from the default.
+# This also has the advantage that all changed settings can be kept when updating the program.
+
+#### RNS call settings ####
+[rns_call]
+display_name = Echo
+
+announce_startup = Yes
+announce_startup_delay = 0 #Seconds
+
+announce_periodic = Yes
+announce_periodic_interval = 30 #Minutes
+
+announce_hidden = Yes
+
+type = hold
