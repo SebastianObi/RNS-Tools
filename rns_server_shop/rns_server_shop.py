@@ -71,7 +71,6 @@ DEFAULT_CONFIG = {
     "enabled": True,
     "title": "Unconfigured/New Shop",
     "subtitle": "Please configure me!",
-    "header": None,
     "header_color": "",
     "header_enabled": True,
     "header_enabled_entrys": True,
@@ -80,6 +79,9 @@ DEFAULT_CONFIG = {
     "announce_startup": True,
     "announce_periodic": True,
     "announce_interval": 1800,
+    "location_enabled": False,
+    "location_lat": 0,
+    "location_lon": 0,
     "state_first_run": True
 }
 DEFAULT_TITLE = None
@@ -191,8 +193,10 @@ class ServerShop:
             self.core.db_shops_add(shop_id=self.destination_hash(), name="", name_announce="")
             self.core.db_shops_set_config(self.destination_hash(), config, time.time())
             self.core.db_shops_set_categorys(self.destination_hash(), default_categorys, time.time())
+            self.core.db_shops_set_images(self.destination_hash(), {}, time.time())
             self.core.db_shops_set_pages(self.destination_hash(), default_pages, time.time())
             self.core.db_shops_set_users(self.destination_hash(), users, time.time())
+            self.core.db_shops_set_statistic(self.destination_hash(), {}, time.time())
 
         config = self.core.db_shops_get_config(self.destination_hash())
         self.announce_data = config["title"]
@@ -201,9 +205,19 @@ class ServerShop:
 
         self.register()
 
+        self.core.db_shops_update_categorys_count(self.destination_hash())
+
 
     def statistic_get(self):
-        return self.statistic
+        return {
+            "ts": self.statistic["ts"],
+            "connects": self.statistic["connects"],
+            "online": len(self.statistic["online"]),
+            "rx_bytes": self.statistic["rx_bytes"],
+            "tx_bytes": self.statistic["tx_bytes"],
+            "rx_count": self.statistic["rx_count"],
+            "tx_count": self.statistic["tx_count"]
+        }
 
 
     def statistic_set(self, statistic):
@@ -211,7 +225,7 @@ class ServerShop:
 
 
     def statistic_reset(self):
-        self.statistic = {"connects": 0, "sync_rx": 0, "sync_tx": 0}
+        self.statistic = {"ts": time.time(), "connects": 0, "online": {}, "rx_bytes": 0, "tx_bytes": 0, "rx_count": 0, "tx_count": 0}
 
 
     def register_announce_callback(self, handler_function):
@@ -299,7 +313,10 @@ class ServerShop:
                 RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()), RNS.LOG_DEBUG)
         elif config:
             self.announce_data = config["title"]
-            self.destination.announce(config["title"].encode("utf-8"), attached_interface=attached_interface)
+            if config["location_enabled"]:
+                self.destination.announce(msgpack.packb({"c": config["title"].encode("utf-8"), "t": None, "f": {"gps": {"lat": config["location_lat"], "lon": config["location_lon"]}}}), attached_interface=attached_interface)
+            else:
+                self.destination.announce(config["title"].encode("utf-8"), attached_interface=attached_interface)
             RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()) +":" + config["title"], RNS.LOG_DEBUG)
 
 
@@ -313,6 +330,7 @@ class ServerShop:
         RNS.log("Server - Peer connected to "+str(self.destination), RNS.LOG_VERBOSE)
         try:
             self.statistic["connects"] += 1
+            self.statistic["online"][link.hash] = True
         except:
             pass
         link.set_link_closed_callback(self.peer_disconnected)
@@ -321,6 +339,13 @@ class ServerShop:
 
     def peer_disconnected(self, link):
         RNS.log("Server - Peer disconnected from "+str(self.destination), RNS.LOG_VERBOSE)
+        try:
+            self.statistic["rx_bytes"] += link.rxbytes
+            self.statistic["tx_bytes"] += link.txbytes
+            if link.hash in self.statistic["online"]:
+                del self.statistic["online"][link.hash]
+        except:
+            pass
 
 
     def peer_identified(self, link, identity):
@@ -433,10 +458,13 @@ class ServerShop:
             data["location_lon"] = entry["location_lon"]
             data["ts_data"] = entry["ts_data"]
 
-        if "t" in ts and entry["ts_text"] > ts["t"]:
+        if "t" in ts and entry["ts_title"] > ts["t"]:
             data["title0"] = entry["title0"]
             data["title1"] = entry["title1"]
             data["title2"] = entry["title2"]
+            data["ts_title"] = entry["ts_title"]
+
+        if "te" in ts and entry["ts_text"] > ts["te"]:
             data["text0"] = entry["text0"]
             data["text1"] = entry["text1"]
             data["text2"] = entry["text2"]
@@ -451,7 +479,6 @@ class ServerShop:
 
         if len(data) > 0:
             data["entry_id"] = entry["entry_id"]
-            data["shop_id"] = entry["shop_id"]
             return data
         else:
             return None
@@ -465,6 +492,8 @@ class ServerShop:
     def sync_rx(self, path, data, request_id, link_id, remote_identity, requested_at):
         if not data:
             return None
+
+        now = time.time()
 
         data_return = {}
 
@@ -482,8 +511,8 @@ class ServerShop:
             data_return["result"] = ServerShop.RESULT_DISABLED
             if "ts_config" in data:
                 if self.core.db_shops_get_config_ts(self.destination_hash()) > data["ts_config"]:
-                    data_return["config"] = self.core.db_shops_get_config(self.destination_hash())
-                    data_return["ts_config"] = self.core.db_shops_get_config_ts(self.destination_hash())
+                    data_return["rx_config"] = self.core.db_shops_get_config(self.destination_hash())
+                    data_return["rx_ts_config"] = self.core.db_shops_get_config_ts(self.destination_hash())
             return msgpack.packb(data_return)
 
         try:
@@ -494,41 +523,53 @@ class ServerShop:
         try:
             if "ts_config" in data:
                 if self.core.db_shops_get_config_ts(self.destination_hash()) > data["ts_config"]:
-                    data_return["config"] = self.core.db_shops_get_config(self.destination_hash())
-                    data_return["ts_config"] = self.core.db_shops_get_config_ts(self.destination_hash())
+                    data_return["rx_config"] = self.core.db_shops_get_config(self.destination_hash())
+                    data_return["rx_ts_config"] = self.core.db_shops_get_config_ts(self.destination_hash())
 
             if "ts_categorys" in data:
                 if self.core.db_shops_get_categorys_ts(self.destination_hash()) > data["ts_categorys"]:
-                    data_return["categorys"] = self.core.db_shops_get_categorys(self.destination_hash())
-                    data_return["ts_categorys"] = self.core.db_shops_get_categorys_ts(self.destination_hash())
+                    data_return["rx_categorys"] = self.core.db_shops_get_categorys(self.destination_hash())
+                    data_return["rx_ts_categorys"] = self.core.db_shops_get_categorys_ts(self.destination_hash())
 
             if "ts_categorys_count" in data:
                 if self.core.db_shops_get_categorys_count_ts(self.destination_hash()) > data["ts_categorys_count"]:
-                    data_return["categorys_count"] = self.core.db_shops_get_categorys_count(self.destination_hash())
-                    data_return["ts_categorys_count"] = self.core.db_shops_get_categorys_count_ts(self.destination_hash())
+                    data_return["rx_categorys_count"] = self.core.db_shops_get_categorys_count(self.destination_hash())
+                    data_return["rx_ts_categorys_count"] = self.core.db_shops_get_categorys_count_ts(self.destination_hash())
+
+            if "ts_images" in data:
+                if self.core.db_shops_get_images_ts(self.destination_hash()) > data["ts_images"]:
+                    data_return["rx_images"] = self.core.db_shops_get_images(self.destination_hash())
+                    data_return["rx_ts_images"] = self.core.db_shops_get_images_ts(self.destination_hash())
 
             if "ts_pages" in data:
                 if self.core.db_shops_get_pages_ts(self.destination_hash()) > data["ts_pages"]:
-                    data_return["pages"] = self.core.db_shops_get_pages(self.destination_hash())
-                    data_return["ts_pages"] = self.core.db_shops_get_pages_ts(self.destination_hash())
+                    data_return["rx_pages"] = self.core.db_shops_get_pages(self.destination_hash())
+                    data_return["rx_ts_pages"] = self.core.db_shops_get_pages_ts(self.destination_hash())
 
             if "ts_users" in data:
                 if self.core.db_shops_get_users_ts(self.destination_hash()) > data["ts_users"]:
-                    data_return["users"] = self.core.db_shops_get_users(self.destination_hash())
-                    data_return["ts_users"] = self.core.db_shops_get_users_ts(self.destination_hash())
+                    data_return["rx_users"] = self.core.db_shops_get_users(self.destination_hash())
+                    data_return["rx_ts_users"] = self.core.db_shops_get_users_ts(self.destination_hash())
+
+            if "ts_statistic" in data:
+                data_return["rx_statistic"] = {
+                    "server": self.statistic_get(),
+                    "db": self.core.db_shops_statistic(self.destination_hash())
+                }
+                data_return["rx_ts_statistic"] = time.time()
 
             if "entrys" in data:
-                data_return["entrys"] = []
-                data_return["entrys_count"] = self.core.db_shops_entrys_count(shop_id=self.destination_hash(), vendor_id=vendor_id, filter=data["filter"], search=data["search"])
+                data_return["rx_entrys"] = []
+                data_return["rx_entrys_count"] = self.core.db_shops_entrys_count(shop_id=self.destination_hash(), vendor_id=vendor_id, filter=data["filter"], search=data["search"])
 
-                for entry in self.core.db_shops_entrys_list(shop_id=self.destination_hash(), vendor_id=vendor_id, filter=data["filter"], search=data["search"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"], sync_images=data["sync_images"]):
+                for entry in self.core.db_shops_entrys_list(shop_id=self.destination_hash(), vendor_id=vendor_id, filter=data["filter"], search=data["search"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"], sync_text=data["sync_text"], sync_images=data["sync_images"]):
                     if entry["entry_id"] in data["entrys"]:
                        entry_return = self.entrys_compare_ts(entry, data["entrys"][entry["entry_id"]])
                        del data["entrys"][entry["entry_id"]]
                        if entry_return:
-                           data_return["entrys"].append(entry_return)
+                           data_return["rx_entrys"].append(entry_return)
                     else:
-                       data_return["entrys"].append(entry)
+                       data_return["rx_entrys"].append(entry)
 
                 for entry_id in data["entrys"]:
                     entry = self.core.db_shops_entrys_get(shop_id=self.destination_hash(), entry_id=entry_id)
@@ -537,7 +578,10 @@ class ServerShop:
                     else:
                         entry_return = {"entry_id": entry_id, "shop_id": self.destination_hash(), "ts": 0}
                     if entry_return:
-                        data_return["entrys"].append(entry_return)
+                        data_return["rx_entrys"].append(entry_return)
+
+                if len(data_return["rx_entrys"]) == 0:
+                    del data_return["rx_entrys"]
 
             data_return["result"] = ServerShop.RESULT_OK
         except Exception as e:
@@ -559,6 +603,8 @@ class ServerShop:
     def sync_tx(self, path, data, request_id, link_id, remote_identity, requested_at):
         if not data:
             return None
+
+        now = time.time()
 
         data_return = {}
 
@@ -593,6 +639,9 @@ class ServerShop:
             if "categorys" in data and "ts_categorys" in data and self.right(vendor_id, [2]):
                 self.core.db_shops_set_categorys(self.destination_hash(), data["categorys"], data["ts_categorys"])
 
+            if "images" in data and "ts_images" in data and self.right(vendor_id, [2]):
+                self.core.db_shops_set_images(self.destination_hash(), data["images"], data["ts_images"])
+
             if "pages" in data and "ts_pages" in data and self.right(vendor_id, [2]):
                 self.core.db_shops_set_pages(self.destination_hash(), data["pages"], data["ts_pages"])
 
@@ -600,21 +649,47 @@ class ServerShop:
                 self.core.db_shops_set_users(self.destination_hash(), data["users"], data["ts_users"])
 
             if "entrys" in data and self.right(vendor_id, [1, 2]):
-                data_return["entrys_sync"] = []
+                data_return["tx_entrys"] = []
                 for entry in data["entrys"]:
-                    if entry["shop_id"] != self.destination_hash():
-                        continue
+                    entry["shop_id"] = self.destination_hash()
+                    entry["vendor_id"] = vendor_id
+                    entry["ts_sync"] = now
                     if self.core.db_shops_entrys_set(entry):
                         if entry["ts"] == 0:
-                            data_return["entrys_sync"].append({"entry_id": entry["entry_id"], "shop_id": entry["shop_id"], "ts": entry["ts"]})
+                            data_return["tx_entrys"].append({"entry_id": entry["entry_id"], "ts": entry["ts"]})
                         else:
-                            data_return["entrys_sync"].append({"entry_id": entry["entry_id"], "shop_id": entry["shop_id"]})
-
+                            data_return["tx_entrys"].append({"entry_id": entry["entry_id"]})
+                if len(data_return["tx_entrys"]) == 0:
+                    del data_return["tx_entrys"]
                 self.core.db_shops_update_categorys_count(self.destination_hash())
+
+            if "entrys_ts" in data and self.right(vendor_id, [1, 2]):
+                data_return["tx_entrys_ts"] = {}
+                for entry_id in data["entrys_ts"]:
+                    entry = self.core.db_shops_entrys_get(shop_id=self.destination_hash(), entry_id=entry_id)
+                    if entry:
+                        data_return["tx_entrys_ts"][entry_id] = []
+                        if "ts" in data["entrys_ts"][entry_id] and data["entrys_ts"][entry_id]["ts"] == 0:
+                            data_return["tx_entrys_ts"][entry_id].append("ts")
+                        if "d" in data["entrys_ts"][entry_id] and data["entrys_ts"][entry_id]["d"] > entry["ts_data"]:
+                            data_return["tx_entrys_ts"][entry_id].append("d")
+                        if "t" in data["entrys_ts"][entry_id] and data["entrys_ts"][entry_id]["t"] > entry["ts_title"]:
+                            data_return["tx_entrys_ts"][entry_id].append("t")
+                        if "te" in data["entrys_ts"][entry_id] and data["entrys_ts"][entry_id]["te"] > entry["ts_text"]:
+                            data_return["tx_entrys_ts"][entry_id].append("te")
+                        if "i" in data["entrys_ts"][entry_id] and data["entrys_ts"][entry_id]["i"] > entry["ts_images"]:
+                            data_return["tx_entrys_ts"][entry_id].append("i")
+                        if len(data_return["tx_entrys_ts"][entry_id]) == 0:
+                            del data_return["tx_entrys_ts"][entry_id]
+                    else:
+                        data_return["tx_entrys_ts"][entry_id] = ["d", "t", "te", "i"]
+
+                if len(data_return["tx_entrys_ts"]) == 0:
+                    del data_return["tx_entrys_ts"]
 
             data_return["result"] = ServerShop.RESULT_OK
         except Exception as e:
-            RNS.log("Server - Sync RX: "+str(e), RNS.LOG_ERROR)
+            RNS.log("Server - Sync TX: "+str(e), RNS.LOG_ERROR)
             data_return["result"] = ServerShop.RESULT_ERROR
 
         data_return = msgpack.packb(data_return)
@@ -654,12 +729,20 @@ class Core:
         return self.db
 
 
+    def db_connect(self):
+        return self.__db_connect()
+
+
     def __db_commit(self):
         if self.db != None:
             try:
                 self.db.commit()
             except:
                 pass
+
+
+    def db_commit(self):
+        self.__db_commit()
 
 
     def __db_init(self, init=True):
@@ -669,11 +752,11 @@ class Core:
 
         if init:
             dbc.execute("DROP TABLE IF EXISTS shop")
-        dbc.execute("CREATE TABLE IF NOT EXISTS shop (id BLOB PRIMARY KEY, config BLOB, categorys BLOB, categorys_count BLOB, pages BLOB, users BLOB, ts_config INTEGER DEFAULT 0, ts_categorys INTEGER DEFAULT 0, ts_categorys_count INTEGER DEFAULT 0, ts_pages INTEGER DEFAULT 0, ts_users INTEGER DEFAULT 0, ts_sync INTEGER DEFAULT 0, pin INTEGER DEFAULT 0, storage_duration INTEGER DEFAULT 0, archive INTEGER DEFAULT 0)")
+        dbc.execute("CREATE TABLE IF NOT EXISTS shop (id BLOB PRIMARY KEY, config BLOB, categorys BLOB, categorys_count BLOB, images BLOB, pages BLOB, users BLOB, statistic BLOB, ts_config INTEGER DEFAULT 0, ts_categorys INTEGER DEFAULT 0, ts_categorys_count INTEGER DEFAULT 0, ts_images INTEGER DEFAULT 0, ts_pages INTEGER DEFAULT 0, ts_users INTEGER DEFAULT 0, ts_statistic INTEGER DEFAULT 0, ts_sync INTEGER DEFAULT 0, pin INTEGER DEFAULT 0, storage_duration INTEGER DEFAULT 0, archive INTEGER DEFAULT 0)")
 
         if init:
             dbc.execute("DROP TABLE IF EXISTS shop_entry")
-        dbc.execute("CREATE TABLE IF NOT EXISTS shop_entry (entry_id BLOB, shop_id BLOB, vendor_id BLOB, category_id INTEGER DEFAULT 0, type_id INTEGER DEFAULT 0, enabled INTEGER DEFAULT 0, title0 TEXT DEFAULT '', title1 TEXT DEFAULT '', title2 TEXT DEFAULT '', text0 TEXT DEFAULT '', text1 TEXT DEFAULT '', text2 TEXT DEFAULT '', text3 TEXT DEFAULT '', text4 TEXT DEFAULT '', text5 TEXT DEFAULT '', option0 INTEGER DEFAULT 0, option1 INTEGER DEFAULT 0, option2 INTEGER DEFAULT 0, option3 INTEGER DEFAULT 0, option4 INTEGER DEFAULT 0, option5 INTEGER DEFAULT 0, option6 INTEGER DEFAULT 0, option7 INTEGER DEFAULT 0, tag0 INTEGER DEFAULT 0, tag1 INTEGER DEFAULT 0, tag2 INTEGER DEFAULT 0, tag3 INTEGER DEFAULT 0, tag4 INTEGER DEFAULT 0, tag5 INTEGER DEFAULT 0, tags0 TEXT DEFAULT '', tags1 TEXT DEFAULT '', images BLOB, price REAL DEFAULT 0, currency INTEGER DEFAULT 0, variants BLOB, q_available INTEGER DEFAULT 0, q_min INTEGER DEFAULT 0, q_max INTEGER DEFAULT 0, weight INTEGER DEFAULT 0, rate INTEGER DEFAULT 0, location_lat REAL DEFAULT 0, location_lon REAL DEFAULT 0, ts DEFAULT 0, ts_data INTEGER DEFAULT 0, ts_text INTEGER DEFAULT 0, ts_images INTEGER DEFAULT 0, ts_sync INTEGER DEFAULT 0, PRIMARY KEY(entry_id, shop_id))")
+        dbc.execute("CREATE TABLE IF NOT EXISTS shop_entry (entry_id BLOB, shop_id BLOB, vendor_id BLOB, category_id INTEGER DEFAULT 0, type_id INTEGER DEFAULT 0, enabled INTEGER DEFAULT 0, title0 TEXT DEFAULT '', title1 TEXT DEFAULT '', title2 TEXT DEFAULT '', text0 TEXT DEFAULT '', text1 TEXT DEFAULT '', text2 TEXT DEFAULT '', text3 TEXT DEFAULT '', text4 TEXT DEFAULT '', text5 TEXT DEFAULT '', option0 INTEGER DEFAULT 0, option1 INTEGER DEFAULT 0, option2 INTEGER DEFAULT 0, option3 INTEGER DEFAULT 0, option4 INTEGER DEFAULT 0, option5 INTEGER DEFAULT 0, option6 INTEGER DEFAULT 0, option7 INTEGER DEFAULT 0, tag0 INTEGER DEFAULT 0, tag1 INTEGER DEFAULT 0, tag2 INTEGER DEFAULT 0, tag3 INTEGER DEFAULT 0, tag4 INTEGER DEFAULT 0, tag5 INTEGER DEFAULT 0, tags0 TEXT DEFAULT '', tags1 TEXT DEFAULT '', images BLOB, price REAL DEFAULT 0, currency INTEGER DEFAULT 0, variants BLOB, q_available INTEGER DEFAULT 0, q_min INTEGER DEFAULT 0, q_max INTEGER DEFAULT 0, weight INTEGER DEFAULT 0, rate INTEGER DEFAULT 0, location_lat REAL DEFAULT 0, location_lon REAL DEFAULT 0, ts DEFAULT 0, ts_data INTEGER DEFAULT 0, ts_title INTEGER DEFAULT 0, ts_text INTEGER DEFAULT 0, ts_images INTEGER DEFAULT 0, ts_sync INTEGER DEFAULT 0, PRIMARY KEY(entry_id, shop_id))")
 
         self.__db_commit()
 
@@ -817,6 +900,55 @@ class Core:
         else:
             self.__db_migrate()
             self.__db_indices()
+
+
+    def db_shops_statistic(self, shop_id):
+        try:
+            db = self.__db_connect()
+            dbc = db.cursor()
+
+            data = {}
+
+            if not os.path.isfile(self.db_path):
+                raise
+            data["size"] = os.path.getsize(self.db_path)
+
+            query = "SELECT COUNT(*) FROM shop_entry WHERE shop_id = ?"
+            dbc.execute(query, (shop_id,))
+            result = dbc.fetchall()
+            if len(result) < 1:
+                data["entrys"] = 0
+            else:
+                data["entrys"] = result[0][0]
+
+            query = "SELECT COUNT(*) FROM shop_entry WHERE shop_id = ? AND ts = 0"
+            dbc.execute(query, (shop_id,))
+            result = dbc.fetchall()
+            if len(result) < 1:
+                data["entrys_del"] = 0
+            else:
+                data["entrys_del"] = result[0][0]
+
+            query = "SELECT COUNT(*) FROM shop_entry WHERE shop_id = ? AND enabled = 1"
+            dbc.execute(query, (shop_id,))
+            result = dbc.fetchall()
+            if len(result) < 1:
+                data["entrys_enabled"] = 0
+            else:
+                data["entrys_enabled"] = result[0][0]
+
+            query = "SELECT COUNT(*) FROM shop_entry WHERE shop_id = ? AND enabled = 0"
+            dbc.execute(query, (shop_id,))
+            result = dbc.fetchall()
+            if len(result) < 1:
+                data["entrys_disabled"] = 0
+            else:
+                data["entrys_disabled"] = result[0][0]
+
+            return data
+
+        except:
+            return None
 
 
     def db_shops_entrys_filter(self, filter):
@@ -963,7 +1095,7 @@ class Core:
         return query
 
 
-    def db_shops_entrys_list(self, shop_id=None, vendor_id=None, filter=None, search=None, order=None, limit=None, limit_start=None, sync=False, sync_data=True, sync_text=True, sync_images=True):
+    def db_shops_entrys_list(self, shop_id=None, vendor_id=None, filter=None, search=None, order=None, limit=None, limit_start=None, sync=False, sync_data=True, sync_title=True, sync_text=True, sync_images=True):
         db = self.__db_connect()
         dbc = db.cursor()
 
@@ -1001,16 +1133,19 @@ class Core:
             for entry in result:
                 data_append = {}
                 data_append["entry_id"] = entry[0]
-                data_append["shop_id"] = entry[1]
-                data_append["vendor_id"] = entry[2]
+                if not sync or not shop_id:
+                    data_append["shop_id"] = entry[1]
+                if not sync:
+                    data_append["vendor_id"] = entry[2]
                 if sync_data:
                     data_append["category_id"] = entry[3]
                     data_append["type_id"] = entry[4]
                     data_append["enabled"] = entry[5]
-                if sync_text:
+                if sync_title:
                     data_append["title0"] = entry[6]
                     data_append["title1"] = entry[7]
                     data_append["title2"] = entry[8]
+                if sync_text:
                     data_append["text0"] = entry[9]
                     data_append["text1"] = entry[10]
                     data_append["text2"] = entry[11]
@@ -1050,99 +1185,110 @@ class Core:
                 data_append["ts"] = entry[42]
                 if sync_data:
                     data_append["ts_data"] = entry[43]
+                if sync_title:
+                    data_append["ts_title"] = entry[44]
                 if sync_text:
-                    data_append["ts_text"] = entry[44]
+                    data_append["ts_text"] = entry[45]
                 if sync_images:
-                    data_append["ts_images"] = entry[45]
-                data_append["ts_sync"] = entry[46]
+                    data_append["ts_images"] = entry[46]
+                if not sync:
+                    data_append["ts_sync"] = entry[47]
 
                 data.append(data_append)
 
             return data
 
 
-    def db_shops_entrys_get(self, shop_id=None, entry_id=None, variant=None):
+    def db_shops_entrys_get(self, shop_id=None, entry_id=None, variant=None, sync=False, sync_data=True, sync_title=True, sync_text=True, sync_images=True):
         db = self.__db_connect()
         dbc = db.cursor()
 
         if variant == None:
             variant = 0
 
-        query = "SELECT shop_entry.*, shop_cart.variant, shop_cart.quantity, IIF(shop_cart.variant IS NOT NULL, 1, 0), IIF(shop_favorite.shop_id IS NOT NULL, 1, 0), IIF(shop_notify.shop_id IS NOT NULL, 1, 0) FROM shop_entry LEFT JOIN shop_cart ON shop_cart.shop_id = shop_entry.shop_id AND shop_cart.entry_id = shop_entry.entry_id AND shop_cart.variant = ? LEFT JOIN shop_favorite ON shop_favorite.shop_id = shop_entry.shop_id AND shop_favorite.entry_id = shop_entry.entry_id LEFT JOIN shop_notify ON shop_notify.shop_id = shop_entry.shop_id AND shop_notify.entry_id = shop_entry.entry_id WHERE shop_entry.ts > 0 AND shop_entry.shop_id = ? AND shop_entry.entry_id = ?"
-        dbc.execute(query, (variant, shop_id, entry_id))
+        query = "SELECT * FROM shop_entry WHERE shop_entry.shop_id = ? AND shop_entry.entry_id = ?"
+        dbc.execute(query, (shop_id, entry_id))
         result = dbc.fetchall()
 
         if len(result) < 1:
             return None
         else:
             entry = result[0]
-            data = {
-                "entry_id": entry[0],
-                "shop_id": entry[1],
-                "vendor_id": entry[2],
-                "category_id": entry[3],
-                "type_id": entry[4],
-                "enabled": entry[5],
-                "title0": entry[6],
-                "title1": entry[7],
-                "title2": entry[8],
-                "text0": entry[9],
-                "text1": entry[10],
-                "text2": entry[11],
-                "text3": entry[12],
-                "text4": entry[13],
-                "text5": entry[14],
-                "option0": entry[15],
-                "option1": entry[16],
-                "option2": entry[17],
-                "option3": entry[18],
-                "option4": entry[19],
-                "option5": entry[20],
-                "option6": entry[21],
-                "option7": entry[22],
-                "tag0": entry[23],
-                "tag1": entry[24],
-                "tag2": entry[25],
-                "tag3": entry[26],
-                "tag4": entry[27],
-                "tag5": entry[28],
-                "tags0": entry[29],
-                "tags1": entry[30],
-                "images": msgpack.unpackb(entry[31]),
-                "price": entry[32],
-                "currency": entry[33],
-                "variants": msgpack.unpackb(entry[34]),
-                "q_available": entry[35],
-                "q_min": entry[36],
-                "q_max": entry[37],
-                "weight": entry[38],
-                "rate": entry[39],
-                "location_lat": entry[40],
-                "location_lon": entry[41],
-                "ts": entry[42],
-                "ts_data": entry[43],
-                "ts_text": entry[44],
-                "ts_images": entry[45],
-                "ts_sync": entry[46],
-
-                "variant": entry[47],
-                "quantity": entry[48],
-                "cart": entry[49],
-                "favorites": entry[50],
-                "notify": entry[51]
-            }
+            data = {}
+            data["entry_id"] = entry[0]
+            if not sync:
+                data["shop_id"] = entry[1]
+                data["vendor_id"] = entry[2]
+            if sync_data:
+                data["category_id"] = entry[3]
+                data["type_id"] = entry[4]
+                data["enabled"] = entry[5]
+            if sync_title:
+                data["title0"] = entry[6]
+                data["title1"] = entry[7]
+                data["title2"] = entry[8]
+            if sync_text:
+                data["text0"] = entry[9]
+                data["text1"] = entry[10]
+                data["text2"] = entry[11]
+                data["text3"] = entry[12]
+                data["text4"] = entry[13]
+                data["text5"] = entry[14]
+            if sync_data:
+                data["option0"] = entry[15]
+                data["option1"] = entry[16]
+                data["option2"] = entry[17]
+                data["option3"] = entry[18]
+                data["option4"] = entry[19]
+                data["option5"] = entry[20]
+                data["option6"] = entry[21]
+                data["option7"] = entry[22]
+                data["tag0"] = entry[23]
+                data["tag1"] = entry[24]
+                data["tag2"] = entry[25]
+                data["tag3"] = entry[26]
+                data["tag4"] = entry[27]
+                data["tag5"] = entry[28]
+                data["tags0"] = entry[29]
+                data["tags1"] = entry[30]
+            if sync_images:
+                data["images"] = msgpack.unpackb(entry[31])
+            if sync_data:
+                data["price"] = entry[32]
+                data["currency"] = entry[33]
+                data["variants"] = msgpack.unpackb(entry[34])
+                data["q_available"] = entry[35]
+                data["q_min"] = entry[36]
+                data["q_max"] = entry[37]
+                data["weight"] = entry[38]
+                data["rate"] = entry[39]
+                data["location_lat"] = entry[40]
+                data["location_lon"] = entry[41]
+            data["ts"] = entry[42]
+            if sync_data:
+                data["ts_data"] = entry[43]
+            if sync_title:
+                data["ts_title"] = entry[44]
+            if sync_text:
+                data["ts_text"] = entry[45]
+            if sync_images:
+                data["ts_images"] = entry[46]
 
             return data
 
 
-    def db_shops_entrys_set(self, entry=None):
+    def db_shops_entrys_set(self, entry=None, vendor_id=None):
         try:
             db = self.__db_connect()
             dbc = db.cursor()
 
             if "ts" in entry and entry["ts"] == 0:
-                query = "DELETE FROM shop_entry WHERE entry_id = ? AND shop_id = ?"
-                dbc.execute(query, (entry["entry_id"], entry["shop_id"]))
+                if vendor_id:
+                    query = "DELETE FROM shop_entry WHERE entry_id = ? AND shop_id = ? AND vendor_id <> ?"
+                    dbc.execute(query, (entry["entry_id"], entry["shop_id"], vendor_id))
+                else:
+                    query = "DELETE FROM shop_entry WHERE entry_id = ? AND shop_id = ?"
+                    dbc.execute(query, (entry["entry_id"], entry["shop_id"]))
 
             else:
                 query = "SELECT entry_id FROM shop_entry WHERE entry_id = ? AND shop_id = ?"
@@ -1156,9 +1302,13 @@ class Core:
                     query = "UPDATE shop_entry SET category_id = ?, type_id = ?, enabled = ?, option0 = ?, option1 = ?, option2 = ?, option3 = ?, option4 = ?, option5 = ?, option6 = ?, option7 = ?, tag0 = ?, tag1 = ?, tag2 = ?, tag3 = ?, tag4 = ?, tag5 = ?, tags0 = ?, tags1 = ?, price = ?, currency = ?, variants = ?, q_available = ?, q_min = ?, q_max = ?, weight = ?, rate = ?, location_lat = ?, location_lon = ?, ts_data = ? WHERE entry_id = ? AND shop_id = ? AND ts_data <= ?"
                     dbc.execute(query, (entry["category_id"], entry["type_id"], entry["enabled"], entry["option0"], entry["option1"], entry["option2"], entry["option3"], entry["option4"], entry["option5"], entry["option6"], entry["option7"], entry["tag0"], entry["tag1"], entry["tag2"], entry["tag3"], entry["tag4"], entry["tag5"], entry["tags0"], entry["tags1"], entry["price"], entry["currency"], msgpack.packb(entry["variants"]), entry["q_available"], entry["q_min"], entry["q_max"], entry["weight"], entry["rate"], entry["location_lat"], entry["location_lon"], entry["ts_data"], entry["entry_id"], entry["shop_id"], entry["ts_data"]))
 
+                if "ts_title" in entry:
+                    query = "UPDATE shop_entry SET title0 = ?, title1 = ?, title2 = ?, ts_title = ? WHERE entry_id = ? AND shop_id = ? AND ts_title <= ?"
+                    dbc.execute(query, (entry["title0"], entry["title1"], entry["title2"], entry["ts_title"], entry["entry_id"], entry["shop_id"], entry["ts_title"]))
+
                 if "ts_text" in entry:
-                    query = "UPDATE shop_entry SET title0 = ?, title1 = ?, title2 = ?, text0 = ?, text1 = ?, text2 = ?, text3 = ?, text4 = ?, text5 = ?, ts_text = ? WHERE entry_id = ? AND shop_id = ? AND ts_text <= ?"
-                    dbc.execute(query, (entry["title0"], entry["title1"], entry["title2"], entry["text0"], entry["text1"], entry["text2"], entry["text3"], entry["text4"], entry["text5"], entry["ts_text"], entry["entry_id"], entry["shop_id"], entry["ts_text"]))
+                    query = "UPDATE shop_entry SET text0 = ?, text1 = ?, text2 = ?, text3 = ?, text4 = ?, text5 = ?, ts_text = ? WHERE entry_id = ? AND shop_id = ? AND ts_text <= ?"
+                    dbc.execute(query, (entry["text0"], entry["text1"], entry["text2"], entry["text3"], entry["text4"], entry["text5"], entry["ts_text"], entry["entry_id"], entry["shop_id"], entry["ts_text"]))
 
                 if "ts_images" in entry:
                     query = "UPDATE shop_entry SET images = ?, ts_images = ? WHERE entry_id = ? AND shop_id = ? AND ts_images <= ?"
@@ -1340,22 +1490,65 @@ class Core:
 
 
     def db_shops_update_categorys_count(self, shop_id):
-        db = self.__db_connect()
-        dbc = db.cursor()
-
-        query = "SELECT category_id, COUNT(category_id) FROM shop_entry WHERE ts > 0 AND shop_id = ? AND enabled = 1 GROUP BY category_id"
-        dbc.execute(query, (shop_id,))
-
-        result = dbc.fetchall()
-
+        data_old = self.db_shops_get_categorys_count(shop_id)
         data = {}
 
+        db = self.__db_connect()
+        dbc = db.cursor()
+        query = "SELECT category_id, COUNT(category_id) FROM shop_entry WHERE ts > 0 AND shop_id = ? AND enabled = 1 GROUP BY category_id"
+        dbc.execute(query, (shop_id,))
+        result = dbc.fetchall()
         if len(result) > 0:
             for entry in result:
                 data[entry[0]] = entry[1]
 
-        query = "UPDATE shop SET categorys_count = ?, ts_categorys_count = ? WHERE id = ?"
-        dbc.execute(query, (msgpack.packb(data), time.time(), shop_id))
+        if len(data) != len(data_old):
+            self.db_shops_set_categorys_count(shop_id, data, time.time())
+        else:
+            for key, value in data.items():
+                if key not in data_old or data_old[key] != value:
+                    self.db_shops_set_categorys_count(shop_id, data, time.time())
+                    break
+
+
+    def db_shops_get_images(self, shop_id):
+        db = self.__db_connect()
+        dbc = db.cursor()
+
+        query = "SELECT images FROM shop WHERE id = ?"
+        dbc.execute(query, (shop_id,))
+        result = dbc.fetchall()
+
+        if len(result) < 1:
+            return {}
+        else:
+            data = msgpack.unpackb(result[0][0])
+            return data
+
+
+    def db_shops_get_images_ts(self, shop_id):
+        db = self.__db_connect()
+        dbc = db.cursor()
+
+        query = "SELECT ts_images FROM shop WHERE id = ?"
+        dbc.execute(query, (shop_id,))
+        result = dbc.fetchall()
+
+        if len(result) < 1:
+            return 0
+        else:
+            return result[0][0]
+
+
+    def db_shops_set_images(self, shop_id, images, ts_images=None, ts_sync=None):
+        db = self.__db_connect()
+        dbc = db.cursor()
+
+        if ts_images == None:
+            ts_images = 0
+
+        query = "UPDATE shop SET images = ?, ts_images = ?, ts_sync = ? WHERE id = ?"
+        dbc.execute(query, (msgpack.packb(images), ts_images, ts_sync, shop_id))
 
         self.__db_commit()
 
@@ -1450,7 +1643,52 @@ class Core:
         self.__db_commit()
 
 
-    def db_shops_add(self, shop_id, name=None, name_announce=None, trust=False, storage_duration=None, config=None, categorys=None, categorys_count=None, pages=None, users=None, ts_config=None, ts_categorys=None, ts_categorys_count=None, ts_pages=None, ts_users=None, ts_sync=None):
+    def db_shops_get_statistic(self, shop_id):
+        db = self.__db_connect()
+        dbc = db.cursor()
+
+        query = "SELECT statistic FROM shop WHERE id = ?"
+        dbc.execute(query, (shop_id,))
+        result = dbc.fetchall()
+
+        if len(result) < 1:
+            return None
+        else:
+            data = msgpack.unpackb(result[0][0])
+            return data
+
+
+    def db_shops_get_statistic_ts(self, shop_id):
+        db = self.__db_connect()
+        dbc = db.cursor()
+
+        query = "SELECT ts_statistic FROM shop WHERE id = ?"
+        dbc.execute(query, (shop_id,))
+        result = dbc.fetchall()
+
+        if len(result) < 1:
+            return 0
+        else:
+            return result[0][0]
+
+
+    def db_shops_set_statistic(self, shop_id, statistic, ts_statistic=None, ts_sync=None):
+        db = self.__db_connect()
+        dbc = db.cursor()
+
+        if ts_statistic == None:
+            ts_statistic = 0
+
+        if ts_sync == None:
+            ts_sync = 0
+
+        query = "UPDATE shop SET statistic = ?, ts_statistic = ?, ts_sync = ? WHERE id = ?"
+        dbc.execute(query, (msgpack.packb(statistic), ts_statistic, ts_sync, shop_id))
+
+        self.__db_commit()
+
+
+    def db_shops_add(self, shop_id, name=None, name_announce=None, trust=False, storage_duration=None, config=None, categorys=None, categorys_count=None, images=None, pages=None, users=None, statistic=None, ts_config=None, ts_categorys=None, ts_categorys_count=None, ts_images=None, ts_pages=None, ts_users=None, ts_statistic=None, ts_sync=None):
         try:
             if isinstance(shop_id, str):
                 if len(shop_id) != RNS.Reticulum.TRUNCATED_HASHLENGTH//8*2:
@@ -1475,11 +1713,17 @@ class Core:
             if categorys_count == None:
                 categorys_count = {}
 
+            if images == None:
+                images = {}
+
             if pages == None:
                 pages = {}
 
             if users == None:
                 users = {}
+
+            if statistic == None:
+                statistic = {}
 
             if ts_config == None:
                 ts_config = 0
@@ -1490,11 +1734,17 @@ class Core:
             if ts_categorys_count == None:
                 ts_categorys_count = 0
 
+            if ts_images == None:
+                ts_images = 0
+
             if ts_pages == None:
                 ts_pages = 0
 
             if ts_users == None:
                 ts_users = 0
+
+            if ts_statistic == None:
+                ts_statistic = 0
 
             if ts_sync == None:
                 ts_sync = 0
@@ -1502,8 +1752,8 @@ class Core:
             db = self.__db_connect()
             dbc = db.cursor()
 
-            query = "INSERT INTO shop (id, config, categorys, categorys_count, pages, users, ts_config, ts_categorys, ts_categorys_count, ts_pages, ts_users, ts_sync, storage_duration) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-            dbc.execute(query, (shop_id, msgpack.packb(config), msgpack.packb(categorys), msgpack.packb(categorys_count), msgpack.packb(pages), msgpack.packb(users), ts_config, ts_categorys, ts_categorys_count, ts_pages, ts_users, ts_sync, storage_duration))
+            query = "INSERT INTO shop (id, config, categorys, categorys_count, images, pages, users, statistic, ts_config, ts_categorys, ts_categorys_count, ts_images, ts_pages, ts_users, ts_statistic, ts_sync, storage_duration) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            dbc.execute(query, (shop_id, msgpack.packb(config), msgpack.packb(categorys), msgpack.packb(categorys_count), msgpack.packb(images), msgpack.packb(pages), msgpack.packb(users), msgpack.packb(statistic), ts_config, ts_categorys, ts_categorys_count, ts_images, ts_pages, ts_users, ts_statistic, ts_sync, storage_duration))
 
             self.__db_commit()
 
@@ -1518,26 +1768,14 @@ class Core:
 # CMDs
 
 
-def cmd(path=None):
+def cmd():
     print("---- Database interface ----")
     print("")
 
-    if path is not None:
-        if path.endswith("/"):
-            path = path[:-1]
-    else:
-        path = PATH
-
-    path += "/database.db"
-
-    print("File: "+path)
+    print("File: "+CORE.db_path)
     print("")
 
-    if not os.path.isfile(path):
-        print("Error: No database file")
-        return
-
-    db = sqlite3.connect(path, isolation_level=None, check_same_thread=False)
+    db = CORE.db_connect()
 
     while True:
         try:
@@ -1566,32 +1804,19 @@ def cmd(path=None):
                 for row in result:
                     print(row)
                     print("")
-                db.commit()
+                CORE.db_commit()
             except Exception as e:
                 print("Error: "+str(e))
 
 
-def cmd_status(path=None):
+def cmd_status():
     print("---- Database status ----")
     print("")
 
-    if path is not None:
-        if path.endswith("/"):
-            path = path[:-1]
-    else:
-        path = PATH
+    print("File: "+CORE.db_path)
+    print("Size: "+cmd_size_str(os.path.getsize(CORE.db_path)))
 
-    path += "/database.db"
-
-    print("File: "+path)
-
-    if not os.path.isfile(path):
-        print("Error: No database file")
-        return
-
-    print("Size: "+cmd_size_str(os.path.getsize(path)))
-
-    db = sqlite3.connect(path, isolation_level=None, check_same_thread=False)
+    db = CORE.db_connect()
     dbc = db.cursor()
 
     query = "SELECT name FROM sqlite_master WHERE type = 'table'"
@@ -1726,12 +1951,26 @@ def exit():
 
 
 #### Setup #####
-def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False):
+def setup_core(path=None):
     global PATH
+    global CORE
+
+    if path is not None:
+        if path.endswith("/"):
+            path = path[:-1]
+        PATH = path
+
+    if path is None:
+        path = PATH
+
+    CORE = Core(storage_path=path)
+
+
+#### Setup #####
+def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False):
     global PATH_RNS
     global LOG_LEVEL
     global LOG_FILE
-    global CORE
     global RNS_CONNECTION
     global RNS_SERVER_SHOP
 
@@ -1776,8 +2015,6 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
 
     if path is None:
         path = PATH
-
-    CORE = Core(storage_path=path)
 
     RNS_SERVER_SHOP = ServerShop(
         core=CORE,
@@ -1825,12 +2062,14 @@ def main():
 
         params = parser.parse_args()
 
+        setup_core(path=params.path)
+
         if params.cmd:
-            cmd(path=params.path)
+            cmd()
             exit()
 
         if params.cmd_status:
-            cmd_status(path=params.path)
+            cmd_status()
             exit()
 
         setup(path=params.path, path_rns=params.path_rns, path_log=params.path_log, loglevel=params.loglevel, service=params.service)

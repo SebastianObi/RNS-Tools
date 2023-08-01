@@ -236,7 +236,16 @@ class ServerPage:
 
 
     def statistic_get(self):
-        return self.statistic
+        return {
+            "ts": self.statistic["ts"],
+            "connects": self.statistic["connects"],
+            "online": len(self.statistic["online"]),
+            "rx_bytes": self.statistic["rx_bytes"],
+            "tx_bytes": self.statistic["tx_bytes"],
+            "pages": self.statistic["pages"],
+            "files": self.statistic["files"],
+            "uploads": self.statistic["uploads"]
+        }
 
 
     def statistic_set(self, statistic):
@@ -244,7 +253,7 @@ class ServerPage:
 
 
     def statistic_reset(self):
-        self.statistic = {"connects": 0, "pages": 0, "files": 0, "uploads": 0}
+        self.statistic = {"ts": time.time(), "connects": 0, "online": {}, "rx_bytes": 0, "tx_bytes": 0, "pages": 0, "files": 0, "uploads": 0}
 
 
     def register_announce_callback(self, handler_function):
@@ -372,6 +381,7 @@ class ServerPage:
         RNS.log("Server - Peer connected to "+str(self.destination), RNS.LOG_VERBOSE)
         try:
             self.statistic["connects"] += 1
+            self.statistic["online"][link.hash] = True
         except:
             pass
         link.set_link_closed_callback(self.peer_disconnected)
@@ -386,6 +396,13 @@ class ServerPage:
 
     def peer_disconnected(self, link):
         RNS.log("Server - Peer disconnected from "+str(self.destination), RNS.LOG_VERBOSE)
+        try:
+            self.statistic["rx_bytes"] += link.rxbytes
+            self.statistic["tx_bytes"] += link.txbytes
+            if link.hash in self.statistic["online"]:
+                del self.statistic["online"][link.hash]
+        except:
+            pass
 
 
     def pages_register(self):
