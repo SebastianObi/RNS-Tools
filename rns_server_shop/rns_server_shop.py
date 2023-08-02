@@ -216,7 +216,10 @@ class ServerShop:
             "rx_bytes": self.statistic["rx_bytes"],
             "tx_bytes": self.statistic["tx_bytes"],
             "rx_count": self.statistic["rx_count"],
-            "tx_count": self.statistic["tx_count"]
+            "tx_count": self.statistic["tx_count"],
+            "entrys_add": self.statistic["entrys_add"],
+            "entrys_edit": self.statistic["entrys_edit"],
+            "entrys_del": self.statistic["entrys_del"]
         }
 
 
@@ -225,7 +228,7 @@ class ServerShop:
 
 
     def statistic_reset(self):
-        self.statistic = {"ts": time.time(), "connects": 0, "online": {}, "rx_bytes": 0, "tx_bytes": 0, "rx_count": 0, "tx_count": 0}
+        self.statistic = {"ts": time.time(), "connects": 0, "online": {}, "rx_bytes": 0, "tx_bytes": 0, "rx_count": 0, "tx_count": 0, "entrys_add": 0, "entrys_edit": 0, "entrys_del": 0}
 
 
     def register_announce_callback(self, handler_function):
@@ -516,7 +519,7 @@ class ServerShop:
             return msgpack.packb(data_return)
 
         try:
-            self.statistic["sync_rx"] += 1
+            self.statistic["rx_count"] += 1
         except:
             pass
 
@@ -627,7 +630,7 @@ class ServerShop:
             return msgpack.packb(data_return)
 
         try:
-            self.statistic["sync_tx"] += 1
+            self.statistic["tx_count"] += 1
         except:
             pass
 
@@ -635,18 +638,23 @@ class ServerShop:
             if "config" in data and "ts_config" in data and self.right(vendor_id, [2]):
                 self.core.db_shops_set_config(self.destination_hash(), data["config"], data["ts_config"])
                 self.announce(reinit=True)
+                data_return["tx_shop"] = True
 
             if "categorys" in data and "ts_categorys" in data and self.right(vendor_id, [2]):
                 self.core.db_shops_set_categorys(self.destination_hash(), data["categorys"], data["ts_categorys"])
+                data_return["tx_shop"] = True
 
             if "images" in data and "ts_images" in data and self.right(vendor_id, [2]):
                 self.core.db_shops_set_images(self.destination_hash(), data["images"], data["ts_images"])
+                data_return["tx_shop"] = True
 
             if "pages" in data and "ts_pages" in data and self.right(vendor_id, [2]):
                 self.core.db_shops_set_pages(self.destination_hash(), data["pages"], data["ts_pages"])
+                data_return["tx_shop"] = True
 
             if "users" in data and "ts_users" in data and self.right(vendor_id, [2]):
                 self.core.db_shops_set_users(self.destination_hash(), data["users"], data["ts_users"])
+                data_return["tx_shop"] = True
 
             if "entrys" in data and self.right(vendor_id, [1, 2]):
                 data_return["tx_entrys"] = []
@@ -654,11 +662,18 @@ class ServerShop:
                     entry["shop_id"] = self.destination_hash()
                     entry["vendor_id"] = vendor_id
                     entry["ts_sync"] = now
-                    if self.core.db_shops_entrys_set(entry):
+                    result = self.core.db_shops_entrys_set(entry)
+                    if result != 0x00:
                         if entry["ts"] == 0:
                             data_return["tx_entrys"].append({"entry_id": entry["entry_id"], "ts": entry["ts"]})
                         else:
                             data_return["tx_entrys"].append({"entry_id": entry["entry_id"]})
+                    if result == 0x01:
+                        self.statistic["entrys_add"] += 1
+                    elif result == 0x02:
+                        self.statistic["entrys_edit"] += 1
+                    elif result == 0x03:
+                        self.statistic["entrys_del"] += 1
                 if len(data_return["tx_entrys"]) == 0:
                     del data_return["tx_entrys"]
                 self.core.db_shops_update_categorys_count(self.destination_hash())
@@ -1278,11 +1293,14 @@ class Core:
 
 
     def db_shops_entrys_set(self, entry=None, vendor_id=None):
+        result = 0x00
+
         try:
             db = self.__db_connect()
             dbc = db.cursor()
 
             if "ts" in entry and entry["ts"] == 0:
+                result = 0x03
                 if vendor_id:
                     query = "DELETE FROM shop_entry WHERE entry_id = ? AND shop_id = ? AND vendor_id <> ?"
                     dbc.execute(query, (entry["entry_id"], entry["shop_id"], vendor_id))
@@ -1295,8 +1313,11 @@ class Core:
                 dbc.execute(query, (entry["entry_id"], entry["shop_id"]))
                 result = dbc.fetchall()
                 if len(result) < 1:
+                    result = 0x01
                     query = "INSERT OR REPLACE INTO shop_entry (entry_id, shop_id, vendor_id, variants, images, ts) values (?, ?, ?, ?, ?, ?)"
                     dbc.execute(query, (entry["entry_id"], entry["shop_id"], entry["vendor_id"], msgpack.packb(None), msgpack.packb(None), entry["ts"]))
+                else:
+                    result = 0x02
 
                 if "ts_data" in entry:
                     query = "UPDATE shop_entry SET category_id = ?, type_id = ?, enabled = ?, option0 = ?, option1 = ?, option2 = ?, option3 = ?, option4 = ?, option5 = ?, option6 = ?, option7 = ?, tag0 = ?, tag1 = ?, tag2 = ?, tag3 = ?, tag4 = ?, tag5 = ?, tags0 = ?, tags1 = ?, price = ?, currency = ?, variants = ?, q_available = ?, q_min = ?, q_max = ?, weight = ?, rate = ?, location_lat = ?, location_lon = ?, ts_data = ? WHERE entry_id = ? AND shop_id = ? AND ts_data <= ?"
@@ -1322,9 +1343,9 @@ class Core:
 
         except Exception as e:
             RNS.log("Core - Error while creating shop entry: "+str(e), RNS.LOG_ERROR)
-            return False
+            result = 0x00
 
-        return True
+        return result
 
 
     def db_shops_entrys_count(self, shop_id=None, vendor_id=None, filter=None, search=None, sync=False):

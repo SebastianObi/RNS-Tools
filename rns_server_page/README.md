@@ -5,7 +5,7 @@ For more information, see the configuration options (at the end of the program f
 
 
 ### Features
-- Compatible with all Reticulum page browser apps (NomadNet, ...)
+- Compatible with all Reticulum page browser apps (Communicator, NomadNet, ...)
 
 
 ## Current Status

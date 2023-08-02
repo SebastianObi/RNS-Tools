@@ -5,7 +5,8 @@ For more information, see the configuration options (at the end of the program f
 
 
 ### Features
-- Only for testing the call functionality of the "Communicator app"
+- Compatible with all Reticulum call apps (Communicator)
+- Only for testing the call functionality
 - Busy call
 - Echo call
 - Hold call

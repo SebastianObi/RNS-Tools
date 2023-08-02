@@ -1,9 +1,9 @@
 # rns_server_shop
-This program provides a server for shop hosting of the "Communicator app".
+This program provides a server for shop hosting of the "Communicator" app.
 
 
 ### Features
-- Compatible with "Communicator app"
+- Compatible with all Reticulum shop apps (Communicator)
 
 
 ## Current Status
