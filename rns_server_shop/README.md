@@ -53,6 +53,7 @@ The full documentation is not yet available. Due to lack of time I can also not 
   ./rns_server_shop.py
   ```
 - After the first start you must perform the initial configuration. This is done in the client application.
+- To do this, start the client app and then the shop server. In the announcement list you should see a new unconfigured shop. Open it to take over the administration. The first active user who opens a shop will automatically become the administrator.
 
 
 ### Run as a system service/deamon:
@@ -107,6 +108,7 @@ The full documentation is not yet available. Due to lack of time I can also not 
   ./rns_server_shop.py -p /root/.rns_server_shop_3nd
   ```
 - After the first start you must perform the initial configuration. This is done in the client application.
+- To do this, start the client app and then the shop server. In the announcement list you should see a new unconfigured shop. Open it to take over the administration. The first active user who opens a shop will automatically become the administrator.
 
 
 ### First usage:
@@ -122,7 +124,7 @@ The full documentation is not yet available. Due to lack of time I can also not 
 
 ### Startup parameters:
 ```bash
-usage: rns_server_shop.py [-h] [-p PATH] [-pr PATH_RNS] [-pl PATH_LOG] [-l LOGLEVEL] [-s]
+usage: rns_server_shop.py [-h] [-p PATH] [-pr PATH_RNS] [-pl PATH_LOG] [-l LOGLEVEL] [-s] [--cmd] [--cmd_status]
 
 RNS Server Shop - Shop hosting functions for RNS based apps
 
@@ -135,6 +137,8 @@ optional arguments:
                         Path to alternative log directory
   -l LOGLEVEL, --loglevel LOGLEVEL
   -s, --service         Running as a service and should log to file
+  --cmd                 Database command interface (Execute any sql database command)
+  --cmd_status          Database status interface (Shows the current status)
 ```
 
 

@@ -190,13 +190,14 @@ class ServerShop:
             if self.default_user:
                 users[self.default_user] = self.default_right
                 del config["state_first_run"]
+            now = time.time()
             self.core.db_shops_add(shop_id=self.destination_hash(), name="", name_announce="")
-            self.core.db_shops_set_config(self.destination_hash(), config, time.time())
-            self.core.db_shops_set_categorys(self.destination_hash(), default_categorys, time.time())
-            self.core.db_shops_set_images(self.destination_hash(), {}, time.time())
-            self.core.db_shops_set_pages(self.destination_hash(), default_pages, time.time())
-            self.core.db_shops_set_users(self.destination_hash(), users, time.time())
-            self.core.db_shops_set_statistic(self.destination_hash(), {}, time.time())
+            self.core.db_shops_set_config(self.destination_hash(), config, now, now)
+            self.core.db_shops_set_categorys(self.destination_hash(), default_categorys, now, now)
+            self.core.db_shops_set_images(self.destination_hash(), {}, now, now)
+            self.core.db_shops_set_pages(self.destination_hash(), default_pages, now, now)
+            self.core.db_shops_set_users(self.destination_hash(), users, now, now)
+            self.core.db_shops_set_statistic(self.destination_hash(), {}, now, now)
 
         config = self.core.db_shops_get_config(self.destination_hash())
         self.announce_data = config["title"]
@@ -429,6 +430,10 @@ class ServerShop:
 
         data = {}
 
+        if "v" in ts:
+            data["vendor_id"] = entry["vendor_id"]
+            data["ts"] = entry["ts"]
+
         if "d" in ts and entry["ts_data"] > ts["d"]:
             data["category_id"] = entry["category_id"]
             data["type_id"] = entry["type_id"]
@@ -560,6 +565,16 @@ class ServerShop:
                     "db": self.core.db_shops_statistic(self.destination_hash())
                 }
                 data_return["rx_ts_statistic"] = time.time()
+
+            if "entry" in data:
+                    entry_id = list(data["entry"].keys())[0]
+                    entry = self.core.db_shops_entrys_get(shop_id=self.destination_hash(), entry_id=entry_id)
+                    if entry:
+                        entry_return = self.entrys_compare_ts(entry, data["entry"][entry_id])
+                    else:
+                        entry_return = {"entry_id": entry_id, "shop_id": self.destination_hash(), "ts": 0}
+                    if entry_return:
+                        data_return["rx_entry"] = entry_return
 
             if "entrys" in data:
                 data_return["rx_entrys"] = []
@@ -1790,6 +1805,11 @@ class Core:
 
 
 def cmd():
+    try:
+        import readline
+    except ImportError:
+        pass
+
     print("---- Database interface ----")
     print("")
 
@@ -1800,8 +1820,11 @@ def cmd():
 
     while True:
         try:
-            print("> ", end="")
+            print("> ")
             cmd = input()
+            if cmd.strip() == "":
+                continue
+            readline.add_history(cmd)
             if cmd.lower() == "exit" or cmd.lower() == "quit":
                 exit()
 
@@ -1811,9 +1834,7 @@ def cmd():
         except EOFError:
             exit()
 
-        if cmd.strip() == "":
-            pass
-        elif cmd.lower() == "clear":
+        if cmd.lower() == "clear":
             print("\033c", end="")
         else:
             try:
@@ -2078,8 +2099,8 @@ def main():
         parser.add_argument("-l", "--loglevel", action="store", type=int, default=LOG_LEVEL)
         parser.add_argument("-s", "--service", action="store_true", default=False, help="Running as a service and should log to file")
 
-        parser.add_argument("--cmd", action="store_true", default=False, help="")
-        parser.add_argument("--cmd_status", action="store_true", default=False, help="")
+        parser.add_argument("--cmd", action="store_true", default=False, help="Database command interface (Execute any sql database command)")
+        parser.add_argument("--cmd_status", action="store_true", default=False, help="Database status interface (Shows the current status)")
 
         params = parser.parse_args()
 
