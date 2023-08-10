@@ -2,6 +2,10 @@
 Various small programs and tools which use the Reticulum Network Stack RNS from https://github.com/markqvist/Reticulum
 
 
+## rns_announce_directory
+For more information, see the detailed [README.md](rns_announce_directory).
+
+
 ## rns_call_echo
 For more information, see the detailed [README.md](rns_call_echo).
 
