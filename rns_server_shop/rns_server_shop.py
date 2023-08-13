@@ -74,7 +74,7 @@ DEFAULT_CONFIG = {
     "header_color": "",
     "header_enabled": True,
     "header_enabled_entrys": True,
-    "template": 1,
+    "template": 10,
     "announce_hidden": False,
     "announce_startup": True,
     "announce_periodic": True,
@@ -438,6 +438,12 @@ class ServerShop:
             data["category_id"] = entry["category_id"]
             data["type_id"] = entry["type_id"]
             data["enabled"] = entry["enabled"]
+            data["num0"] = entry["num0"]
+            data["num1"] = entry["num1"]
+            data["num2"] = entry["num2"]
+            data["num3"] = entry["num3"]
+            data["num4"] = entry["num4"]
+            data["num5"] = entry["num5"]
             data["option0"] = entry["option0"]
             data["option1"] = entry["option1"]
             data["option2"] = entry["option2"]
@@ -460,7 +466,6 @@ class ServerShop:
             data["q_available"] = entry["q_available"]
             data["q_min"] = entry["q_min"]
             data["q_max"] = entry["q_max"]
-            data["weight"] = entry["weight"]
             data["rate"] = entry["rate"]
             data["location_lat"] = entry["location_lat"]
             data["location_lon"] = entry["location_lon"]
@@ -603,7 +608,7 @@ class ServerShop:
 
             data_return["result"] = ServerShop.RESULT_OK
         except Exception as e:
-            RNS.log("Server - Sync TX: "+str(e), RNS.LOG_ERROR)
+            RNS.log("Server - Sync RX: "+str(e), RNS.LOG_ERROR)
             data_return["result"] = ServerShop.RESULT_ERROR
 
         data_return = msgpack.packb(data_return)
@@ -786,7 +791,7 @@ class Core:
 
         if init:
             dbc.execute("DROP TABLE IF EXISTS shop_entry")
-        dbc.execute("CREATE TABLE IF NOT EXISTS shop_entry (entry_id BLOB, shop_id BLOB, vendor_id BLOB, category_id INTEGER DEFAULT 0, type_id INTEGER DEFAULT 0, enabled INTEGER DEFAULT 0, title0 TEXT DEFAULT '', title1 TEXT DEFAULT '', title2 TEXT DEFAULT '', text0 TEXT DEFAULT '', text1 TEXT DEFAULT '', text2 TEXT DEFAULT '', text3 TEXT DEFAULT '', text4 TEXT DEFAULT '', text5 TEXT DEFAULT '', option0 INTEGER DEFAULT 0, option1 INTEGER DEFAULT 0, option2 INTEGER DEFAULT 0, option3 INTEGER DEFAULT 0, option4 INTEGER DEFAULT 0, option5 INTEGER DEFAULT 0, option6 INTEGER DEFAULT 0, option7 INTEGER DEFAULT 0, tag0 INTEGER DEFAULT 0, tag1 INTEGER DEFAULT 0, tag2 INTEGER DEFAULT 0, tag3 INTEGER DEFAULT 0, tag4 INTEGER DEFAULT 0, tag5 INTEGER DEFAULT 0, tags0 TEXT DEFAULT '', tags1 TEXT DEFAULT '', images BLOB, price REAL DEFAULT 0, currency INTEGER DEFAULT 0, variants BLOB, q_available INTEGER DEFAULT 0, q_min INTEGER DEFAULT 0, q_max INTEGER DEFAULT 0, weight INTEGER DEFAULT 0, rate INTEGER DEFAULT 0, location_lat REAL DEFAULT 0, location_lon REAL DEFAULT 0, ts DEFAULT 0, ts_data INTEGER DEFAULT 0, ts_title INTEGER DEFAULT 0, ts_text INTEGER DEFAULT 0, ts_images INTEGER DEFAULT 0, ts_sync INTEGER DEFAULT 0, PRIMARY KEY(entry_id, shop_id))")
+        dbc.execute("CREATE TABLE IF NOT EXISTS shop_entry (entry_id BLOB, shop_id BLOB, vendor_id BLOB, category_id INTEGER DEFAULT 0, type_id INTEGER DEFAULT 0, enabled INTEGER DEFAULT 0, title0 TEXT DEFAULT '', title1 TEXT DEFAULT '', title2 TEXT DEFAULT '', text0 TEXT DEFAULT '', text1 TEXT DEFAULT '', text2 TEXT DEFAULT '', text3 TEXT DEFAULT '', text4 TEXT DEFAULT '', text5 TEXT DEFAULT '', num0 INTEGER DEFAULT 0, num1 INTEGER DEFAULT 0, num2 INTEGER DEFAULT 0, num3 INTEGER DEFAULT 0, num4 INTEGER DEFAULT 0, num5 INTEGER DEFAULT 0, option0 INTEGER DEFAULT 0, option1 INTEGER DEFAULT 0, option2 INTEGER DEFAULT 0, option3 INTEGER DEFAULT 0, option4 INTEGER DEFAULT 0, option5 INTEGER DEFAULT 0, option6 INTEGER DEFAULT 0, option7 INTEGER DEFAULT 0, tag0 INTEGER DEFAULT 0, tag1 INTEGER DEFAULT 0, tag2 INTEGER DEFAULT 0, tag3 INTEGER DEFAULT 0, tag4 INTEGER DEFAULT 0, tag5 INTEGER DEFAULT 0, tags0 TEXT DEFAULT '', tags1 TEXT DEFAULT '', images BLOB, price REAL DEFAULT 0, currency INTEGER DEFAULT 0, variants BLOB, q_available INTEGER DEFAULT 0, q_min INTEGER DEFAULT 0, q_max INTEGER DEFAULT 0, rate INTEGER DEFAULT 0, location_lat REAL DEFAULT 0, location_lon REAL DEFAULT 0, ts INTEGER DEFAULT 0, ts_data INTEGER DEFAULT 0, ts_title INTEGER DEFAULT 0, ts_text INTEGER DEFAULT 0, ts_images INTEGER DEFAULT 0, ts_sync INTEGER DEFAULT 0, PRIMARY KEY(entry_id, shop_id))")
 
         self.__db_commit()
 
@@ -799,6 +804,16 @@ class Core:
         dbc = db.cursor()
 
         self.__db_commit()
+
+        # TODO: Remove in the future
+        self.__db_migrate_column_datatype("shop_entry", "ts", "INTEGER", "0")
+        self.__db_migrate_column_add("shop_entry", "num0", "INTEGER", "0", "text5")
+        self.__db_migrate_column_add("shop_entry", "num1", "INTEGER", "0", "num0")
+        self.__db_migrate_column_add("shop_entry", "num2", "INTEGER", "0", "num1")
+        self.__db_migrate_column_add("shop_entry", "num3", "INTEGER", "0", "num2")
+        self.__db_migrate_column_add("shop_entry", "num4", "INTEGER", "0", "num3")
+        self.__db_migrate_column_add("shop_entry", "num5", "INTEGER", "0", "num4")
+        self.__db_migrate_column_delete("shop_entry", "weight")
 
         self.__db_init(False)
 
@@ -834,7 +849,28 @@ class Core:
 
         dbc.execute("SELECT 1 FROM PRAGMA_TABLE_INFO('"+table+"') WHERE name = '"+name+"'")
         if len(dbc.fetchall()) != 0:
-            dbc.execute("ALTER TABLE "+table+" DROP COLUMN "+name)
+            try:
+                dbc.execute("ALTER TABLE "+table+" DROP COLUMN "+name)
+            except:
+                dbc.execute(f"PRAGMA table_info({table})")
+                columns_info = dbc.fetchall()
+
+                primary_key = ""
+                primary_keys = []
+                for i, column in enumerate(columns_info):
+                    if column[5]:
+                        primary_keys.append(column[1])
+                if len(primary_keys) > 1:
+                    primary_key = ", PRIMARY KEY("+", ".join(primary_keys)+")"
+
+                column_position = next(i for i, column in enumerate(columns_info) if column[1] == name)
+                del columns_info[column_position]
+
+                dbc.execute(f"DROP TABLE IF EXISTS {table}_old")
+                dbc.execute(f"ALTER TABLE {table} RENAME TO {table}_old")
+                dbc.execute(f"CREATE TABLE {table} ({', '.join([(f'{col[1]} {col[2]}') + (f' DEFAULT {col[4]}' if col[4] is not None else '') + (' PRIMARY KEY' if col[5] and primary_key == '' else '') for col in columns_info])}"+primary_key+")")
+                dbc.execute(f"INSERT INTO {table} ({', '.join([f'{col[1]}' for i, col in enumerate(columns_info)])}) SELECT {', '.join([f'{col[1]}' for i, col in enumerate(columns_info)])} FROM {table}_old")
+                dbc.execute(f"DROP TABLE {table}_old")
 
         self.__db_commit()
 
@@ -1029,6 +1065,42 @@ class Core:
         if "text5" in filter:
             querys.append("text5 LIKE '"+str(filter["text5"])+"'")
 
+        if "num0_min" in filter:
+            querys.append("num0 >= "+str(filter["num0_min"]))
+
+        if "num0_max" in filter:
+            querys.append("num0 <= "+str(filter["num0_max"]))
+
+        if "num1_min" in filter:
+            querys.append("num1 >= "+str(filter["num1_min"]))
+
+        if "num1_max" in filter:
+            querys.append("num1 <= "+str(filter["num1_max"]))
+
+        if "num2_min" in filter:
+            querys.append("num2 >= "+str(filter["num2_min"]))
+
+        if "num2_max" in filter:
+            querys.append("num2 <= "+str(filter["num2_max"]))
+
+        if "num3_min" in filter:
+            querys.append("num3 >= "+str(filter["num3_min"]))
+
+        if "num3_max" in filter:
+            querys.append("num3 <= "+str(filter["num3_max"]))
+
+        if "num4_min" in filter:
+            querys.append("num4 >= "+str(filter["num4_min"]))
+
+        if "num4_max" in filter:
+            querys.append("num4 <= "+str(filter["num4_max"]))
+
+        if "num5_min" in filter:
+            querys.append("num5 >= "+str(filter["num5_min"]))
+
+        if "num5_max" in filter:
+            querys.append("num5 <= "+str(filter["num5_max"]))
+
         if "option0" in filter:
             querys.append("option0 = "+str(filter["option0"]))
 
@@ -1095,30 +1167,16 @@ class Core:
 
 
     def db_shops_entrys_order(self, order):
-        if order == "A-ASC":
-            query = " ORDER BY shop_entry.title0 ASC"
-        elif order == "A-DESC":
-            query = " ORDER BY shop_entry.title0 DESC"
-        elif order == "P-ASC":
-            query = " ORDER BY shop_entry.price ASC, shop_entry.title0 ASC"
-        elif order == "P-DESC":
-            query = " ORDER BY shop_entry.price DESC, shop_entry.title0 ASC"
-        elif order == "R-ASC":
-            query = " ORDER BY shop_entry.rate ASC, shop_entry.title0 ASC"
-        elif order == "R-DESC":
-            query = " ORDER BY shop_entry.rate DESC, shop_entry.title0 ASC"
-        elif order == "S-ASC":
-            query = " ORDER BY shop_entry.option2 ASC, shop_entry.title0 ASC"
-        elif order == "S-DESC":
-            query = " ORDER BY shop_entry.option2 DESC, shop_entry.title0 ASC"
-        elif order == "ST-ASC":
-            query = " ORDER BY shop_entry.option3 ASC, shop_entry.title0 ASC"
-        elif order == "ST-DESC":
-            query = " ORDER BY shop_entry.option3 DESC, shop_entry.title0 ASC"
-        elif order == "ASC":
-            query = " ORDER BY shop_entry.ts ASC, shop_entry.title0 ASC"
-        elif order == "DESC":
-            query = " ORDER BY shop_entry.ts DESC, shop_entry.title0 ASC"
+        if order == None:
+            return ""
+
+        querys = []
+
+        for key, value in order.items():
+            querys.append("shop_entry."+key+" "+value)
+
+        if len(querys) > 0:
+            query = " ORDER BY "+", ".join(querys)
         else:
             query = ""
 
@@ -1183,46 +1241,51 @@ class Core:
                     data_append["text4"] = entry[13]
                     data_append["text5"] = entry[14]
                 if sync_data:
-                    data_append["option0"] = entry[15]
-                    data_append["option1"] = entry[16]
-                    data_append["option2"] = entry[17]
-                    data_append["option3"] = entry[18]
-                    data_append["option4"] = entry[19]
-                    data_append["option5"] = entry[20]
-                    data_append["option6"] = entry[21]
-                    data_append["option7"] = entry[22]
-                    data_append["tag0"] = entry[23]
-                    data_append["tag1"] = entry[24]
-                    data_append["tag2"] = entry[25]
-                    data_append["tag3"] = entry[26]
-                    data_append["tag4"] = entry[27]
-                    data_append["tag5"] = entry[28]
-                    data_append["tags0"] = entry[29]
-                    data_append["tags1"] = entry[30]
+                    data_append["num0"] = entry[15]
+                    data_append["num1"] = entry[16]
+                    data_append["num2"] = entry[17]
+                    data_append["num3"] = entry[18]
+                    data_append["num4"] = entry[19]
+                    data_append["num5"] = entry[20]
+                    data_append["option0"] = entry[21]
+                    data_append["option1"] = entry[22]
+                    data_append["option2"] = entry[23]
+                    data_append["option3"] = entry[24]
+                    data_append["option4"] = entry[25]
+                    data_append["option5"] = entry[26]
+                    data_append["option6"] = entry[27]
+                    data_append["option7"] = entry[28]
+                    data_append["tag0"] = entry[29]
+                    data_append["tag1"] = entry[30]
+                    data_append["tag2"] = entry[31]
+                    data_append["tag3"] = entry[32]
+                    data_append["tag4"] = entry[33]
+                    data_append["tag5"] = entry[34]
+                    data_append["tags0"] = entry[35]
+                    data_append["tags1"] = entry[36]
                 if sync_images:
-                    data_append["images"] = msgpack.unpackb(entry[31])
+                    data_append["images"] = msgpack.unpackb(entry[37])
                 if sync_data:
-                    data_append["price"] = entry[32]
-                    data_append["currency"] = entry[33]
-                    data_append["variants"] = msgpack.unpackb(entry[34])
-                    data_append["q_available"] = entry[35]
-                    data_append["q_min"] = entry[36]
-                    data_append["q_max"] = entry[37]
-                    data_append["weight"] = entry[38]
-                    data_append["rate"] = entry[39]
-                    data_append["location_lat"] = entry[40]
-                    data_append["location_lon"] = entry[41]
-                data_append["ts"] = entry[42]
+                    data_append["price"] = entry[38]
+                    data_append["currency"] = entry[39]
+                    data_append["variants"] = msgpack.unpackb(entry[40])
+                    data_append["q_available"] = entry[41]
+                    data_append["q_min"] = entry[42]
+                    data_append["q_max"] = entry[43]
+                    data_append["rate"] = entry[44]
+                    data_append["location_lat"] = entry[45]
+                    data_append["location_lon"] = entry[46]
+                data_append["ts"] = entry[47]
                 if sync_data:
-                    data_append["ts_data"] = entry[43]
+                    data_append["ts_data"] = entry[48]
                 if sync_title:
-                    data_append["ts_title"] = entry[44]
+                    data_append["ts_title"] = entry[49]
                 if sync_text:
-                    data_append["ts_text"] = entry[45]
+                    data_append["ts_text"] = entry[50]
                 if sync_images:
-                    data_append["ts_images"] = entry[46]
+                    data_append["ts_images"] = entry[51]
                 if not sync:
-                    data_append["ts_sync"] = entry[47]
+                    data_append["ts_sync"] = entry[52]
 
                 data.append(data_append)
 
@@ -1265,44 +1328,49 @@ class Core:
                 data["text4"] = entry[13]
                 data["text5"] = entry[14]
             if sync_data:
-                data["option0"] = entry[15]
-                data["option1"] = entry[16]
-                data["option2"] = entry[17]
-                data["option3"] = entry[18]
-                data["option4"] = entry[19]
-                data["option5"] = entry[20]
-                data["option6"] = entry[21]
-                data["option7"] = entry[22]
-                data["tag0"] = entry[23]
-                data["tag1"] = entry[24]
-                data["tag2"] = entry[25]
-                data["tag3"] = entry[26]
-                data["tag4"] = entry[27]
-                data["tag5"] = entry[28]
-                data["tags0"] = entry[29]
-                data["tags1"] = entry[30]
+                data["num0"] = entry[15]
+                data["num1"] = entry[16]
+                data["num2"] = entry[17]
+                data["num3"] = entry[18]
+                data["num4"] = entry[19]
+                data["num5"] = entry[20]
+                data["option0"] = entry[21]
+                data["option1"] = entry[22]
+                data["option2"] = entry[23]
+                data["option3"] = entry[24]
+                data["option4"] = entry[25]
+                data["option5"] = entry[26]
+                data["option6"] = entry[27]
+                data["option7"] = entry[28]
+                data["tag0"] = entry[29]
+                data["tag1"] = entry[30]
+                data["tag2"] = entry[31]
+                data["tag3"] = entry[32]
+                data["tag4"] = entry[33]
+                data["tag5"] = entry[34]
+                data["tags0"] = entry[35]
+                data["tags1"] = entry[36]
             if sync_images:
-                data["images"] = msgpack.unpackb(entry[31])
+                data["images"] = msgpack.unpackb(entry[37])
             if sync_data:
-                data["price"] = entry[32]
-                data["currency"] = entry[33]
-                data["variants"] = msgpack.unpackb(entry[34])
-                data["q_available"] = entry[35]
-                data["q_min"] = entry[36]
-                data["q_max"] = entry[37]
-                data["weight"] = entry[38]
-                data["rate"] = entry[39]
-                data["location_lat"] = entry[40]
-                data["location_lon"] = entry[41]
-            data["ts"] = entry[42]
+                data["price"] = entry[38]
+                data["currency"] = entry[39]
+                data["variants"] = msgpack.unpackb(entry[40])
+                data["q_available"] = entry[41]
+                data["q_min"] = entry[42]
+                data["q_max"] = entry[43]
+                data["rate"] = entry[44]
+                data["location_lat"] = entry[45]
+                data["location_lon"] = entry[46]
+            data["ts"] = entry[47]
             if sync_data:
-                data["ts_data"] = entry[43]
+                data["ts_data"] = entry[48]
             if sync_title:
-                data["ts_title"] = entry[44]
+                data["ts_title"] = entry[49]
             if sync_text:
-                data["ts_text"] = entry[45]
+                data["ts_text"] = entry[50]
             if sync_images:
-                data["ts_images"] = entry[46]
+                data["ts_images"] = entry[51]
 
             return data
 
@@ -1335,8 +1403,8 @@ class Core:
                     result = 0x02
 
                 if "ts_data" in entry:
-                    query = "UPDATE shop_entry SET category_id = ?, type_id = ?, enabled = ?, option0 = ?, option1 = ?, option2 = ?, option3 = ?, option4 = ?, option5 = ?, option6 = ?, option7 = ?, tag0 = ?, tag1 = ?, tag2 = ?, tag3 = ?, tag4 = ?, tag5 = ?, tags0 = ?, tags1 = ?, price = ?, currency = ?, variants = ?, q_available = ?, q_min = ?, q_max = ?, weight = ?, rate = ?, location_lat = ?, location_lon = ?, ts_data = ? WHERE entry_id = ? AND shop_id = ? AND ts_data <= ?"
-                    dbc.execute(query, (entry["category_id"], entry["type_id"], entry["enabled"], entry["option0"], entry["option1"], entry["option2"], entry["option3"], entry["option4"], entry["option5"], entry["option6"], entry["option7"], entry["tag0"], entry["tag1"], entry["tag2"], entry["tag3"], entry["tag4"], entry["tag5"], entry["tags0"], entry["tags1"], entry["price"], entry["currency"], msgpack.packb(entry["variants"]), entry["q_available"], entry["q_min"], entry["q_max"], entry["weight"], entry["rate"], entry["location_lat"], entry["location_lon"], entry["ts_data"], entry["entry_id"], entry["shop_id"], entry["ts_data"]))
+                    query = "UPDATE shop_entry SET category_id = ?, type_id = ?, enabled = ?, num0 = ?, num1 = ?, num2 = ?, num3 = ?, num4 = ?, num5 = ?, option0 = ?, option1 = ?, option2 = ?, option3 = ?, option4 = ?, option5 = ?, option6 = ?, option7 = ?, tag0 = ?, tag1 = ?, tag2 = ?, tag3 = ?, tag4 = ?, tag5 = ?, tags0 = ?, tags1 = ?, price = ?, currency = ?, variants = ?, q_available = ?, q_min = ?, q_max = ?, rate = ?, location_lat = ?, location_lon = ?, ts_data = ? WHERE entry_id = ? AND shop_id = ? AND ts_data <= ?"
+                    dbc.execute(query, (entry["category_id"], entry["type_id"], entry["enabled"], entry["num0"], entry["num1"], entry["num2"], entry["num3"], entry["num4"], entry["num5"], entry["option0"], entry["option1"], entry["option2"], entry["option3"], entry["option4"], entry["option5"], entry["option6"], entry["option7"], entry["tag0"], entry["tag1"], entry["tag2"], entry["tag3"], entry["tag4"], entry["tag5"], entry["tags0"], entry["tags1"], entry["price"], entry["currency"], msgpack.packb(entry["variants"]), entry["q_available"], entry["q_min"], entry["q_max"], entry["rate"], entry["location_lat"], entry["location_lon"], entry["ts_data"], entry["entry_id"], entry["shop_id"], entry["ts_data"]))
 
                 if "ts_title" in entry:
                     query = "UPDATE shop_entry SET title0 = ?, title1 = ?, title2 = ?, ts_title = ? WHERE entry_id = ? AND shop_id = ? AND ts_title <= ?"
