@@ -452,14 +452,15 @@ class ServerShop:
             data["option5"] = entry["option5"]
             data["option6"] = entry["option6"]
             data["option7"] = entry["option7"]
-            data["tag0"] = entry["tag0"]
-            data["tag1"] = entry["tag1"]
-            data["tag2"] = entry["tag2"]
-            data["tag3"] = entry["tag3"]
-            data["tag4"] = entry["tag4"]
-            data["tag5"] = entry["tag5"]
             data["tags0"] = entry["tags0"]
             data["tags1"] = entry["tags1"]
+            data["tags2"] = entry["tags2"]
+            data["tags3"] = entry["tags3"]
+            data["tags4"] = entry["tags4"]
+            data["tags5"] = entry["tags5"]
+            data["tags6"] = entry["tags6"]
+            data["tags7"] = entry["tags7"]
+            data["files"] = entry["files"]
             data["price"] = entry["price"]
             data["currency"] = entry["currency"]
             data["variants"] = entry["variants"]
@@ -780,6 +781,18 @@ class Core:
         self.__db_commit()
 
 
+    def __db_sanitize(self, value):
+        value = str(value)
+        value = value.replace('\\', "")
+        value = value.replace("\0", "")
+        value = value.replace("\n", "")
+        value = value.replace("\r", "")
+        value = value.replace("'", "")
+        value = value.replace('"', "")
+        value = value.replace("\x1a", "")
+        return value
+
+
     def __db_init(self, init=True):
         RNS.log("Core - Initialize database...", RNS.LOG_DEBUG)
         db = self.__db_connect()
@@ -791,7 +804,7 @@ class Core:
 
         if init:
             dbc.execute("DROP TABLE IF EXISTS shop_entry")
-        dbc.execute("CREATE TABLE IF NOT EXISTS shop_entry (entry_id BLOB, shop_id BLOB, vendor_id BLOB, category_id INTEGER DEFAULT 0, type_id INTEGER DEFAULT 0, enabled INTEGER DEFAULT 0, title0 TEXT DEFAULT '', title1 TEXT DEFAULT '', title2 TEXT DEFAULT '', text0 TEXT DEFAULT '', text1 TEXT DEFAULT '', text2 TEXT DEFAULT '', text3 TEXT DEFAULT '', text4 TEXT DEFAULT '', text5 TEXT DEFAULT '', num0 INTEGER DEFAULT 0, num1 INTEGER DEFAULT 0, num2 INTEGER DEFAULT 0, num3 INTEGER DEFAULT 0, num4 INTEGER DEFAULT 0, num5 INTEGER DEFAULT 0, option0 INTEGER DEFAULT 0, option1 INTEGER DEFAULT 0, option2 INTEGER DEFAULT 0, option3 INTEGER DEFAULT 0, option4 INTEGER DEFAULT 0, option5 INTEGER DEFAULT 0, option6 INTEGER DEFAULT 0, option7 INTEGER DEFAULT 0, tag0 INTEGER DEFAULT 0, tag1 INTEGER DEFAULT 0, tag2 INTEGER DEFAULT 0, tag3 INTEGER DEFAULT 0, tag4 INTEGER DEFAULT 0, tag5 INTEGER DEFAULT 0, tags0 TEXT DEFAULT '', tags1 TEXT DEFAULT '', images BLOB, price REAL DEFAULT 0, currency INTEGER DEFAULT 0, variants BLOB, q_available INTEGER DEFAULT 0, q_min INTEGER DEFAULT 0, q_max INTEGER DEFAULT 0, rate INTEGER DEFAULT 0, location_lat REAL DEFAULT 0, location_lon REAL DEFAULT 0, ts INTEGER DEFAULT 0, ts_data INTEGER DEFAULT 0, ts_title INTEGER DEFAULT 0, ts_text INTEGER DEFAULT 0, ts_images INTEGER DEFAULT 0, ts_sync INTEGER DEFAULT 0, PRIMARY KEY(entry_id, shop_id))")
+        dbc.execute("CREATE TABLE IF NOT EXISTS shop_entry (entry_id BLOB, shop_id BLOB, vendor_id BLOB, category_id INTEGER DEFAULT 0, type_id INTEGER DEFAULT 0, enabled INTEGER DEFAULT 0, title0 TEXT DEFAULT '', title1 TEXT DEFAULT '', title2 TEXT DEFAULT '', text0 TEXT DEFAULT '', text1 TEXT DEFAULT '', text2 TEXT DEFAULT '', text3 TEXT DEFAULT '', text4 TEXT DEFAULT '', text5 TEXT DEFAULT '', num0 INTEGER DEFAULT 0, num1 INTEGER DEFAULT 0, num2 INTEGER DEFAULT 0, num3 INTEGER DEFAULT 0, num4 INTEGER DEFAULT 0, num5 INTEGER DEFAULT 0, option0 INTEGER DEFAULT 0, option1 INTEGER DEFAULT 0, option2 INTEGER DEFAULT 0, option3 INTEGER DEFAULT 0, option4 INTEGER DEFAULT 0, option5 INTEGER DEFAULT 0, option6 INTEGER DEFAULT 0, option7 INTEGER DEFAULT 0, tags0 TEXT DEFAULT '', tags1 TEXT DEFAULT '', tags2 TEXT DEFAULT '', tags3 TEXT DEFAULT '', tags4 TEXT DEFAULT '', tags5 TEXT DEFAULT '', tags6 TEXT DEFAULT '', tags7 TEXT DEFAULT '', images BLOB, files BLOB, files_data BLOB, price REAL DEFAULT 0, currency INTEGER DEFAULT 0, variants BLOB, q_available INTEGER DEFAULT 0, q_min INTEGER DEFAULT 0, q_max INTEGER DEFAULT 0, rate INTEGER DEFAULT 0, location_lat REAL DEFAULT 0, location_lon REAL DEFAULT 0, ts INTEGER DEFAULT 0, ts_data INTEGER DEFAULT 0, ts_title INTEGER DEFAULT 0, ts_text INTEGER DEFAULT 0, ts_images INTEGER DEFAULT 0, ts_sync INTEGER DEFAULT 0, PRIMARY KEY(entry_id, shop_id))")
 
         self.__db_commit()
 
@@ -814,6 +827,20 @@ class Core:
         self.__db_migrate_column_add("shop_entry", "num4", "INTEGER", "0", "num3")
         self.__db_migrate_column_add("shop_entry", "num5", "INTEGER", "0", "num4")
         self.__db_migrate_column_delete("shop_entry", "weight")
+        self.__db_migrate_column_delete("shop_entry", "tag0")
+        self.__db_migrate_column_delete("shop_entry", "tag1")
+        self.__db_migrate_column_delete("shop_entry", "tag2")
+        self.__db_migrate_column_delete("shop_entry", "tag3")
+        self.__db_migrate_column_delete("shop_entry", "tag4")
+        self.__db_migrate_column_delete("shop_entry", "tag5")
+        self.__db_migrate_column_add("shop_entry", "tags2", "TEXT", "''", "tags1")
+        self.__db_migrate_column_add("shop_entry", "tags3", "TEXT", "''", "tags2")
+        self.__db_migrate_column_add("shop_entry", "tags4", "TEXT", "''", "tags3")
+        self.__db_migrate_column_add("shop_entry", "tags5", "TEXT", "''", "tags4")
+        self.__db_migrate_column_add("shop_entry", "tags6", "TEXT", "''", "tags5")
+        self.__db_migrate_column_add("shop_entry", "tags7", "TEXT", "''", "tags6")
+        self.__db_migrate_column_add("shop_entry", "files", "BLOB", None, "images")
+        self.__db_migrate_column_add("shop_entry", "files_data", "BLOB", None, "files")
 
         self.__db_init(False)
 
@@ -1025,12 +1052,12 @@ class Core:
 
         if "category_id" in filter and filter["category_id"] != None:
             if isinstance(filter["category_id"], list):
-                querys.append("category_id IN ("+",".join(str(x) for x in filter["category_id"])+")")
+                querys.append("category_id IN ("+",".join(self.__db_sanitize(x) for x in filter["category_id"])+")")
             else:
-                querys.append("category_id = "+str(filter["category_id"]))
+                querys.append("category_id = "+self.__db_sanitize(filter["category_id"]))
 
         if "type_id" in filter and filter["type_id"] != None and filter["type_id"] != 0:
-            querys.append("type_id = "+str(filter["type_id"]))
+            querys.append("type_id = "+self.__db_sanitize(filter["type_id"]))
 
         if "enabled" in filter:
             if filter["enabled"]:
@@ -1038,125 +1065,206 @@ class Core:
             else:
                 querys.append("enabled = 0")
 
+        if "vendor_id" in filter:
+            querys.append("vendor_id = X'"+self.__db_sanitize(filter["vendor_id"])+"'")
+
         if "title0" in filter:
-            querys.append("title0 LIKE '"+str(filter["title0"])+"'")
+            querys.append("title0 LIKE '%"+self.__db_sanitize(filter["title0"])+"%' COLLATE NOCASE")
 
         if "title1" in filter:
-            querys.append("title1 LIKE '"+str(filter["title1"])+"'")
+            querys.append("title1 LIKE '%"+self.__db_sanitize(filter["title1"])+"%' COLLATE NOCASE")
 
         if "title2" in filter:
-            querys.append("title2 LIKE '"+str(filter["title2"])+"'")
+            querys.append("title2 LIKE '%"+self.__db_sanitize(filter["title2"])+"%' COLLATE NOCASE")
 
         if "text0" in filter:
-            querys.append("text0 LIKE '"+str(filter["text0"])+"'")
+            querys.append("text0 LIKE '%"+self.__db_sanitize(filter["text0"])+"%' COLLATE NOCASE")
 
         if "text1" in filter:
-            querys.append("text1 LIKE '"+str(filter["text1"])+"'")
+            querys.append("text1 LIKE '%"+self.__db_sanitize(filter["text1"])+"%' COLLATE NOCASE")
 
         if "text2" in filter:
-            querys.append("text2 LIKE '"+str(filter["text2"])+"'")
+            querys.append("text2 LIKE '%"+self.__db_sanitize(filter["text2"])+"%' COLLATE NOCASE")
 
         if "text3" in filter:
-            querys.append("text3 LIKE '"+str(filter["text3"])+"'")
+            querys.append("text3 LIKE '%"+self.__db_sanitize(filter["text3"])+"%' COLLATE NOCASE")
 
         if "text4" in filter:
-            querys.append("text4 LIKE '"+str(filter["text4"])+"'")
+            querys.append("text4 LIKE '%"+self.__db_sanitize(filter["text4"])+"%' COLLATE NOCASE")
 
         if "text5" in filter:
-            querys.append("text5 LIKE '"+str(filter["text5"])+"'")
+            querys.append("text5 LIKE '%"+self.__db_sanitize(filter["text5"])+"%' COLLATE NOCASE")
 
         if "num0_min" in filter:
-            querys.append("num0 >= "+str(filter["num0_min"]))
+            querys.append("num0 >= "+self.__db_sanitize(filter["num0_min"]))
 
         if "num0_max" in filter:
-            querys.append("num0 <= "+str(filter["num0_max"]))
+            querys.append("num0 <= "+self.__db_sanitize(filter["num0_max"]))
 
         if "num1_min" in filter:
-            querys.append("num1 >= "+str(filter["num1_min"]))
+            querys.append("num1 >= "+self.__db_sanitize(filter["num1_min"]))
 
         if "num1_max" in filter:
-            querys.append("num1 <= "+str(filter["num1_max"]))
+            querys.append("num1 <= "+self.__db_sanitize(filter["num1_max"]))
 
         if "num2_min" in filter:
-            querys.append("num2 >= "+str(filter["num2_min"]))
+            querys.append("num2 >= "+self.__db_sanitize(filter["num2_min"]))
 
         if "num2_max" in filter:
-            querys.append("num2 <= "+str(filter["num2_max"]))
+            querys.append("num2 <= "+self.__db_sanitize(filter["num2_max"]))
 
         if "num3_min" in filter:
-            querys.append("num3 >= "+str(filter["num3_min"]))
+            querys.append("num3 >= "+self.__db_sanitize(filter["num3_min"]))
 
         if "num3_max" in filter:
-            querys.append("num3 <= "+str(filter["num3_max"]))
+            querys.append("num3 <= "+self.__db_sanitize(filter["num3_max"]))
 
         if "num4_min" in filter:
-            querys.append("num4 >= "+str(filter["num4_min"]))
+            querys.append("num4 >= "+self.__db_sanitize(filter["num4_min"]))
 
         if "num4_max" in filter:
-            querys.append("num4 <= "+str(filter["num4_max"]))
+            querys.append("num4 <= "+self.__db_sanitize(filter["num4_max"]))
 
         if "num5_min" in filter:
-            querys.append("num5 >= "+str(filter["num5_min"]))
+            querys.append("num5 >= "+self.__db_sanitize(filter["num5_min"]))
 
         if "num5_max" in filter:
-            querys.append("num5 <= "+str(filter["num5_max"]))
+            querys.append("num5 <= "+self.__db_sanitize(filter["num5_max"]))
 
         if "option0" in filter:
-            querys.append("option0 = "+str(filter["option0"]))
+            querys.append("option0 = "+self.__db_sanitize(filter["option0"]))
 
         if "option1" in filter:
-            querys.append("option1 = "+str(filter["option1"]))
+            querys.append("option1 = "+self.__db_sanitize(filter["option1"]))
 
         if "option2" in filter:
-            querys.append("option2 = "+str(filter["option2"]))
+            querys.append("option2 = "+self.__db_sanitize(filter["option2"]))
 
         if "option3" in filter:
-            querys.append("option3 = "+str(filter["option3"]))
+            querys.append("option3 = "+self.__db_sanitize(filter["option3"]))
 
         if "option4" in filter:
-            querys.append("option4 = "+str(filter["option4"]))
+            querys.append("option4 = "+self.__db_sanitize(filter["option4"]))
 
         if "option5" in filter:
-            querys.append("option5 = "+str(filter["option5"]))
+            querys.append("option5 = "+self.__db_sanitize(filter["option5"]))
 
         if "option6" in filter:
-            querys.append("option6 = "+str(filter["option6"]))
+            querys.append("option6 = "+self.__db_sanitize(filter["option6"]))
 
         if "option7" in filter:
-            querys.append("option7 = "+str(filter["option7"]))
+            querys.append("option7 = "+self.__db_sanitize(filter["option7"]))
 
-        if "tag0" in filter:
-            querys.append("tag0 = 1")
+        if "tags0" in filter:
+            tags = []
+            for key in filter["tags0"]:
+                tags.append("tags0 LIKE '%"+self.__db_sanitize(key)+"%'")
+            if "tags0_mode" in filter and filter["tags0_mode"] == 0x00:
+                mode = " OR "
+            elif "tags0_mode" in filter and filter["tags0_mode"] == 0x01:
+                mode = " AND "
+            else:
+                mode = " AND "
+            querys.append("("+mode.join(tags)+")")
 
-        if "tag1" in filter:
-            querys.append("tag1 = 1")
+        if "tags1" in filter:
+            tags = []
+            for key in filter["tags1"]:
+                tags.append("tags1 LIKE '%"+self.__db_sanitize(key)+"%'")
+            if "tags1_mode" in filter and filter["tags1_mode"] == 0x00:
+                mode = " OR "
+            elif "tags1_mode" in filter and filter["tags1_mode"] == 0x01:
+                mode = " AND "
+            else:
+                mode = " AND "
+            querys.append("("+mode.join(tags)+")")
 
-        if "tag2" in filter:
-            querys.append("tag2 = 1")
+        if "tags2" in filter:
+            tags = []
+            for key in filter["tags2"]:
+                tags.append("tags2 LIKE '%"+self.__db_sanitize(key)+"%'")
+            if "tags2_mode" in filter and filter["tags2_mode"] == 0x00:
+                mode = " OR "
+            elif "tags2_mode" in filter and filter["tags2_mode"] == 0x01:
+                mode = " AND "
+            else:
+                mode = " AND "
+            querys.append("("+mode.join(tags)+")")
 
-        if "tag3" in filter:
-            querys.append("tag3 = 1")
+        if "tags3" in filter:
+            tags = []
+            for key in filter["tags3"]:
+                tags.append("tags3 LIKE '%"+self.__db_sanitize(key)+"%'")
+            if "tags3_mode" in filter and filter["tags3_mode"] == 0x00:
+                mode = " OR "
+            elif "tags3_mode" in filter and filter["tags3_mode"] == 0x01:
+                mode = " AND "
+            else:
+                mode = " AND "
+            querys.append("("+mode.join(tags)+")")
 
-        if "tag4" in filter:
-            querys.append("tag4 = 1")
+        if "tags4" in filter:
+            tags = []
+            for key in filter["tags4"]:
+                tags.append("tags4 LIKE '%"+self.__db_sanitize(key)+"%'")
+            if "tags4_mode" in filter and filter["tags4_mode"] == 0x00:
+                mode = " OR "
+            elif "tags4_mode" in filter and filter["tags4_mode"] == 0x01:
+                mode = " AND "
+            else:
+                mode = " AND "
+            querys.append("("+mode.join(tags)+")")
 
-        if "tag5" in filter:
-            querys.append("tag5 = 1")
+        if "tags5" in filter:
+            tags = []
+            for key in filter["tags5"]:
+                tags.append("tags5 LIKE '%"+self.__db_sanitize(key)+"%'")
+            if "tags5_mode" in filter and filter["tags5_mode"] == 0x00:
+                mode = " OR "
+            elif "tags5_mode" in filter and filter["tags5_mode"] == 0x01:
+                mode = " AND "
+            else:
+                mode = " AND "
+            querys.append("("+mode.join(tags)+")")
+
+        if "tags6" in filter:
+            tags = []
+            for key in filter["tags6"]:
+                tags.append("tags6 LIKE '%"+self.__db_sanitize(key)+"%'")
+            if "tags6_mode" in filter and filter["tags6_mode"] == 0x00:
+                mode = " OR "
+            elif "tags6_mode" in filter and filter["tags6_mode"] == 0x01:
+                mode = " AND "
+            else:
+                mode = " AND "
+            querys.append("("+mode.join(tags)+")")
+
+        if "tags7" in filter:
+            tags = []
+            for key in filter["tags7"]:
+                tags.append("tags7 LIKE '%"+self.__db_sanitize(key)+"%'")
+            if "tags7_mode" in filter and filter["tags7_mode"] == 0x00:
+                mode = " OR "
+            elif "tags7_mode" in filter and filter["tags7_mode"] == 0x01:
+                mode = " AND "
+            else:
+                mode = " AND "
+            querys.append("("+mode.join(tags)+")")
 
         if "price_min" in filter:
-            querys.append("price >= "+str(filter["price_min"]))
+            querys.append("price >= "+self.__db_sanitize(filter["price_min"]))
 
         if "price_max" in filter:
-            querys.append("price <= "+str(filter["price_max"]))
+            querys.append("price <= "+self.__db_sanitize(filter["price_max"]))
 
         if "ts_min" in filter:
-            querys.append("ts >= "+str(filter["ts_min"]))
+            querys.append("ts >= "+self.__db_sanitize(filter["ts_min"]))
 
         if "ts_max" in filter:
-            querys.append("ts <= "+str(filter["ts_max"]))
+            querys.append("ts <= "+self.__db_sanitize(filter["ts_max"]))
 
         if "currency" in filter:
-            querys.append("currency = "+str(filter["currency"]))
+            querys.append("currency = "+self.__db_sanitize(filter["currency"]))
 
         if len(querys) > 0:
             query = " AND "+" AND ".join(querys)
@@ -1173,7 +1281,7 @@ class Core:
         querys = []
 
         for key, value in order.items():
-            querys.append("shop_entry."+key+" "+value)
+            querys.append("shop_entry."+self.__db_sanitize(key)+" "+self.__db_sanitize(value))
 
         if len(querys) > 0:
             query = " ORDER BY "+", ".join(querys)
@@ -1202,7 +1310,7 @@ class Core:
             if limit == None or limit_start == None:
                 query_limit = ""
             else:
-                query_limit = " LIMIT "+str(limit)+" OFFSET "+str(limit_start)
+                query_limit = " LIMIT "+self.__db_sanitize(limit)+" OFFSET "+self.__db_sanitize(limit_start)
 
             if search == None:
                 query = "SELECT * FROM shop_entry WHERE ts > 0 AND shop_id = ? AND enabled = 1"+query_filter+query_order+query_limit
@@ -1255,37 +1363,38 @@ class Core:
                     data_append["option5"] = entry[26]
                     data_append["option6"] = entry[27]
                     data_append["option7"] = entry[28]
-                    data_append["tag0"] = entry[29]
-                    data_append["tag1"] = entry[30]
-                    data_append["tag2"] = entry[31]
-                    data_append["tag3"] = entry[32]
-                    data_append["tag4"] = entry[33]
-                    data_append["tag5"] = entry[34]
-                    data_append["tags0"] = entry[35]
-                    data_append["tags1"] = entry[36]
+                    data_append["tags0"] = entry[29]
+                    data_append["tags1"] = entry[30]
+                    data_append["tags2"] = entry[31]
+                    data_append["tags3"] = entry[32]
+                    data_append["tags4"] = entry[33]
+                    data_append["tags5"] = entry[34]
+                    data_append["tags6"] = entry[35]
+                    data_append["tags7"] = entry[36]
                 if sync_images:
                     data_append["images"] = msgpack.unpackb(entry[37])
                 if sync_data:
-                    data_append["price"] = entry[38]
-                    data_append["currency"] = entry[39]
-                    data_append["variants"] = msgpack.unpackb(entry[40])
-                    data_append["q_available"] = entry[41]
-                    data_append["q_min"] = entry[42]
-                    data_append["q_max"] = entry[43]
-                    data_append["rate"] = entry[44]
-                    data_append["location_lat"] = entry[45]
-                    data_append["location_lon"] = entry[46]
-                data_append["ts"] = entry[47]
+                    data_append["files"] = msgpack.unpackb(entry[38])
+                    data_append["price"] = entry[40]
+                    data_append["currency"] = entry[41]
+                    data_append["variants"] = msgpack.unpackb(entry[42])
+                    data_append["q_available"] = entry[43]
+                    data_append["q_min"] = entry[44]
+                    data_append["q_max"] = entry[45]
+                    data_append["rate"] = entry[46]
+                    data_append["location_lat"] = entry[47]
+                    data_append["location_lon"] = entry[48]
+                data_append["ts"] = entry[49]
                 if sync_data:
-                    data_append["ts_data"] = entry[48]
+                    data_append["ts_data"] = entry[50]
                 if sync_title:
-                    data_append["ts_title"] = entry[49]
+                    data_append["ts_title"] = entry[51]
                 if sync_text:
-                    data_append["ts_text"] = entry[50]
+                    data_append["ts_text"] = entry[52]
                 if sync_images:
-                    data_append["ts_images"] = entry[51]
+                    data_append["ts_images"] = entry[53]
                 if not sync:
-                    data_append["ts_sync"] = entry[52]
+                    data_append["ts_sync"] = entry[54]
 
                 data.append(data_append)
 
@@ -1342,35 +1451,36 @@ class Core:
                 data["option5"] = entry[26]
                 data["option6"] = entry[27]
                 data["option7"] = entry[28]
-                data["tag0"] = entry[29]
-                data["tag1"] = entry[30]
-                data["tag2"] = entry[31]
-                data["tag3"] = entry[32]
-                data["tag4"] = entry[33]
-                data["tag5"] = entry[34]
-                data["tags0"] = entry[35]
-                data["tags1"] = entry[36]
+                data["tags0"] = entry[29]
+                data["tags1"] = entry[30]
+                data["tags2"] = entry[31]
+                data["tags3"] = entry[32]
+                data["tags4"] = entry[33]
+                data["tags5"] = entry[34]
+                data["tags6"] = entry[35]
+                data["tags7"] = entry[36]
             if sync_images:
                 data["images"] = msgpack.unpackb(entry[37])
             if sync_data:
-                data["price"] = entry[38]
-                data["currency"] = entry[39]
-                data["variants"] = msgpack.unpackb(entry[40])
-                data["q_available"] = entry[41]
-                data["q_min"] = entry[42]
-                data["q_max"] = entry[43]
-                data["rate"] = entry[44]
-                data["location_lat"] = entry[45]
-                data["location_lon"] = entry[46]
-            data["ts"] = entry[47]
+                data["files"] = msgpack.unpackb(entry[38])
+                data["price"] = entry[40]
+                data["currency"] = entry[41]
+                data["variants"] = msgpack.unpackb(entry[42])
+                data["q_available"] = entry[43]
+                data["q_min"] = entry[44]
+                data["q_max"] = entry[45]
+                data["rate"] = entry[46]
+                data["location_lat"] = entry[47]
+                data["location_lon"] = entry[48]
+            data["ts"] = entry[49]
             if sync_data:
-                data["ts_data"] = entry[48]
+                data["ts_data"] = entry[50]
             if sync_title:
-                data["ts_title"] = entry[49]
+                data["ts_title"] = entry[51]
             if sync_text:
-                data["ts_text"] = entry[50]
+                data["ts_text"] = entry[52]
             if sync_images:
-                data["ts_images"] = entry[51]
+                data["ts_images"] = entry[53]
 
             return data
 
@@ -1397,14 +1507,14 @@ class Core:
                 result = dbc.fetchall()
                 if len(result) < 1:
                     result = 0x01
-                    query = "INSERT OR REPLACE INTO shop_entry (entry_id, shop_id, vendor_id, variants, images, ts) values (?, ?, ?, ?, ?, ?)"
-                    dbc.execute(query, (entry["entry_id"], entry["shop_id"], entry["vendor_id"], msgpack.packb(None), msgpack.packb(None), entry["ts"]))
+                    query = "INSERT OR REPLACE INTO shop_entry (entry_id, shop_id, vendor_id, variants, images, files, files_data, ts) values (?, ?, ?, ?, ?, ?, ?, ?)"
+                    dbc.execute(query, (entry["entry_id"], entry["shop_id"], entry["vendor_id"], msgpack.packb(None), msgpack.packb(None), msgpack.packb(None), msgpack.packb(None), entry["ts"]))
                 else:
                     result = 0x02
 
                 if "ts_data" in entry:
-                    query = "UPDATE shop_entry SET category_id = ?, type_id = ?, enabled = ?, num0 = ?, num1 = ?, num2 = ?, num3 = ?, num4 = ?, num5 = ?, option0 = ?, option1 = ?, option2 = ?, option3 = ?, option4 = ?, option5 = ?, option6 = ?, option7 = ?, tag0 = ?, tag1 = ?, tag2 = ?, tag3 = ?, tag4 = ?, tag5 = ?, tags0 = ?, tags1 = ?, price = ?, currency = ?, variants = ?, q_available = ?, q_min = ?, q_max = ?, rate = ?, location_lat = ?, location_lon = ?, ts_data = ? WHERE entry_id = ? AND shop_id = ? AND ts_data <= ?"
-                    dbc.execute(query, (entry["category_id"], entry["type_id"], entry["enabled"], entry["num0"], entry["num1"], entry["num2"], entry["num3"], entry["num4"], entry["num5"], entry["option0"], entry["option1"], entry["option2"], entry["option3"], entry["option4"], entry["option5"], entry["option6"], entry["option7"], entry["tag0"], entry["tag1"], entry["tag2"], entry["tag3"], entry["tag4"], entry["tag5"], entry["tags0"], entry["tags1"], entry["price"], entry["currency"], msgpack.packb(entry["variants"]), entry["q_available"], entry["q_min"], entry["q_max"], entry["rate"], entry["location_lat"], entry["location_lon"], entry["ts_data"], entry["entry_id"], entry["shop_id"], entry["ts_data"]))
+                    query = "UPDATE shop_entry SET category_id = ?, type_id = ?, enabled = ?, num0 = ?, num1 = ?, num2 = ?, num3 = ?, num4 = ?, num5 = ?, option0 = ?, option1 = ?, option2 = ?, option3 = ?, option4 = ?, option5 = ?, option6 = ?, option7 = ?, tags0 = ?, tags1 = ?, tags2 = ?, tags3 = ?, tags4 = ?, tags5 = ?, tags6 = ?, tags7 = ?, files = ?, price = ?, currency = ?, variants = ?, q_available = ?, q_min = ?, q_max = ?, rate = ?, location_lat = ?, location_lon = ?, ts_data = ? WHERE entry_id = ? AND shop_id = ? AND ts_data <= ?"
+                    dbc.execute(query, (entry["category_id"], entry["type_id"], entry["enabled"], entry["num0"], entry["num1"], entry["num2"], entry["num3"], entry["num4"], entry["num5"], entry["option0"], entry["option1"], entry["option2"], entry["option3"], entry["option4"], entry["option5"], entry["option6"], entry["option7"], entry["tags0"], entry["tags1"], entry["tags2"], entry["tags3"], entry["tags4"], entry["tags5"], entry["tags6"], entry["tags7"], msgpack.packb(entry["files"]), entry["price"], entry["currency"], msgpack.packb(entry["variants"]), entry["q_available"], entry["q_min"], entry["q_max"], entry["rate"], entry["location_lat"], entry["location_lon"], entry["ts_data"], entry["entry_id"], entry["shop_id"], entry["ts_data"]))
 
                 if "ts_title" in entry:
                     query = "UPDATE shop_entry SET title0 = ?, title1 = ?, title2 = ?, ts_title = ? WHERE entry_id = ? AND shop_id = ? AND ts_title <= ?"
@@ -2078,6 +2188,7 @@ def setup_core(path=None):
 
 #### Setup #####
 def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False):
+    global PATH
     global PATH_RNS
     global LOG_LEVEL
     global LOG_FILE
