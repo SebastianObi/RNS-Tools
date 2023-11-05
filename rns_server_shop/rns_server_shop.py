@@ -36,6 +36,7 @@ import sys
 import os
 import time
 import argparse
+import random
 
 #### Process ####
 import signal
@@ -79,6 +80,9 @@ DEFAULT_CONFIG = {
     "announce_startup": True,
     "announce_periodic": True,
     "announce_interval": 1800,
+    "maintenance_startup": True,
+    "maintenance_periodic": True,
+    "maintenance_interval": 86400,
     "location_enabled": False,
     "location_lat": 0,
     "location_lon": 0,
@@ -108,13 +112,15 @@ class ServerShop:
     RESULT_OK          = 0x01
     RESULT_SYNCRONIZE  = 0x02
     RESULT_NO_IDENTITY = 0x03
-    RESULT_NO_RIGHT    = 0x04
+    RESULT_NO_USER     = 0x04
+    RESULT_NO_RIGHT    = 0x05
     RESULT_DISABLED    = 0xFE
     RESULT_BLOCKED     = 0xFF
 
 
-    def __init__(self, core, storage_path=None, identity_file="identity", identity=None, destination_name="nomadnetwork", destination_type="shop", destination_conv_name="lxmf", destination_conv_type="delivery", statistic=None, default_config=None, default_title=None, default_categorys=None, default_pages=None, default_users=None, default_user=None, default_right=None, default_right_block=None):
+    def __init__(self, core, is_standalone=True, storage_path=None, identity_file="identity", identity=None, destination_name="nomadnetwork", destination_type="shop", destination_conv_name="lxmf", destination_conv_type="delivery", statistic=None, default_config=None, default_title=None, default_categorys=None, default_pages=None, default_users=None, default_user=None, default_right=None, default_right_block=None):
         self.core = core
+        self.is_standalone = is_standalone
 
         self.storage_path = storage_path
 
@@ -203,9 +209,13 @@ class ServerShop:
             self.core.db_shops_set_cmd(self.destination_hash(), {}, 0, now)
 
         config = self.core.db_shops_get_config(self.destination_hash())
+
         self.announce_data = config["title"]
         if config and (config["announce_startup"] or config["announce_periodic"]):
             self.announce(initial=True)
+
+        if config and (config["maintenance_startup"] or config["maintenance_periodic"]):
+            self.maintenance(initial=True)
 
         self.register()
 
@@ -327,6 +337,36 @@ class ServerShop:
             RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()) +":" + config["title"], RNS.LOG_DEBUG)
 
 
+    def maintenance(self, initial=False, reinit=False):
+        config = self.core.db_shops_get_config(self.destination_hash())
+
+        if config and config["maintenance_periodic"] and config["maintenance_interval"] > 0:
+            maintenance_timer = threading.Timer(config["maintenance_interval"], self.maintenance)
+            maintenance_timer.daemon = True
+            maintenance_timer.start()
+
+        if reinit:
+            return
+
+        if initial:
+            if config and config["maintenance_startup"]:
+                self.maintenance_now()
+            return
+
+        self.maintenance_now()
+
+
+    def maintenance_now(self):
+        config = self.core.db_shops_get_config(self.destination_hash())
+
+        if config and not config["enabled"]:
+            return
+
+        if self.is_standalone:
+            RNS.log("Server - Maintenance", RNS.LOG_DEBUG)
+            self.core.db_vacuum()
+
+
     def register(self):
         RNS.log("Server - Register", RNS.LOG_DEBUG)
         self.destination.register_request_handler("sync_rx", response_generator=self.sync_rx, allow=RNS.Destination.ALLOW_ALL)
@@ -438,8 +478,8 @@ class ServerShop:
             data["ts"] = entry["ts"]
 
         if "d" in ts and entry["ts_data"] > ts["d"]:
-            data["category_id"] = entry["category_id"]
-            data["type_id"] = entry["type_id"]
+            data["category0"] = entry["category0"]
+            data["category1"] = entry["category1"]
             data["enabled"] = entry["enabled"]
             data["num0"] = entry["num0"]
             data["num1"] = entry["num1"]
@@ -510,12 +550,16 @@ class ServerShop:
         try:
             if cmd == "entry_disabled":
                 self.core.db_shops_entrys_set_enabled(shop_id=self.destination_hash(), entry_id=value, value=False)
+                self.core.db_shops_update_categorys_count(self.destination_hash())
             elif cmd == "entrys_disabled":
                 self.core.db_shops_entrys_set_enabled(shop_id=self.destination_hash(), vendor_id=value, value=False)
+                self.core.db_shops_update_categorys_count(self.destination_hash())
             elif cmd == "entry_delete":
                 self.core.db_shops_entrys_delete(shop_id=self.destination_hash(), entry_id=value)
+                self.core.db_shops_update_categorys_count(self.destination_hash())
             elif cmd == "entrys_delete":
                 self.core.db_shops_entrys_delete(shop_id=self.destination_hash(), vendor_id=value)
+                self.core.db_shops_update_categorys_count(self.destination_hash())
             elif cmd == "user":
                 users = self.core.db_shops_get_users(self.destination_hash())
                 if users:
@@ -556,7 +600,11 @@ class ServerShop:
             data_return["result"] = ServerShop.RESULT_NO_IDENTITY
             return msgpack.packb(data_return)
 
-        if self.right(vendor_id, [255]):
+        if not self.right(vendor_id, [0, 1, 2, 255]):
+            data_return["result"] = ServerShop.RESULT_NO_USER
+            return msgpack.packb(data_return)
+
+        if self.right(vendor_id, [255]) and not self.right(vendor_id, [0, 1, 2]):
             data_return["result"] = ServerShop.RESULT_BLOCKED
             return msgpack.packb(data_return)
 
@@ -649,6 +697,13 @@ class ServerShop:
                 if len(data_return["rx_entrys"]) == 0:
                     del data_return["rx_entrys"]
 
+            if "file" in data:
+                file = self.core.db_shops_entrys_get_file(shop_id=self.destination_hash(), entry_id=data["file"]["entry_id"], file=data["file"]["file"])
+                if file:
+                    if "name" in data["file"] and data["file"]["name"]:
+                        file["name"] = data["file"]["name"]
+                    data_return["rx_file"] = file
+
             data_return["result"] = ServerShop.RESULT_OK
         except Exception as e:
             RNS.log("Server - Sync RX: "+str(e), RNS.LOG_ERROR)
@@ -680,7 +735,11 @@ class ServerShop:
             data_return["result"] = ServerShop.RESULT_NO_IDENTITY
             return msgpack.packb(data_return)
 
-        if self.right(vendor_id, [255]):
+        if not self.right(vendor_id, [0, 1, 2, 255]):
+            data_return["result"] = ServerShop.RESULT_NO_USER
+            return msgpack.packb(data_return)
+
+        if self.right(vendor_id, [255]) and not self.right(vendor_id, [1, 2]):
             data_return["result"] = ServerShop.RESULT_BLOCKED
             return msgpack.packb(data_return)
 
@@ -701,6 +760,7 @@ class ServerShop:
             if "config" in data and "ts_config" in data and self.right(vendor_id, [2]):
                 self.core.db_shops_set_config(self.destination_hash(), data["config"], data["ts_config"])
                 self.announce(reinit=True)
+                self.maintenance(reinit=True)
                 data_return["tx_shop"] = True
 
             if "categorys" in data and "ts_categorys" in data and self.right(vendor_id, [2]):
@@ -725,12 +785,18 @@ class ServerShop:
                     entry["shop_id"] = self.destination_hash()
                     entry["vendor_id"] = vendor_id
                     entry["ts_sync"] = now
-                    result = self.core.db_shops_entrys_set(entry)
+                    result, result_files = self.core.db_shops_entrys_set(entry, sync=True)
                     if result != 0x00:
                         if entry["ts"] == 0:
-                            data_return["tx_entrys"].append({"entry_id": entry["entry_id"], "ts": entry["ts"]})
+                            if len(result_files) > 0:
+                                data_return["tx_entrys"].append({"entry_id": entry["entry_id"], "ts": entry["ts"], "result_files": result_files})
+                            else:
+                                data_return["tx_entrys"].append({"entry_id": entry["entry_id"], "ts": entry["ts"]})
                         else:
-                            data_return["tx_entrys"].append({"entry_id": entry["entry_id"]})
+                            if len(result_files) > 0:
+                                data_return["tx_entrys"].append({"entry_id": entry["entry_id"], "result_files": result_files})
+                            else:
+                                data_return["tx_entrys"].append({"entry_id": entry["entry_id"]})
                     if result == 0x01:
                         self.statistic["entrys_add"] += 1
                     elif result == 0x02:
@@ -757,10 +823,12 @@ class ServerShop:
                             data_return["tx_entrys_ts"][entry_id].append("te")
                         if "i" in data["entrys_ts"][entry_id] and data["entrys_ts"][entry_id]["i"] > entry["ts_images"]:
                             data_return["tx_entrys_ts"][entry_id].append("i")
+                        if "f" in data["entrys_ts"][entry_id] and data["entrys_ts"][entry_id]["f"] > entry["ts_files"]:
+                            data_return["tx_entrys_ts"][entry_id].append("f")
                         if len(data_return["tx_entrys_ts"][entry_id]) == 0:
                             del data_return["tx_entrys_ts"][entry_id]
                     else:
-                        data_return["tx_entrys_ts"][entry_id] = ["d", "t", "te", "i"]
+                        data_return["tx_entrys_ts"][entry_id] = ["d", "t", "te", "i", "f"]
 
                 if len(data_return["tx_entrys_ts"]) == 0:
                     del data_return["tx_entrys_ts"]
@@ -854,7 +922,7 @@ class Core:
 
         if init:
             dbc.execute("DROP TABLE IF EXISTS shop_entry")
-        dbc.execute("CREATE TABLE IF NOT EXISTS shop_entry (entry_id BLOB, shop_id BLOB, vendor_id BLOB, category_id INTEGER DEFAULT 0, type_id INTEGER DEFAULT 0, enabled INTEGER DEFAULT 0, title0 TEXT DEFAULT '', title1 TEXT DEFAULT '', title2 TEXT DEFAULT '', text0 TEXT DEFAULT '', text1 TEXT DEFAULT '', text2 TEXT DEFAULT '', text3 TEXT DEFAULT '', text4 TEXT DEFAULT '', text5 TEXT DEFAULT '', num0 INTEGER DEFAULT 0, num1 INTEGER DEFAULT 0, num2 INTEGER DEFAULT 0, num3 INTEGER DEFAULT 0, num4 INTEGER DEFAULT 0, num5 INTEGER DEFAULT 0, option0 INTEGER DEFAULT 0, option1 INTEGER DEFAULT 0, option2 INTEGER DEFAULT 0, option3 INTEGER DEFAULT 0, option4 INTEGER DEFAULT 0, option5 INTEGER DEFAULT 0, option6 INTEGER DEFAULT 0, option7 INTEGER DEFAULT 0, tags0 TEXT DEFAULT '', tags1 TEXT DEFAULT '', tags2 TEXT DEFAULT '', tags3 TEXT DEFAULT '', tags4 TEXT DEFAULT '', tags5 TEXT DEFAULT '', tags6 TEXT DEFAULT '', tags7 TEXT DEFAULT '', images BLOB, files BLOB, files_data BLOB, price REAL DEFAULT 0, currency INTEGER DEFAULT 0, variants BLOB, q_available INTEGER DEFAULT 0, q_min INTEGER DEFAULT 0, q_max INTEGER DEFAULT 0, rate INTEGER DEFAULT 0, location_lat REAL DEFAULT 0, location_lon REAL DEFAULT 0, ts INTEGER DEFAULT 0, ts_data INTEGER DEFAULT 0, ts_title INTEGER DEFAULT 0, ts_text INTEGER DEFAULT 0, ts_images INTEGER DEFAULT 0, ts_sync INTEGER DEFAULT 0, PRIMARY KEY(entry_id, shop_id))")
+        dbc.execute("CREATE TABLE IF NOT EXISTS shop_entry (entry_id BLOB, shop_id BLOB, vendor_id BLOB, category0 INTEGER DEFAULT 0, category1 INTEGER DEFAULT 0, enabled INTEGER DEFAULT 0, title0 TEXT DEFAULT '', title1 TEXT DEFAULT '', title2 TEXT DEFAULT '', text0 TEXT DEFAULT '', text1 TEXT DEFAULT '', text2 TEXT DEFAULT '', text3 TEXT DEFAULT '', text4 TEXT DEFAULT '', text5 TEXT DEFAULT '', num0 INTEGER DEFAULT 0, num1 INTEGER DEFAULT 0, num2 INTEGER DEFAULT 0, num3 INTEGER DEFAULT 0, num4 INTEGER DEFAULT 0, num5 INTEGER DEFAULT 0, option0 INTEGER DEFAULT 0, option1 INTEGER DEFAULT 0, option2 INTEGER DEFAULT 0, option3 INTEGER DEFAULT 0, option4 INTEGER DEFAULT 0, option5 INTEGER DEFAULT 0, option6 INTEGER DEFAULT 0, option7 INTEGER DEFAULT 0, tags0 TEXT DEFAULT '', tags1 TEXT DEFAULT '', tags2 TEXT DEFAULT '', tags3 TEXT DEFAULT '', tags4 TEXT DEFAULT '', tags5 TEXT DEFAULT '', tags6 TEXT DEFAULT '', tags7 TEXT DEFAULT '', images BLOB, files BLOB, files_data BLOB, price REAL DEFAULT 0, currency INTEGER DEFAULT 0, variants BLOB, q_available INTEGER DEFAULT 0, q_min INTEGER DEFAULT 0, q_max INTEGER DEFAULT 0, rate INTEGER DEFAULT 0, location_lat REAL DEFAULT 0, location_lon REAL DEFAULT 0, ts INTEGER DEFAULT 0, ts_data INTEGER DEFAULT 0, ts_title INTEGER DEFAULT 0, ts_text INTEGER DEFAULT 0, ts_images INTEGER DEFAULT 0, ts_files INTEGER DEFAULT 0, ts_sync INTEGER DEFAULT 0, PRIMARY KEY(entry_id, shop_id))")
 
         self.__db_commit()
 
@@ -893,6 +961,10 @@ class Core:
         self.__db_migrate_column_add("shop_entry", "tags7", "TEXT", "''", "tags6")
         self.__db_migrate_column_add("shop_entry", "files", "BLOB", None, "images")
         self.__db_migrate_column_add("shop_entry", "files_data", "BLOB", None, "files")
+        self.__db_migrate_column_add("shop_entry", "ts_files", "INTEGER", "0", "ts_images")
+
+        self.__db_migrate_column_rename("shop_entry", "category_id", "category0")
+        self.__db_migrate_column_rename("shop_entry", "type_id", "category1")
 
         self.__db_init(False)
 
@@ -1037,6 +1109,29 @@ class Core:
         pass
 
 
+    def __db_vacuum(self):
+        db_retrys = 3
+        db_waitingtime = random.uniform(0.05, 0.2)
+
+        for i in range(db_retrys):
+            try:
+                db = self.__db_connect()
+                dbc = db.cursor()
+                dbc.execute("VACUUM")
+                self.__db_commit()
+                return
+
+            except Exception as e:
+                error = str(e)
+                time.sleep(db_waitingtime)
+
+        RNS.log("Core - An error occurred during vacuum database operation: "+error, RNS.LOG_ERROR)
+
+
+    def db_vacuum(self):
+        self.__db_vacuum()
+
+
     def db_load(self):
         RNS.log("Core - Loading database...", RNS.LOG_DEBUG)
 
@@ -1141,7 +1236,11 @@ class Core:
         self.__db_commit()
 
 
-    def db_shops_get_categorys(self, shop_id):
+    def db_shops_get_categorys(self, shop_id, category_id=0):
+        # TODO
+        if category_id > 0:
+            return None
+
         db = self.__db_connect()
         dbc = db.cursor()
 
@@ -1186,7 +1285,11 @@ class Core:
         self.__db_commit()
 
 
-    def db_shops_get_categorys_count(self, shop_id):
+    def db_shops_get_categorys_count(self, shop_id, category_id=0):
+        # TODO
+        if category_id > 0:
+            return {}
+
         db = self.__db_connect()
         dbc = db.cursor()
 
@@ -1234,7 +1337,7 @@ class Core:
 
         db = self.__db_connect()
         dbc = db.cursor()
-        query = "SELECT category_id, COUNT(category_id) FROM shop_entry WHERE ts > 0 AND shop_id = ? AND enabled = 1 GROUP BY category_id"
+        query = "SELECT category0, COUNT(category0) FROM shop_entry WHERE ts > 0 AND shop_id = ? AND enabled = 1 GROUP BY category0"
         dbc.execute(query, (shop_id,))
         result = dbc.fetchall()
         if len(result) > 0:
@@ -1591,14 +1694,17 @@ class Core:
 
         querys = []
 
-        if "category_id" in filter and filter["category_id"] != None:
-            if isinstance(filter["category_id"], list):
-                querys.append("category_id IN ("+",".join(self.__db_sanitize(x) for x in filter["category_id"])+")")
+        if "category0" in filter and filter["category0"] != None:
+            if isinstance(filter["category0"], list):
+                querys.append("category0 IN ("+",".join(self.__db_sanitize(x) for x in filter["category0"])+")")
             else:
-                querys.append("category_id = "+self.__db_sanitize(filter["category_id"]))
+                querys.append("category0 = "+self.__db_sanitize(filter["category0"]))
 
-        if "type_id" in filter and filter["type_id"] != None and filter["type_id"] != 0:
-            querys.append("type_id = "+self.__db_sanitize(filter["type_id"]))
+        if "category1" in filter and filter["category1"] != None:
+            if isinstance(filter["category1"], list):
+                querys.append("category1 IN ("+",".join(self.__db_sanitize(x) for x in filter["category1"])+")")
+            else:
+                querys.append("category1 = "+self.__db_sanitize(filter["category1"]))
 
         if "enabled" in filter:
             if filter["enabled"]:
@@ -1832,7 +1938,7 @@ class Core:
         return query
 
 
-    def db_shops_entrys_list(self, shop_id=None, vendor_id=None, filter=None, search=None, order=None, limit=None, limit_start=None, sync=False, sync_data=True, sync_title=True, sync_text=True, sync_images=True):
+    def db_shops_entrys_list(self, shop_id=None, vendor_id=None, filter=None, search=None, order=None, limit=None, limit_start=None, sync=False, sync_data=True, sync_title=True, sync_text=True, sync_images=True, sync_files=True):
         db = self.__db_connect()
         dbc = db.cursor()
 
@@ -1875,8 +1981,8 @@ class Core:
                 if not sync:
                     data_append["vendor_id"] = entry[2]
                 if sync_data:
-                    data_append["category_id"] = entry[3]
-                    data_append["type_id"] = entry[4]
+                    data_append["category0"] = entry[3]
+                    data_append["category1"] = entry[4]
                     data_append["enabled"] = entry[5]
                 if sync_title:
                     data_append["title0"] = entry[6]
@@ -1934,15 +2040,17 @@ class Core:
                     data_append["ts_text"] = entry[52]
                 if sync_images:
                     data_append["ts_images"] = entry[53]
+                if sync_files:
+                    data_append["ts_files"] = entry[54]
                 if not sync:
-                    data_append["ts_sync"] = entry[54]
+                    data_append["ts_sync"] = entry[55]
 
                 data.append(data_append)
 
             return data
 
 
-    def db_shops_entrys_get(self, shop_id=None, entry_id=None, variant=None, sync=False, sync_data=True, sync_title=True, sync_text=True, sync_images=True):
+    def db_shops_entrys_get(self, shop_id=None, entry_id=None, variant=None, sync=False, sync_data=True, sync_title=True, sync_text=True, sync_images=True, sync_files=True):
         db = self.__db_connect()
         dbc = db.cursor()
 
@@ -1963,8 +2071,8 @@ class Core:
                 data["shop_id"] = entry[1]
                 data["vendor_id"] = entry[2]
             if sync_data:
-                data["category_id"] = entry[3]
-                data["type_id"] = entry[4]
+                data["category0"] = entry[3]
+                data["category1"] = entry[4]
                 data["enabled"] = entry[5]
             if sync_title:
                 data["title0"] = entry[6]
@@ -2002,8 +2110,24 @@ class Core:
                 data["tags7"] = entry[36]
             if sync_images:
                 data["images"] = msgpack.unpackb(entry[37])
-            if sync_data:
+            if sync_data or sync_files:
                 data["files"] = msgpack.unpackb(entry[38])
+            if sync:
+                if sync_files:
+                    files = msgpack.unpackb(entry[38])
+                    if files and len(files) > 0:
+                        files_data = msgpack.unpackb(entry[39])
+                        if files_data and len(files_data) > 0:
+                            data["files_data"] = {}
+                            for key, value in files.items():
+                                if value["ts"] == 0:
+                                    if key in files_data:
+                                        data["files_data"][key] = files_data[key]
+                            if len(data["files_data"]) == 0:
+                                del data["files_data"]
+            else:
+                data["files_data"] = msgpack.unpackb(entry[39])
+            if sync_data:
                 data["price"] = entry[40]
                 data["currency"] = entry[41]
                 data["variants"] = msgpack.unpackb(entry[42])
@@ -2022,12 +2146,42 @@ class Core:
                 data["ts_text"] = entry[52]
             if sync_images:
                 data["ts_images"] = entry[53]
+            if sync_files:
+                data["ts_files"] = entry[54]
+
+            if not sync:
+                data["ts_sync"] = entry[55]
 
             return data
 
 
-    def db_shops_entrys_set(self, entry=None, vendor_id=None):
+    def db_shops_entrys_get_file(self, shop_id=None, entry_id=None, file=None):
+        db = self.__db_connect()
+        dbc = db.cursor()
+
+        data = {}
+        data[entry_id] = {}
+
+        query = "SELECT files, files_data FROM shop_entry WHERE shop_id = ? AND entry_id = ? AND enabled = 1"
+        dbc.execute(query, (shop_id, entry_id))
+        result = dbc.fetchall()
+
+        if len(result) < 1:
+            return None
+        else:
+            files = msgpack.unpackb(result[0][0])
+            files_data = msgpack.unpackb(result[0][1])
+
+            if file in files and file in files_data and files[file]["type"] != 0x00:
+                return {"name": files[file]["name"], "size": files[file]["size"], "data": files_data[file]}
+            else:
+                return None
+
+
+    def db_shops_entrys_set(self, entry=None, vendor_id=None, sync=False):
+        now = time.time()
         result = 0x00
+        result_files = []
 
         try:
             db = self.__db_connect()
@@ -2054,8 +2208,8 @@ class Core:
                     result = 0x02
 
                 if "ts_data" in entry:
-                    query = "UPDATE shop_entry SET category_id = ?, type_id = ?, enabled = ?, num0 = ?, num1 = ?, num2 = ?, num3 = ?, num4 = ?, num5 = ?, option0 = ?, option1 = ?, option2 = ?, option3 = ?, option4 = ?, option5 = ?, option6 = ?, option7 = ?, tags0 = ?, tags1 = ?, tags2 = ?, tags3 = ?, tags4 = ?, tags5 = ?, tags6 = ?, tags7 = ?, files = ?, price = ?, currency = ?, variants = ?, q_available = ?, q_min = ?, q_max = ?, rate = ?, location_lat = ?, location_lon = ?, ts_data = ? WHERE entry_id = ? AND shop_id = ? AND ts_data <= ?"
-                    dbc.execute(query, (entry["category_id"], entry["type_id"], entry["enabled"], entry["num0"], entry["num1"], entry["num2"], entry["num3"], entry["num4"], entry["num5"], entry["option0"], entry["option1"], entry["option2"], entry["option3"], entry["option4"], entry["option5"], entry["option6"], entry["option7"], entry["tags0"], entry["tags1"], entry["tags2"], entry["tags3"], entry["tags4"], entry["tags5"], entry["tags6"], entry["tags7"], msgpack.packb(entry["files"]), entry["price"], entry["currency"], msgpack.packb(entry["variants"]), entry["q_available"], entry["q_min"], entry["q_max"], entry["rate"], entry["location_lat"], entry["location_lon"], entry["ts_data"], entry["entry_id"], entry["shop_id"], entry["ts_data"]))
+                    query = "UPDATE shop_entry SET category0 = ?, category1 = ?, enabled = ?, num0 = ?, num1 = ?, num2 = ?, num3 = ?, num4 = ?, num5 = ?, option0 = ?, option1 = ?, option2 = ?, option3 = ?, option4 = ?, option5 = ?, option6 = ?, option7 = ?, tags0 = ?, tags1 = ?, tags2 = ?, tags3 = ?, tags4 = ?, tags5 = ?, tags6 = ?, tags7 = ?, files = ?, price = ?, currency = ?, variants = ?, q_available = ?, q_min = ?, q_max = ?, rate = ?, location_lat = ?, location_lon = ?, ts_data = ? WHERE entry_id = ? AND shop_id = ? AND ts_data <= ?"
+                    dbc.execute(query, (entry["category0"], entry["category1"], entry["enabled"], entry["num0"], entry["num1"], entry["num2"], entry["num3"], entry["num4"], entry["num5"], entry["option0"], entry["option1"], entry["option2"], entry["option3"], entry["option4"], entry["option5"], entry["option6"], entry["option7"], entry["tags0"], entry["tags1"], entry["tags2"], entry["tags3"], entry["tags4"], entry["tags5"], entry["tags6"], entry["tags7"], msgpack.packb(entry["files"]), entry["price"], entry["currency"], msgpack.packb(entry["variants"]), entry["q_available"], entry["q_min"], entry["q_max"], entry["rate"], entry["location_lat"], entry["location_lon"], entry["ts_data"], entry["entry_id"], entry["shop_id"], entry["ts_data"]))
 
                 if "ts_title" in entry:
                     query = "UPDATE shop_entry SET title0 = ?, title1 = ?, title2 = ?, ts_title = ? WHERE entry_id = ? AND shop_id = ? AND ts_title <= ?"
@@ -2069,6 +2223,37 @@ class Core:
                     query = "UPDATE shop_entry SET images = ?, ts_images = ? WHERE entry_id = ? AND shop_id = ? AND ts_images <= ?"
                     dbc.execute(query, (msgpack.packb(entry["images"]), entry["ts_images"], entry["entry_id"], entry["shop_id"], entry["ts_images"]))
 
+                if "ts_files" in entry:
+                    if not "files" in entry or not entry["files"] or len(entry["files"]) == 0:
+                        files = None
+                        files_data = None
+                    else:
+                        files = entry["files"]
+                        query = "SELECT files_data FROM shop_entry WHERE entry_id = ? AND shop_id = ?"
+                        dbc.execute(query, (entry["entry_id"], entry["shop_id"]))
+                        result = dbc.fetchall()
+                        if len(result) < 1:
+                            files_data = {}
+                        else:
+                            files_data = msgpack.unpackb(result[0][0])
+                            if files_data:
+                                for key in list(files_data):
+                                    if key not in files:
+                                        del files_data[key]
+                            else:
+                                files_data = {}
+                        if "files_data" in entry and entry["files_data"]:
+                            files_data.update(entry["files_data"])
+                            if sync:
+                                for key in list(entry["files_data"]):
+                                    result_files.append(key)
+                    if files and len(files) == 0:
+                        files = None
+                    if files_data and len(files_data) == 0:
+                        files_data = None
+                    query = "UPDATE shop_entry SET files = ?, files_data = ?, ts_files = ? WHERE entry_id = ? AND shop_id = ?"
+                    dbc.execute(query, (msgpack.packb(files), msgpack.packb(files_data), entry["ts_files"], entry["entry_id"], entry["shop_id"]))
+
                 if "ts_sync" in entry:
                     query = "UPDATE shop_entry SET ts_sync = ? WHERE entry_id = ? AND shop_id = ?"
                     dbc.execute(query, (entry["ts_sync"], entry["entry_id"], entry["shop_id"]))
@@ -2078,8 +2263,12 @@ class Core:
         except Exception as e:
             RNS.log("Core - Error while creating shop entry: "+str(e), RNS.LOG_ERROR)
             result = 0x00
+            result_files = []
 
-        return result
+        if sync:
+            return result, result_files
+        else:
+            return result
 
 
     def db_shops_entrys_count(self, shop_id=None, vendor_id=None, filter=None, search=None, sync=False):
@@ -2117,21 +2306,12 @@ class Core:
         dbc = db.cursor()
 
         if entry != None:
-            query = "DELETE FROM shop_cart WHERE shop_id = ? AND entry_id = ?"
-            dbc.execute(query, (entry["shop_id"], entry["entry_id"]))
-
             query = "DELETE FROM shop_entry WHERE shop_id = ? AND entry_id = ?"
             dbc.execute(query, (entry["shop_id"], entry["entry_id"]))
 
             if not loopback:
                 query = "INSERT OR REPLACE INTO shop_entry (entry_id, shop_id, vendor_id, images, variants, files, files_data) values (?, ?, ?, ?, ?, ?, ?)"
                 dbc.execute(query, (entry["entry_id"], entry["shop_id"], entry["vendor_id"], msgpack.packb(None), msgpack.packb(None), msgpack.packb(None), msgpack.packb(None)))
-
-            query = "DELETE FROM shop_favorite WHERE shop_id = ? AND entry_id = ?"
-            dbc.execute(query, (entry["shop_id"], entry["entry_id"]))
-
-            query = "DELETE FROM shop_notify WHERE shop_id = ? AND entry_id = ?"
-            dbc.execute(query, (entry["shop_id"], entry["entry_id"]))
 
         elif shop_id != None and entry_id != None:
             query = "DELETE FROM shop_entry WHERE shop_id = ? AND entry_id = ?"
@@ -2161,14 +2341,6 @@ class Core:
             dbc.execute(query, (value, time.time(), ts_sync, shop_id, vendor_id))
 
         self.__db_commit()
-
-
-    def db_shops_entrys_set_enable(self, shop_id, entry_id, loopback=False, vendor_id=None):
-        self.db_shops_entrys_set_enabled(shop_id, entry_id, True, loopback, vendor_id)
-
-
-    def db_shops_entrys_set_disable(self, shop_id, entry_id, loopback=False, vendor_id=None):
-        self.db_shops_entrys_set_enabled(shop_id, entry_id, False, loopback, vendor_id)
 
 
 ##############################################################################################################

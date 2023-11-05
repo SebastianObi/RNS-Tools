@@ -783,14 +783,6 @@ hidden = False
 hop_min = 0 #0=any
 hop_max = 0 #0=any
 hop_interfaces = #Comma separated list
-
-[nomadnetwork.shop]
-enabled = True
-type = 0xB0
-hidden = False
-hop_min = 0 #0=any
-hop_max = 0 #0=any
-hop_interfaces = #Comma separated list
 '''
 
 
