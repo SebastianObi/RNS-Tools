@@ -35,7 +35,7 @@ CACHE_TIME = 0 #0=No cache, None=Default
 DATE_TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 
 # Mapping the announcement type to the link type
-TYPE_LINK = {0x01: "lxmf", 0xAC: "nnn", 0xB0: "shop"}
+TYPE_LINK = {0x01: "lxmf", 0xAC: "nnn", 0xB0: "shop", 0xB5: "task"}
 
 # Screen template - Main (Use on all pages)
 TEMPLATE_MAIN = """

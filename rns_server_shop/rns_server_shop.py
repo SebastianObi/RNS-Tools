@@ -331,7 +331,7 @@ class ServerShop:
         elif config:
             self.announce_data = config["title"]
             if config["location_enabled"]:
-                self.destination.announce(msgpack.packb({"c": config["title"].encode("utf-8"), "t": None, "f": {"gps": {"lat": config["location_lat"], "lon": config["location_lon"]}}}), attached_interface=attached_interface)
+                self.destination.announce(msgpack.packb({"c": config["title"].encode("utf-8"), "t": None, "f": {self.core.MSG_FIELD_GPS: {"lat": config["location_lat"], "lon": config["location_lon"]}}}), attached_interface=attached_interface)
             else:
                 self.destination.announce(config["title"].encode("utf-8"), attached_interface=attached_interface)
             RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()) +":" + config["title"], RNS.LOG_DEBUG)
@@ -858,6 +858,9 @@ class ServerShop:
 
 
 class Core:
+    MSG_FIELD_GPS = 0xA6
+
+
     def __init__(self, storage_path=None):
         self.storage_path = storage_path
 
