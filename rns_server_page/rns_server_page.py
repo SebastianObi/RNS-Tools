@@ -37,6 +37,7 @@ import os
 import time
 import datetime
 import argparse
+import random
 
 #### Config ####
 import configparser
@@ -50,6 +51,7 @@ import subprocess
 # Install: pip3 install rns
 # Source: https://markqvist.github.io
 import RNS
+import RNS.vendor.umsgpack as umsgpack
 
 
 ##############################################################################################################
@@ -61,7 +63,7 @@ NAME = "RNS Server Page/File"
 DESCRIPTION = "Page/File hosting functions for RNS based apps"
 VERSION = "0.0.1 (2023-01-12)"
 COPYRIGHT = "(c) 2023 Sebastian Obele  /  obele.eu"
-PATH = os.path.expanduser("~") + "/." + os.path.splitext(os.path.basename(__file__))[0]
+PATH = os.path.expanduser("~")+"/.config/"+os.path.splitext(os.path.basename(__file__))[0]
 PATH_RNS = None
 
 
@@ -70,13 +72,61 @@ CONFIG = None
 RNS_CONNECTION = None
 RNS_SERVER_PAGE = None
 
+ANNOUNCE_DATA_CONTENT = 0x00
+ANNOUNCE_DATA_FIELDS  = 0x01
+ANNOUNCE_DATA_TITLE   = 0x02
+
+MSG_FIELD_EMBEDDED_LXMS    = 0x01
+MSG_FIELD_TELEMETRY        = 0x02
+MSG_FIELD_TELEMETRY_STREAM = 0x03
+MSG_FIELD_ICON             = 0x04
+MSG_FIELD_FILE_ATTACHMENTS = 0x05
+MSG_FIELD_IMAGE            = 0x06
+MSG_FIELD_AUDIO            = 0x07
+MSG_FIELD_THREAD           = 0x08
+MSG_FIELD_COMMANDS         = 0x09
+MSG_FIELD_RESULTS          = 0x0A
+
+MSG_FIELD_ANSWER             = 0xA0
+MSG_FIELD_ATTACHMENT         = 0xA1
+MSG_FIELD_COMMANDS_EXECUTE   = 0xA2
+MSG_FIELD_COMMANDS_RESULT    = 0xA3
+MSG_FIELD_CONTACT            = 0xA4
+MSG_FIELD_DATA               = 0xA5
+MSG_FIELD_DELETE             = 0xA6
+MSG_FIELD_EDIT               = 0xA7
+MSG_FIELD_GPS                = 0xA8
+MSG_FIELD_HASH               = 0xA9
+MSG_FIELD_ICON_MENU          = 0xAA
+MSG_FIELD_ICON_SRC           = 0xAB
+MSG_FIELD_KEYBOARD           = 0xAC
+MSG_FIELD_KEYBOARD_INLINE    = 0xAD
+MSG_FIELD_LOCATION           = 0xAE
+MSG_FIELD_POLL               = 0xAF
+MSG_FIELD_POLL_ANSWER        = 0xB0
+MSG_FIELD_REACTION           = 0xB1
+MSG_FIELD_RECEIPT            = 0xB2
+MSG_FIELD_SCHEDULED          = 0xB3
+MSG_FIELD_SILENT             = 0xB4
+MSG_FIELD_SRC                = 0xB5
+MSG_FIELD_STATE              = 0xB6
+MSG_FIELD_STICKER            = 0xB7
+MSG_FIELD_TELEMETRY_DB       = 0xB8
+MSG_FIELD_TELEMETRY_PEER     = 0xB9
+MSG_FIELD_TELEMETRY_COMMANDS = 0xBA
+MSG_FIELD_TEMPLATE           = 0xBB
+MSG_FIELD_TOPIC              = 0xBC
+MSG_FIELD_TYPE               = 0xBD
+MSG_FIELD_TYPE_FIELDS        = 0xBE
+MSG_FIELD_VOICE              = 0xBF
+
 
 ##############################################################################################################
 # ServerPage Class
 
 
 class ServerPage:
-    def __init__(self, storage_path=None, identity_file="identity", identity=None, destination_name="nomadnetwork", destination_type="node", announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False, register_startup=True, register_startup_delay=0, register_periodic=True, register_periodic_interval=30, statistic=None):
+    def __init__(self, storage_path=None, identity_file="identity", identity=None, destination_name="nomadnetwork", destination_type="node", destination_conv_name="lxmf", destination_conv_type="delivery", destination_mode=True, announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False, register_startup=True, register_startup_delay=0, register_periodic=True, register_periodic_interval=30, statistic=None):
         self.storage_path = storage_path
 
         self.identity_file = identity_file
@@ -85,9 +135,15 @@ class ServerPage:
         self.destination_name = destination_name
         self.destination_type = destination_type
         self.aspect_filter = self.destination_name + "." + self.destination_type
+        self.destination_conv_name = destination_conv_name
+        self.destination_conv_type = destination_conv_type
+        self.aspect_filter_conv = self.destination_conv_name + "." + self.destination_conv_type
+        self.destination_mode = destination_mode
 
         self.announce_startup = announce_startup
         self.announce_startup_delay = int(announce_startup_delay)
+        if self.announce_startup_delay == 0:
+            self.announce_startup_delay = random.randint(5, 30)
 
         self.announce_periodic = announce_periodic
         self.announce_periodic_interval = int(announce_periodic_interval)
@@ -235,6 +291,10 @@ class ServerPage:
             self.register(True)
 
 
+    def stop(self):
+        pass
+
+
     def statistic_get(self):
         return {
             "ts": self.statistic["ts"],
@@ -334,14 +394,14 @@ class ServerPage:
         elif app_data != None:
             if isinstance(app_data, str):
                 self.destination.announce(app_data.encode("utf-8"), attached_interface=attached_interface)
-                RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()) +":" + app_data, RNS.LOG_DEBUG)
+                RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()) +": " + app_data, RNS.LOG_DEBUG)
             else:
                 self.destination.announce(app_data, attached_interface=attached_interface)
                 RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()), RNS.LOG_DEBUG)
         else:
             if isinstance(self.announce_data, str):
                 self.destination.announce(self.announce_data.encode("utf-8"), attached_interface=attached_interface)
-                RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()) +":" + self.announce_data, RNS.LOG_DEBUG)
+                RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()) +": " + self.announce_data, RNS.LOG_DEBUG)
             else:
                 self.destination.announce(self.announce_data, attached_interface=attached_interface)
                 RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()), RNS.LOG_DEBUG)
@@ -471,6 +531,11 @@ class ServerPage:
         else:
             RNS.log("Server - Pages: Request <local> for: "+str(path), RNS.LOG_VERBOSE)
 
+        if remote_identity:
+            dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        else:
+            dest = None
+
         if data:
             RNS.log("Server - Pages: Data: "+str(data), RNS.LOG_DEBUG)
 
@@ -511,19 +576,26 @@ class ServerPage:
             except Exception as e:
                 RNS.log("Server - Pages: Error while fetching list of allowed identities for request: "+str(e), RNS.LOG_ERROR)
 
-            if hasattr(remote_identity, "hash") and remote_identity.hash in allowed_list:
-                allowed = True
-            else:
-                RNS.log("Server - Pages: Denying request, remote identity was not in list of allowed identities", RNS.LOG_VERBOSE)
+            if hasattr(remote_identity, "hash"):
+                if self.destination_mode == False and remote_identity.hash in allowed_list:
+                    allowed = True
+                elif self.destination_mode == True and dest in allowed_list:
+                    allowed = True
 
         elif self.pages_allow_all:
             allowed = True
 
-        elif hasattr(remote_identity, "hash") and remote_identity.hash in self.pages_allow:
-            allowed = True
+        elif hasattr(remote_identity, "hash"):
+            if self.destination_mode == False and remote_identity.hash in self.pages_allow:
+                allowed = True
+            elif self.destination_mode == True and dest in self.pages_allow:
+                allowed = True
 
-        if hasattr(remote_identity, "hash") and remote_identity.hash in self.pages_deny:
-            allowed = False
+        if hasattr(remote_identity, "hash"):
+            if self.destination_mode == False and remote_identity.hash in self.pages_deny:
+                allowed = False
+            elif self.destination_mode == True and dest in self.pages_deny:
+                allowed = False
 
         if request_id == None:
             allowed = True
@@ -539,6 +611,8 @@ class ServerPage:
                         env_map["link_id"] = RNS.hexrep(link_id, delimit=False)
                     if remote_identity != None:
                         env_map["remote_identity"] = RNS.hexrep(remote_identity.hash, delimit=False)
+                    if dest != None:
+                        env_map["dest"] = RNS.hexrep(dest, delimit=False)
 
                     if data != None and isinstance(data, dict):
                         for e in data:
@@ -568,6 +642,11 @@ class ServerPage:
         else:
             RNS.log("Server - Pages: Serving index for request <local> for: "+str(path), RNS.LOG_VERBOSE)
 
+        if remote_identity:
+            dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        else:
+            dest = None
+
         if data:
             RNS.log("Server - Pages: Data: "+str(data), RNS.LOG_DEBUG)
 
@@ -581,11 +660,17 @@ class ServerPage:
         if self.pages_allow_all or self.files_allow_all:
             allowed = True
 
-        if hasattr(remote_identity, "hash") and (remote_identity.hash in self.pages_allow or remote_identity.hash in self.files_allow):
-            allowed = True
+        if hasattr(remote_identity, "hash"):
+            if self.destination_mode == False and (remote_identity.hash in self.pages_allow or remote_identity.hash in self.files_allow):
+                allowed = True
+            elif self.destination_mode == True and (dest in self.pages_allow or dest in self.files_allow):
+                allowed = True
 
-        if hasattr(remote_identity, "hash") and (remote_identity.hash in self.pages_deny or remote_identity.hash in self.files_deny):
-            allowed = False
+        if hasattr(remote_identity, "hash"):
+            if self.destination_mode == False and (remote_identity.hash in self.pages_deny or remote_identity.hash in self.files_deny):
+                allowed = False
+            elif self.destination_mode == True and (dest in self.pages_deny or dest in self.files_deny):
+                allowed = False
 
         if request_id == None:
             allowed = True
@@ -737,6 +822,11 @@ class ServerPage:
         else:
             RNS.log("Server - Files: Request <local> for: "+str(path), RNS.LOG_VERBOSE)
 
+        if remote_identity:
+            dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        else:
+            dest = None
+
         try:
             self.statistic["files"] += 1
         except:
@@ -774,19 +864,26 @@ class ServerPage:
             except Exception as e:
                 RNS.log("Server - Files: Error while fetching list of allowed identities for request: "+str(e), RNS.LOG_ERROR)
 
-            if hasattr(remote_identity, "hash") and remote_identity.hash in allowed_list:
-                allowed = True
-            else:
-                RNS.log("Server - Files: Denying request, remote identity was not in list of allowed identities", RNS.LOG_VERBOSE)
+            if hasattr(remote_identity, "hash"):
+                if self.destination_mode == False and remote_identity.hash in allowed_list:
+                    allowed = True
+                elif self.destination_mode == True and dest in allowed_list:
+                    allowed = True
 
         elif self.files_allow_all:
             allowed = True
 
-        elif hasattr(remote_identity, "hash") and remote_identity.hash in self.files_allow:
-            allowed = True
+        elif hasattr(remote_identity, "hash"):
+            if self.destination_mode == False and remote_identity.hash in self.files_allow:
+                allowed = True
+            elif self.destination_mode == True and dest in self.files_allow:
+                allowed = True
 
-        if hasattr(remote_identity, "hash") and remote_identity.hash in self.files_deny:
-            allowed = False
+        if hasattr(remote_identity, "hash"):
+            if self.destination_mode == False and remote_identity.hash in self.files_deny:
+                allowed = False
+            elif self.destination_mode == True and dest in self.files_deny:
+                allowed = False
 
         if request_id == None:
             allowed = True
@@ -826,8 +923,14 @@ class ServerPage:
         sender_identity = resource.link.get_remote_identity()
 
         if sender_identity != None:
-            if sender_identity.hash in self.upload_allow:
-                return True
+            dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, sender_identity)
+        else:
+            dest = None
+
+        if self.destination_mode == False and sender_identity.hash in self.upload_allow:
+            return True
+        elif self.destination_mode == True and dest in self.upload_allow:
+            return True
 
         return False
 
@@ -1171,7 +1274,6 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
     log("        Name: " + CONFIG["main"]["name"], LOG_INFO)
     log("Program File: " + __file__, LOG_INFO)
     log(" Config File: " + PATH + "/config", LOG_INFO)
-    log("   Data File: " + PATH + "/data.cfg", LOG_INFO)
     log("     Version: " + VERSION, LOG_INFO)
     log("   Copyright: " + COPYRIGHT, LOG_INFO)
     log("...............................................................................", LOG_INFO)
@@ -1180,6 +1282,22 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
 
     if path is None:
         path = PATH
+
+    announce_data = CONFIG["rns_server"]["display_name"]
+    if CONFIG["main"].getboolean("fields_announce"):
+        fields = {}
+        if CONFIG["telemetry"].getboolean("location_enabled"):
+            try:
+               fields[MSG_FIELD_GPS] = {"lat": CONFIG["telemetry"].getfloat("location_lat"), "lon": CONFIG["telemetry"].getfloat("location_lon")}
+            except:
+                pass
+        if CONFIG["telemetry"].getboolean("state_enabled"):
+            try:
+               fields[MSG_FIELD_STATE] = CONFIG["telemetry"].getint("state_data")
+            except:
+                pass
+        if len(fields) > 0:
+            announce_data = umsgpack.packb({ANNOUNCE_DATA_CONTENT: CONFIG["rns_server"]["display_name"].encode("utf-8"), ANNOUNCE_DATA_TITLE: None, ANNOUNCE_DATA_FIELDS: fields})
 
     RNS_SERVER_PAGE = ServerPage(
         storage_path=path,
@@ -1191,7 +1309,7 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
         announce_startup_delay=CONFIG["rns_server"]["announce_startup_delay"],
         announce_periodic=CONFIG["rns_server"].getboolean("announce_periodic"),
         announce_periodic_interval=CONFIG["rns_server"]["announce_periodic_interval"],
-        announce_data=CONFIG["rns_server"]["display_name"],
+        announce_data=announce_data,
         announce_hidden=CONFIG["rns_server"].getboolean("announce_hidden"),
         register_startup=True,
         register_startup_delay=0,
@@ -1291,6 +1409,12 @@ DEFAULT_CONFIG_OVERRIDE = '''# This is the user configuration file to override t
 # This file can be used to clearly summarize all settings that deviate from the default.
 # This also has the advantage that all changed settings can be kept when updating the program.
 
+
+#### Main program settings ####
+[main]
+fields_announce = False
+
+
 #### RNS server settings ####
 [rns_server]
 display_name = Server
@@ -1301,6 +1425,15 @@ announce_startup_delay = 0 #Seconds
 announce_periodic = Yes
 announce_periodic_interval = 120 #Minutes
 
+
+#### Telemetry settings ####
+[telemetry]
+location_enabled = False
+location_lat = 0
+location_lon = 0
+
+state_enabled = False
+state_data = 0
 '''
 
 
@@ -1317,6 +1450,10 @@ enabled = True
 
 # Name of the program. Only for display in the log or program startup.
 name = RNS Server Page/File
+
+# Transport extended data in the announce.
+# This is needed for the integration of advanced client apps.
+fields_announce = False
 
 
 #### RNS server settings ####
@@ -1380,6 +1517,16 @@ upload_path = files
 upload_ext_allow = #,-separated list
 upload_ext_deny = py,sh #,-separated list
 upload_allow_all = False
+
+
+#### Telemetry settings ####
+[telemetry]
+location_enabled = False
+location_lat = 0
+location_lon = 0
+
+state_enabled = False
+state_data = 0
 '''
 
 

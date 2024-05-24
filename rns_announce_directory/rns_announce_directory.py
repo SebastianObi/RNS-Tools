@@ -36,6 +36,7 @@ import sys
 import os
 import time
 import argparse
+import random
 
 #### Config ####
 import configparser
@@ -59,7 +60,7 @@ NAME = "RNS Announce Directory"
 DESCRIPTION = "Database for the collection of received announcements"
 VERSION = "0.0.1 (2023-01-12)"
 COPYRIGHT = "(c) 2023 Sebastian Obele  /  obele.eu"
-PATH = os.path.expanduser("~") + "/." + os.path.splitext(os.path.basename(__file__))[0]
+PATH = os.path.expanduser("~")+"/.config/"+os.path.splitext(os.path.basename(__file__))[0]
 PATH_RNS = None
 
 
@@ -68,6 +69,54 @@ CONFIG = None
 DB = None
 RNS_CONNECTION = None
 RNS_ANNOUNCE_HANDLER = None
+
+ANNOUNCE_DATA_CONTENT = 0x00
+ANNOUNCE_DATA_FIELDS  = 0x01
+ANNOUNCE_DATA_TITLE   = 0x02
+
+MSG_FIELD_EMBEDDED_LXMS    = 0x01
+MSG_FIELD_TELEMETRY        = 0x02
+MSG_FIELD_TELEMETRY_STREAM = 0x03
+MSG_FIELD_ICON             = 0x04
+MSG_FIELD_FILE_ATTACHMENTS = 0x05
+MSG_FIELD_IMAGE            = 0x06
+MSG_FIELD_AUDIO            = 0x07
+MSG_FIELD_THREAD           = 0x08
+MSG_FIELD_COMMANDS         = 0x09
+MSG_FIELD_RESULTS          = 0x0A
+
+MSG_FIELD_ANSWER             = 0xA0
+MSG_FIELD_ATTACHMENT         = 0xA1
+MSG_FIELD_COMMANDS_EXECUTE   = 0xA2
+MSG_FIELD_COMMANDS_RESULT    = 0xA3
+MSG_FIELD_CONTACT            = 0xA4
+MSG_FIELD_DATA               = 0xA5
+MSG_FIELD_DELETE             = 0xA6
+MSG_FIELD_EDIT               = 0xA7
+MSG_FIELD_GPS                = 0xA8
+MSG_FIELD_HASH               = 0xA9
+MSG_FIELD_ICON_MENU          = 0xAA
+MSG_FIELD_ICON_SRC           = 0xAB
+MSG_FIELD_KEYBOARD           = 0xAC
+MSG_FIELD_KEYBOARD_INLINE    = 0xAD
+MSG_FIELD_LOCATION           = 0xAE
+MSG_FIELD_POLL               = 0xAF
+MSG_FIELD_POLL_ANSWER        = 0xB0
+MSG_FIELD_REACTION           = 0xB1
+MSG_FIELD_RECEIPT            = 0xB2
+MSG_FIELD_SCHEDULED          = 0xB3
+MSG_FIELD_SILENT             = 0xB4
+MSG_FIELD_SRC                = 0xB5
+MSG_FIELD_STATE              = 0xB6
+MSG_FIELD_STICKER            = 0xB7
+MSG_FIELD_TELEMETRY_DB       = 0xB8
+MSG_FIELD_TELEMETRY_PEER     = 0xB9
+MSG_FIELD_TELEMETRY_COMMANDS = 0xBA
+MSG_FIELD_TEMPLATE           = 0xBB
+MSG_FIELD_TOPIC              = 0xBC
+MSG_FIELD_TYPE               = 0xBD
+MSG_FIELD_TYPE_FIELDS        = 0xBE
+MSG_FIELD_VOICE              = 0xBF
 
 
 ##############################################################################################################
@@ -100,7 +149,7 @@ class AnnounceHandler:
             else:
                 return
 
-        dest_type = self.dest_type
+        dest_type = [self.dest_type]
 
         if self.recall_app_data and self.recall_app_data != "":
             try:
@@ -119,10 +168,12 @@ class AnnounceHandler:
             try:
                 app_data_dict = msgpack.unpackb(app_data)
                 if isinstance(app_data_dict, dict):
-                    if "c" in app_data_dict:
-                        app_data = app_data_dict["c"]
-                    if "f" in app_data_dict and "type" in app_data_dict["f"]:
-                        dest_type = app_data_dict["f"]["type"]
+                    if ANNOUNCE_DATA_CONTENT in app_data_dict:
+                        app_data = app_data_dict[ANNOUNCE_DATA_CONTENT]
+                    if ANNOUNCE_DATA_FIELDS in app_data_dict and MSG_FIELD_TYPE in app_data_dict[ANNOUNCE_DATA_FIELDS]:
+                        dest_type = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_TYPE]
+                        if not isinstance(dest_type, list):
+                            dest_type = [dest_type]
             except:
                 pass
 
@@ -145,14 +196,15 @@ class AnnounceHandler:
 
             log("RNS - Received '"+self.aspect_filter+"' announce for "+RNS.prettyhexrep(destination_hash)+" "+str(hop_count)+" hops away with data: "+app_data, LOG_DEBUG)
 
-            self.callback(
-                dest=destination_hash,
-                app_data=app_data,
-                dest_type=dest_type,
-                hop_count=hop_count,
-                hop_interface=hop_interface,
-                hop_dest=None
-            )
+            for key in dest_type:
+                self.callback(
+                    dest=destination_hash,
+                    dest_type=key,
+                    app_data=app_data,
+                    hop_count=hop_count,
+                    hop_interface=hop_interface,
+                    hop_dest=None
+                )
 
         except Exception as e:
             log("RNS - Error while processing received announce: "+str(e), LOG_ERROR)
@@ -187,7 +239,7 @@ def db_init(init=True):
 
     if init:
         dbc.execute("DROP TABLE IF EXISTS announce")
-    dbc.execute("CREATE TABLE IF NOT EXISTS announce (dest BLOB PRIMARY KEY, ts INTEGER DEFAULT 0, data TEXT DEFAULT '', type INTEGER DEFAULT 0, hop_count INTEGER DEFAULT 0, hop_interface TEXT DEFAULT '', hop_dest BLOB)")
+    dbc.execute("CREATE TABLE IF NOT EXISTS announce (dest BLOB, type INTEGER DEFAULT 0, ts INTEGER DEFAULT 0, data TEXT DEFAULT '', hop_count INTEGER DEFAULT 0, hop_interface TEXT DEFAULT '', hop_dest BLOB, PRIMARY KEY(dest, type))")
 
     db_commit()
 
@@ -215,23 +267,23 @@ def db_load():
         db_indices()
 
 
-def db_announce_add(dest, app_data, dest_type=0x01, hop_count=0, hop_interface="", hop_dest=None):
+def db_announce_add(dest, dest_type=0x01, app_data="", hop_count=0, hop_interface="", hop_dest=None):
     db = db_connect()
     dbc = db.cursor()
 
     if app_data == "":
-        query = "SELECT dest FROM announce WHERE dest = ?"
-        dbc.execute(query, (dest,))
+        query = "SELECT dest FROM announce WHERE dest = ? AND type = ?"
+        dbc.execute(query, (dest, dest_type))
         result = dbc.fetchall()
         if len(result) > 0:
-            query = "UPDATE announce SET ts = ?, type = ?, hop_count = ?, hop_interface = ?, hop_dest = ? WHERE dest = ?"
-            dbc.execute(query, (time.time(), dest_type, hop_count, hop_interface, hop_dest, dest))
+            query = "UPDATE announce SET ts = ?, hop_count = ?, hop_interface = ?, hop_dest = ? WHERE dest = ? AND type = ?"
+            dbc.execute(query, (time.time(), hop_count, hop_interface, hop_dest, dest, dest_type))
         else:
-            query = "INSERT OR REPLACE INTO announce (dest, ts, data, type, hop_count, hop_interface, hop_dest) values (?, ?, ?, ?, ?, ?, ?)"
-            dbc.execute(query, (dest, time.time(), app_data, dest_type, hop_count, hop_interface, hop_dest))
+            query = "INSERT OR REPLACE INTO announce (dest, type, ts, data, hop_count, hop_interface, hop_dest) values (?, ?, ?, ?, ?, ?, ?)"
+            dbc.execute(query, (dest, dest_type, time.time(), app_data, hop_count, hop_interface, hop_dest))
     else:
-        query = "INSERT OR REPLACE INTO announce (dest, ts, data, type, hop_count, hop_interface, hop_dest) values (?, ?, ?, ?, ?, ?, ?)"
-        dbc.execute(query, (dest, time.time(), app_data, dest_type, hop_count, hop_interface, hop_dest))
+        query = "INSERT OR REPLACE INTO announce (dest, type, ts, data, hop_count, hop_interface, hop_dest) values (?, ?, ?, ?, ?, ?, ?)"
+        dbc.execute(query, (dest, dest_type, time.time(), app_data, hop_count, hop_interface, hop_dest))
 
     db_commit()
 

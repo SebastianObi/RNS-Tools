@@ -61,7 +61,7 @@ NAME = "RNS Server Shop"
 DESCRIPTION = "Shop hosting functions for RNS based apps"
 VERSION = "0.0.1 (2023-07-20)"
 COPYRIGHT = "(c) 2023 Sebastian Obele  /  obele.eu"
-PATH = os.path.expanduser("~") + "/." + os.path.splitext(os.path.basename(__file__))[0]
+PATH = os.path.expanduser("~")+"/.config/"+os.path.splitext(os.path.basename(__file__))[0]
 PATH_RNS = None
 RIGHTS = {0: "User", 1: "Vendor", 2: "Admin", 255: "Blocked"}
 DESTINATION_NAME = "nomadnetwork"
@@ -76,6 +76,8 @@ DEFAULT_CONFIG = {
     "header_enabled": True,
     "header_enabled_entrys": True,
     "template": 10,
+    "template_config": "",
+    "template_config_enabled": False,
     "announce_hidden": False,
     "announce_startup": True,
     "announce_periodic": True,
@@ -83,9 +85,11 @@ DEFAULT_CONFIG = {
     "maintenance_startup": True,
     "maintenance_periodic": True,
     "maintenance_interval": 86400,
-    "location_enabled": False,
-    "location_lat": 0,
-    "location_lon": 0,
+    "telemetry_location_enabled": False,
+    "telemetry_location_lat": 0,
+    "telemetry_location_lon": 0,
+    "telemetry_state_enabled": False,
+    "telemetry_state_data": 0,
     "state_first_run": True
 }
 DEFAULT_TITLE = None
@@ -93,6 +97,8 @@ DEFAULT_CATEGORYS = {0: [0, "Test Category 1"], 1: [0, "Test Category 2"], 2: [4
 DEFAULT_PAGES = {}
 DEFAULT_USERS = {"any": 0}
 DEFAULT_USER = None
+DEFAULT_USER_INTERFACES = ["AutoInterface", "KISSInterface", "RNodeInterface", "SerialInterface"]
+DEFAULT_USER_HOPS = 1
 DEFAULT_RIGHT = 2
 DEFAULT_RIGHT_BLOCK = 255
 
@@ -118,7 +124,7 @@ class ServerShop:
     RESULT_BLOCKED     = 0xFF
 
 
-    def __init__(self, core, is_standalone=True, storage_path=None, identity_file="identity", identity=None, destination_name="nomadnetwork", destination_type="shop", destination_conv_name="lxmf", destination_conv_type="delivery", statistic=None, default_config=None, default_title=None, default_categorys=None, default_pages=None, default_users=None, default_user=None, default_right=None, default_right_block=None):
+    def __init__(self, core, is_standalone=True, storage_path=None, identity_file="identity", identity=None, destination_name="nomadnetwork", destination_type="shop", destination_conv_name="lxmf", destination_conv_type="delivery", statistic=None, default_config=None, default_title=None, default_categorys=None, default_pages=None, default_users=None, default_user=None, default_user_interfaces=None, default_user_hops=None, default_user_callback=None, default_right=None, default_right_block=None):
         self.core = core
         self.is_standalone = is_standalone
 
@@ -145,6 +151,9 @@ class ServerShop:
         self.default_pages = default_pages
         self.default_users = default_users
         self.default_user = default_user
+        self.default_user_interfaces = default_user_interfaces
+        self.default_user_hops = default_user_hops
+        self.default_user_callback = default_user_callback
         self.default_right = default_right
         self.default_right_block = default_right_block
 
@@ -220,6 +229,14 @@ class ServerShop:
         self.register()
 
         self.core.db_shops_update_categorys_count(self.destination_hash())
+
+
+    def start(self):
+        pass
+
+
+    def stop(self):
+        pass
 
 
     def statistic_get(self):
@@ -324,17 +341,22 @@ class ServerShop:
         elif app_data != None:
             if isinstance(app_data, str):
                 self.destination.announce(app_data.encode("utf-8"), attached_interface=attached_interface)
-                RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()) +":" + app_data, RNS.LOG_DEBUG)
+                RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()) +": " + app_data, RNS.LOG_DEBUG)
             else:
                 self.destination.announce(app_data, attached_interface=attached_interface)
                 RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()), RNS.LOG_DEBUG)
         elif config:
             self.announce_data = config["title"]
-            if config["location_enabled"]:
-                self.destination.announce(msgpack.packb({"c": config["title"].encode("utf-8"), "t": None, "f": {self.core.MSG_FIELD_GPS: {"lat": config["location_lat"], "lon": config["location_lon"]}}}), attached_interface=attached_interface)
+            fields = {}
+            if config["telemetry_location_enabled"]:
+                fields[self.core.MSG_FIELD_GPS] = {"lat": config["telemetry_location_lat"], "lon": config["telemetry_location_lon"]}
+            if config["telemetry_state_enabled"]:
+                fields[self.core.MSG_FIELD_STATE] = config["telemetry_state_data"]
+            if len(fields) > 0:
+                self.destination.announce(msgpack.packb({self.core.ANNOUNCE_DATA_CONTENT: config["title"].encode("utf-8"), self.core.ANNOUNCE_DATA_TITLE: None, self.core.ANNOUNCE_DATA_FIELDS: fields}), attached_interface=attached_interface)
             else:
                 self.destination.announce(config["title"].encode("utf-8"), attached_interface=attached_interface)
-            RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()) +":" + config["title"], RNS.LOG_DEBUG)
+            RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()) +": " + config["title"], RNS.LOG_DEBUG)
 
 
     def maintenance(self, initial=False, reinit=False):
@@ -417,11 +439,19 @@ class ServerShop:
 
         if users:
             if config and "state_first_run" in config:
-                del config["state_first_run"]
-                self.core.db_shops_set_config(self.destination_hash(), config, time.time())
-                users[dest] = self.default_right
-                self.core.db_shops_set_users(self.destination_hash(), users, time.time())
-                return self.right(dest, right)
+                hop_interface = sef.core.reticulum.get_next_hop_if_name(dest)
+                if self.default_user_interfaces == None or len(self.default_user_interfaces) == 0 or any(hop_interface.startswith(prefix) for prefix in self.default_user_interfaces):
+                    hop_count = RNS.Transport.hops_to(dest)
+                    #hop_interface_self = str(RNS.Transport.next_hop_interface(dest))
+                    #if hop_interface_self and hop_interface_self.startswith("LocalInterface"):
+                    #    hop_count -= 1
+                    if self.default_user_hops == None or self.default_user_hops == 0 or hop_count <= self.default_user_hops:
+                        RNS.log("Server - Create new user "+RNS.prettyhexrep(dest)+" connected via "+hop_interface+" with "+str(hop_count)+" hops", RNS.LOG_DEBUG)
+                        del config["state_first_run"]
+                        self.core.db_shops_set_config(self.destination_hash(), config, time.time())
+                        users[dest] = self.default_right
+                        self.core.db_shops_set_users(self.destination_hash(), users, time.time())
+                        return self.right(dest, right)
 
             if dest in users and users[dest] in right:
                 return True
@@ -546,9 +576,13 @@ class ServerShop:
     #################################################
 
 
-    def cmd(self, cmd, value):
+    def cmd(self, cmd, value, vendor_id=None):
         try:
-            if cmd == "entry_disabled":
+            if cmd == "announce":
+                self.announce()
+            elif cmd == "maintenance":
+                self.maintenance()
+            elif cmd == "entry_disabled":
                 self.core.db_shops_entrys_set_enabled(shop_id=self.destination_hash(), entry_id=value, value=False)
                 self.core.db_shops_update_categorys_count(self.destination_hash())
             elif cmd == "entrys_disabled":
@@ -559,6 +593,12 @@ class ServerShop:
                 self.core.db_shops_update_categorys_count(self.destination_hash())
             elif cmd == "entrys_delete":
                 self.core.db_shops_entrys_delete(shop_id=self.destination_hash(), vendor_id=value)
+                self.core.db_shops_update_categorys_count(self.destination_hash())
+            elif cmd == "entry_ownership":
+                self.core.db_shops_entrys_set_vendor_id(shop_id=self.destination_hash(), entry_id=value, vendor_id_new=vendor_id)
+                self.core.db_shops_update_categorys_count(self.destination_hash())
+            elif cmd == "entrys_ownership":
+                self.core.db_shops_entrys_set_vendor_id(shop_id=self.destination_hash(), vendor_id_old=value, vendor_id_new=vendor_id)
                 self.core.db_shops_update_categorys_count(self.destination_hash())
             elif cmd == "user":
                 users = self.core.db_shops_get_users(self.destination_hash())
@@ -622,6 +662,9 @@ class ServerShop:
             pass
 
         try:
+            if "type" in data:
+                data_return["type"] = data["type"]
+
             if "ts_config" in data:
                 if self.core.db_shops_get_config_ts(self.destination_hash()) > data["ts_config"]:
                     data_return["rx_config"] = self.core.db_shops_get_config(self.destination_hash())
@@ -757,6 +800,9 @@ class ServerShop:
             pass
 
         try:
+            if "type" in data:
+                data_return["type"] = data["type"]
+
             if "config" in data and "ts_config" in data and self.right(vendor_id, [2]):
                 self.core.db_shops_set_config(self.destination_hash(), data["config"], data["ts_config"])
                 self.announce(reinit=True)
@@ -836,7 +882,7 @@ class ServerShop:
             if "cmd" in data and self.right(vendor_id, [2]):
                 data_return["cmd"] = []
                 for key, value in data["cmd"].items():
-                    if self.cmd(cmd=value["cmd"], value=value["value"]):
+                    if self.cmd(cmd=value["cmd"], value=value["value"], vendor_id=vendor_id):
                         data_return["cmd"].append(key)
                 if len(data_return["cmd"]) == 0:
                     del data_return["cmd"]
@@ -858,7 +904,53 @@ class ServerShop:
 
 
 class Core:
-    MSG_FIELD_GPS = 0xA6
+    ANNOUNCE_DATA_CONTENT = 0x00
+    ANNOUNCE_DATA_FIELDS  = 0x01
+    ANNOUNCE_DATA_TITLE   = 0x02
+
+    MSG_FIELD_EMBEDDED_LXMS    = 0x01
+    MSG_FIELD_TELEMETRY        = 0x02
+    MSG_FIELD_TELEMETRY_STREAM = 0x03
+    MSG_FIELD_ICON             = 0x04
+    MSG_FIELD_FILE_ATTACHMENTS = 0x05
+    MSG_FIELD_IMAGE            = 0x06
+    MSG_FIELD_AUDIO            = 0x07
+    MSG_FIELD_THREAD           = 0x08
+    MSG_FIELD_COMMANDS         = 0x09
+    MSG_FIELD_RESULTS          = 0x0A
+
+    MSG_FIELD_ANSWER             = 0xA0
+    MSG_FIELD_ATTACHMENT         = 0xA1
+    MSG_FIELD_COMMANDS_EXECUTE   = 0xA2
+    MSG_FIELD_COMMANDS_RESULT    = 0xA3
+    MSG_FIELD_CONTACT            = 0xA4
+    MSG_FIELD_DATA               = 0xA5
+    MSG_FIELD_DELETE             = 0xA6
+    MSG_FIELD_EDIT               = 0xA7
+    MSG_FIELD_GPS                = 0xA8
+    MSG_FIELD_HASH               = 0xA9
+    MSG_FIELD_ICON_MENU          = 0xAA
+    MSG_FIELD_ICON_SRC           = 0xAB
+    MSG_FIELD_KEYBOARD           = 0xAC
+    MSG_FIELD_KEYBOARD_INLINE    = 0xAD
+    MSG_FIELD_LOCATION           = 0xAE
+    MSG_FIELD_POLL               = 0xAF
+    MSG_FIELD_POLL_ANSWER        = 0xB0
+    MSG_FIELD_REACTION           = 0xB1
+    MSG_FIELD_RECEIPT            = 0xB2
+    MSG_FIELD_SCHEDULED          = 0xB3
+    MSG_FIELD_SILENT             = 0xB4
+    MSG_FIELD_SRC                = 0xB5
+    MSG_FIELD_STATE              = 0xB6
+    MSG_FIELD_STICKER            = 0xB7
+    MSG_FIELD_TELEMETRY_DB       = 0xB8
+    MSG_FIELD_TELEMETRY_PEER     = 0xB9
+    MSG_FIELD_TELEMETRY_COMMANDS = 0xBA
+    MSG_FIELD_TEMPLATE           = 0xBB
+    MSG_FIELD_TOPIC              = 0xBC
+    MSG_FIELD_TYPE               = 0xBD
+    MSG_FIELD_TYPE_FIELDS        = 0xBE
+    MSG_FIELD_VOICE              = 0xBF
 
 
     def __init__(self, storage_path=None):
@@ -877,6 +969,8 @@ class Core:
         self.db = None
         self.db_path = self.storage_path + "/database.db"
         self.db_load()
+
+        self.reticulum = None
 
 
     def __db_connect(self):
@@ -2327,6 +2421,30 @@ class Core:
         self.__db_commit()
 
 
+    def db_shops_entrys_set_vendor_id(self, shop_id=None, entry_id=None, loopback=False, vendor_id_old=None, vendor_id_new=None):
+        db = self.__db_connect()
+        dbc = db.cursor()
+
+        if loopback:
+            ts_sync = time.time()
+        else:
+            ts_sync = 0
+
+        if entry_id != None and vendor_id_old == None:
+            query = "UPDATE shop_entry SET entry_id = ?, vendor_id = ?, enabled = ?, ts_sync = ? WHERE shop_id = ? AND entry_id = ?"
+            dbc.execute(query, (self.uid_bytes(), vendor_id_new, True, ts_sync, shop_id, entry_id))
+        else:
+            query = "SELECT entry_id FROM shop_entry WHERE shop_id = ? AND vendor_id = ?"
+            dbc.execute(query, (shop_id, vendor_id_old))
+            result = dbc.fetchall()
+            if len(result) >= 1:
+                for entry in result:
+                    query = "UPDATE shop_entry SET entry_id = ?, vendor_id = ?, enabled = ?, ts_sync = ? WHERE shop_id = ? AND entry_id = ?"
+                    dbc.execute(query, (self.uid_bytes(), vendor_id_new, True, ts_sync, shop_id, entry[0]))
+
+        self.__db_commit()
+
+
     def db_shops_entrys_set_enabled(self, shop_id=None, entry_id=None, value=False, loopback=False, vendor_id=None):
         db = self.__db_connect()
         dbc = db.cursor()
@@ -2346,11 +2464,90 @@ class Core:
         self.__db_commit()
 
 
+    def uid_bytes(self):
+        return RNS.Identity().hash
+
+
+    def uid_str(self):
+        return str(uuid.uuid4())
+
+
 ##############################################################################################################
 # CMDs
 
 
-def cmd():
+def cmd(cmd):
+    db = CORE.db_connect()
+    dbc = db.cursor()
+    query = "SELECT id FROM shop LIMIT 1"
+    dbc.execute("SELECT id FROM shop LIMIT 1")
+    result = dbc.fetchall()
+    if len(result) < 1:
+        print("Error: No configuration exists")
+        panic()
+    else:
+        shop_id = result[0][0]
+
+    config = CORE.db_shops_get_config(shop_id)
+    if not config:
+        print("Error: No configuration exists")
+        panic()
+
+    cmd = cmd.strip()
+    cmd = cmd.split()
+
+    if len(cmd) < 1:
+        print("Error: Command format wrong")
+        panic()
+
+    if cmd[0] == "enable" and len(cmd) == 1:
+        config["enabled"] = True
+        CORE.db_shops_set_config(shop_id, config, time.time())
+
+    elif cmd[0] == "disable" and len(cmd) == 1:
+        config["enabled"] = False
+        CORE.db_shops_set_config(shop_id, config, time.time())
+
+    elif cmd[0] in config and len(cmd) == 2:
+        value = cmd[1]
+        if value.isdigit():
+            value = int(value)
+        elif value.isnumeric():
+            value = float(value)
+        elif value.lower() == "true":
+            value = True
+        elif value.lower() == "false":
+            value = False
+        elif value.startswith("0x") or value.startswith("0X"):
+            try:
+                value_int = int(value, 16)
+                value = val_int
+            except:
+                pass
+
+    else:
+        print("Error: Wrong/Unknown command")
+        panic()
+
+
+def cmd_val_to_val(val):
+    if val.isdigit():
+        return int(val)
+    elif val.isnumeric():
+        return float(val)
+    elif val.lower() == "true":
+        return True
+    elif val.lower() == "false":
+        return False
+    elif val.startswith("0x") or val.startswith("0X"):
+        try:
+            val_int = int(val, 16)
+            return val_int
+        except:
+            pass
+    return val
+
+def cmd_db():
     try:
         import readline
     except ImportError:
@@ -2426,6 +2623,149 @@ def cmd_status():
             print("Tables:")
             for entry in result:
                 print(entry[0]+": "+str(entry[1]))
+
+
+def cmd_user(cmd):
+    db = CORE.db_connect()
+    dbc = db.cursor()
+    query = "SELECT id FROM shop LIMIT 1"
+    dbc.execute("SELECT id FROM shop LIMIT 1")
+    result = dbc.fetchall()
+    if len(result) < 1:
+        print("Error: No configuration exists")
+        panic()
+    else:
+        shop_id = result[0][0]
+
+    config = CORE.db_shops_get_config(shop_id)
+    if not config:
+        print("Error: No configuration exists")
+        panic()
+
+    users = CORE.db_shops_get_users(shop_id)
+    if not users:
+        print("Error: No users exists")
+        panic()
+
+    cmd = cmd.strip()
+    cmd = cmd.split()
+
+    if len(cmd) < 1:
+        print("Error: Command format wrong")
+        panic()
+
+    if cmd[0] == "list" and len(cmd) == 1:
+        print("User/Address\tRight")
+        for key, value in users.items():
+            try:
+                print(RNS.prettyhexrep(key)+"\t"+str(value))
+            except:
+                print(str(key)+"\t"+str(value))
+
+    elif cmd[0] == "get" and len(cmd) == 2:
+        try:
+            if cmd[1] == "any":
+                dest = cmd[1]
+            else:
+                dest = bytes.fromhex(cmd[1])
+                if len(dest) != RNS.Reticulum.TRUNCATED_HASHLENGTH//8:
+                    raise ValueError("Wrong format")
+        except Exception as e:
+            print("Error: Destination address: "+str(e))
+            panic()
+        print("User/Address\tRight")
+        if dest in users:
+            try:
+                print(RNS.prettyhexrep(dest)+"\t"+str(users[dest]))
+            except:
+                print(str(dest)+"\t"+str(users[dest]))
+
+    elif cmd[0] == "add" and len(cmd) == 2:
+        if "state_first_run" in config:
+            del config["state_first_run"]
+            CORE.db_shops_set_config(shop_id, config, time.time())
+        try:
+            if cmd[1] == "any":
+                dest = cmd[1]
+            else:
+                dest = bytes.fromhex(cmd[1])
+                if len(dest) != RNS.Reticulum.TRUNCATED_HASHLENGTH//8:
+                    raise ValueError("Wrong format")
+        except Exception as e:
+            print("Error: Destination address: "+str(e))
+            panic()
+        users[dest] = DEFAULT_RIGHT
+        CORE.db_shops_set_users(shop_id, users, time.time())
+
+    elif cmd[0] == "add" and len(cmd) == 3:
+        if "state_first_run" in config:
+            del config["state_first_run"]
+            CORE.db_shops_set_config(shop_id, config, time.time())
+        try:
+            if cmd[1] == "any":
+                dest = cmd[1]
+            else:
+                dest = bytes.fromhex(cmd[1])
+                if len(dest) != RNS.Reticulum.TRUNCATED_HASHLENGTH//8:
+                    raise ValueError("Wrong format")
+        except Exception as e:
+            print("Error: Destination address: "+str(e))
+            panic()
+        users[dest] = int(cmd[2])
+        CORE.db_shops_set_users(shop_id, users, time.time())
+
+    elif cmd[0] == "del" and len(cmd) == 2:
+        try:
+            if cmd[1] == "any":
+                dest = cmd[1]
+            else:
+                dest = bytes.fromhex(cmd[1])
+                if len(dest) != RNS.Reticulum.TRUNCATED_HASHLENGTH//8:
+                    raise ValueError("Wrong format")
+        except Exception as e:
+            print("Error: Destination address: "+str(e))
+            panic()
+        if dest in users:
+            del users[dest]
+            CORE.db_shops_set_users(shop_id, users, time.time())
+
+    elif cmd[0] == "set" and len(cmd) == 3:
+        try:
+            if cmd[1] == "any":
+                dest = cmd[1]
+            else:
+                dest = bytes.fromhex(cmd[1])
+                if len(dest) != RNS.Reticulum.TRUNCATED_HASHLENGTH//8:
+                    raise ValueError("Wrong format")
+        except Exception as e:
+            print("Error: Destination address: "+str(e))
+            panic()
+        if dest in users:
+            users[dest] = int(cmd[2])
+            CORE.db_shops_set_users(shop_id, users, time.time())
+        else:
+            print("Error: User does not exist")
+            panic()
+
+    elif cmd[0] == "check" and len(cmd) == 3:
+        try:
+            if cmd[1] == "any":
+                dest = cmd[1]
+            else:
+                dest = bytes.fromhex(cmd[1])
+                if len(dest) != RNS.Reticulum.TRUNCATED_HASHLENGTH//8:
+                    raise ValueError("Wrong format")
+        except Exception as e:
+            print("Error: Destination address: "+str(e))
+            panic()
+        if dest in users and users[dest] == int(cmd[2]):
+            print("1")
+        else:
+            print("0")
+
+    else:
+        print("Error: Wrong/Unknown command")
+        panic()
 
 
 def cmd_size_str(num, suffix='B'):
@@ -2592,6 +2932,8 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
 
     RNS_CONNECTION = RNS.Reticulum(configdir=PATH_RNS, loglevel=rns_loglevel)
 
+    CORE.reticulum = RNS_CONNECTION
+
     log("...............................................................................", LOG_INFO)
     log("        Name: " + NAME, LOG_INFO)
     log("Program File: " + __file__, LOG_INFO)
@@ -2621,6 +2963,8 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
         default_pages=DEFAULT_PAGES,
         default_users=DEFAULT_USERS,
         default_user=DEFAULT_USER,
+        default_user_interfaces=DEFAULT_USER_INTERFACES,
+        default_user_hops=DEFAULT_USER_HOPS,
         default_right=DEFAULT_RIGHT,
         default_right_block=DEFAULT_RIGHT_BLOCK
         )
@@ -2647,19 +2991,29 @@ def main():
         parser.add_argument("-l", "--loglevel", action="store", type=int, default=LOG_LEVEL)
         parser.add_argument("-s", "--service", action="store_true", default=False, help="Running as a service and should log to file")
 
-        parser.add_argument("--cmd", action="store_true", default=False, help="Database command interface (Execute any sql database command)")
+        parser.add_argument("--cmd", action="store", type=str, default=None, help="Manage server")
+        parser.add_argument("--cmd_db", action="store_true", default=False, help="Database command interface (Execute any sql database command)")
         parser.add_argument("--cmd_status", action="store_true", default=False, help="Database status interface (Shows the current status)")
+        parser.add_argument("--cmd_user", action="store", type=str, default=None, help="Manage users")
 
         params = parser.parse_args()
 
         setup_core(path=params.path)
 
         if params.cmd:
-            cmd()
+            cmd(params.cmd)
+            exit()
+
+        if params.cmd_db:
+            cmd_db()
             exit()
 
         if params.cmd_status:
             cmd_status()
+            exit()
+
+        if params.cmd_user:
+            cmd_user(params.cmd_user)
             exit()
 
         setup(path=params.path, path_rns=params.path_rns, path_log=params.path_log, loglevel=params.loglevel, service=params.service)

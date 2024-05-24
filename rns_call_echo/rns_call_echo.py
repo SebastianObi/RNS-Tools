@@ -37,6 +37,7 @@ import os
 import time
 import datetime
 import argparse
+import random
 
 #### Config ####
 import configparser
@@ -61,7 +62,7 @@ NAME = "RNS Call Echo"
 DESCRIPTION = ""
 VERSION = "0.0.1 (2023-01-12)"
 COPYRIGHT = "(c) 2023 Sebastian Obele  /  obele.eu"
-PATH = os.path.expanduser("~") + "/." + os.path.splitext(os.path.basename(__file__))[0]
+PATH = os.path.expanduser("~")+"/.config/"+os.path.splitext(os.path.basename(__file__))[0]
 PATH_RNS = None
 
 
@@ -76,6 +77,12 @@ RNS_SERVER_CALL = None
 
 
 class ServerCall:
+    DATA_FIELDS    = 0x00
+    DATA_PAYLOAD   = 0x01
+    DATA_SIGNALING = 0x02
+    DATA_VALUE     = 0x03
+
+
     def __init__(self, storage_path=None, identity_file="identity", identity=None, destination_name="nomadnetwork", destination_type="call", announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False, type="talk", answer_cmd=12, answer_delay=2, hold_cmd=15, hold_delay=0, hold_value="", reject_cmd=15, reject_delay=0, reject_value="", connection_timeout=0):
         self.storage_path = storage_path
 
@@ -88,6 +95,8 @@ class ServerCall:
 
         self.announce_startup = announce_startup
         self.announce_startup_delay = int(announce_startup_delay)
+        if self.announce_startup_delay == 0:
+            self.announce_startup_delay = random.randint(5, 30)
 
         self.announce_periodic = announce_periodic
         self.announce_periodic_interval = int(announce_periodic_interval)
@@ -252,14 +261,14 @@ class ServerCall:
         elif app_data != None:
             if isinstance(app_data, str):
                 self.destination.announce(app_data.encode("utf-8"), attached_interface=attached_interface)
-                log("RNS - Announced: " + RNS.prettyhexrep(self.destination_hash()) +":" + app_data, LOG_DEBUG)
+                log("RNS - Announced: " + RNS.prettyhexrep(self.destination_hash()) +": " + app_data, LOG_DEBUG)
             else:
                 self.destination.announce(app_data, attached_interface=attached_interface)
                 log("RNS - Announced: " + RNS.prettyhexrep(self.destination_hash()), LOG_DEBUG)
         else:
             if isinstance(self.announce_data, str):
                 self.destination.announce(self.announce_data.encode("utf-8"), attached_interface=attached_interface)
-                log("RNS - Announced: " + RNS.prettyhexrep(self.destination_hash()) +":" + self.announce_data, LOG_DEBUG)
+                log("RNS - Announced: " + RNS.prettyhexrep(self.destination_hash()) +": " + self.announce_data, LOG_DEBUG)
             else:
                 self.destination.announce(self.announce_data, attached_interface=attached_interface)
                 log("RNS - Announced: " + RNS.prettyhexrep(self.destination_hash()), LOG_DEBUG)
@@ -310,7 +319,7 @@ class ServerCall:
 
         if self.type == "reject":
             time.sleep(self.reject_delay)
-            self.buffer.write(msgpack.packb({"s": self.reject_cmd, "v": self.reject_value}))
+            self.buffer.write(msgpack.packb({ServerCall.DATA_SIGNALING: self.reject_cmd, ServerCall.DATA_VALUE: self.reject_value}))
             self.buffer.flush()
             time.sleep(0.5)
             self.state = False
@@ -318,7 +327,7 @@ class ServerCall:
                 self.link.teardown()
         else:
             time.sleep(self.answer_delay)
-            self.buffer.write(msgpack.packb({"s": self.answer_cmd}))
+            self.buffer.write(msgpack.packb({ServerCall.DATA_SIGNALING: self.answer_cmd}))
             self.buffer.flush()
 
 
@@ -331,12 +340,12 @@ class ServerCall:
             if self.type == "hold":
                 if self.state != "hold":
                     time.sleep(self.hold_delay)
-                    self.buffer.write(msgpack.packb({"s": self.hold_cmd, "v": self.hold_value}))
+                    self.buffer.write(msgpack.packb({ServerCall.DATA_SIGNALING: self.hold_cmd, ServerCall.DATA_VALUE: self.hold_value}))
                     self.buffer.flush()
                     self.state = "hold"
             elif self.type == "reject":
                 time.sleep(self.reject_delay)
-                self.buffer.write(msgpack.packb({"s": self.reject_cmd, "v": self.reject_value}))
+                self.buffer.write(msgpack.packb({ServerCall.DATA_SIGNALING: self.reject_cmd, ServerCall.DATA_VALUE: self.reject_value}))
                 self.buffer.flush()
                 time.sleep(0.5)
                 self.state = False
@@ -639,7 +648,6 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
     log("        Name: " + CONFIG["main"]["name"], LOG_INFO)
     log("Program File: " + __file__, LOG_INFO)
     log(" Config File: " + PATH + "/config", LOG_INFO)
-    log(" Data File: " + PATH + "/data.cfg", LOG_INFO)
     log("     Version: " + VERSION, LOG_INFO)
     log("   Copyright: " + COPYRIGHT, LOG_INFO)
     log("...............................................................................", LOG_INFO)

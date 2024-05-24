@@ -10,6 +10,10 @@ For more information, see the detailed [README.md](rns_announce_directory).
 For more information, see the detailed [README.md](rns_server_blockchain).
 
 
+## rns_server_management
+For more information, see the detailed [README.md](rns_server_management).
+
+
 ## rns_call_echo
 For more information, see the detailed [README.md](rns_call_echo).
 
@@ -91,7 +95,7 @@ The full documentation is not yet available. Due to lack of time I can also not 
 - Copy and edit the following content to your own needs.
   ```bash
   [Unit]
-  Description=rns_server_page.py Daemon
+  Description=rns_server_page
   After=multi-user.target
   [Service]
   # ExecStartPre=/bin/sleep 10

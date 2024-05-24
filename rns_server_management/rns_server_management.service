@@ -1,0 +1,12 @@
+[Unit]
+Description=rns_server_management
+After=multi-user.target
+[Service]
+ExecStartPre=/bin/sleep 10
+Type=simple
+Restart=always
+RestartSec=3
+User=root
+ExecStart=/root/RNS-Tools/rns_server_management/rns_server_management.py
+[Install]
+WantedBy=multi-user.target

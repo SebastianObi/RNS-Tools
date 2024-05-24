@@ -55,7 +55,7 @@ import RNS.vendor.umsgpack as umsgpack
 FILE = os.path.splitext(os.path.basename(__file__))[0]
 
 if PATH == None:
-    PATH = os.path.expanduser("~")+"/."+FILE
+    PATH = os.path.expanduser("~")+"/.config/"+FILE
 
 DB = None
 
@@ -207,9 +207,9 @@ def db_list(filter=None, search=None, order=None, limit=None, limit_start=None):
         for entry in result:
             data.append({
                 "dest": entry[0],
-                "ts": entry[1],
-                "data": entry[2],
-                "type": entry[3]
+                "type": entry[1],
+                "ts": entry[2],
+                "data": entry[3],
             })
 
         return data

@@ -5,7 +5,7 @@ For more information, see the configuration options (at the end of the program f
 
 
 ### Features
-- Compatible with all Reticulum page browser apps (Communicator, NomadNet, ...)
+- Compatible with all Reticulum page browser apps (NomadNet, ...)
 
 
 ## Current Status
@@ -75,7 +75,7 @@ The full documentation is not yet available. Due to lack of time I can also not 
 - Copy and edit the following content to your own needs.
   ```bash
   [Unit]
-  Description=rns_server_page.py Daemon
+  Description=rns_server_page
   After=multi-user.target
   [Service]
   # ExecStartPre=/bin/sleep 10

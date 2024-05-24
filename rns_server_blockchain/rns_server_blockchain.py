@@ -37,6 +37,7 @@ import os
 import time
 import datetime
 import argparse
+import random
 
 #### UID ####
 import uuid
@@ -65,7 +66,7 @@ NAME = "RNS Server Blockchain"
 DESCRIPTION = "Gateway/Bridge for payment/wallet for RNS based apps"
 VERSION = "0.0.1 (2023-10-19)"
 COPYRIGHT = "(c) 2023 Sebastian Obele  /  obele.eu"
-PATH = os.path.expanduser("~") + "/." + os.path.splitext(os.path.basename(__file__))[0]
+PATH = os.path.expanduser("~")+"/.config/"+os.path.splitext(os.path.basename(__file__))[0]
 PATH_RNS = None
 
 
@@ -101,6 +102,8 @@ class ServerBlockchain:
 
         self.announce_startup = announce_startup
         self.announce_startup_delay = int(announce_startup_delay)
+        if self.announce_startup_delay == 0:
+            self.announce_startup_delay = random.randint(5, 30)
 
         self.announce_periodic = announce_periodic
         self.announce_periodic_interval = int(announce_periodic_interval)
@@ -157,6 +160,14 @@ class ServerBlockchain:
 
         #### Load dummy data ####
         self.data_dummy_load()
+
+
+    def start(self):
+        pass
+
+
+    def stop(self):
+        pass
 
 
     #### Dummy data functions ####
@@ -273,14 +284,14 @@ class ServerBlockchain:
         elif app_data != None:
             if isinstance(app_data, str):
                 self.destination.announce(app_data.encode("utf-8"), attached_interface=attached_interface)
-                RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()) +":" + app_data, RNS.LOG_DEBUG)
+                RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()) +": " + app_data, RNS.LOG_DEBUG)
             else:
                 self.destination.announce(app_data, attached_interface=attached_interface)
                 RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()), RNS.LOG_DEBUG)
         else:
             if isinstance(self.announce_data, str):
                 self.destination.announce(self.announce_data.encode("utf-8"), attached_interface=attached_interface)
-                RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()) +":" + self.announce_data, RNS.LOG_DEBUG)
+                RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()) +": " + self.announce_data, RNS.LOG_DEBUG)
             else:
                 self.destination.announce(self.announce_data, attached_interface=attached_interface)
                 RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()), RNS.LOG_DEBUG)
@@ -693,7 +704,6 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
     log("        Name: " + CONFIG["main"]["name"], LOG_INFO)
     log("Program File: " + __file__, LOG_INFO)
     log(" Config File: " + PATH + "/config", LOG_INFO)
-    log("   Data File: " + PATH + "/data.cfg", LOG_INFO)
     log("     Version: " + VERSION, LOG_INFO)
     log("   Copyright: " + COPYRIGHT, LOG_INFO)
     log("...............................................................................", LOG_INFO)

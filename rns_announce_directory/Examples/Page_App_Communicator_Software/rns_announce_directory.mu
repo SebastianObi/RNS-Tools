@@ -74,7 +74,7 @@ import RNS.vendor.umsgpack as umsgpack
 FILE = os.path.splitext(os.path.basename(__file__))[0]
 
 if PATH == None:
-    PATH = os.path.expanduser("~")+"/."+FILE
+    PATH = os.path.expanduser("~")+"/.config/"+FILE
 
 DB = None
 
@@ -228,9 +228,9 @@ def db_announce_list(filter=None, search=None, order=None, limit=None, limit_sta
         for entry in result:
             data.append({
                 "dest": entry[0],
-                "ts": entry[1],
-                "data": entry[2],
-                "type": entry[3],
+                "type": entry[1],
+                "ts": entry[2],
+                "data": entry[3],
                 "hop_count": entry[4],
                 "hop_interface": entry[5]
             })

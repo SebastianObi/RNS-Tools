@@ -1,9 +1,9 @@
 # rns_server_shop
-This program provides a server for shop hosting of the "Communicator" app.
+This program provides a server for shop hosting of the "Communicator" app. Which is another project that is not part of this github.
 
 
 ### Features
-- Compatible with all Reticulum shop apps (Communicator)
+- Compatible with all Reticulum shop apps (Communicator which is another project that is not part of this github)
 
 
 ## Current Status
@@ -64,7 +64,7 @@ The full documentation is not yet available. Due to lack of time I can also not 
 - Copy and edit the following content to your own needs.
   ```bash
   [Unit]
-  Description=rns_server_shop.py Daemon
+  Description=rns_server_shop
   After=multi-user.target
   [Service]
   # ExecStartPre=/bin/sleep 10

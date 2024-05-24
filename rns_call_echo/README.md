@@ -1,11 +1,11 @@
 # rns_call_echo
-This program provides a test endpoint for the call functionality of the "Communicator app".
+This program provides a test endpoint for the call functionality of the "Communicator" app. Which is another project that is not part of this github.
 
 For more information, see the configuration options (at the end of the program files). Everything else is briefly documented there. After the first start this configuration will be created as default config in the corresponding file.
 
 
 ### Features
-- Compatible with all Reticulum call apps (Communicator)
+- Compatible with all Reticulum call apps (Communicator which is another project that is not part of this github)
 - Only for testing the call functionality
 - Busy call
 - Echo call
