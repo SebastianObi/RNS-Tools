@@ -349,7 +349,7 @@ class ServerShop:
             self.announce_data = config["title"]
             fields = {}
             if config["telemetry_location_enabled"]:
-                fields[self.core.MSG_FIELD_GPS] = {"lat": config["telemetry_location_lat"], "lon": config["telemetry_location_lon"]}
+                fields[self.core.MSG_FIELD_LOCATION] = [config["telemetry_location_lat"], config["telemetry_location_lon"]]
             if config["telemetry_state_enabled"]:
                 fields[self.core.MSG_FIELD_STATE] = config["telemetry_state_data"]
             if len(fields) > 0:
@@ -927,7 +927,7 @@ class Core:
     MSG_FIELD_DATA               = 0xA5
     MSG_FIELD_DELETE             = 0xA6
     MSG_FIELD_EDIT               = 0xA7
-    MSG_FIELD_GPS                = 0xA8
+    MSG_FIELD_GROUP              = 0xA8
     MSG_FIELD_HASH               = 0xA9
     MSG_FIELD_ICON_MENU          = 0xAA
     MSG_FIELD_ICON_SRC           = 0xAB
@@ -1901,96 +1901,112 @@ class Core:
 
         if "tags0" in filter:
             tags = []
+            if "tags0_mode" in filter and filter["tags0_mode"] == 0x02:
+                mode = " NOT LIKE "
+            else:
+                mode = " LIKE "
             for key in filter["tags0"]:
-                tags.append("tags0 LIKE '%"+self.__db_sanitize(key)+"%'")
+                tags.append("tags0"+mode+"'%"+self.__db_sanitize(key)+"%'")
             if "tags0_mode" in filter and filter["tags0_mode"] == 0x00:
                 mode = " OR "
-            elif "tags0_mode" in filter and filter["tags0_mode"] == 0x01:
-                mode = " AND "
             else:
                 mode = " AND "
             querys.append("("+mode.join(tags)+")")
 
         if "tags1" in filter:
             tags = []
+            if "tags1_mode" in filter and filter["tags1_mode"] == 0x02:
+                mode = " NOT LIKE "
+            else:
+                mode = " LIKE "
             for key in filter["tags1"]:
-                tags.append("tags1 LIKE '%"+self.__db_sanitize(key)+"%'")
+                tags.append("tags1"+mode+"'%"+self.__db_sanitize(key)+"%'")
             if "tags1_mode" in filter and filter["tags1_mode"] == 0x00:
                 mode = " OR "
-            elif "tags1_mode" in filter and filter["tags1_mode"] == 0x01:
-                mode = " AND "
             else:
                 mode = " AND "
             querys.append("("+mode.join(tags)+")")
 
         if "tags2" in filter:
             tags = []
+            if "tags2_mode" in filter and filter["tags2_mode"] == 0x02:
+                mode = " NOT LIKE "
+            else:
+                mode = " LIKE "
             for key in filter["tags2"]:
-                tags.append("tags2 LIKE '%"+self.__db_sanitize(key)+"%'")
+                tags.append("tags2"+mode+"'%"+self.__db_sanitize(key)+"%'")
             if "tags2_mode" in filter and filter["tags2_mode"] == 0x00:
                 mode = " OR "
-            elif "tags2_mode" in filter and filter["tags2_mode"] == 0x01:
-                mode = " AND "
             else:
                 mode = " AND "
             querys.append("("+mode.join(tags)+")")
 
         if "tags3" in filter:
             tags = []
+            if "tags3_mode" in filter and filter["tags3_mode"] == 0x02:
+                mode = " NOT LIKE "
+            else:
+                mode = " LIKE "
             for key in filter["tags3"]:
-                tags.append("tags3 LIKE '%"+self.__db_sanitize(key)+"%'")
+                tags.append("tags3"+mode+"'%"+self.__db_sanitize(key)+"%'")
             if "tags3_mode" in filter and filter["tags3_mode"] == 0x00:
                 mode = " OR "
-            elif "tags3_mode" in filter and filter["tags3_mode"] == 0x01:
-                mode = " AND "
             else:
                 mode = " AND "
             querys.append("("+mode.join(tags)+")")
 
         if "tags4" in filter:
             tags = []
+            if "tags4_mode" in filter and filter["tags4_mode"] == 0x02:
+                mode = " NOT LIKE "
+            else:
+                mode = " LIKE "
             for key in filter["tags4"]:
-                tags.append("tags4 LIKE '%"+self.__db_sanitize(key)+"%'")
+                tags.append("tags4"+mode+"'%"+self.__db_sanitize(key)+"%'")
             if "tags4_mode" in filter and filter["tags4_mode"] == 0x00:
                 mode = " OR "
-            elif "tags4_mode" in filter and filter["tags4_mode"] == 0x01:
-                mode = " AND "
             else:
                 mode = " AND "
             querys.append("("+mode.join(tags)+")")
 
         if "tags5" in filter:
             tags = []
+            if "tags5_mode" in filter and filter["tags5_mode"] == 0x02:
+                mode = " NOT LIKE "
+            else:
+                mode = " LIKE "
             for key in filter["tags5"]:
-                tags.append("tags5 LIKE '%"+self.__db_sanitize(key)+"%'")
+                tags.append("tags5"+mode+"'%"+self.__db_sanitize(key)+"%'")
             if "tags5_mode" in filter and filter["tags5_mode"] == 0x00:
                 mode = " OR "
-            elif "tags5_mode" in filter and filter["tags5_mode"] == 0x01:
-                mode = " AND "
             else:
                 mode = " AND "
             querys.append("("+mode.join(tags)+")")
 
         if "tags6" in filter:
             tags = []
+            if "tags6_mode" in filter and filter["tags6_mode"] == 0x02:
+                mode = " NOT LIKE "
+            else:
+                mode = " LIKE "
             for key in filter["tags6"]:
-                tags.append("tags6 LIKE '%"+self.__db_sanitize(key)+"%'")
+                tags.append("tags6"+mode+"'%"+self.__db_sanitize(key)+"%'")
             if "tags6_mode" in filter and filter["tags6_mode"] == 0x00:
                 mode = " OR "
-            elif "tags6_mode" in filter and filter["tags6_mode"] == 0x01:
-                mode = " AND "
             else:
                 mode = " AND "
             querys.append("("+mode.join(tags)+")")
 
         if "tags7" in filter:
             tags = []
+            if "tags7_mode" in filter and filter["tags7_mode"] == 0x02:
+                mode = " NOT LIKE "
+            else:
+                mode = " LIKE "
             for key in filter["tags7"]:
-                tags.append("tags7 LIKE '%"+self.__db_sanitize(key)+"%'")
+                tags.append("tags7"+mode+"'%"+self.__db_sanitize(key)+"%'")
             if "tags7_mode" in filter and filter["tags7_mode"] == 0x00:
                 mode = " OR "
-            elif "tags7_mode" in filter and filter["tags7_mode"] == 0x01:
-                mode = " AND "
             else:
                 mode = " AND "
             querys.append("("+mode.join(tags)+")")

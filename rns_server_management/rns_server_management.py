@@ -116,7 +116,7 @@ MSG_FIELD_CONTACT            = 0xA4
 MSG_FIELD_DATA               = 0xA5
 MSG_FIELD_DELETE             = 0xA6
 MSG_FIELD_EDIT               = 0xA7
-MSG_FIELD_GPS                = 0xA8
+MSG_FIELD_GROUP              = 0xA8
 MSG_FIELD_HASH               = 0xA9
 MSG_FIELD_ICON_MENU          = 0xAA
 MSG_FIELD_ICON_SRC           = 0xAB
@@ -2203,7 +2203,7 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
         fields = {}
         if CONFIG["telemetry"].getboolean("location_enabled"):
             try:
-               fields[MSG_FIELD_GPS] = {"lat": CONFIG["telemetry"].getfloat("location_lat"), "lon": CONFIG["telemetry"].getfloat("location_lon")}
+               fields[MSG_FIELD_LOCATION] = [CONFIG["telemetry"].getfloat("location_lat"), CONFIG["telemetry"].getfloat("location_lon")]
             except:
                 pass
         if CONFIG["telemetry"].getboolean("state_enabled"):
