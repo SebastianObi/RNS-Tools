@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 ##############################################################################################################
 #
-# Copyright (c) 2023 Sebastian Obele  /  obele.eu
+# Copyright (c) 2024 Sebastian Obele  /  obele.eu
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -58,8 +58,8 @@ import RNS.vendor.umsgpack as msgpack
 #### Global Variables - Configuration ####
 NAME = "RNS Announce Directory"
 DESCRIPTION = "Database for the collection of received announcements"
-VERSION = "0.0.1 (2023-01-12)"
-COPYRIGHT = "(c) 2023 Sebastian Obele  /  obele.eu"
+VERSION = "0.0.1 (2024-05-31)"
+COPYRIGHT = "(c) 2024 Sebastian Obele  /  obele.eu"
 PATH = os.path.expanduser("~")+"/.config/"+os.path.splitext(os.path.basename(__file__))[0]
 PATH_RNS = None
 
@@ -124,7 +124,7 @@ MSG_FIELD_VOICE              = 0xBF
 
 
 class AnnounceHandler:
-    def __init__(self, aspect_filter=None, callback=None, dest_type=None, hidden=False, hop_min=0, hop_max=0, hop_interfaces=[], recall_app_data=None, dest_deny=[]):
+    def __init__(self, aspect_filter=None, callback=None, dest_type=None, hidden=False, hop_min=0, hop_max=0, hop_interfaces=[], recall_app_data=None, dest_allow=[], dest_deny=[]):
         self.aspect_filter = aspect_filter
         self.callback = callback
         self.dest_type = dest_type
@@ -133,6 +133,7 @@ class AnnounceHandler:
         self.hop_max = hop_max
         self.hop_interfaces = hop_interfaces
         self.recall_app_data = recall_app_data
+        self.dest_allow = dest_allow
         self.dest_deny = dest_deny
 
 
@@ -191,6 +192,9 @@ class AnnounceHandler:
             if len(self.hop_interfaces) > 0 and hop_interface not in self.hop_interfaces:
                 return
 
+            if len(self.dest_allow) > 0 and destination_hash not in self.dest_allow:
+                return
+
             if len(self.dest_deny) > 0 and destination_hash in self.dest_deny:
                 return
 
@@ -203,7 +207,8 @@ class AnnounceHandler:
                     app_data=app_data,
                     hop_count=hop_count,
                     hop_interface=hop_interface,
-                    hop_dest=None
+                    hop_dest=None,
+                    aspect_filter=self.aspect_filter
                 )
 
         except Exception as e:
@@ -267,7 +272,7 @@ def db_load():
         db_indices()
 
 
-def db_announce_add(dest, dest_type=0x01, app_data="", hop_count=0, hop_interface="", hop_dest=None):
+def db_announce_add(dest, dest_type=0x01, app_data="", hop_count=0, hop_interface="", hop_dest=None, aspect_filter=""):
     db = db_connect()
     dbc = db.cursor()
 
@@ -707,6 +712,19 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
 
     RNS_ANNOUNCE_HANDLER = {}
 
+    dest_allow = []
+    if CONFIG.has_section("allow"):
+        for (key, val) in CONFIG.items("allow"):
+            try:
+                if len(val) == ((RNS.Reticulum.TRUNCATED_HASHLENGTH//8)*2)+2:
+                    val = val[1:-1]
+                if len(val) != ((RNS.Reticulum.TRUNCATED_HASHLENGTH//8)*2):
+                    continue
+                val = bytes.fromhex(val)
+                dest_allow.append(val)
+            except:
+                pass
+
     dest_deny = []
     if CONFIG.has_section("deny"):
         for (key, val) in CONFIG.items("deny"):
@@ -738,7 +756,7 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
                 hop_interfaces = []
             recall_app_data = config_get(CONFIG, section, "recall_app_data")
 
-            RNS_ANNOUNCE_HANDLER[section] = AnnounceHandler(section, db_announce_add, dest_type, hidden, hop_min, hop_max, hop_interfaces, recall_app_data, dest_deny)
+            RNS_ANNOUNCE_HANDLER[section] = AnnounceHandler(section, db_announce_add, dest_type, hidden, hop_min, hop_max, hop_interfaces, recall_app_data, dest_allow, dest_deny)
             RNS.Transport.register_announce_handler(RNS_ANNOUNCE_HANDLER[section])
 
             log("RNS - Added announce handler for '"+section+"'", LOG_DEBUG)

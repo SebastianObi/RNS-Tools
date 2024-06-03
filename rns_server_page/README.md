@@ -33,8 +33,6 @@ The full documentation is not yet available. Due to lack of time I can also not 
   
   pip3 install rns
   pip3 install pyserial netifaces
-  
-  pip3 install lxmf
   ```
 - Change the Reticulum configuration to suit your needs and use-case.
   ```bash

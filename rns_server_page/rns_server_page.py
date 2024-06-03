@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 ##############################################################################################################
 #
-# Copyright (c) 2023 Sebastian Obele  /  obele.eu
+# Copyright (c) 2024 Sebastian Obele  /  obele.eu
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -61,8 +61,8 @@ import RNS.vendor.umsgpack as umsgpack
 #### Global Variables - Configuration ####
 NAME = "RNS Server Page/File"
 DESCRIPTION = "Page/File hosting functions for RNS based apps"
-VERSION = "0.0.1 (2023-01-12)"
-COPYRIGHT = "(c) 2023 Sebastian Obele  /  obele.eu"
+VERSION = "0.0.1 (2024-05-31)"
+COPYRIGHT = "(c) 2024 Sebastian Obele  /  obele.eu"
 PATH = os.path.expanduser("~")+"/.config/"+os.path.splitext(os.path.basename(__file__))[0]
 PATH_RNS = None
 

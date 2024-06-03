@@ -6,16 +6,16 @@ Various small programs and tools which use the Reticulum Network Stack RNS from 
 For more information, see the detailed [README.md](rns_announce_directory).
 
 
+## rns_call_echo
+For more information, see the detailed [README.md](rns_call_echo).
+
+
 ## rns_server_blockchain
 For more information, see the detailed [README.md](rns_server_blockchain).
 
 
 ## rns_server_management
 For more information, see the detailed [README.md](rns_server_management).
-
-
-## rns_call_echo
-For more information, see the detailed [README.md](rns_call_echo).
 
 
 ## rns_server_page
