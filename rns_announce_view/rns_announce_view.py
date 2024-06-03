@@ -427,6 +427,7 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False,
 
     if len(RNS_ANNOUNCE_HANDLER) == 0:
         log("RNS - Error: No announce handlers connected", LOG_ERROR)
+        panic()
     else:
         log("RNS - Connected with "+str(len(RNS_ANNOUNCE_HANDLER))+" announce handlers", LOG_DEBUG)
 
