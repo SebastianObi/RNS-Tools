@@ -1,0 +1,2061 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-01 19:45+0100\n"
+"PO-Revision-Date: 2023-12-12 09:38\n"
+"Last-Translator: SebastianObi\n"
+"Language-Team: SebastianObi\n"
+"Language: ga\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#: infos
+#, fuzzy
+msgid "Software - Python"
+msgstr "Bogearraí - Python"
+
+#: infos
+#, fuzzy
+msgid "Software - Reticulum"
+msgstr "Bogearraí - Reticulum"
+
+#: infos
+#, fuzzy
+msgid "Software - System"
+msgstr "Bogearraí - Córas"
+
+#: infos
+#, fuzzy
+msgid "System - Drives & data storage"
+msgstr "Córas - Tiomántáin & Stóráil Sonraí"
+
+#: infos
+#, fuzzy
+msgid "System - General system information"
+msgstr "Córas - Faisnéis an Chórais Ghinearálta"
+
+#: infos
+#, fuzzy
+msgid "System - Interfaces"
+msgstr "Córas - Comhéadain"
+
+#: infos
+#, fuzzy
+msgid "System - Network connections"
+msgstr "Córas - naisc líonra"
+
+#: infos
+#, fuzzy
+msgid "System time"
+msgstr "Am córais"
+
+#: infos
+#, fuzzy
+msgid "Start time"
+msgstr "Am tosaithe"
+
+#: infos
+#, fuzzy
+msgid "Runtime"
+msgstr "Rith am"
+
+#: infos
+#, fuzzy
+msgid "Version"
+msgstr "Leagan"
+
+#: infos
+#, fuzzy
+msgid "Status:"
+msgstr "Stádas:"
+
+#: infos
+#, fuzzy
+msgid "Clients:"
+msgstr "Cliaint:"
+
+#: infos
+#, fuzzy
+msgid "Peers:"
+msgstr "Piaraí:"
+
+#: infos
+#, fuzzy
+msgid "Mode:"
+msgstr "Modh:"
+
+#: infos
+#, fuzzy
+msgid "Speed:"
+msgstr "Luas:"
+
+#: infos
+#, fuzzy
+msgid "Airtime:"
+msgstr "Am aer:"
+
+#: infos
+#, fuzzy
+msgid "Ch. Load:"
+msgstr "Ch. LOAD:"
+
+#: infos
+#, fuzzy
+msgid "Queued:"
+msgstr "Ciúine:"
+
+#: infos
+#, fuzzy
+msgid "announce"
+msgstr "cuir in iúl"
+
+#: infos
+#, fuzzy
+msgid "announces"
+msgstr "fógra"
+
+#: infos
+#, fuzzy
+msgid "Held:"
+msgstr "Ar siúl:"
+
+#: infos
+#, fuzzy
+msgid "Announces:"
+msgstr "Fógraíonn:"
+
+#: infos
+#, fuzzy
+msgid "Transport Instance"
+msgstr "Cás iompair"
+
+#: infos
+#, fuzzy
+msgid "Probe responder"
+msgstr "Freagróir a fhiosrú"
+
+#: infos
+#, fuzzy
+msgid "Uptime"
+msgstr "Am a chur"
+
+#: infos
+#, fuzzy
+msgid "[b]Size:[/b]"
+msgstr "[b] Méid: [/b]"
+
+#: infos
+#, fuzzy
+msgid "[b]Free:[/b]"
+msgstr "[b] saor in aisce: [/b]"
+
+#: infos
+#, fuzzy
+msgid "[b]Type:[/b]"
+msgstr "[b] Cineál: [/b]"
+
+#: infos
+#, fuzzy
+msgid "Platform"
+msgstr "Ardán"
+
+#: infos
+#, fuzzy
+msgid "Release"
+msgstr "Scaoilteoir"
+
+#: infos
+#, fuzzy
+msgid "Release name"
+msgstr "Ainm scaoilte"
+
+#: infos
+#, fuzzy
+msgid "Model"
+msgstr "Mionsamhail"
+
+#: infos
+#, fuzzy
+msgid "Hostname"
+msgstr "Óisteadh"
+
+#: infos
+#, fuzzy
+msgid "CPU load"
+msgstr "Ualach LAP"
+
+#: infos
+#, fuzzy
+msgid "CPU cores"
+msgstr "Croíleacáin cpu"
+
+#: infos
+#, fuzzy
+msgid "System temperature"
+msgstr "Teocht an chórais"
+
+#: infos
+#, fuzzy
+msgid "LAN"
+msgstr "Dearadh"
+
+#: infos
+#, fuzzy
+msgid "WiFi"
+msgstr "Wifi"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks"
+msgstr "Líonraí wifi"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks connected"
+msgstr "Líonraí wifi ceangailte"
+
+#: infos
+#, fuzzy
+msgid "USB"
+msgstr "USB"
+
+#: infos
+#, fuzzy
+msgid "Bluetooth"
+msgstr "Bluetooth"
+
+#: infos
+#, fuzzy
+msgid "Serial"
+msgstr "Idiruimhir"
+
+#: logs
+#, fuzzy
+msgid "FDN - Reticulum, Channel, Group, Shop"
+msgstr "FDN - Reticulum, Channel, Group, Shop"
+
+#: logs
+#, fuzzy
+msgid "Software"
+msgstr "Bogearraí"
+
+#: logs
+#, fuzzy
+msgid "Dhcpd - DHCP Server"
+msgstr "DHCPD - Freastalaí DHCP"
+
+#: logs
+#, fuzzy
+msgid "Dnsmasq - DNS Server"
+msgstr "DNSMASQ - Freastalaí DNS"
+
+#: logs
+#, fuzzy
+msgid "Hostapd - WiFi AP"
+msgstr "Hostapd - WiFi AP"
+
+#: logs
+#, fuzzy
+msgid "System"
+msgstr "Córas"
+
+#: logs
+#, fuzzy
+msgid "Auth - Authentication"
+msgstr "Auth - Fíordheimhniú"
+
+#: logs
+#, fuzzy
+msgid "Daemon - System daemons"
+msgstr "Daemon - Daemons Córais"
+
+#: logs
+#, fuzzy
+msgid "Fail - Failed login attempts"
+msgstr "Teip - iarrachtaí logála isteach teipthe"
+
+#: logs
+#, fuzzy
+msgid "Kern - Kernel"
+msgstr "Kern - Eithne"
+
+#: logs
+#, fuzzy
+msgid "Mail - Email-related events"
+msgstr "Ríomhphost - imeachtaí a bhaineann le ríomhphost"
+
+#: logs
+#, fuzzy
+msgid "Messages - General system events"
+msgstr "Teachtaireachtaí - Imeachtaí an Chórais Ghinearálta"
+
+#: logs
+#, fuzzy
+msgid "Syslog - System"
+msgstr "Syslog - Córas"
+
+#: logs
+#, fuzzy
+msgid "User - User activities"
+msgstr "Gníomhaíochtaí Úsáideora - Úsáideora"
+
+#: scripts
+#, fuzzy
+msgid "Backup & Restore"
+msgstr "Cúltaca & Athchóirigh"
+
+#: scripts
+#, fuzzy
+msgid "Examples"
+msgstr "Samplaí"
+
+#: scripts
+#, fuzzy
+msgid "Examples 1"
+msgstr "Samplaí 1"
+
+#: scripts
+#, fuzzy
+msgid "Examples 2"
+msgstr "Samplaí 2"
+
+#: scripts
+msgid "Examples - Test Configurations"
+msgstr ""
+
+#: scripts
+#, fuzzy
+msgid "Examples - User interface test functions"
+msgstr "Samplaí - Feidhmeanna Tástála Comhéadan Úsáideora"
+
+#: scripts
+#, fuzzy
+msgid "Reticulum - LoRadio & RNode"
+msgstr "Reticulum - Loradio & Rnode"
+
+#: scripts
+#, fuzzy
+msgid "Software - Installation"
+msgstr "Bogearraí - Suiteáil"
+
+#: scripts
+#, fuzzy
+msgid "Software - Uninstallation"
+msgstr "Bogearraí - Díshuiteáil"
+
+#: scripts
+#, fuzzy
+msgid "Software - Update"
+msgstr "Bogearraí - Nuashonrú"
+
+#: scripts
+#, fuzzy
+msgid "System - Configuration"
+msgstr "Córas - Cumraíocht"
+
+#: scripts
+#, fuzzy
+msgid "System - Update"
+msgstr "Córas - Nuashonrú"
+
+#: scripts
+#, fuzzy
+msgid "Management - Restart"
+msgstr "Bainistíocht - Atosaigh"
+
+#: scripts
+#, fuzzy
+msgid "System - Reboot"
+msgstr "Córas - atosaigh"
+
+#: scripts
+#, fuzzy
+msgid "System - Shutdown"
+msgstr "Córas - múchadh"
+
+#: scripts
+#, fuzzy
+msgid "System Clone - Creates a direct copy of the system drive"
+msgstr "Clón an Chórais - Cruthaíonn sé cóip dhíreach den tiomáint córais"
+
+#: scripts
+#, fuzzy
+msgid "System Image - Creates an image of the system drive"
+msgstr "Íomhá an Chórais - Cruthaíonn sé íomhá de thiomáint an chórais"
+
+#: scripts
+#, fuzzy
+msgid "Example - All input elements"
+msgstr "Sampla - Gach eilimint ionchuir"
+
+#: scripts
+#, fuzzy
+msgid "Example - Exit codes"
+msgstr "Sampla - Cóid Scoir"
+
+#: scripts
+#, fuzzy
+msgid "Example - Waiting time"
+msgstr "Sampla - Am feithimh"
+
+#: scripts
+#, fuzzy
+msgid "Info - Read out information"
+msgstr "Eolas - Faisnéis a léamh amach"
+
+#: scripts
+#, fuzzy
+msgid "Install - Installing the firmware"
+msgstr "Suiteáil - an Firmware a shuiteáil"
+
+#: scripts
+#, fuzzy
+msgid "Reset - Resetting the firmware"
+msgstr "Athshocraigh - Athshocrú an Firmware"
+
+#: scripts
+#, fuzzy
+msgid "Update - Updating the firmware"
+msgstr "Nuashonrú - An Firmware a nuashonrú"
+
+#: scripts
+#, fuzzy
+msgid "Bridge Matrix - Message bridge"
+msgstr "Maitrís droichid - Droichead Teachtaireachta"
+
+#: scripts
+#, fuzzy
+msgid "Console tools - Recommended tools"
+msgstr "Uirlisí Console - Uirlisí Molta"
+
+#: scripts
+#, fuzzy
+msgid "Filesystem tools - Recommended tools"
+msgstr "Uirlisí Córas Comhaid - Uirlisí Molta"
+
+#: scripts
+#, fuzzy
+msgid "Server Blockchain - Gateway for payment and other blockchain functions"
+msgstr ""
+"Blockchain Freastalaí - Tairseach le haghaidh íocaíochta agus feidhmeanna "
+"blocshuí eile"
+
+#: scripts
+#, fuzzy
+msgid "Server Channel - Hosting the channel functionality"
+msgstr "Cainéal Freastalaí - Feidhmiúlacht an Mhuir nIocht a Óstáil"
+
+#: scripts
+#, fuzzy
+msgid "Server Group - Hosting the group functionality"
+msgstr "Grúpa Freastalaí - Feidhmiúlacht an Ghrúpa a Óstáil"
+
+#: scripts
+#, fuzzy
+msgid "Server Page - Hosting the page functionality"
+msgstr "Leathanach Freastalaí - Feidhmiúlacht na Leathanach a Óstáil"
+
+#: scripts
+#, fuzzy
+msgid "Server Propagation - Hosting the propagation node functionality"
+msgstr "Iomadú Freastalaí - Óstáil a dhéanamh ar fheidhmiúlacht an nód iomadú"
+
+#: scripts
+#, fuzzy
+msgid "Server Shop - Hosting the shop functionality"
+msgstr "Siopa Freastalaí - Feidhmiúlacht an tsiopa a óstáil"
+
+#: scripts
+#, fuzzy
+msgid "Server - All hosting functions for channel, group, page, shop, etc."
+msgstr ""
+"Freastalaí - Gach feidhm óstála le haghaidh cainéal, grúpa, leathanach, "
+"siopa, srl."
+
+#: scripts
+#, fuzzy
+msgid "File system - Extend file system (Raspberry Pi)"
+msgstr "Córas comhaid - Córas comhaid a shíneadh (Raspberry Pi)"
+
+#: scripts
+#, fuzzy
+msgid "Password - Change operating system password"
+msgstr "Pasfhocal - Athraigh pasfhocal an chórais oibriúcháin"
+
+#: scripts
+#, fuzzy
+msgid "Update check - Check for new versions"
+msgstr "Seiceáil Nuashonraithe - Seiceáil le haghaidh leaganacha nua"
+
+#: scripts
+#, fuzzy
+msgid "Update cleanup - Cleaning up unneeded packages"
+msgstr "Glanadh Nuashonraithe - Pacáistí Uimhde a Ghlanadh Suas"
+
+#: scripts
+#, fuzzy
+msgid "Update Update - Update the system"
+msgstr "Nuashonrú Nuashonraithe - Nuashonraigh an córas"
+
+#: scripts
+#, fuzzy
+msgid "Update Upgrade - Distribution update of the system"
+msgstr "Uasghrádú Nuashonraithe - Nuashonrú Dáileacháin an Chórais"
+
+#: scripts
+#, fuzzy
+msgid "Installing.."
+msgstr "Suiteáil .."
+
+#: scripts
+#, fuzzy
+msgid "Uninstalling..."
+msgstr "Díshuiteáil ..."
+
+#: scripts
+#, fuzzy
+msgid "Updating..."
+msgstr "Nuashonrú ..."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The management server will restart. You must reconnect to re-establish a "
+"connection."
+msgstr ""
+"Atosaíonn an freastalaí bainistíochta. Ní mór duit athcheangal a dhéanamh le "
+"nasc a athbhunú."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will reboot. You must reconnect to re-establish a connection."
+msgstr ""
+"Atosaigh an córas. Ní mór duit athcheangal a dhéanamh le nasc a athbhunú."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will shut down. You must then start it manually to re-establish a "
+"connection."
+msgstr ""
+"Dúnfar an córas. Ní mór duit ansin é a thosú de láimh chun nasc a athbhunú."
+
+#: scripts
+#, fuzzy
+msgid "No installed services found. Exiting."
+msgstr "Níor aimsíodh aon seirbhísí suiteáilte. Ag imeacht."
+
+#: scripts
+#, fuzzy
+msgid "Select a service:"
+msgstr "Roghnaigh seirbhís:"
+
+#: scripts
+#, fuzzy
+msgid "Enter the name for the service: (only a-z 0-9)"
+msgstr "Iontráil ainm na Seirbhíse: (Amháin A-Z 0-9)"
+
+#: scripts
+#, fuzzy
+msgid "Enter the display name for the application:"
+msgstr "Cuir isteach an t -ainm taispeána don iarratas:"
+
+#: scripts
+#, fuzzy
+msgid "Invalid choice!"
+msgstr "Rogha neamhbhailí!"
+
+#: scripts
+#, fuzzy
+msgid "Update successfully completed!"
+msgstr "Nuashonrú críochnaithe go rathúil!"
+
+#: scripts
+#, fuzzy
+msgid "Uninstallation successfully completed!"
+msgstr "Díshuiteáil a chríochnú go rathúil!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a shop successfully completed!"
+msgstr "Suiteáil siopa a bhí críochnaithe go rathúil!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of an echo server successfully completed!"
+msgstr "Suiteáil freastalaí macallaithe go rathúil!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a channel successfully completed!"
+msgstr "Suiteáil cainéal críochnaithe go rathúil!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a group successfully completed!"
+msgstr "Suiteáil grúpa a críochnaíodh go rathúil!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a propagation node successfully completed!"
+msgstr "Suiteáil nód iomadúcháin críochnaithe go rathúil!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a provisioning node successfully completed!"
+msgstr "Suiteáil nód soláthair a críochnaíodh go rathúil!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a page successfully completed!"
+msgstr "Suiteáil leathanach a críochnaíodh go rathúil!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a blockchain node successfully completed!"
+msgstr "Suiteáil nód blocshuímh críochnaithe go rathúil!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a message bridge successfully completed!"
+msgstr "Suiteáil droichead teachtaireachta críochnaithe go rathúil!"
+
+#: scripts
+#, fuzzy
+msgid ""
+"No further configuration is necessary. Connect to the shop to make all the "
+"necessary settings in the shop app. You should find the new shop in the "
+"announcement list."
+msgstr ""
+"Níl aon chumraíocht eile riachtanach. Ceangail leis an siopa chun na "
+"socruithe riachtanacha go léir a dhéanamh san aip siopa. Ba chóir duit an "
+"siopa nua a aimsiú sa liosta fógraíochta."
+
+#: scripts
+#, fuzzy
+msgid ""
+"To make further settings, please edit the corresponding configuration files "
+"in the following folder:"
+msgstr ""
+"Chun socruithe breise a dhéanamh, cuir na comhaid chumraíochta "
+"chomhfhreagracha san fhillteán seo a leanas in eagar:"
+
+#: scripts
+#, fuzzy
+msgid "Then you must restart the following service:"
+msgstr "Ansin caithfidh tú an tseirbhís seo a leanas a atosú:"
+
+#: services
+#, fuzzy
+msgid "All"
+msgstr "Uile"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Hit:"
+msgstr "Buail:"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading package lists"
+msgstr "Liostaí Pacáiste Léitheoireachta"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Building dependency tree"
+msgstr "Crann spleáchais tógála"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading state information"
+msgstr "Faisnéis Stáit Léitheoireachta"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading database"
+msgstr "Bunachar Sonraí Léitheoireachta"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Calculating upgrade"
+msgstr "Uasghrádú a ríomh"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Waiting for headers"
+msgstr "Ag fanacht le ceanntásca"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Working"
+msgstr "Ag obair"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "All packages are up to date"
+msgstr "Tá gach pacáiste cothrom le dáta"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Done"
+msgstr "Déanta"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"The following packages were automatically installed and are no longer "
+"required"
+msgstr ""
+"Suiteáladh na pacáistí seo a leanas go huathoibríoch agus níl gá leo a "
+"thuilleadh"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Use"
+msgstr "Úsáid a bhaint as"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove them"
+msgstr "chun iad a bhaint"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "upgraded"
+msgstr "uasghrádaithe"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "newly installed"
+msgstr "suiteáilte nua"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove and"
+msgstr "a bhaint agus"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "not upgraded"
+msgstr "Gan uasghrádú"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Connected to"
+msgstr "Ceangailte le"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be REMOVED"
+msgstr "Bainfear na pacáistí seo a leanas"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "After this operation"
+msgstr "Tar éis na hoibríochta seo"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "disk space will be freed"
+msgstr "Scaoilfear spás diosca"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Do you want to continue?"
+msgstr "Ar mhaith leat leanúint ar aghaidh?"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Progress"
+msgstr "Dul chun cinn"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Removing"
+msgstr "Barr"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Processing triggers for"
+msgstr "Triggers próiseála do"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be upgraded"
+msgstr "Déanfar na pacáistí seo a leanas a uasghrádú"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading changelogs"
+msgstr "Léitheoireacht Léitheoireachta"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preconfiguring packages"
+msgstr "Pacáistí réamhchumraithe"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preparing to unpack"
+msgstr "Ag ullmhú chun díphacáil a dhéanamh"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "files and directories currently installed"
+msgstr "comhaid agus eolairí suiteáilte faoi láthair"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Unpacking"
+msgstr "Díphacáistiú"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Setting up"
+msgstr "Eagrú"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "over"
+msgstr "i gcaitheamh"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Installing new version of config file"
+msgstr "Leagan nua den chomhad config a shuiteáil"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "A new version"
+msgstr "Leagan nua"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "of configuration file"
+msgstr "de chomhad cumraíochta"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"is available, but the version installed currently has been locally modified"
+msgstr ""
+"ar fáil, ach tá an leagan atá suiteáilte faoi láthair athraithe go háitiúil"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error, exiting now."
+msgstr "Earráid, ag imeacht anois."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: You need to run this script as"
+msgstr "Earráid: Ní mór duit an script seo a rith mar"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: This script can't be piped!"
+msgstr "Earráid: Ní féidir an script seo a phíopáil!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "failed!"
+msgstr "Theip ar!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Finished!"
+msgstr "Críochnaithe!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating packet repository"
+msgstr "Stór Paicéid a nuashonrú"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating system"
+msgstr "Córas nuashonraithe"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Cleanup system"
+msgstr "Córas glanta"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Installing"
+msgstr "Suiteáil"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating"
+msgstr "Nuashonrú"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Expanding Filesystem"
+msgstr "Córas comhaid a leathnú"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Do you want to proceed?"
+msgstr "Ar mhaith leat dul ar aghaidh?"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Ok, proceeding..."
+msgstr "Ceart go leor, ag dul ar aghaidh ..."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "No, exiting now."
+msgstr "Níl, ag imeacht anois."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Please answer yes or no."
+msgstr "Freagair tá nó níl."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing path"
+msgstr "Conair Athrú"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Downloading"
+msgstr "Íoslódáil"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/owner"
+msgstr "Ceadanna/úinéir comhaid a athrú"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/right"
+msgstr "Ceadanna comhaid a athrú/ar dheis"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "To activate the changes, the system must be rebooted."
+msgstr "Chun na hathruithe a ghníomhachtú, ní mór an córas a atosú."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Could not find any user, exiting now."
+msgstr "Níorbh fhéidir teacht ar aon úsáideoir, ag imeacht anois."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Which user would you like to edit?"
+msgstr "Cén úsáideoir ar mhaith leat a chur in eagar?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Define the password for user"
+msgstr "Sainmhínigh an focal faire don úsáideoir"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Do you want to edit another user?"
+msgstr "Ar mhaith leat úsáideoir eile a chur in eagar?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "New password"
+msgstr "Focal Faire Nua"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Retype new password"
+msgstr "Pasfhocal nua a athchruthú"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "No password has been supplied."
+msgstr "Níor soláthraíodh aon phasfhocal."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Sorry, passwords do not match."
+msgstr "Tá brón orm, ní mheaitseálann pasfhocail."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Updating password"
+msgstr "Pasfhocal a nuashonrú"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Authentication token manipulation error"
+msgstr "Earráid ionramháil chomhartha fíordheimhnithe"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "password unchanged"
+msgstr "pasfhocal gan athrú"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "user"
+msgstr "úsáideoir"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "does not exist"
+msgstr "Gan a bheith ann"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Please connect the destination device you wish to use."
+msgstr "Ceangail an gléas ceann scríbe is mian leat a úsáid le do thoil."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Hit enter when it is connected."
+msgstr "Buail isteach nuair a bhíonn sé ceangailte."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find any devices, exiting now."
+msgstr "Níorbh fhéidir aon fheistí a aimsiú, ag imeacht anois."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find specified device, exiting now."
+msgstr "Níorbh fhéidir gléas sonraithe a fháil, ag imeacht anois."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "What is your destination device?"
+msgstr "Cad é do ghléas ceann scríbe?"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Ok, using device:"
+msgstr "Ceart go leor, ag baint úsáide as gléas:"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "target is busy"
+msgstr "Tá an sprioc gnóthach"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating image file"
+msgstr "Comhad Íomhá a Chruthú"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image file"
+msgstr "Comhad Íomhá Laghdaithe"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "copied"
+msgstr "cóipeáil"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records in"
+msgstr "Taifid i"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records out"
+msgstr "taifid amach"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Gathering data"
+msgstr "Sonraí a bhailiú"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating new"
+msgstr "NUA a chruthú"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Checking filesystem"
+msgstr "Córas comhaid a sheiceáil"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "non-contiguous"
+msgstr "neamh-chontúirteach"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks"
+msgstr "bloic"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking filesystem"
+msgstr "Córas comhaid a laghdú"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Resizing the filesystem on"
+msgstr "An córas comhaid a athrú ar"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Begin pass"
+msgstr "Tús a chur le pas"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Relocating blocks"
+msgstr "Bloic a athlonnú"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Scanning inode table"
+msgstr "Tábla Inode Scanadh"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Updating inode references"
+msgstr "Tagairtí Inode a nuashonrú"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "The filesystem on"
+msgstr "An córas comhaid ar"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "is now"
+msgstr "anois"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks long"
+msgstr "Bloic fada"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image"
+msgstr "Íomhá ag crapadh"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Using gzip on the shrunk image"
+msgstr "Ag baint úsáide as gzip ar an íomhá shrunk"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrunk"
+msgstr "Loic"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "from"
+msgstr "as"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "to"
+msgstr "chun"
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid ""
+"Please connect the destination device (sd-card, usb-stick) you wish to use."
+msgstr ""
+"Le do thoil, ceangail an gléas ceann scríbe (SD-Cárta, USB-stick) is mian "
+"leat a úsáid."
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid "WARNING: All data on the destination device will be deleted!"
+msgstr "RABHADH: Scriosfar na sonraí go léir ar an bhfeiste cinn scríbe!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting frequency is"
+msgstr "Tá minicíocht tuairiscithe raidió"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting bandwidth is"
+msgstr "Tá bandaleithead tuairiscithe raidió"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting TX power is"
+msgstr "Tuairisciú raidió tá cumhacht TX"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting spreading factor is"
+msgstr "Tá fachtóir leathadh tuairiscithe raidió"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting coding rate is"
+msgstr "Tá ráta códaithe tuairiscithe raidió"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware initialisation error"
+msgstr "Earráid Tosaithe Crua -earraí"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware TX error"
+msgstr "Earráid TX Crua -earraí"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware error"
+msgstr "earráid chrua -earraí"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "serial read timeout"
+msgstr "Sraithuimhir Timeout"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while detecting hardware for"
+msgstr "Tharla earráid IO agus crua -earraí á bhrath le haghaidh"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring frequency for"
+msgstr "Tharla earráid IO agus minicíocht á chumrú do"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring bandwidth for"
+msgstr "Tharla earráid IO agus bandaleithead á chumrú le haghaidh"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring TX power for"
+msgstr "Tharla earráid IO agus cumhacht TX á chumrú do"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring spreading factor for"
+msgstr "Tharla earráid IO agus an fachtóir scaipthe á chumrú"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring coding rate for"
+msgstr "Tharla earráid IO agus ráta códaithe á chumrú do"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state for"
+msgstr "Tharla earráid IO agus stát raidió á chumrú do"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring device mode"
+msgstr "Tharla earráid IO agus mód na feiste á chumrú"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while wiping EEPROM"
+msgstr "Tharla earráid IO agus Eeprom á ghlanadh"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while restarting device"
+msgstr "Tharla earráid IO agus an gléas á atosú"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while writing EEPROM"
+msgstr "Tharla earráid IO agus Eeprom á scríobh"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state"
+msgstr "Tharla earráid IO agus stát raidió á chumrú"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download EEPROM from device. Is a valid firmware installed?"
+msgstr ""
+"Níorbh fhéidir Eeprom a íoslódáil ón bhfeiste. An bhfuil firmware bailí "
+"suiteáilte?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum mismatch"
+msgstr "Neamh -chomhoiriúnú seiceála eeprom"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum correct"
+msgstr "Eeprom checksum ceart"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load local signing key"
+msgstr "Níorbh fhéidir an eochair sínithe áitiúil a luchtú"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize local signing key"
+msgstr "Níorbh fhéidir an eochair sínithe áitiúil a dhí -uisciú"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validated"
+msgstr "Síniú gléas bailíochtaithe"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validation failed"
+msgstr "Theip ar bhailíochtú sínithe gléas"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid EEPROM data, could not parse device EEPROM."
+msgstr "Níorbh fhéidir le sonraí neamhbhailí EEPROM, gléas EEPROM a pharsáil."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Hello!\n"
+"\n"
+"This guide will help you install the RNode firmware on supported\n"
+"and homebrew devices. Please connect the device you wish to set\n"
+"up now."
+msgstr ""
+"Dia dhuit! \n"
+"\n"
+" Cuideoidh an treoir seo leat an Firmware RNODE a shuiteáil ar thacaíocht \n"
+" agus gléasanna Homebrew. Ceangail an gléas is mian leat a shocrú le do "
+"thoil \n"
+" suas anois."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please connect the device you wish to setup now."
+msgstr "Ceangail an gléas is mian leat a chur ar bun anois."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find any port, exiting now."
+msgstr "Níorbh fhéidir teacht ar aon chalafort, ag imeacht anois."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Detected serial ports:"
+msgstr "Calafoirt srathacha braite:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What serial port is your device connected to?"
+msgstr "Cén calafort srathach a bhfuil do ghléas ceangailte leis?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That port does not exist, exiting now."
+msgstr "Níl an calafort sin ann, ag imeacht anois."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not select port, exiting now."
+msgstr "Níorbh fhéidir an calafort a roghnú, ag imeacht anois."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Ok, using device on"
+msgstr "Ceart go leor, ag úsáid feiste ar"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "using device on"
+msgstr "Ag baint úsáide as gléas ar"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find specified port"
+msgstr "Níorbh fhéidir calafort sonraithe a fháil"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "exiting now"
+msgstr "ag imeacht anois"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Probing device"
+msgstr "Gléas Tráchtaithe"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not open the specified serial port. The contained exception was:"
+msgstr ""
+"Níorbh fhéidir an calafort sraitheach sonraithe a oscailt. Ba é an eisceacht "
+"a bhí ann ná:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No answer from device"
+msgstr "Gan freagra ón bhfeiste"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Trying to read EEPROM"
+msgstr "Ag iarraidh Eeprom a léamh"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device is already installed and provisioned. No further action will\n"
+"be taken. If you wish to completely reinstall this device, you must first\n"
+"wipe the current EEPROM. See the help for more info.\n"
+"\n"
+"Exiting now."
+msgstr ""
+"Tá an gléas seo suiteáilte agus curtha ar fáil cheana féin. Ní dhéanfaidh "
+"aon ghníomh breise \n"
+" a thógáil. Más mian leat an gléas seo a athchur go hiomlán, caithfidh tú ar "
+"dtús \n"
+" Scrios an Eeprom reatha. Féach an chabhair le haghaidh tuilleadh eolais. \n"
+"\n"
+" Ag imeacht anois."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"The device seems to have an RNode firmware installed, but it was not\n"
+"provisioned correctly, or it is corrupt. We are going to reinstall the\n"
+"correct firmware and provision it."
+msgstr ""
+"Is cosúil go bhfuil firmware RNode suiteáilte ag an bhfeiste, ach ní raibh "
+"sé \n"
+" curtha ar fáil i gceart, nó tá sé truaillithe. Táimid ag dul chun an \n"
+" Firmware agus soláthar ceart é."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "It looks like this is a fresh device with no RNode firmware."
+msgstr ""
+"Tá an chuma air gur gléas úr é seo nach bhfuil aon fhirmware Rnode ann."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of device is this?"
+msgstr "Cén cineál feiste é seo?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Important! Using RNode firmware on"
+msgstr "Tábhachtach! Ag baint úsáide as Firmware Rnode ar"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"should currently be\n"
+"considered experimental. It is not intended for production or critical use.\n"
+"The currently supplied firmware is provided AS-IS as a courtesey to those\n"
+"who would like to experiment with it. Hit enter to continue."
+msgstr ""
+"Ba chóir a bheith faoi láthair \n"
+" a mheastar a bheith turgnamhach. Níl sé beartaithe le haghaidh táirgthe ná "
+"úsáid chriticiúil. \n"
+" Soláthraítear an Firmware a sholáthraítear faoi láthair mar atá mar "
+"chúirtéis dóibh siúd \n"
+" ar mhaith leo triail a bhaint as. Buail isteach chun leanúint ar aghaidh."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That device type does not exist, exiting now."
+msgstr "Níl an cineál feiste sin ann, ag imeacht anois."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of microcontroller is your board based on?"
+msgstr "Cén cineál microcontroller a bhfuil do bhord bunaithe air?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That MCU type does not exist, exiting now."
+msgstr "Níl an cineál MCU sin ann, ag imeacht anois."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What transceiver module does your board use?"
+msgstr "Cén modúl transceiver a úsáideann do bhord?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That transceiver type does not exist, exiting now."
+msgstr "Níl an cineál tarchuradóra sin ann, ag imeacht anois."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What model is this RNode?"
+msgstr "Cén tsamhail atá sa rnode seo?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That model does not exist, exiting now."
+msgstr "Níl an tsamhail sin ann, ag imeacht anois."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this T-Beam for?"
+msgstr "Cén banna a bhfuil an T-bíoma seo ann?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That band does not exist, exiting now."
+msgstr "Níl an banna sin ann, ag imeacht anois."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this LoRa32 for?"
+msgstr "Cén banna a bhfuil an lora32 seo ann?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this Heltec LoRa32 for?"
+msgstr "Cén banna a bhfuil an Heltec Lora32 seo ann?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of ESP32 board is this?"
+msgstr "Cén cineál bord ESP32 é seo?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That ESP32 board does not exist, exiting now."
+msgstr "Nach bhfuil an bord ESP32 ann, ag imeacht anois."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Sorry, no firmware for your board currently exists.\n"
+"Help making it a reality by contributing code or by\n"
+"donating to the project."
+msgstr ""
+"Tá brón orm, níl aon fhirmware ann do do bhord faoi láthair. \n"
+" Cabhrú leat é a thabhairt i gcrích trí chód a chur leis nó trí \n"
+" ag tabhairt don tionscadal."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Ok, that should be all the information we need. Please confirm the "
+"following\n"
+"summary before proceeding. In the next step, the device will be flashed and\n"
+"provisioned, so make that you are satisfied with your choices."
+msgstr ""
+"OK, ba chóir gurb é sin an t -eolas go léir a theastaíonn uainn. Deimhnigh "
+"an méid seo a leanas le do thoil \n"
+" Achoimre sula dtéann tú ar aghaidh. Sa chéad chéim eile, déanfar an gléas a "
+"fhlasadh agus \n"
+" Soláthraithe, mar sin déan go bhfuil tú sásta le do chuid roghanna."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial port"
+msgstr "Calafort sraith"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device type"
+msgstr "Cineál Gléas"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device MCU"
+msgstr "Gléas MCU"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file"
+msgstr "Comhad daingne"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Is the above correct?"
+msgstr "An bhfuil an méid thuas ceart?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "OK, aborting now."
+msgstr "Ceart go leor, ag ginmhilleadh anois."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device connected"
+msgstr "Gléas ceangailte"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Current firmware version:"
+msgstr "Leagan Firmware reatha:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Got invalid response while detecting device"
+msgstr "Fuair tú freagra neamhbhailí agus gléas á bhrath"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download required firmware file. The contained exception was:"
+msgstr ""
+"Níorbh fhéidir an comhad Firmware riachtanach a íoslódáil. Ba é an eisceacht "
+"a bhí ann ná:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial module could not be found"
+msgstr "Níorbh fhéidir modúl srathach a fháil"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs pyserial to work.\n"
+"You can install it with: pip3 install pyserial"
+msgstr ""
+"Teastaíonn pyserial chun obair a dhéanamh ar fhóntas cumraíochta RNODE. \n"
+" Is féidir leat é a shuiteáil le: pip3 suiteáil pyserial"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cryptography module could not be found"
+msgstr "Níorbh fhéidir modúl cripteagrafaíochta a fháil"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs the cryptography module to work.\n"
+"You can install it with: pip3 install cryptography"
+msgstr ""
+"Teastaíonn an modúl cripteagrafaíochta le hoibriú ó fhóntas cumraíochta "
+"RNODE. \n"
+" Is féidir leat é a shuiteáil le: pip3 suiteáil cripteagrafaíocht"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Downloading latest frimware from GitHub"
+msgstr "Firmware is déanaí a íoslódáil ó GitHub"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware download completed"
+msgstr "Íoslódáil Firmware Críochnaithe"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware extracted"
+msgstr "Firmware a bhaintear"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not extract firmware from downloaded zip file"
+msgstr "Níorbh fhéidir Firmware a bhaint as comhad zip íoslódáilte"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing RNode firmware to device on"
+msgstr "Firmware rnode flashing go gléas ar"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Done flashing"
+msgstr "Arna dhéanamh ag splancadh"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Waiting for ESP32 reset"
+msgstr "Ag fanacht le ESP32 a athshocrú"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while flashing"
+msgstr "Earráid agus tú ag splancadh"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file not found"
+msgstr "Níor aimsíodh comhad firmware"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download firmware package"
+msgstr "Níorbh fhéidir pacáiste firmware a íoslódáil"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The contained exception was:"
+msgstr "Ba é an eisceacht a bhí ann ná:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Skipping online check, using local firmware file:"
+msgstr ""
+"Seiceáil ar líne a scipeáil, ag baint úsáide as comhad Firmware áitiúil:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load signing key"
+msgstr "Níorbh fhéidir an eochair sínithe a luchtú"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize signing key"
+msgstr "Níorbh fhéidir an eochair sínithe a dhí -úsáid"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Generating a new signing key"
+msgstr "Eochair sínithe nua a ghiniúint"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Signing key already exists, not overwriting!\n"
+"Manually delete this key to create a new one."
+msgstr ""
+"Tá an eochair sínithe ann cheana féin, ní ró -scríobh! \n"
+" Scrios an eochair seo de láimh chun ceann nua a chruthú."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The firmware directory does not exist, can't write key!"
+msgstr "Níl an t -eolaire Firmware ann, ní féidir leis an eochair a scríobh!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Extracting firmware"
+msgstr "Firmware a bhaint"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Opening serial port"
+msgstr "Calafort sraitheach a oscailt"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Serial port opened, but RNode did not respond. Is a valid firmware installed?"
+msgstr ""
+"Osclaíodh calafort srathach, ach níor fhreagair Rnode. An bhfuil firmware "
+"bailí suiteáilte?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"WARNING: EEPROM is being wiped! Power down device NOW if you do not want "
+"this!"
+msgstr ""
+"RABHADH: Tá EEPROM á scriosadh! Feiste cumhachta síos anois mura bhfuil tú "
+"ag iarraidh é seo!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Reading EEPROM"
+msgstr "Ag léamh Eeprom"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "ERROR: No firmware found for this board. Cannot update."
+msgstr ""
+"Earráid: Ní bhfuarthas aon fhirmware don bhord seo. Ní féidir nuashonrú a "
+"dhéanamh."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cannot update device firmware"
+msgstr "Ní féidir Firmware Gléas a nuashonrú"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Updating RNode firmware for device on"
+msgstr "Firmware Rnode a nuashonrú le haghaidh feiste ar"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing new firmware completed"
+msgstr "Firmware nua flashing críochnaithe"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update completed successfully"
+msgstr "Nuashonrú Firmware críochnaithe go rathúil"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while flashing the new firmware, exiting now."
+msgstr "Tharla earráid agus an firmware nua á splancadh, ag imeacht anois."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while updating firmware"
+msgstr "Earráid agus Firmware á nuashonrú"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update file not found"
+msgstr "Níor aimsíodh comhad nuashonraithe firmware"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM contents"
+msgstr "Clár Eeprom"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM backup written to"
+msgstr "Cúltaca Eeprom scríofa chuig"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"EEPROM was successfully downloaded from device,\n"
+"but file could not be written to disk."
+msgstr ""
+"Íoslódáladh Eeprom go rathúil ón bhfeiste, \n"
+" Ach níorbh fhéidir an comhad a scríobh chuig diosca."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device info:"
+msgstr "Eolas Gléas:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Product"
+msgstr "Toradh"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature"
+msgstr "Síniú gléas"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware version"
+msgstr "Leagan daingne"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Hardware revision"
+msgstr "Athbhreithniú crua -earraí"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial number"
+msgstr "Sraithuimhir"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency range"
+msgstr "Raon minicíochta"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Max TX power"
+msgstr "Max Tx Power"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Manufactured"
+msgstr "Monaraithe"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device mode"
+msgstr "Modh gléas"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency"
+msgstr "Minicíocht"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth"
+msgstr "Leithead banda"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "TX power"
+msgstr "Cumhacht TX"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor"
+msgstr "Fachtóir scaipthe"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate"
+msgstr "Ráta códaithe"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "On-air bitrate"
+msgstr "Giotán ar an aer"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM is invalid, no further information available"
+msgstr "Tá EEPROM neamhbhailí, níl aon fhaisnéis bhreise ar fáil"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM bootstrap was requested, but a valid EEPROM was already present."
+msgstr ""
+"Iarradh ar Eeprom Bootstrap, ach bhí EEPROM bailí i láthair cheana féin."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No changes are being made."
+msgstr "Níl aon athruithe á ndéanamh."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Clearing old EEPROM, this will take about 15 seconds"
+msgstr "Ag glanadh sean -eeprom, tógfaidh sé seo thart ar 15 soicind"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not create device serial number, exiting"
+msgstr "Níorbh fhéidir sraithuimhir feiste a chruthú, ag imeacht"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Loading signing key"
+msgstr "Eochair sínithe a luchtú"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while signing EEPROM"
+msgstr "Earráid agus Eeprom á shíniú"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bootstrapping device EEPROM"
+msgstr "Feiste bootstrapping eeprom"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM written! Validating"
+msgstr "Eeprom scríofa! Bailíochtú"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM Bootstrapping successful!"
+msgstr "Eeprom bootstrapping rathúil!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "RNode Firmware autoinstallation complete!"
+msgstr "RNODE Firmware AutoInstallation Críochnaithe!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "To use your device with Reticulum, read the documetation at:"
+msgstr "Chun do ghléas a úsáid le Reticulum, léigh an doiciméadú ag:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Thank you for using this utility! Please help the project by\n"
+"contributing code and reporting bugs, or by donating!"
+msgstr ""
+"Go raibh maith agat as an bhfóntas seo a úsáid! Cuidigh le do thoil leis an "
+"tionscadal le \n"
+" cód a chur le chéile agus bugs tuairiscithe, nó trí bhronnadh!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Your contributions and donations directly further the realisation\n"
+"of truly open, free and resilient communications systems."
+msgstr ""
+"Cuireann do chuid ranníocaíochtaí agus síntiúis an réadú chun cinn go "
+"díreach \n"
+" de chórais chumarsáide atá oscailte, saor in aisce agus athléimneach."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "WARNING: Could not backup device EEPROM to disk"
+msgstr "RABHADH: Níorbh fhéidir leis an ngléas cúltaca EEPROM chun diosca"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM was written, but validation failed. Check your settings."
+msgstr "Scríobhadh EEPROM, ach theip ar bhailíochtú. Seiceáil do shocruithe."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while writing EEPROM. The contained exception was:"
+msgstr "Tharla earráid agus Eeprom á scríobh. Ba é an eisceacht a bhí ann ná:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid data specified, cancelling EEPROM write"
+msgstr "Sonraí neamhbhailí sonraithe, ag cealú eeprom scríobh"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to normal (host-controlled) operating mode"
+msgstr "Gléas atá leagtha síos go gnáth-mhodh oibriúcháin (faoi rialú óstach)"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please input startup configuration:"
+msgstr "Cuir cumraíocht tosaithe isteach le do thoil:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency in Hz:"
+msgstr "Minicíocht i Hz:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth in Hz:"
+msgstr "Bandaleithead i HZ:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor:"
+msgstr "Fachtóir scaipthe:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate:"
+msgstr "Ráta códaithe:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to TNC operating mode"
+msgstr "Gléas atá leagtha síos chuig modh oibriúcháin TNC"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device contains a valid firmware, but EEPROM is invalid.\n"
+"Probably the device has not been initialised, or the EEPROM has been "
+"erased.\n"
+"Please correctly initialise the device and try again!"
+msgstr ""
+"Tá firmware bailí sa fheiste seo, ach tá EEPROM neamhbhailí. \n"
+" Is dócha nár cuireadh tús leis an bhfeiste, nó gur scriosadh an EEPROM. \n"
+" Cuir tús leis an bhfeiste i gceart agus bain triail eile as!"

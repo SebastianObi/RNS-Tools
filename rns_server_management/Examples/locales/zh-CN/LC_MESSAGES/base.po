@@ -1,0 +1,2019 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-01 19:45+0100\n"
+"PO-Revision-Date: 2023-12-12 09:41\n"
+"Last-Translator: SebastianObi\n"
+"Language-Team: SebastianObi\n"
+"Language: zh-CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#: infos
+#, fuzzy
+msgid "Software - Python"
+msgstr "软件-Python"
+
+#: infos
+#, fuzzy
+msgid "Software - Reticulum"
+msgstr "软件 - 网状"
+
+#: infos
+#, fuzzy
+msgid "Software - System"
+msgstr "软件 - 系统"
+
+#: infos
+#, fuzzy
+msgid "System - Drives & data storage"
+msgstr "系统 - 驱动器和数据存储"
+
+#: infos
+#, fuzzy
+msgid "System - General system information"
+msgstr "系统 - 一般系统信息"
+
+#: infos
+#, fuzzy
+msgid "System - Interfaces"
+msgstr "系统 - 接口"
+
+#: infos
+#, fuzzy
+msgid "System - Network connections"
+msgstr "系统 - 网络连接"
+
+#: infos
+#, fuzzy
+msgid "System time"
+msgstr "系统时间"
+
+#: infos
+#, fuzzy
+msgid "Start time"
+msgstr "开始时间"
+
+#: infos
+#, fuzzy
+msgid "Runtime"
+msgstr "运行"
+
+#: infos
+#, fuzzy
+msgid "Version"
+msgstr "版本"
+
+#: infos
+#, fuzzy
+msgid "Status:"
+msgstr "地位：:"
+
+#: infos
+#, fuzzy
+msgid "Clients:"
+msgstr "客户：:"
+
+#: infos
+#, fuzzy
+msgid "Peers:"
+msgstr "同伴：:"
+
+#: infos
+#, fuzzy
+msgid "Mode:"
+msgstr "模式：:"
+
+#: infos
+#, fuzzy
+msgid "Speed:"
+msgstr "速度：:"
+
+#: infos
+#, fuzzy
+msgid "Airtime:"
+msgstr "通话时间：:"
+
+#: infos
+#, fuzzy
+msgid "Ch. Load:"
+msgstr "ch。 加载：:"
+
+#: infos
+#, fuzzy
+msgid "Queued:"
+msgstr "排队：:"
+
+#: infos
+#, fuzzy
+msgid "announce"
+msgstr "宣布"
+
+#: infos
+#, fuzzy
+msgid "announces"
+msgstr "宣布"
+
+#: infos
+#, fuzzy
+msgid "Held:"
+msgstr "握住：:"
+
+#: infos
+#, fuzzy
+msgid "Announces:"
+msgstr "宣布：:"
+
+#: infos
+#, fuzzy
+msgid "Transport Instance"
+msgstr "运输实例"
+
+#: infos
+#, fuzzy
+msgid "Probe responder"
+msgstr "探针响应者"
+
+#: infos
+#, fuzzy
+msgid "Uptime"
+msgstr "正常运行时间"
+
+#: infos
+#, fuzzy
+msgid "[b]Size:[/b]"
+msgstr "[b]大小：[/b]"
+
+#: infos
+#, fuzzy
+msgid "[b]Free:[/b]"
+msgstr "[b]免费：[/b]"
+
+#: infos
+#, fuzzy
+msgid "[b]Type:[/b]"
+msgstr "[b]类型：[/b]"
+
+#: infos
+#, fuzzy
+msgid "Platform"
+msgstr "平台"
+
+#: infos
+#, fuzzy
+msgid "Release"
+msgstr "发布"
+
+#: infos
+#, fuzzy
+msgid "Release name"
+msgstr "发布名称"
+
+#: infos
+#, fuzzy
+msgid "Model"
+msgstr "模型"
+
+#: infos
+#, fuzzy
+msgid "Hostname"
+msgstr "主机名"
+
+#: infos
+#, fuzzy
+msgid "CPU load"
+msgstr "CPU负载"
+
+#: infos
+#, fuzzy
+msgid "CPU cores"
+msgstr "CPU内核"
+
+#: infos
+#, fuzzy
+msgid "System temperature"
+msgstr "系统温度"
+
+#: infos
+#, fuzzy
+msgid "LAN"
+msgstr "局域网"
+
+#: infos
+#, fuzzy
+msgid "WiFi"
+msgstr "无线上网"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks"
+msgstr "WiFi网络"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks connected"
+msgstr "连接WiFi网络"
+
+#: infos
+#, fuzzy
+msgid "USB"
+msgstr "USB"
+
+#: infos
+#, fuzzy
+msgid "Bluetooth"
+msgstr "蓝牙"
+
+#: infos
+#, fuzzy
+msgid "Serial"
+msgstr "系列"
+
+#: logs
+#, fuzzy
+msgid "FDN - Reticulum, Channel, Group, Shop"
+msgstr "FDN-网状，频道，小组，商店"
+
+#: logs
+#, fuzzy
+msgid "Software"
+msgstr "软件"
+
+#: logs
+#, fuzzy
+msgid "Dhcpd - DHCP Server"
+msgstr "DHCPD -DHCP服务器"
+
+#: logs
+#, fuzzy
+msgid "Dnsmasq - DNS Server"
+msgstr "DNSMASQ -DNS服务器"
+
+#: logs
+#, fuzzy
+msgid "Hostapd - WiFi AP"
+msgstr "Hostapd -WiFi AP"
+
+#: logs
+#, fuzzy
+msgid "System"
+msgstr "系统"
+
+#: logs
+#, fuzzy
+msgid "Auth - Authentication"
+msgstr "auth-身份验证"
+
+#: logs
+#, fuzzy
+msgid "Daemon - System daemons"
+msgstr "守护程序 - 系统守护程序"
+
+#: logs
+#, fuzzy
+msgid "Fail - Failed login attempts"
+msgstr "失败 - 登录尝试失败"
+
+#: logs
+#, fuzzy
+msgid "Kern - Kernel"
+msgstr "克恩 - 内核"
+
+#: logs
+#, fuzzy
+msgid "Mail - Email-related events"
+msgstr "邮件 - 与电子邮件有关的活动"
+
+#: logs
+#, fuzzy
+msgid "Messages - General system events"
+msgstr "消息 - 通用系统事件"
+
+#: logs
+#, fuzzy
+msgid "Syslog - System"
+msgstr "Syslog-系统"
+
+#: logs
+#, fuzzy
+msgid "User - User activities"
+msgstr "用户 - 用户活动"
+
+#: scripts
+#, fuzzy
+msgid "Backup & Restore"
+msgstr "备份和还原"
+
+#: scripts
+#, fuzzy
+msgid "Examples"
+msgstr "例子"
+
+#: scripts
+#, fuzzy
+msgid "Examples 1"
+msgstr "示例1"
+
+#: scripts
+#, fuzzy
+msgid "Examples 2"
+msgstr "示例2"
+
+#: scripts
+msgid "Examples - Test Configurations"
+msgstr ""
+
+#: scripts
+#, fuzzy
+msgid "Examples - User interface test functions"
+msgstr "示例 - 用户界面测试功能"
+
+#: scripts
+#, fuzzy
+msgid "Reticulum - LoRadio & RNode"
+msgstr "网状-Loradio＆rnode"
+
+#: scripts
+#, fuzzy
+msgid "Software - Installation"
+msgstr "软件 - 安装"
+
+#: scripts
+#, fuzzy
+msgid "Software - Uninstallation"
+msgstr "软件 - 卸载"
+
+#: scripts
+#, fuzzy
+msgid "Software - Update"
+msgstr "软件更新"
+
+#: scripts
+#, fuzzy
+msgid "System - Configuration"
+msgstr "系统配置"
+
+#: scripts
+#, fuzzy
+msgid "System - Update"
+msgstr "系统更新"
+
+#: scripts
+#, fuzzy
+msgid "Management - Restart"
+msgstr "管理 - 重新启动"
+
+#: scripts
+#, fuzzy
+msgid "System - Reboot"
+msgstr "系统 - 重新启动"
+
+#: scripts
+#, fuzzy
+msgid "System - Shutdown"
+msgstr "系统 - 关闭"
+
+#: scripts
+#, fuzzy
+msgid "System Clone - Creates a direct copy of the system drive"
+msgstr "系统克隆 - 创建系统驱动器的直接副本"
+
+#: scripts
+#, fuzzy
+msgid "System Image - Creates an image of the system drive"
+msgstr "系统图像 - 创建系统驱动器的图像"
+
+#: scripts
+#, fuzzy
+msgid "Example - All input elements"
+msgstr "示例 - 所有输入元素"
+
+#: scripts
+#, fuzzy
+msgid "Example - Exit codes"
+msgstr "示例 - 退出代码"
+
+#: scripts
+#, fuzzy
+msgid "Example - Waiting time"
+msgstr "示例 - 等待时间"
+
+#: scripts
+#, fuzzy
+msgid "Info - Read out information"
+msgstr "信息 - 读取信息"
+
+#: scripts
+#, fuzzy
+msgid "Install - Installing the firmware"
+msgstr "安装 - 安装固件"
+
+#: scripts
+#, fuzzy
+msgid "Reset - Resetting the firmware"
+msgstr "重置 - 重置固件"
+
+#: scripts
+#, fuzzy
+msgid "Update - Updating the firmware"
+msgstr "更新 - 更新固件"
+
+#: scripts
+#, fuzzy
+msgid "Bridge Matrix - Message bridge"
+msgstr "桥梁矩阵 - 消息桥"
+
+#: scripts
+#, fuzzy
+msgid "Console tools - Recommended tools"
+msgstr "控制台工具 - 推荐工具"
+
+#: scripts
+#, fuzzy
+msgid "Filesystem tools - Recommended tools"
+msgstr "文件系统工具 - 推荐工具"
+
+#: scripts
+#, fuzzy
+msgid "Server Blockchain - Gateway for payment and other blockchain functions"
+msgstr "服务器区块链 - 付款和其他区块链功能的网关"
+
+#: scripts
+#, fuzzy
+msgid "Server Channel - Hosting the channel functionality"
+msgstr "服务器频道 - 托管频道功能"
+
+#: scripts
+#, fuzzy
+msgid "Server Group - Hosting the group functionality"
+msgstr "服务器组 - 托管组功能"
+
+#: scripts
+#, fuzzy
+msgid "Server Page - Hosting the page functionality"
+msgstr "服务器页面 - 托管页面功能"
+
+#: scripts
+#, fuzzy
+msgid "Server Propagation - Hosting the propagation node functionality"
+msgstr "服务器传播 - 托管传播节点功能"
+
+#: scripts
+#, fuzzy
+msgid "Server Shop - Hosting the shop functionality"
+msgstr "服务器商店 - 托管商店功能"
+
+#: scripts
+#, fuzzy
+msgid "Server - All hosting functions for channel, group, page, shop, etc."
+msgstr "服务器 - 所有托管功能用于频道，组，页面，商店等。."
+
+#: scripts
+#, fuzzy
+msgid "File system - Extend file system (Raspberry Pi)"
+msgstr "文件系统 - 扩展文件系统（Raspberry Pi）"
+
+#: scripts
+#, fuzzy
+msgid "Password - Change operating system password"
+msgstr "密码 - 更改操作系统密码"
+
+#: scripts
+#, fuzzy
+msgid "Update check - Check for new versions"
+msgstr "更新检查 - 检查新版本"
+
+#: scripts
+#, fuzzy
+msgid "Update cleanup - Cleaning up unneeded packages"
+msgstr "更新清理 - 清理不需要的软件包"
+
+#: scripts
+#, fuzzy
+msgid "Update Update - Update the system"
+msgstr "更新更新 - 更新系统"
+
+#: scripts
+#, fuzzy
+msgid "Update Upgrade - Distribution update of the system"
+msgstr "更新升级 - 系统的分发更新"
+
+#: scripts
+#, fuzzy
+msgid "Installing.."
+msgstr "安装.."
+
+#: scripts
+#, fuzzy
+msgid "Uninstalling..."
+msgstr "卸载..."
+
+#: scripts
+#, fuzzy
+msgid "Updating..."
+msgstr "更新..."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The management server will restart. You must reconnect to re-establish a "
+"connection."
+msgstr "管理服务器将重新启动。 您必须重新连接以重新建立连接。."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will reboot. You must reconnect to re-establish a connection."
+msgstr "系统将重新启动。 您必须重新连接以重新建立连接。."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will shut down. You must then start it manually to re-establish a "
+"connection."
+msgstr "系统将关闭。 然后，您必须手动启动它以重新建立连接。."
+
+#: scripts
+#, fuzzy
+msgid "No installed services found. Exiting."
+msgstr "找不到安装服务。 退出。."
+
+#: scripts
+#, fuzzy
+msgid "Select a service:"
+msgstr "选择一项服务：:"
+
+#: scripts
+#, fuzzy
+msgid "Enter the name for the service: (only a-z 0-9)"
+msgstr "输入服务的名称：（仅A-Z 0-9）"
+
+#: scripts
+#, fuzzy
+msgid "Enter the display name for the application:"
+msgstr "输入应用程序的显示名称：:"
+
+#: scripts
+#, fuzzy
+msgid "Invalid choice!"
+msgstr "无效的选择！!"
+
+#: scripts
+#, fuzzy
+msgid "Update successfully completed!"
+msgstr "更新成功完成！!"
+
+#: scripts
+#, fuzzy
+msgid "Uninstallation successfully completed!"
+msgstr "卸载成功完成！!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a shop successfully completed!"
+msgstr "成功完成的商店安装！!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of an echo server successfully completed!"
+msgstr "已成功完成的Echo服务器的安装！!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a channel successfully completed!"
+msgstr "成功完成的频道安装！!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a group successfully completed!"
+msgstr "一个小组的安装成功完成！!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a propagation node successfully completed!"
+msgstr "成功完成的传播节点的安装！!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a provisioning node successfully completed!"
+msgstr "已成功完成的配置节点的安装！!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a page successfully completed!"
+msgstr "成功完成的页面安装！!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a blockchain node successfully completed!"
+msgstr "成功完成的区块链节点的安装！!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a message bridge successfully completed!"
+msgstr "消息桥的安装成功完成！!"
+
+#: scripts
+#, fuzzy
+msgid ""
+"No further configuration is necessary. Connect to the shop to make all the "
+"necessary settings in the shop app. You should find the new shop in the "
+"announcement list."
+msgstr ""
+"无需进一步的配置。 连接到商店，在商店应用程序中进行所有必要的设置。 您应该在"
+"公告列表中找到新商店。."
+
+#: scripts
+#, fuzzy
+msgid ""
+"To make further settings, please edit the corresponding configuration files "
+"in the following folder:"
+msgstr "要进行进一步的设置，请在以下文件夹中编辑相应的配置文件：:"
+
+#: scripts
+#, fuzzy
+msgid "Then you must restart the following service:"
+msgstr "然后，您必须重新启动以下服务：:"
+
+#: services
+#, fuzzy
+msgid "All"
+msgstr "全部"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Hit:"
+msgstr "打：:"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading package lists"
+msgstr "阅读包列表"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Building dependency tree"
+msgstr "建造依赖树"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading state information"
+msgstr "阅读状态信息"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading database"
+msgstr "读取数据库"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Calculating upgrade"
+msgstr "计算升级"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Waiting for headers"
+msgstr "等待标题"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Working"
+msgstr "在职的"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "All packages are up to date"
+msgstr "所有软件包都是最新的"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Done"
+msgstr "完毕"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"The following packages were automatically installed and are no longer "
+"required"
+msgstr "以下软件包自动安装，不再需要"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Use"
+msgstr "使用"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove them"
+msgstr "去除它们"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "upgraded"
+msgstr "升级"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "newly installed"
+msgstr "新安装"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove and"
+msgstr "删除和"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "not upgraded"
+msgstr "没有升级"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Connected to"
+msgstr "连接到"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be REMOVED"
+msgstr "以下包将删除"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "After this operation"
+msgstr "此操作后"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "disk space will be freed"
+msgstr "磁盘空间将被释放"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Do you want to continue?"
+msgstr "你想继续吗？?"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Progress"
+msgstr "进步"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Removing"
+msgstr "去除"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Processing triggers for"
+msgstr "处理触发器"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be upgraded"
+msgstr "以下包将升级"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading changelogs"
+msgstr "阅读Changelogs"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preconfiguring packages"
+msgstr "预先配置的软件包"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preparing to unpack"
+msgstr "准备打开包装"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "files and directories currently installed"
+msgstr "目前安装的文件和目录"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Unpacking"
+msgstr "解开包装"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Setting up"
+msgstr "配置"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "over"
+msgstr "超过"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Installing new version of config file"
+msgstr "安装新版本的配置文件"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "A new version"
+msgstr "一个新版本"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "of configuration file"
+msgstr "配置文件"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"is available, but the version installed currently has been locally modified"
+msgstr "可用，但是当前安装的版本已在本地修改"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error, exiting now."
+msgstr "错误，现在退出。."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: You need to run this script as"
+msgstr "错误：您需要将此脚本运行"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: This script can't be piped!"
+msgstr "错误：这个脚本无法管道！!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "failed!"
+msgstr "失败的！!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Finished!"
+msgstr "完成的！!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating packet repository"
+msgstr "更新数据包存储库"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating system"
+msgstr "更新系统"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Cleanup system"
+msgstr "清理系统"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Installing"
+msgstr "安装"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating"
+msgstr "更新"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Expanding Filesystem"
+msgstr "扩展文件系统"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Do you want to proceed?"
+msgstr "你想继续吗？?"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Ok, proceeding..."
+msgstr "好，继续..."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "No, exiting now."
+msgstr "不，现在退出。."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Please answer yes or no."
+msgstr "请回答是或否。."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing path"
+msgstr "改变路径"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Downloading"
+msgstr "下载"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/owner"
+msgstr "更改文件权限/所有者"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/right"
+msgstr "更改文件权限/权利"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "To activate the changes, the system must be rebooted."
+msgstr "要激活更改，必须重新启动系统。."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Could not find any user, exiting now."
+msgstr "找不到任何用户，现在退出。."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Which user would you like to edit?"
+msgstr "您想编辑哪个用户？?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Define the password for user"
+msgstr "定义用户密码"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Do you want to edit another user?"
+msgstr "您想编辑另一个用户吗？?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "New password"
+msgstr "新密码"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Retype new password"
+msgstr "重新输入新密码"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "No password has been supplied."
+msgstr "没有提供密码。."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Sorry, passwords do not match."
+msgstr "抱歉，密码不匹配。."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Updating password"
+msgstr "更新密码"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Authentication token manipulation error"
+msgstr "身份验证令牌操纵错误"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "password unchanged"
+msgstr "密码不变"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "user"
+msgstr "用户"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "does not exist"
+msgstr "不存在"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Please connect the destination device you wish to use."
+msgstr "请连接要使用的目标设备。."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Hit enter when it is connected."
+msgstr "连接时点击输入。."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find any devices, exiting now."
+msgstr "找不到任何设备，现在退出。."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find specified device, exiting now."
+msgstr "找不到指定的设备，现在退出。."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "What is your destination device?"
+msgstr "您的目标设备是什么？?"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Ok, using device:"
+msgstr "好，使用设备：:"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "target is busy"
+msgstr "目标很忙"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating image file"
+msgstr "创建图像文件"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image file"
+msgstr "缩小图像文件"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "copied"
+msgstr "复制"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records in"
+msgstr "记录中"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records out"
+msgstr "记录"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Gathering data"
+msgstr "收集数据"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating new"
+msgstr "创建新"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Checking filesystem"
+msgstr "检查文件系统"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "non-contiguous"
+msgstr "无关紧要"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks"
+msgstr "块"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking filesystem"
+msgstr "缩小文件系统"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Resizing the filesystem on"
+msgstr "调整文件系统的大小"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Begin pass"
+msgstr "开始通过"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Relocating blocks"
+msgstr "重新定位块"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Scanning inode table"
+msgstr "扫描Inode表"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Updating inode references"
+msgstr "更新Inode参考"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "The filesystem on"
+msgstr "文件系统打开"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "is now"
+msgstr "就是现在"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks long"
+msgstr "块长"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image"
+msgstr "缩小图像"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Using gzip on the shrunk image"
+msgstr "在缩小图像上使用GZIP"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrunk"
+msgstr "压缩"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "from"
+msgstr "从"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "to"
+msgstr "到"
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid ""
+"Please connect the destination device (sd-card, usb-stick) you wish to use."
+msgstr "请连接您希望使用的目标设备（SD卡，USB-STICK）。."
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid "WARNING: All data on the destination device will be deleted!"
+msgstr "警告：目标设备上的所有数据将被删除！!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting frequency is"
+msgstr "无线电报告频率是"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting bandwidth is"
+msgstr "广播报告带宽是"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting TX power is"
+msgstr "无线电报告TX功率是"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting spreading factor is"
+msgstr "无线电报告传播因素是"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting coding rate is"
+msgstr "无线电报告编码率为"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware initialisation error"
+msgstr "硬件初始化错误"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware TX error"
+msgstr "硬件TX错误"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware error"
+msgstr "硬件错误"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "serial read timeout"
+msgstr "串行阅读超时"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while detecting hardware for"
+msgstr "检测硬件的IO错误"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring frequency for"
+msgstr "在配置频率时发生IO错误"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring bandwidth for"
+msgstr "在配置带宽时发生IO错误"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring TX power for"
+msgstr "在配置TX电源时发生IO错误"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring spreading factor for"
+msgstr "在配置扩展因子时发生IO错误"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring coding rate for"
+msgstr "在配置编码率时发生IO错误"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state for"
+msgstr "在配置无线电状态时发生IO错误"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring device mode"
+msgstr "配置设备模式时发生IO错误"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while wiping EEPROM"
+msgstr "擦除EEPROM时发生IO错误"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while restarting device"
+msgstr "重新启动设备时发生IO错误"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while writing EEPROM"
+msgstr "编写EEPROM时发生IO错误"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state"
+msgstr "配置无线电状态时发生IO错误"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download EEPROM from device. Is a valid firmware installed?"
+msgstr "无法从设备下载EEPROM。 是否安装了有效的固件？?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum mismatch"
+msgstr "EEPROM校验和不匹配"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum correct"
+msgstr "EEPROM校验和正确"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load local signing key"
+msgstr "无法加载本地签名密钥"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize local signing key"
+msgstr "无法应对本地签名密钥"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validated"
+msgstr "设备签名已验证"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validation failed"
+msgstr "设备签名验证失败"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid EEPROM data, could not parse device EEPROM."
+msgstr "无效的EEPROM数据，无法解析设备EEPROM。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Hello!\n"
+"\n"
+"This guide will help you install the RNode firmware on supported\n"
+"and homebrew devices. Please connect the device you wish to set\n"
+"up now."
+msgstr ""
+"你好！ \n"
+"\n"
+" 本指南将帮助您在支持的 \n"
+" 和自制设备。 请连接您要设置的设备 \n"
+" 现在。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please connect the device you wish to setup now."
+msgstr "请连接您现在要设置的设备。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find any port, exiting now."
+msgstr "找不到任何端口，现在退出。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Detected serial ports:"
+msgstr "检测到的串行端口：:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What serial port is your device connected to?"
+msgstr "您的设备连接到什么串行端口？?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That port does not exist, exiting now."
+msgstr "该端口现在不存在，现在退出。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not select port, exiting now."
+msgstr "无法选择端口，现在退出。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Ok, using device on"
+msgstr "好，使用设备上"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "using device on"
+msgstr "使用设备打开"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find specified port"
+msgstr "找不到指定的端口"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "exiting now"
+msgstr "现在退出"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Probing device"
+msgstr "探测设备"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not open the specified serial port. The contained exception was:"
+msgstr "无法打开指定的串行端口。 包含的例外是：:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No answer from device"
+msgstr "设备没有答案"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Trying to read EEPROM"
+msgstr "试图阅读Eeprom"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device is already installed and provisioned. No further action will\n"
+"be taken. If you wish to completely reinstall this device, you must first\n"
+"wipe the current EEPROM. See the help for more info.\n"
+"\n"
+"Exiting now."
+msgstr ""
+"该设备已经安装和配置。 没有进一步的行动 \n"
+" 被带走。 如果您想完全重新安装此设备，则必须首先 \n"
+" 擦除当前的EEPROM。 请参阅帮助以获取更多信息。 \n"
+"\n"
+" 现在退出。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"The device seems to have an RNode firmware installed, but it was not\n"
+"provisioned correctly, or it is corrupt. We are going to reinstall the\n"
+"correct firmware and provision it."
+msgstr ""
+"该设备似乎已安装了RNode固件，但不是 \n"
+" 正确提供，或者是损坏的。 我们将重新安装 \n"
+" 正确固件并配置它。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "It looks like this is a fresh device with no RNode firmware."
+msgstr "看起来这是一个没有RNode固件的新鲜设备。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of device is this?"
+msgstr "这是什么设备？?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Important! Using RNode firmware on"
+msgstr "重要的！ 在上使用rnode固件"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"should currently be\n"
+"considered experimental. It is not intended for production or critical use.\n"
+"The currently supplied firmware is provided AS-IS as a courtesey to those\n"
+"who would like to experiment with it. Hit enter to continue."
+msgstr ""
+"当前应该是 \n"
+" 被认为是实验性的。 它不打算生产或关键用途。 \n"
+" 目前提供的固件作为courtesesy提供给那些 \n"
+" 谁想尝试它。 点击输入以继续。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That device type does not exist, exiting now."
+msgstr "现在不存在该设备类型，现在退出。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of microcontroller is your board based on?"
+msgstr "您的董事会基于哪种微控制器？?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That MCU type does not exist, exiting now."
+msgstr "现在不存在MCU类型，现在退出。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What transceiver module does your board use?"
+msgstr "您的董事会使用什么收发器模块？?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That transceiver type does not exist, exiting now."
+msgstr "该收发器类型现在不存在，现在退出。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What model is this RNode?"
+msgstr "该rnode是什么模型？?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That model does not exist, exiting now."
+msgstr "该模型现在不存在，现在退出。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this T-Beam for?"
+msgstr "这个T梁是什么乐队？?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That band does not exist, exiting now."
+msgstr "该乐队现在不存在，现在退出。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this LoRa32 for?"
+msgstr "这个Lora32是什么乐队？?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this Heltec LoRa32 for?"
+msgstr "这个heltec lora32是什么乐队？?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of ESP32 board is this?"
+msgstr "这是什么样的ESP32板？?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That ESP32 board does not exist, exiting now."
+msgstr "ESP32板不存在，现在退出。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Sorry, no firmware for your board currently exists.\n"
+"Help making it a reality by contributing code or by\n"
+"donating to the project."
+msgstr ""
+"抱歉，目前没有固件为您的董事会存在。 \n"
+" 通过贡献代码或通过 \n"
+" 向项目捐款。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Ok, that should be all the information we need. Please confirm the "
+"following\n"
+"summary before proceeding. In the next step, the device will be flashed and\n"
+"provisioned, so make that you are satisfied with your choices."
+msgstr ""
+"好的，那应该是我们需要的所有信息。 请确认以下 \n"
+" 摘要在继续前进。 在下一步中，设备将闪烁，并 \n"
+" 提供的，因此使您对自己的选择感到满意。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial port"
+msgstr "串行端口"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device type"
+msgstr "设备类型"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device MCU"
+msgstr "设备MCU"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file"
+msgstr "固件文件"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Is the above correct?"
+msgstr "上述正确吗？?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "OK, aborting now."
+msgstr "好，现在流产。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device connected"
+msgstr "连接设备"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Current firmware version:"
+msgstr "当前的固件版本：:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Got invalid response while detecting device"
+msgstr "检测设备时产生了无效的响应"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download required firmware file. The contained exception was:"
+msgstr "无法下载所需的固件文件。 包含的例外是：:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial module could not be found"
+msgstr "找不到串行模块"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs pyserial to work.\n"
+"You can install it with: pip3 install pyserial"
+msgstr ""
+"rnode配置实用程序需要催眠作用才能工作。 \n"
+" 您可以安装它：pip3安装填序"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cryptography module could not be found"
+msgstr "无法找到加密模块"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs the cryptography module to work.\n"
+"You can install it with: pip3 install cryptography"
+msgstr ""
+"rnode配置实用程序需要加密模块才能工作。 \n"
+" 您可以安装它：pip3安装加密"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Downloading latest frimware from GitHub"
+msgstr "从GitHub下载最新固件"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware download completed"
+msgstr "固件下载完成"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware extracted"
+msgstr "提取固件"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not extract firmware from downloaded zip file"
+msgstr "无法从下载的zip文件中提取固件"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing RNode firmware to device on"
+msgstr "将ronode固件闪烁到设备上"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Done flashing"
+msgstr "完成闪烁"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Waiting for ESP32 reset"
+msgstr "等待ESP32重置"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while flashing"
+msgstr "闪烁时错误"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file not found"
+msgstr "找不到固件文件"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download firmware package"
+msgstr "无法下载固件软件包"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The contained exception was:"
+msgstr "包含的例外是：:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Skipping online check, using local firmware file:"
+msgstr "使用本地固件文件跳过在线检查：:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load signing key"
+msgstr "无法加载签名密钥"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize signing key"
+msgstr "无法应对签名密钥"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Generating a new signing key"
+msgstr "生成新的签名密钥"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Signing key already exists, not overwriting!\n"
+"Manually delete this key to create a new one."
+msgstr ""
+"签名密钥已经存在，而不是覆盖！ \n"
+" 手动删除此键以创建一个新的键。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The firmware directory does not exist, can't write key!"
+msgstr "固件目录不存在，不能编写密钥！!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Extracting firmware"
+msgstr "提取固件"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Opening serial port"
+msgstr "打开串行端口"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Serial port opened, but RNode did not respond. Is a valid firmware installed?"
+msgstr "串行端口打开了，但RNode没有响应。 是否安装了有效的固件？?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"WARNING: EEPROM is being wiped! Power down device NOW if you do not want "
+"this!"
+msgstr "警告：Eeprom正在擦拭！ 如果您不想要此功能，请立即关闭设备！!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Reading EEPROM"
+msgstr "阅读Eeprom"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "ERROR: No firmware found for this board. Cannot update."
+msgstr "错误：该板找不到固件。 无法更新。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cannot update device firmware"
+msgstr "无法更新设备固件"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Updating RNode firmware for device on"
+msgstr "更新用于设备的RNode固件"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing new firmware completed"
+msgstr "闪烁的新固件完成"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update completed successfully"
+msgstr "固件更新成功完成"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while flashing the new firmware, exiting now."
+msgstr "刷新新固件时发生错误，现在退出。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while updating firmware"
+msgstr "更新固件时错误"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update file not found"
+msgstr "找不到固件更新文件"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM contents"
+msgstr "EEPROM内容"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM backup written to"
+msgstr "EEPROM备份写信给"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"EEPROM was successfully downloaded from device,\n"
+"but file could not be written to disk."
+msgstr ""
+"EEPROM已从设备成功下载， \n"
+" 但是文件无法写入磁盘。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device info:"
+msgstr "设备信息：:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Product"
+msgstr "产品"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature"
+msgstr "设备签名"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware version"
+msgstr "固件版本"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Hardware revision"
+msgstr "硬件修订"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial number"
+msgstr "序列号"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency range"
+msgstr "频率范围"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Max TX power"
+msgstr "最大TX功率"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Manufactured"
+msgstr "制造"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device mode"
+msgstr "设备模式"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency"
+msgstr "频率"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth"
+msgstr "带宽"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "TX power"
+msgstr "TX功率"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor"
+msgstr "扩散因子"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate"
+msgstr "编码率"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "On-air bitrate"
+msgstr "空中比特率"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM is invalid, no further information available"
+msgstr "EEPROM无效，没有其他信息"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM bootstrap was requested, but a valid EEPROM was already present."
+msgstr "请求Eeprom Bootstrap，但已经存在有效的EEPROM。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No changes are being made."
+msgstr "没有改变。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Clearing old EEPROM, this will take about 15 seconds"
+msgstr "清除旧的Eeprom，这将需要大约15秒"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not create device serial number, exiting"
+msgstr "无法创建设备序列号，退出"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Loading signing key"
+msgstr "加载签名键"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while signing EEPROM"
+msgstr "签署EEPROM时出错"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bootstrapping device EEPROM"
+msgstr "引导设备EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM written! Validating"
+msgstr "Eeprom写了！ 证实"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM Bootstrapping successful!"
+msgstr "EEPROM引导成功！!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "RNode Firmware autoinstallation complete!"
+msgstr "RNode固件自动安装完整！!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "To use your device with Reticulum, read the documetation at:"
+msgstr "要与网状设备一起使用，请阅读文档：:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Thank you for using this utility! Please help the project by\n"
+"contributing code and reporting bugs, or by donating!"
+msgstr ""
+"感谢您使用此实用程序！ 请帮助该项目 \n"
+" 贡献代码和报告错误，或通过捐赠！!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Your contributions and donations directly further the realisation\n"
+"of truly open, free and resilient communications systems."
+msgstr ""
+"您的捐款和捐赠直接进一步实现 \n"
+" 真正开放，免费和有弹性的通信系统。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "WARNING: Could not backup device EEPROM to disk"
+msgstr "警告：无法备份设备EEPROM到磁盘"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM was written, but validation failed. Check your settings."
+msgstr "EEPROM写了，但验证失败了。 检查您的设置。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while writing EEPROM. The contained exception was:"
+msgstr "编写EEPROM时发生错误。 包含的例外是：:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid data specified, cancelling EEPROM write"
+msgstr "指定的数据无效，取消EEPROM写作"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to normal (host-controlled) operating mode"
+msgstr "设备设置为普通（主机控制）操作模式"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please input startup configuration:"
+msgstr "请输入启动配置：:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency in Hz:"
+msgstr "Hz的频率：:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth in Hz:"
+msgstr "HZ的带宽：:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor:"
+msgstr "扩散因子：:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate:"
+msgstr "编码率：:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to TNC operating mode"
+msgstr "设置为TNC操作模式"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device contains a valid firmware, but EEPROM is invalid.\n"
+"Probably the device has not been initialised, or the EEPROM has been "
+"erased.\n"
+"Please correctly initialise the device and try again!"
+msgstr ""
+"该设备包含有效的固件，但EEPROM无效。 \n"
+" 可能尚未初始化该设备，或者已经删除了EEPROM。 \n"
+" 请正确初始化设备，然后重试！!"

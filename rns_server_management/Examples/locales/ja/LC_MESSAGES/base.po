@@ -1,0 +1,2056 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-01 19:45+0100\n"
+"PO-Revision-Date: 2023-12-12 09:39\n"
+"Last-Translator: SebastianObi\n"
+"Language-Team: SebastianObi\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#: infos
+#, fuzzy
+msgid "Software - Python"
+msgstr "ソフトウェア-Python"
+
+#: infos
+#, fuzzy
+msgid "Software - Reticulum"
+msgstr "ソフトウェア -  reticulum"
+
+#: infos
+#, fuzzy
+msgid "Software - System"
+msgstr "ソフトウェア - システム"
+
+#: infos
+#, fuzzy
+msgid "System - Drives & data storage"
+msgstr "システム - ドライブとデータストレージ"
+
+#: infos
+#, fuzzy
+msgid "System - General system information"
+msgstr "システム - 一般的なシステム情報"
+
+#: infos
+#, fuzzy
+msgid "System - Interfaces"
+msgstr "システム - インターフェイス"
+
+#: infos
+#, fuzzy
+msgid "System - Network connections"
+msgstr "システム - ネットワーク接続"
+
+#: infos
+#, fuzzy
+msgid "System time"
+msgstr "システム時刻"
+
+#: infos
+#, fuzzy
+msgid "Start time"
+msgstr "始まる時間"
+
+#: infos
+#, fuzzy
+msgid "Runtime"
+msgstr "ランタイム"
+
+#: infos
+#, fuzzy
+msgid "Version"
+msgstr "バージョン"
+
+#: infos
+#, fuzzy
+msgid "Status:"
+msgstr "状態：:"
+
+#: infos
+#, fuzzy
+msgid "Clients:"
+msgstr "クライアント：:"
+
+#: infos
+#, fuzzy
+msgid "Peers:"
+msgstr "仲間：:"
+
+#: infos
+#, fuzzy
+msgid "Mode:"
+msgstr "モード：:"
+
+#: infos
+#, fuzzy
+msgid "Speed:"
+msgstr "スピード：:"
+
+#: infos
+#, fuzzy
+msgid "Airtime:"
+msgstr "放送時間：:"
+
+#: infos
+#, fuzzy
+msgid "Ch. Load:"
+msgstr "ch。 負荷：:"
+
+#: infos
+#, fuzzy
+msgid "Queued:"
+msgstr "キュー：:"
+
+#: infos
+#, fuzzy
+msgid "announce"
+msgstr "発表する"
+
+#: infos
+#, fuzzy
+msgid "announces"
+msgstr "発表します"
+
+#: infos
+#, fuzzy
+msgid "Held:"
+msgstr "開催：:"
+
+#: infos
+#, fuzzy
+msgid "Announces:"
+msgstr "発表：:"
+
+#: infos
+#, fuzzy
+msgid "Transport Instance"
+msgstr "トランスポートインスタンス"
+
+#: infos
+#, fuzzy
+msgid "Probe responder"
+msgstr "プローブレスポンダー"
+
+#: infos
+#, fuzzy
+msgid "Uptime"
+msgstr "稼働時間"
+
+#: infos
+#, fuzzy
+msgid "[b]Size:[/b]"
+msgstr "[b]サイズ：[/b]"
+
+#: infos
+#, fuzzy
+msgid "[b]Free:[/b]"
+msgstr "[b]無料：[/b]"
+
+#: infos
+#, fuzzy
+msgid "[b]Type:[/b]"
+msgstr "[b]タイプ：[/b]"
+
+#: infos
+#, fuzzy
+msgid "Platform"
+msgstr "プラットホーム"
+
+#: infos
+#, fuzzy
+msgid "Release"
+msgstr "リリース"
+
+#: infos
+#, fuzzy
+msgid "Release name"
+msgstr "リリース名"
+
+#: infos
+#, fuzzy
+msgid "Model"
+msgstr "モデル"
+
+#: infos
+#, fuzzy
+msgid "Hostname"
+msgstr "ホスト名"
+
+#: infos
+#, fuzzy
+msgid "CPU load"
+msgstr "CPU負荷"
+
+#: infos
+#, fuzzy
+msgid "CPU cores"
+msgstr "CPUコア"
+
+#: infos
+#, fuzzy
+msgid "System temperature"
+msgstr "システム温度"
+
+#: infos
+#, fuzzy
+msgid "LAN"
+msgstr "lan"
+
+#: infos
+#, fuzzy
+msgid "WiFi"
+msgstr "Wi-Fi"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks"
+msgstr "WiFiネットワーク"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks connected"
+msgstr "接続されたWiFiネットワーク"
+
+#: infos
+#, fuzzy
+msgid "USB"
+msgstr "USB"
+
+#: infos
+#, fuzzy
+msgid "Bluetooth"
+msgstr "ブルートゥース"
+
+#: infos
+#, fuzzy
+msgid "Serial"
+msgstr "シリアル"
+
+#: logs
+#, fuzzy
+msgid "FDN - Reticulum, Channel, Group, Shop"
+msgstr "FDN -Reticulum、Channel、Group、Shop"
+
+#: logs
+#, fuzzy
+msgid "Software"
+msgstr "ソフトウェア"
+
+#: logs
+#, fuzzy
+msgid "Dhcpd - DHCP Server"
+msgstr "DHCPD -DHCPサーバー"
+
+#: logs
+#, fuzzy
+msgid "Dnsmasq - DNS Server"
+msgstr "DNSMASQ -DNSサーバー"
+
+#: logs
+#, fuzzy
+msgid "Hostapd - WiFi AP"
+msgstr "hostapd -wifi ap"
+
+#: logs
+#, fuzzy
+msgid "System"
+msgstr "システム"
+
+#: logs
+#, fuzzy
+msgid "Auth - Authentication"
+msgstr "認証 - 認証"
+
+#: logs
+#, fuzzy
+msgid "Daemon - System daemons"
+msgstr "デーモン - システムデーモン"
+
+#: logs
+#, fuzzy
+msgid "Fail - Failed login attempts"
+msgstr "失敗 - ログインの試行に失敗しました"
+
+#: logs
+#, fuzzy
+msgid "Kern - Kernel"
+msgstr "カーン - カーネル"
+
+#: logs
+#, fuzzy
+msgid "Mail - Email-related events"
+msgstr "メール - 電子メール関連のイベント"
+
+#: logs
+#, fuzzy
+msgid "Messages - General system events"
+msgstr "メッセージ - 一般的なシステムイベント"
+
+#: logs
+#, fuzzy
+msgid "Syslog - System"
+msgstr "syslog-システム"
+
+#: logs
+#, fuzzy
+msgid "User - User activities"
+msgstr "ユーザー - ユーザーアクティビティ"
+
+#: scripts
+#, fuzzy
+msgid "Backup & Restore"
+msgstr "復元する"
+
+#: scripts
+#, fuzzy
+msgid "Examples"
+msgstr "例"
+
+#: scripts
+#, fuzzy
+msgid "Examples 1"
+msgstr "例1"
+
+#: scripts
+#, fuzzy
+msgid "Examples 2"
+msgstr "例2"
+
+#: scripts
+msgid "Examples - Test Configurations"
+msgstr ""
+
+#: scripts
+#, fuzzy
+msgid "Examples - User interface test functions"
+msgstr "例 - ユーザーインターフェイステスト機能"
+
+#: scripts
+#, fuzzy
+msgid "Reticulum - LoRadio & RNode"
+msgstr "reticulum -loradio＆rnode"
+
+#: scripts
+#, fuzzy
+msgid "Software - Installation"
+msgstr "ソフトウェアのインストール"
+
+#: scripts
+#, fuzzy
+msgid "Software - Uninstallation"
+msgstr "ソフトウェア - アンインストール"
+
+#: scripts
+#, fuzzy
+msgid "Software - Update"
+msgstr "ソフトウェアの更新"
+
+#: scripts
+#, fuzzy
+msgid "System - Configuration"
+msgstr "システム構成"
+
+#: scripts
+#, fuzzy
+msgid "System - Update"
+msgstr "システムアップデート"
+
+#: scripts
+#, fuzzy
+msgid "Management - Restart"
+msgstr "管理 - 再起動"
+
+#: scripts
+#, fuzzy
+msgid "System - Reboot"
+msgstr "システム - 再起動"
+
+#: scripts
+#, fuzzy
+msgid "System - Shutdown"
+msgstr "システム - シャットダウン"
+
+#: scripts
+#, fuzzy
+msgid "System Clone - Creates a direct copy of the system drive"
+msgstr "システムクローン - システムドライブの直接コピーを作成します"
+
+#: scripts
+#, fuzzy
+msgid "System Image - Creates an image of the system drive"
+msgstr "システムイメージ - システムドライブの画像を作成します"
+
+#: scripts
+#, fuzzy
+msgid "Example - All input elements"
+msgstr "例 - すべての入力要素"
+
+#: scripts
+#, fuzzy
+msgid "Example - Exit codes"
+msgstr "例 - 出口コード"
+
+#: scripts
+#, fuzzy
+msgid "Example - Waiting time"
+msgstr "例 - 待ち時間"
+
+#: scripts
+#, fuzzy
+msgid "Info - Read out information"
+msgstr "情報 - 情報を読んでください"
+
+#: scripts
+#, fuzzy
+msgid "Install - Installing the firmware"
+msgstr "インストール - ファームウェアのインストール"
+
+#: scripts
+#, fuzzy
+msgid "Reset - Resetting the firmware"
+msgstr "リセット - ファームウェアのリセット"
+
+#: scripts
+#, fuzzy
+msgid "Update - Updating the firmware"
+msgstr "更新 - ファームウェアの更新"
+
+#: scripts
+#, fuzzy
+msgid "Bridge Matrix - Message bridge"
+msgstr "ブリッジマトリックス - メッセージブリッジ"
+
+#: scripts
+#, fuzzy
+msgid "Console tools - Recommended tools"
+msgstr "コンソールツール - 推奨ツール"
+
+#: scripts
+#, fuzzy
+msgid "Filesystem tools - Recommended tools"
+msgstr "ファイルシステムツール - 推奨ツール"
+
+#: scripts
+#, fuzzy
+msgid "Server Blockchain - Gateway for payment and other blockchain functions"
+msgstr ""
+"サーバーブロックチェーン - 支払いおよびその他のブロックチェーン機能のための"
+"ゲートウェイ"
+
+#: scripts
+#, fuzzy
+msgid "Server Channel - Hosting the channel functionality"
+msgstr "サーバーチャネル - チャネル機能のホスト"
+
+#: scripts
+#, fuzzy
+msgid "Server Group - Hosting the group functionality"
+msgstr "サーバーグループ - グループ機能のホスティング"
+
+#: scripts
+#, fuzzy
+msgid "Server Page - Hosting the page functionality"
+msgstr "サーバーページ - ページ機能のホスト"
+
+#: scripts
+#, fuzzy
+msgid "Server Propagation - Hosting the propagation node functionality"
+msgstr "サーバー伝播 - 伝播ノード機能のホスト"
+
+#: scripts
+#, fuzzy
+msgid "Server Shop - Hosting the shop functionality"
+msgstr "サーバーショップ - ショップ機能をホストします"
+
+#: scripts
+#, fuzzy
+msgid "Server - All hosting functions for channel, group, page, shop, etc."
+msgstr ""
+"サーバー - チャネル、グループ、ページ、ショップなどのすべてのホスティング機"
+"能。."
+
+#: scripts
+#, fuzzy
+msgid "File system - Extend file system (Raspberry Pi)"
+msgstr "ファイルシステム - ファイルシステムを拡張（RaspberryPi）"
+
+#: scripts
+#, fuzzy
+msgid "Password - Change operating system password"
+msgstr "パスワード - オペレーティングシステムのパスワードを変更します"
+
+#: scripts
+#, fuzzy
+msgid "Update check - Check for new versions"
+msgstr "更新チェック - 新しいバージョンを確認します"
+
+#: scripts
+#, fuzzy
+msgid "Update cleanup - Cleaning up unneeded packages"
+msgstr "更新クリーンアップ - 不必要なパッケージのクリーンアップ"
+
+#: scripts
+#, fuzzy
+msgid "Update Update - Update the system"
+msgstr "更新更新 - システムを更新します"
+
+#: scripts
+#, fuzzy
+msgid "Update Upgrade - Distribution update of the system"
+msgstr "アップグレードの更新 - システムの配布更新"
+
+#: scripts
+#, fuzzy
+msgid "Installing.."
+msgstr "インストール.."
+
+#: scripts
+#, fuzzy
+msgid "Uninstalling..."
+msgstr "アンインストール..."
+
+#: scripts
+#, fuzzy
+msgid "Updating..."
+msgstr "更新..."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The management server will restart. You must reconnect to re-establish a "
+"connection."
+msgstr ""
+"管理サーバーが再起動します。 接続を再確立するには、再接続する必要がありま"
+"す。."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will reboot. You must reconnect to re-establish a connection."
+msgstr ""
+"システムは再起動します。 接続を再確立するには、再接続する必要があります。."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will shut down. You must then start it manually to re-establish a "
+"connection."
+msgstr ""
+"システムはシャットダウンします。 その後、接続を再確立するために手動で開始する"
+"必要があります。."
+
+#: scripts
+#, fuzzy
+msgid "No installed services found. Exiting."
+msgstr "インストールされたサービスは見つかりませんでした。 終了。."
+
+#: scripts
+#, fuzzy
+msgid "Select a service:"
+msgstr "サービスを選択します：:"
+
+#: scripts
+#, fuzzy
+msgid "Enter the name for the service: (only a-z 0-9)"
+msgstr "サービスの名前を入力してください：（ a-z 0-9のみ）"
+
+#: scripts
+#, fuzzy
+msgid "Enter the display name for the application:"
+msgstr "アプリケーションのディスプレイ名を入力してください。:"
+
+#: scripts
+#, fuzzy
+msgid "Invalid choice!"
+msgstr "無効な選択！!"
+
+#: scripts
+#, fuzzy
+msgid "Update successfully completed!"
+msgstr "更新が正常に完了しました！!"
+
+#: scripts
+#, fuzzy
+msgid "Uninstallation successfully completed!"
+msgstr "アンインストールが正常に完了しました！!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a shop successfully completed!"
+msgstr "ショップのインストールが正常に完了しました！!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of an echo server successfully completed!"
+msgstr "エコーサーバーのインストールが正常に完了しました！!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a channel successfully completed!"
+msgstr "チャネルのインストールが正常に完了しました！!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a group successfully completed!"
+msgstr "グループのインストールが正常に完了しました！!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a propagation node successfully completed!"
+msgstr "伝播ノードのインストールが正常に完了しました！!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a provisioning node successfully completed!"
+msgstr "プロビジョニングノードのインストールが正常に完了しました！!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a page successfully completed!"
+msgstr "ページのインストールが正常に完了しました！!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a blockchain node successfully completed!"
+msgstr "ブロックチェーンノードのインストールが正常に完了しました！!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a message bridge successfully completed!"
+msgstr "メッセージブリッジのインストールが正常に完了しました！!"
+
+#: scripts
+#, fuzzy
+msgid ""
+"No further configuration is necessary. Connect to the shop to make all the "
+"necessary settings in the shop app. You should find the new shop in the "
+"announcement list."
+msgstr ""
+"それ以上の構成は必要ありません。 ショップに接続して、ショップアプリで必要なす"
+"べての設定を作成します。 アナウンスリストに新しいショップがあります。."
+
+#: scripts
+#, fuzzy
+msgid ""
+"To make further settings, please edit the corresponding configuration files "
+"in the following folder:"
+msgstr ""
+"さらに設定するには、次のフォルダーで対応する構成ファイルを編集してください。:"
+
+#: scripts
+#, fuzzy
+msgid "Then you must restart the following service:"
+msgstr "次に、次のサービスを再起動する必要があります。:"
+
+#: services
+#, fuzzy
+msgid "All"
+msgstr "全て"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Hit:"
+msgstr "打つ：:"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading package lists"
+msgstr "パッケージリストを読む"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Building dependency tree"
+msgstr "依存関係ツリーの構築"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading state information"
+msgstr "州の情報を読む"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading database"
+msgstr "データベースを読む"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Calculating upgrade"
+msgstr "アップグレードの計算"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Waiting for headers"
+msgstr "ヘッダーを待っています"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Working"
+msgstr "働く"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "All packages are up to date"
+msgstr "すべてのパッケージは最新です"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Done"
+msgstr "終わり"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"The following packages were automatically installed and are no longer "
+"required"
+msgstr "次のパッケージが自動的にインストールされ、もはや必要ありません"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Use"
+msgstr "使用"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove them"
+msgstr "それらを削除します"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "upgraded"
+msgstr "アップグレード"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "newly installed"
+msgstr "新しくインストールされています"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove and"
+msgstr "削除する"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "not upgraded"
+msgstr "アップグレードされていません"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Connected to"
+msgstr "に接続されています"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be REMOVED"
+msgstr "次のパッケージが削除されます"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "After this operation"
+msgstr "この操作の後"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "disk space will be freed"
+msgstr "ディスクスペースは解放されます"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Do you want to continue?"
+msgstr "続けたいですか？?"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Progress"
+msgstr "進捗"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Removing"
+msgstr "削除"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Processing triggers for"
+msgstr "処理トリガーの"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be upgraded"
+msgstr "次のパッケージがアップグレードされます"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading changelogs"
+msgstr "Changelogsを読む"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preconfiguring packages"
+msgstr "パッケージを事前に設定します"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preparing to unpack"
+msgstr "開梱の準備"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "files and directories currently installed"
+msgstr "現在インストールされているファイルとディレクトリ"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Unpacking"
+msgstr "開梱"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Setting up"
+msgstr "セットアップ"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "over"
+msgstr "以上"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Installing new version of config file"
+msgstr "Configファイルの新しいバージョンのインストール"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "A new version"
+msgstr "新しいバージョン"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "of configuration file"
+msgstr "構成ファイルの"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"is available, but the version installed currently has been locally modified"
+msgstr ""
+"利用可能ですが、現在インストールされているバージョンはローカルに変更されてい"
+"ます"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error, exiting now."
+msgstr "エラー、今すぐ終了します。."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: You need to run this script as"
+msgstr "エラー：このスクリプトを実行する必要があります"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: This script can't be piped!"
+msgstr "エラー：このスクリプトはパイプできません！!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "failed!"
+msgstr "失敗した！!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Finished!"
+msgstr "終了した！!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating packet repository"
+msgstr "パケットリポジトリの更新"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating system"
+msgstr "更新システム"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Cleanup system"
+msgstr "クリーンアップシステム"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Installing"
+msgstr "インストール"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating"
+msgstr "更新"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Expanding Filesystem"
+msgstr "ファイルシステムの拡大"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Do you want to proceed?"
+msgstr "先に進みたいですか？?"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Ok, proceeding..."
+msgstr "OK、進行中..."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "No, exiting now."
+msgstr "いいえ、今すぐ終了します。."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Please answer yes or no."
+msgstr "はいまたはいいえに答えてください。."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing path"
+msgstr "パスを変更します"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Downloading"
+msgstr "ダウンロード"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/owner"
+msgstr "ファイル許可/所有者の変更"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/right"
+msgstr "ファイル許可/右の変更"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "To activate the changes, the system must be rebooted."
+msgstr "変更をアクティブにするには、システムを再起動する必要があります。."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Could not find any user, exiting now."
+msgstr "ユーザーが見つかりませんでしたが、今すぐ終了しました。."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Which user would you like to edit?"
+msgstr "どのユーザーを編集しますか？?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Define the password for user"
+msgstr "ユーザーのパスワードを定義します"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Do you want to edit another user?"
+msgstr "別のユーザーを編集しますか？?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "New password"
+msgstr "新しいパスワード"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Retype new password"
+msgstr "新しいパスワード再入力"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "No password has been supplied."
+msgstr "パスワードは提供されていません。."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Sorry, passwords do not match."
+msgstr "申し訳ありませんが、パスワードは一致しません。."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Updating password"
+msgstr "パスワードの更新"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Authentication token manipulation error"
+msgstr "認証トークン操作エラー"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "password unchanged"
+msgstr "パスワードは変更されていません"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "user"
+msgstr "ユーザー"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "does not exist"
+msgstr "存在しない"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Please connect the destination device you wish to use."
+msgstr "使用する宛先デバイスを接続してください。."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Hit enter when it is connected."
+msgstr "接続されているときにEnterを押します。."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find any devices, exiting now."
+msgstr "デバイスが見つかりませんでしたが、今すぐ終了しました。."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find specified device, exiting now."
+msgstr "指定されたデバイスが見つかりませんでしたが、今すぐ終了しました。."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "What is your destination device?"
+msgstr "あなたの目的地デバイスは何ですか？?"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Ok, using device:"
+msgstr "OK、デバイスの使用：:"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "target is busy"
+msgstr "ターゲットは忙しいです"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating image file"
+msgstr "画像ファイルの作成"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image file"
+msgstr "画像ファイルの縮小"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "copied"
+msgstr "コピー"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records in"
+msgstr "の記録"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records out"
+msgstr "記録"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Gathering data"
+msgstr "情報収集中"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating new"
+msgstr "新しい作成"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Checking filesystem"
+msgstr "ファイルシステムのチェック"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "non-contiguous"
+msgstr "不連続"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks"
+msgstr "ブロック"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking filesystem"
+msgstr "縮小ファイルシステム"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Resizing the filesystem on"
+msgstr "ファイルシステムの変更"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Begin pass"
+msgstr "パスを開始します"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Relocating blocks"
+msgstr "ブロックの再配置"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Scanning inode table"
+msgstr "スキャンイノードテーブル"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Updating inode references"
+msgstr "INODE参照の更新"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "The filesystem on"
+msgstr "オンのファイルシステム"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "is now"
+msgstr "今でしょ"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks long"
+msgstr "長いブロック"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image"
+msgstr "縮小画像"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Using gzip on the shrunk image"
+msgstr "縮小画像でGZIPを使用します"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrunk"
+msgstr "縮んだ"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "from"
+msgstr "から"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "to"
+msgstr "に"
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid ""
+"Please connect the destination device (sd-card, usb-stick) you wish to use."
+msgstr "使用したい宛先デバイス（SDカード、USBスティック）を接続してください。."
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid "WARNING: All data on the destination device will be deleted!"
+msgstr "警告：宛先デバイス上のすべてのデータが削除されます！!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting frequency is"
+msgstr "無線報告頻度です"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting bandwidth is"
+msgstr "ラジオレポート帯域幅はです"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting TX power is"
+msgstr "ラジオレポートTX Powerはです"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting spreading factor is"
+msgstr "ラジオレポートの拡散要因です"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting coding rate is"
+msgstr "ラジオレポートコーディングレートはです"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware initialisation error"
+msgstr "ハードウェアの初期化エラー"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware TX error"
+msgstr "ハードウェアTXエラー"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware error"
+msgstr "ハードウェアエラー"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "serial read timeout"
+msgstr "シリアル読み取りタイムアウト"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while detecting hardware for"
+msgstr "ハードウェアの検出中にIOエラーが発生しました"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring frequency for"
+msgstr "頻度の構成中にIOエラーが発生しました"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring bandwidth for"
+msgstr "帯域幅の構成中にIOエラーが発生しました"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring TX power for"
+msgstr "TX電源の設定中にIOエラーが発生しました"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring spreading factor for"
+msgstr "拡散係数の構成中にIOエラーが発生しました"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring coding rate for"
+msgstr "コードレートの構成中にIOエラーが発生しました"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state for"
+msgstr "無線状態の構成中にIOエラーが発生しました"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring device mode"
+msgstr "デバイスモードの構成中にIOエラーが発生しました"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while wiping EEPROM"
+msgstr "EEPROMの拭き取り中にIOエラーが発生しました"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while restarting device"
+msgstr "デバイスの再起動中にIOエラーが発生しました"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while writing EEPROM"
+msgstr "EEPROMの書き込み中にIOエラーが発生しました"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state"
+msgstr "無線状態の構成中にIOエラーが発生しました"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download EEPROM from device. Is a valid firmware installed?"
+msgstr ""
+"デバイスからEEPROMをダウンロードできませんでした。 有効なファームウェアはイン"
+"ストールされていますか？?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum mismatch"
+msgstr "Eeprom Checksumの不一致"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum correct"
+msgstr "eepromチェックサムは正しい"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load local signing key"
+msgstr "ローカルの署名キーをロードできませんでした"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize local signing key"
+msgstr "ローカルの署名キーをゆるくすることはできませんでした"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validated"
+msgstr "デバイスの署名が検証されました"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validation failed"
+msgstr "デバイスの署名検証に失敗しました"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid EEPROM data, could not parse device EEPROM."
+msgstr "無効なEEPROMデータは、デバイスEEPROMを解析できませんでした。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Hello!\n"
+"\n"
+"This guide will help you install the RNode firmware on supported\n"
+"and homebrew devices. Please connect the device you wish to set\n"
+"up now."
+msgstr ""
+"こんにちは！ \n"
+"\n"
+" このガイドは、サポートされているRNODEファームウェアをインストールするのに役"
+"立ちます \n"
+" および自家製のデバイス。 設定するデバイスを接続してください \n"
+" 今すぐ。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please connect the device you wish to setup now."
+msgstr "今すぐセットアップするデバイスを接続してください。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find any port, exiting now."
+msgstr "ポートが見つかりませんでしたが、今すぐ終了しました。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Detected serial ports:"
+msgstr "検出されたシリアルポート：:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What serial port is your device connected to?"
+msgstr "デバイスはどのシリアルポートに接続されていますか？?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That port does not exist, exiting now."
+msgstr "そのポートは存在せず、今すぐ終了します。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not select port, exiting now."
+msgstr "今すぐ終了するポートを選択できませんでした。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Ok, using device on"
+msgstr "OK、デバイスを使用して"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "using device on"
+msgstr "デバイスを使用します"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find specified port"
+msgstr "指定されたポートが見つかりませんでした"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "exiting now"
+msgstr "今すぐ終了します"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Probing device"
+msgstr "プローブデバイス"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not open the specified serial port. The contained exception was:"
+msgstr ""
+"指定されたシリアルポートを開くことができませんでした。 含まれる例外は次のとお"
+"りです。:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No answer from device"
+msgstr "デバイスからの答えはありません"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Trying to read EEPROM"
+msgstr "Eepromを読み込もうとしています"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device is already installed and provisioned. No further action will\n"
+"be taken. If you wish to completely reinstall this device, you must first\n"
+"wipe the current EEPROM. See the help for more info.\n"
+"\n"
+"Exiting now."
+msgstr ""
+"このデバイスはすでにインストールされ、プロビジョニングされています。 それ以上"
+"のアクションはありません \n"
+" 取られます。 このデバイスを完全に再インストールしたい場合は、最初にする必要"
+"があります \n"
+" 現在のEEPROMを拭きます。 詳細については、ヘルプをご覧ください。 \n"
+"\n"
+" 今すぐ終了します。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"The device seems to have an RNode firmware installed, but it was not\n"
+"provisioned correctly, or it is corrupt. We are going to reinstall the\n"
+"correct firmware and provision it."
+msgstr ""
+"デバイスにはrnodeファームウェアがインストールされているようですが、 \n"
+" 正しくプロビジョニングされているか、破損しています。 再インストールします \n"
+" ファームウェアを修正してプロビジョニングします。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "It looks like this is a fresh device with no RNode firmware."
+msgstr "これは、RNODEファームウェアのない新鮮なデバイスのようです。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of device is this?"
+msgstr "これはどんなデバイスですか？?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Important! Using RNode firmware on"
+msgstr "重要！ RNODEファームウェアを使用して"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"should currently be\n"
+"considered experimental. It is not intended for production or critical use.\n"
+"The currently supplied firmware is provided AS-IS as a courtesey to those\n"
+"who would like to experiment with it. Hit enter to continue."
+msgstr ""
+"現在はそうあるべきです \n"
+" 実験と見なされます。 生産や批判的な使用を目的としたものではありません。 \n"
+" 現在提供されているファームウェアは、それらの礼儀として提供されています \n"
+" 誰がそれを試したいですか。 Enterを押して続行します。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That device type does not exist, exiting now."
+msgstr "そのデバイスタイプは存在せず、今すぐ終了します。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of microcontroller is your board based on?"
+msgstr "ボードはどのようなマイクロコントローラーに基づいていますか？?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That MCU type does not exist, exiting now."
+msgstr "そのMCUタイプは存在せず、今すぐ終了します。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What transceiver module does your board use?"
+msgstr "ボードはどのようなトランシーバーモジュールを使用していますか？?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That transceiver type does not exist, exiting now."
+msgstr "そのトランシーバータイプは存在せず、今すぐ終了します。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What model is this RNode?"
+msgstr "このrnodeはどのモデルですか？?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That model does not exist, exiting now."
+msgstr "そのモデルは存在せず、今すぐ終了します。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this T-Beam for?"
+msgstr "このTビームはどのバンドですか？?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That band does not exist, exiting now."
+msgstr "そのバンドは存在せず、今すぐ終了します。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this LoRa32 for?"
+msgstr "このlora32はどのバンドですか？?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this Heltec LoRa32 for?"
+msgstr "このHeltec Lora32はどのバンドですか？?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of ESP32 board is this?"
+msgstr "これはどのようなESP32ボードですか？?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That ESP32 board does not exist, exiting now."
+msgstr "そのESP32ボードは存在せず、今すぐ終了します。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Sorry, no firmware for your board currently exists.\n"
+"Help making it a reality by contributing code or by\n"
+"donating to the project."
+msgstr ""
+"申し訳ありませんが、ボードのファームウェアは現在存在していません。 \n"
+" コードを寄付することによって、または \n"
+" プロジェクトへの寄付。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Ok, that should be all the information we need. Please confirm the "
+"following\n"
+"summary before proceeding. In the next step, the device will be flashed and\n"
+"provisioned, so make that you are satisfied with your choices."
+msgstr ""
+"わかりました、それは私たちが必要とするすべての情報でなければなりません。 以下"
+"を確認してください \n"
+" 進む前の要約。 次のステップでは、デバイスが点滅し、 \n"
+" プロビジョニングされているので、あなたがあなたの選択に満足しているようにして"
+"ください。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial port"
+msgstr "シリアルポート"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device type"
+msgstr "デバイスタイプ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device MCU"
+msgstr "デバイスMCU"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file"
+msgstr "ファームウェアファイル"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Is the above correct?"
+msgstr "上記は正しいですか？?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "OK, aborting now."
+msgstr "わかりました、今中絶します。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device connected"
+msgstr "接続されたデバイス"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Current firmware version:"
+msgstr "現在のファームウェアバージョン：:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Got invalid response while detecting device"
+msgstr "デバイスの検出中に無効な応答を得ました"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download required firmware file. The contained exception was:"
+msgstr ""
+"必要なファームウェアファイルをダウンロードできませんでした。 含まれる例外は次"
+"のとおりです。:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial module could not be found"
+msgstr "シリアルモジュールは見つかりませんでした"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs pyserial to work.\n"
+"You can install it with: pip3 install pyserial"
+msgstr ""
+"rnode configユーティリティは、動作するためにpyserialが必要です。 \n"
+" PISSERIALをインストールする：PISSERIALをインストールできます"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cryptography module could not be found"
+msgstr "暗号化モジュールは見つかりませんでした"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs the cryptography module to work.\n"
+"You can install it with: pip3 install cryptography"
+msgstr ""
+"rnode Configityユーティリティは、動作するために暗号化モジュールを必要としま"
+"す。 \n"
+" ：PIP3インストール暗号化にインストールできます"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Downloading latest frimware from GitHub"
+msgstr "GitHubから最新のファームウェアをダウンロードします"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware download completed"
+msgstr "ファームウェアのダウンロードが完了しました"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware extracted"
+msgstr "抽出されたファームウェア"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not extract firmware from downloaded zip file"
+msgstr "ダウンロードしたzipファイルからファームウェアを抽出できませんでした"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing RNode firmware to device on"
+msgstr "RNODEファームウェアをデバイスに点滅させます"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Done flashing"
+msgstr "フラッシュを完了しました"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Waiting for ESP32 reset"
+msgstr "ESP32リセットを待っています"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while flashing"
+msgstr "点滅中のエラー"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file not found"
+msgstr "ファームウェアファイルが見つかりません"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download firmware package"
+msgstr "ファームウェアパッケージをダウンロードできませんでした"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The contained exception was:"
+msgstr "含まれる例外は次のとおりです。:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Skipping online check, using local firmware file:"
+msgstr ""
+"ローカルファームウェアファイルを使用して、オンラインチェックをスキップしま"
+"す。:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load signing key"
+msgstr "署名キーをロードできませんでした"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize signing key"
+msgstr "署名キーをゆるくすることはできませんでした"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Generating a new signing key"
+msgstr "新しい署名キーを生成します"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Signing key already exists, not overwriting!\n"
+"Manually delete this key to create a new one."
+msgstr ""
+"署名キーはすでに存在し、上書きではありません！ \n"
+" このキーを手動で削除して、新しいキーを作成します。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The firmware directory does not exist, can't write key!"
+msgstr "ファームウェアディレクトリは存在せず、キーを書くことができません！!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Extracting firmware"
+msgstr "ファームウェアの抽出"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Opening serial port"
+msgstr "シリアルポートを開く"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Serial port opened, but RNode did not respond. Is a valid firmware installed?"
+msgstr ""
+"シリアルポートが開かれましたが、Rnodeは応答しませんでした。 有効なファーム"
+"ウェアはインストールされていますか？?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"WARNING: EEPROM is being wiped! Power down device NOW if you do not want "
+"this!"
+msgstr ""
+"警告：EEPROMが一掃されています！ あなたがこれを望まないならば、今すぐ電源ダウ"
+"ンデバイス！!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Reading EEPROM"
+msgstr "Eepromを読む"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "ERROR: No firmware found for this board. Cannot update."
+msgstr "エラー：このボードにファームウェアは見つかりません。 更新できません。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cannot update device firmware"
+msgstr "デバイスファームウェアを更新できません"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Updating RNode firmware for device on"
+msgstr "デバイス用のRNODEファームウェアを更新します"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing new firmware completed"
+msgstr "フラッシュの新しいファームウェアが完成しました"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update completed successfully"
+msgstr "ファームウェアの更新は正常に完了しました"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while flashing the new firmware, exiting now."
+msgstr ""
+"新しいファームウェアを点滅させたときにエラーが発生し、今すぐ終了しました。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while updating firmware"
+msgstr "ファームウェアの更新中のエラー"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update file not found"
+msgstr "ファームウェア更新ファイルが見つかりません"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM contents"
+msgstr "EEPROMコンテンツ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM backup written to"
+msgstr "eepromバックアップに書き込まれました"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"EEPROM was successfully downloaded from device,\n"
+"but file could not be written to disk."
+msgstr ""
+"Eepromはデバイスから正常にダウンロードされ、 \n"
+" しかし、ファイルをディスクに書き込むことはできませんでした。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device info:"
+msgstr "デバイス情報：:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Product"
+msgstr "製品"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature"
+msgstr "デバイスの署名"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware version"
+msgstr "ファームウェアバージョン"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Hardware revision"
+msgstr "ハードウェアリビジョン"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial number"
+msgstr "シリアルナンバー"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency range"
+msgstr "周波数範囲"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Max TX power"
+msgstr "Max Tx Power"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Manufactured"
+msgstr "製造"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device mode"
+msgstr "デバイスモード"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency"
+msgstr "頻度"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth"
+msgstr "帯域幅"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "TX power"
+msgstr "TXパワー"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor"
+msgstr "拡散係数"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate"
+msgstr "コーディングレート"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "On-air bitrate"
+msgstr "オンエアビットレート"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM is invalid, no further information available"
+msgstr "EEPROMは無効で、それ以上の情報はありません"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM bootstrap was requested, but a valid EEPROM was already present."
+msgstr ""
+"Eeprom Bootstrapが要求されましたが、有効なEEPROMがすでに存在していました。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No changes are being made."
+msgstr "変更は行われていません。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Clearing old EEPROM, this will take about 15 seconds"
+msgstr "古いeepromをクリアする、これには約15秒かかります"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not create device serial number, exiting"
+msgstr "デバイスのシリアル番号を作成して、終了できませんでした"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Loading signing key"
+msgstr "署名キーの読み込み"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while signing EEPROM"
+msgstr "eepromに署名している間にエラー"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bootstrapping device EEPROM"
+msgstr "ブートストラップデバイスEEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM written! Validating"
+msgstr "Eepromが書いた！ 検証"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM Bootstrapping successful!"
+msgstr "Eeprom Bootstrappingが成功しました！!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "RNode Firmware autoinstallation complete!"
+msgstr "rnodeファームウェア自動インストール完了！!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "To use your device with Reticulum, read the documetation at:"
+msgstr ""
+"reticulumでデバイスを使用するには、次のようなドキュメントをお読みください。:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Thank you for using this utility! Please help the project by\n"
+"contributing code and reporting bugs, or by donating!"
+msgstr ""
+"このユーティリティをご利用いただきありがとうございます！ プロジェクトを手伝っ"
+"てください \n"
+" コードの寄稿とバグのレポート、または寄付によって！!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Your contributions and donations directly further the realisation\n"
+"of truly open, free and resilient communications systems."
+msgstr ""
+"あなたの貢献と寄付は直接実現を促進します \n"
+" 本当にオープンで、無料で回復力のある通信システムの。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "WARNING: Could not backup device EEPROM to disk"
+msgstr "警告：デバイスEEPROMをディスクにバックアップできませんでした"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM was written, but validation failed. Check your settings."
+msgstr ""
+"Eepromは書かれていましたが、検証に失敗しました。 設定を確認してください。."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while writing EEPROM. The contained exception was:"
+msgstr ""
+"EEPROMを書いているときにエラーが発生しました。 含まれる例外は次のとおりで"
+"す。:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid data specified, cancelling EEPROM write"
+msgstr "指定された無効なデータ、EEPROM書き込みのキャンセル"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to normal (host-controlled) operating mode"
+msgstr "デバイスは、通常（ホスト制御）動作モードに設定されています"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please input startup configuration:"
+msgstr "スタートアップの構成を入力してください：:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency in Hz:"
+msgstr "Hzの頻度：:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth in Hz:"
+msgstr "Hzの帯域幅：:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor:"
+msgstr "拡散要因：:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate:"
+msgstr "コーディングレート：:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to TNC operating mode"
+msgstr "TNC動作モードに設定されています"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device contains a valid firmware, but EEPROM is invalid.\n"
+"Probably the device has not been initialised, or the EEPROM has been "
+"erased.\n"
+"Please correctly initialise the device and try again!"
+msgstr ""
+"このデバイスには有効なファームウェアが含まれていますが、EEPROMは無効です。 \n"
+" おそらく、デバイスは初期化されていないか、EEPROMが消去されていません。 \n"
+" デバイスを正しく初期化して、再試行してください！!"

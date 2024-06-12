@@ -1,0 +1,135 @@
+#!/usr/bin/env python3
+
+
+import json
+
+import re
+import subprocess
+
+
+def size_str(num, suffix='B'):
+    units = ['','K','M','G','T','P','E','Z']
+    last_unit = 'Y'
+
+    if suffix == 'b':
+        num *= 8
+        units = ['','K','M','G','T','P','E','Z']
+        last_unit = 'Y'
+
+    for unit in units:
+        if abs(num) < 1000.0:
+            if unit == "":
+                return "%.0f %s%s" % (num, unit, suffix)
+            else:
+                return "%.2f %s%s" % (num, unit, suffix)
+        num /= 1000.0
+
+    return "%.2f%s%s" % (num, last_unit, suffix)
+
+
+def speed_str(num, suffix='bps'):
+    units = ['','k','M','G','T','P','E','Z']
+    last_unit = 'Y'
+
+    if suffix == 'Bps':
+        num /= 8
+        units = ['','K','M','G','T','P','E','Z']
+        last_unit = 'Y'
+
+    for unit in units:
+        if abs(num) < 1000.0:
+            return "%3.2f %s%s" % (num, unit, suffix)
+        num /= 1000.0
+
+    return "%.2f %s%s" % (num, last_unit, suffix)
+
+
+def frequency_str(hz, suffix="Hz"):
+    num = hz*1e6
+    units = ["µ", "m", "", "K","M","G","T","P","E","Z"]
+    last_unit = "Y"
+
+    for unit in units:
+        if abs(num) < 1000.0:
+            return "%.2f %s%s" % (num, unit, suffix)
+        num /= 1000.0
+
+    return "%.2f%s%s" % (num, last_unit, suffix)
+
+
+def prettytime(time):
+    days = int(time // (24 * 3600))
+    if days == 0:
+        days = ""
+    else:
+        days = str(days)+"T "
+    time = time % (24 * 3600)
+    hours = int(time // 3600)
+    time %= 3600
+    minutes = int(time // 60)
+    time %= 60
+    seconds = int(time)
+    return "{}{:0>2}:{:0>2}:{:0>2}".format(days, hours, minutes, seconds)
+
+
+def cmd(cmd, default="", timeout=5):
+    if cmd == "":
+        return default
+    try:
+        result = subprocess.run(cmd, capture_output=True, shell=True, text=True, timeout=timeout)
+        if result.returncode == 0:
+            return re.sub(r'^\s+|\s+$', '', result.stdout)
+    except:
+        None
+    return default
+
+
+def file(file, default=""):
+    if file == "":
+        return default
+    try:
+        file_handler = open(file)
+        file_string = file_handler.read()
+        file_handler.close()
+        return re.sub(r'^\s+|\s+$', '', file_string)
+    except:
+        None
+    return default
+
+
+data = {}
+
+
+result = cmd("ip route list")
+if result != "":
+    result = result + "\n"
+    regex = re.findall(r'default via (([0-9]{1,3}\.){3}[0-9]{1,3}) dev (\w*)', result)
+    for match in regex:
+        text0 = ""
+        text1 = ""
+
+        result_dns = cmd('host ' + match[0] + ' | sed -rn "s/.*domain name pointer (.*)\./\1/p" | head -n 1')
+        if result_dns != "":
+            text1 += " [b]DNS name: [/b]"+result_dns
+
+        result_connection = cmd('ping -W1 -c 1 -I ' + match[2] + ' ' + match[0] +' |  sed -rn "s/.*icmp_seq=1.*time=.*/OK/p"')
+        if result_connection == "":
+            result_connection = "NOK"
+        text0 += " [b]Gateway: [/b]"+result_connection
+
+        result_connection = cmd('ping -W1 -c 1 -I ' + match[2] + ' 8.8.8.8 |  sed -rn "s/.*icmp_seq=1.*time=.*/OK/p"')
+        if result_connection == "":
+            result_connection = "NOK"
+        text0 += " [b]Online IP: [/b]"+result_connection
+
+        result_connection = cmd('ping -W1 -c 1 -I ' + match[2] + ' google.de |  sed -rn "s/.*icmp_seq=1.*time=.*/OK/p"')
+        if result_connection == "":
+            result_connection = "NOK"
+        text0 += " [b]Online DNS: [/b]"+result_connection
+
+        data[match[2]+" "+match[0]] = [text0.strip(), text1.strip(), "ethernet-cable", 0x00]
+
+
+json_data = json.dumps(data)
+
+print(json_data)

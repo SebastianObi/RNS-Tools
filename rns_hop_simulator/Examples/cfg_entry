@@ -1,0 +1,12 @@
+[[Default]]
+type = AutoInterface
+enabled = True
+mode = gateway
+
+[[TCP Server]]
+type = TCPServerInterface
+enabled = True
+outgoing = True
+mode = gateway
+listen_ip = 0.0.0.0
+listen_port = 42042

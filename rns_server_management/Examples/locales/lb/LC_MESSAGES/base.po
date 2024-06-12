@@ -1,0 +1,2049 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-01 19:45+0100\n"
+"PO-Revision-Date: 2023-12-12 09:39\n"
+"Last-Translator: SebastianObi\n"
+"Language-Team: SebastianObi\n"
+"Language: lb\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#: infos
+#, fuzzy
+msgid "Software - Python"
+msgstr "Software - Python"
+
+#: infos
+#, fuzzy
+msgid "Software - Reticulum"
+msgstr "Software - Reticulum"
+
+#: infos
+#, fuzzy
+msgid "Software - System"
+msgstr "Software - System"
+
+#: infos
+#, fuzzy
+msgid "System - Drives & data storage"
+msgstr "System - Drive & Data Späichere"
+
+#: infos
+#, fuzzy
+msgid "System - General system information"
+msgstr "System - General Systeminformatioun"
+
+#: infos
+#, fuzzy
+msgid "System - Interfaces"
+msgstr "System - Interfaces"
+
+#: infos
+#, fuzzy
+msgid "System - Network connections"
+msgstr "System - Netzwierkverbindunge"
+
+#: infos
+#, fuzzy
+msgid "System time"
+msgstr "Systemen Zäit Zäit"
+
+#: infos
+#, fuzzy
+msgid "Start time"
+msgstr "Startzäit"
+
+#: infos
+#, fuzzy
+msgid "Runtime"
+msgstr "Runtime"
+
+#: infos
+#, fuzzy
+msgid "Version"
+msgstr "Erëm"
+
+#: infos
+#, fuzzy
+msgid "Status:"
+msgstr "Stell:"
+
+#: infos
+#, fuzzy
+msgid "Clients:"
+msgstr "Client:"
+
+#: infos
+#, fuzzy
+msgid "Peers:"
+msgstr "Kollegen:"
+
+#: infos
+#, fuzzy
+msgid "Mode:"
+msgstr "Modus:"
+
+#: infos
+#, fuzzy
+msgid "Speed:"
+msgstr "VODWX:"
+
+#: infos
+#, fuzzy
+msgid "Airtime:"
+msgstr "Loftzäit:"
+
+#: infos
+#, fuzzy
+msgid "Ch. Load:"
+msgstr "CH. Lueden:"
+
+#: infos
+#, fuzzy
+msgid "Queued:"
+msgstr "Queied:"
+
+#: infos
+#, fuzzy
+msgid "announce"
+msgstr "annonct"
+
+#: infos
+#, fuzzy
+msgid "announces"
+msgstr "smucken"
+
+#: infos
+#, fuzzy
+msgid "Held:"
+msgstr "Ofgehalen:"
+
+#: infos
+#, fuzzy
+msgid "Announces:"
+msgstr "Annoncéiert:"
+
+#: infos
+#, fuzzy
+msgid "Transport Instance"
+msgstr "Transportéieren Instanz"
+
+#: infos
+#, fuzzy
+msgid "Probe responder"
+msgstr "SOBE responder"
+
+#: infos
+#, fuzzy
+msgid "Uptime"
+msgstr "Virun Uewfer"
+
+#: infos
+#, fuzzy
+msgid "[b]Size:[/b]"
+msgstr "[B] Gréisst: [/ B]"
+
+#: infos
+#, fuzzy
+msgid "[b]Free:[/b]"
+msgstr "[B] gratis: [/ B]"
+
+#: infos
+#, fuzzy
+msgid "[b]Type:[/b]"
+msgstr "[B] Typ: [/ B]"
+
+#: infos
+#, fuzzy
+msgid "Platform"
+msgstr "Plattform"
+
+#: infos
+#, fuzzy
+msgid "Release"
+msgstr "Fräis Noriicht"
+
+#: infos
+#, fuzzy
+msgid "Release name"
+msgstr "Fräien Numm"
+
+#: infos
+#, fuzzy
+msgid "Model"
+msgstr "Model"
+
+#: infos
+#, fuzzy
+msgid "Hostname"
+msgstr "Hostnumm"
+
+#: infos
+#, fuzzy
+msgid "CPU load"
+msgstr "CPU Luede"
+
+#: infos
+#, fuzzy
+msgid "CPU cores"
+msgstr "CPU Kärelen"
+
+#: infos
+#, fuzzy
+msgid "System temperature"
+msgstr "System Temperatur"
+
+#: infos
+#, fuzzy
+msgid "LAN"
+msgstr "Lan"
+
+#: infos
+#, fuzzy
+msgid "WiFi"
+msgstr "Wifi"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks"
+msgstr "WiFi Netzwierker"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks connected"
+msgstr "WiFi Netzwierker verbonne sinn"
+
+#: infos
+#, fuzzy
+msgid "USB"
+msgstr "USB"
+
+#: infos
+#, fuzzy
+msgid "Bluetooth"
+msgstr "Bluetooth"
+
+#: infos
+#, fuzzy
+msgid "Serial"
+msgstr "Serien"
+
+#: logs
+#, fuzzy
+msgid "FDN - Reticulum, Channel, Group, Shop"
+msgstr "FDN - Reticulum, Kanal, Grupp, Buttek"
+
+#: logs
+#, fuzzy
+msgid "Software"
+msgstr "Software"
+
+#: logs
+#, fuzzy
+msgid "Dhcpd - DHCP Server"
+msgstr "DHCPD - DHCP Server"
+
+#: logs
+#, fuzzy
+msgid "Dnsmasq - DNS Server"
+msgstr "DnMasq - DNS Server"
+
+#: logs
+#, fuzzy
+msgid "Hostapd - WiFi AP"
+msgstr "Feindd - wifi ap"
+
+#: logs
+#, fuzzy
+msgid "System"
+msgstr "System de System"
+
+#: logs
+#, fuzzy
+msgid "Auth - Authentication"
+msgstr "Auth - Authentifikatioun"
+
+#: logs
+#, fuzzy
+msgid "Daemon - System daemons"
+msgstr "Daemon - System Daemonen"
+
+#: logs
+#, fuzzy
+msgid "Fail - Failed login attempts"
+msgstr "Ausgefallenen - Feeler Login Versich"
+
+#: logs
+#, fuzzy
+msgid "Kern - Kernel"
+msgstr "Kern - Kärel"
+
+#: logs
+#, fuzzy
+msgid "Mail - Email-related events"
+msgstr "Mail - E-Mail-verbonne Evenementer"
+
+#: logs
+#, fuzzy
+msgid "Messages - General system events"
+msgstr "Messagen - General System Eventer"
+
+#: logs
+#, fuzzy
+msgid "Syslog - System"
+msgstr "Syslog - System"
+
+#: logs
+#, fuzzy
+msgid "User - User activities"
+msgstr "Benotzer Benotzer - Benotzer"
+
+#: scripts
+#, fuzzy
+msgid "Backup & Restore"
+msgstr "Backup & Restauréieren"
+
+#: scripts
+#, fuzzy
+msgid "Examples"
+msgstr "Beispiller"
+
+#: scripts
+#, fuzzy
+msgid "Examples 1"
+msgstr "Beispiller 1"
+
+#: scripts
+#, fuzzy
+msgid "Examples 2"
+msgstr "Beispiller 2"
+
+#: scripts
+msgid "Examples - Test Configurations"
+msgstr ""
+
+#: scripts
+#, fuzzy
+msgid "Examples - User interface test functions"
+msgstr "Beispiller - Benotzer Interface Testfunktiounen"
+
+#: scripts
+#, fuzzy
+msgid "Reticulum - LoRadio & RNode"
+msgstr "Reticulum - loradio & rnod"
+
+#: scripts
+#, fuzzy
+msgid "Software - Installation"
+msgstr "Software - Installatioun"
+
+#: scripts
+#, fuzzy
+msgid "Software - Uninstallation"
+msgstr "Software - Uninstallatioun"
+
+#: scripts
+#, fuzzy
+msgid "Software - Update"
+msgstr "Software - Update"
+
+#: scripts
+#, fuzzy
+msgid "System - Configuration"
+msgstr "System - Konfiguratioun"
+
+#: scripts
+#, fuzzy
+msgid "System - Update"
+msgstr "System - Update"
+
+#: scripts
+#, fuzzy
+msgid "Management - Restart"
+msgstr "Gestioun - Restart"
+
+#: scripts
+#, fuzzy
+msgid "System - Reboot"
+msgstr "System - Reboot"
+
+#: scripts
+#, fuzzy
+msgid "System - Shutdown"
+msgstr "System - Shutdown"
+
+#: scripts
+#, fuzzy
+msgid "System Clone - Creates a direct copy of the system drive"
+msgstr "System Klon - kreéiert eng direkt Kopie vum System Drive"
+
+#: scripts
+#, fuzzy
+msgid "System Image - Creates an image of the system drive"
+msgstr "Systembild - erstellt e Bild vum System Drive"
+
+#: scripts
+#, fuzzy
+msgid "Example - All input elements"
+msgstr "Beispill - all Input Elementer"
+
+#: scripts
+#, fuzzy
+msgid "Example - Exit codes"
+msgstr "Beispill - Ausgangskoden"
+
+#: scripts
+#, fuzzy
+msgid "Example - Waiting time"
+msgstr "Beispill - Waart Zäit"
+
+#: scripts
+#, fuzzy
+msgid "Info - Read out information"
+msgstr "Info - Liest Informatiounen"
+
+#: scripts
+#, fuzzy
+msgid "Install - Installing the firmware"
+msgstr "Installéieren - Installéiert d'Firmware"
+
+#: scripts
+#, fuzzy
+msgid "Reset - Resetting the firmware"
+msgstr "Reset - Reset de Firmware"
+
+#: scripts
+#, fuzzy
+msgid "Update - Updating the firmware"
+msgstr "Update - Update d'Firmware"
+
+#: scripts
+#, fuzzy
+msgid "Bridge Matrix - Message bridge"
+msgstr "Bréck Matrix - Message Bréck"
+
+#: scripts
+#, fuzzy
+msgid "Console tools - Recommended tools"
+msgstr "Konsol Tools - Recommandéiert Tools"
+
+#: scripts
+#, fuzzy
+msgid "Filesystem tools - Recommended tools"
+msgstr "Dateiesystem Tools - Recommandéiert Tools"
+
+#: scripts
+#, fuzzy
+msgid "Server Blockchain - Gateway for payment and other blockchain functions"
+msgstr "Server Blockchain - Gateway fir Bezuelung an aner Blockchinfunktiounen"
+
+#: scripts
+#, fuzzy
+msgid "Server Channel - Hosting the channel functionality"
+msgstr "Server Kanal - Hosting d'Kanal Funktionalitéit"
+
+#: scripts
+#, fuzzy
+msgid "Server Group - Hosting the group functionality"
+msgstr "Server Grupp - Hosting d'Grupp Funktionalitéit"
+
+#: scripts
+#, fuzzy
+msgid "Server Page - Hosting the page functionality"
+msgstr "Server Säit - Hosting d'Säit Funktionalitéit"
+
+#: scripts
+#, fuzzy
+msgid "Server Propagation - Hosting the propagation node functionality"
+msgstr "Server Propagatioun - Hosting d'Propagatioun Node Funktionalitéit"
+
+#: scripts
+#, fuzzy
+msgid "Server Shop - Hosting the shop functionality"
+msgstr "Servergeschäft - Hosting d'Geschäftsfunktionalitéit"
+
+#: scripts
+#, fuzzy
+msgid "Server - All hosting functions for channel, group, page, shop, etc."
+msgstr ""
+"Server - datt all Hosting Funktiounen fir Kanal, Grupp, POP, Shop, asw."
+
+#: scripts
+#, fuzzy
+msgid "File system - Extend file system (Raspberry Pi)"
+msgstr "Dateiesystem - Verlängert Dateiesystem (Hambier Pi)"
+
+#: scripts
+#, fuzzy
+msgid "Password - Change operating system password"
+msgstr "Passwuert - Operatiounssystem Passwuert änneren"
+
+#: scripts
+#, fuzzy
+msgid "Update check - Check for new versions"
+msgstr "Update Check - Kontrolléiert fir nei Versiounen"
+
+#: scripts
+#, fuzzy
+msgid "Update cleanup - Cleaning up unneeded packages"
+msgstr "Update Botzen - botzen net vernoléissegt Packagen"
+
+#: scripts
+#, fuzzy
+msgid "Update Update - Update the system"
+msgstr "Update Update - Update de System"
+
+#: scripts
+#, fuzzy
+msgid "Update Upgrade - Distribution update of the system"
+msgstr "Update Upgrade - Distributioun Update vum System"
+
+#: scripts
+#, fuzzy
+msgid "Installing.."
+msgstr "Installéieren .."
+
+#: scripts
+#, fuzzy
+msgid "Uninstalling..."
+msgstr "Deinstalléieren ..."
+
+#: scripts
+#, fuzzy
+msgid "Updating..."
+msgstr "Updaten ..."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The management server will restart. You must reconnect to re-establish a "
+"connection."
+msgstr ""
+"De Management Server gëtt nei starten. Dir musst eng Verbindung nei "
+"opzebauen."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will reboot. You must reconnect to re-establish a connection."
+msgstr "De System wäert nei starten. Dir musst eng Verbindung nei opzebauen."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will shut down. You must then start it manually to re-establish a "
+"connection."
+msgstr ""
+"De System gëtt zou. Dir musst dunn dat manuell ufänken fir eng Verbindung "
+"nei opzebauen."
+
+#: scripts
+#, fuzzy
+msgid "No installed services found. Exiting."
+msgstr "Keng installéiert Servicer fonnt. Ausléisen."
+
+#: scripts
+#, fuzzy
+msgid "Select a service:"
+msgstr "Wielt e Service:"
+
+#: scripts
+#, fuzzy
+msgid "Enter the name for the service: (only a-z 0-9)"
+msgstr "Gitt den Numm fir de Service: (nëmmen a-z 0-9)"
+
+#: scripts
+#, fuzzy
+msgid "Enter the display name for the application:"
+msgstr "Gitt den Displaynumm un fir d'Applikatioun:"
+
+#: scripts
+#, fuzzy
+msgid "Invalid choice!"
+msgstr "Ongëlteg Wiel!"
+
+#: scripts
+#, fuzzy
+msgid "Update successfully completed!"
+msgstr "Update erfollegräich ofgeschloss!"
+
+#: scripts
+#, fuzzy
+msgid "Uninstallation successfully completed!"
+msgstr "Uninstallatioun erfollegräich ofgeschloss!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a shop successfully completed!"
+msgstr "Installatioun vun engem Geschäft erfollegräich ofgeschloss!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of an echo server successfully completed!"
+msgstr "Installatioun vun engem EOO Server erfollegräich ofgeschloss!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a channel successfully completed!"
+msgstr "Installatioun vun engem Kanal erfollegräich ofgeschloss!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a group successfully completed!"
+msgstr "Installatioun vun enger Grupp erfollegräich ofgeschloss!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a propagation node successfully completed!"
+msgstr "Installatioun vun enger Baggerung Node erfollegräich ofgeschloss!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a provisioning node successfully completed!"
+msgstr "Installatioun vun engem proviséierte Node erfollegräich ofgeschloss!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a page successfully completed!"
+msgstr "Installatioun vun enger Säit erfollegräich ofgeschloss!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a blockchain node successfully completed!"
+msgstr "Installatioun vun engem Blockchain Node erfollegräich ofgeschloss!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a message bridge successfully completed!"
+msgstr "Installatioun vun enger Noriichtekëscht erfollegräich ofgeschloss!"
+
+#: scripts
+#, fuzzy
+msgid ""
+"No further configuration is necessary. Connect to the shop to make all the "
+"necessary settings in the shop app. You should find the new shop in the "
+"announcement list."
+msgstr ""
+"Keng weider Konfiguratioun ass néideg. Connect an de Buttek fir all déi "
+"néideg Astellungen an der Geschäft App ze maachen. Dir sollt den neie "
+"Geschäft an der Ukënnegungslëscht fannen."
+
+#: scripts
+#, fuzzy
+msgid ""
+"To make further settings, please edit the corresponding configuration files "
+"in the following folder:"
+msgstr ""
+"Fir weider Astellunge ze maachen, ännert w.e.g. déi entspriechend "
+"Konfiguratiouns Dateien an de folgenden Dossier:"
+
+#: scripts
+#, fuzzy
+msgid "Then you must restart the following service:"
+msgstr "Da musst Dir de folgende Service nei starten:"
+
+#: services
+#, fuzzy
+msgid "All"
+msgstr "Alles"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Hit:"
+msgstr "Richteg:"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading package lists"
+msgstr "Pak Pack Listen"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Building dependency tree"
+msgstr "Ofhängeg Beem"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading state information"
+msgstr "Liesen Staatinformatioun"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading database"
+msgstr "Liesen Datebank"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Calculating upgrade"
+msgstr "Berechnung Upgrade"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Waiting for headers"
+msgstr "Waart op Headers"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Working"
+msgstr "Schaffen"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "All packages are up to date"
+msgstr "All Packagen sinn aktuell"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Done"
+msgstr "Verdataktioun"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"The following packages were automatically installed and are no longer "
+"required"
+msgstr ""
+"Déi folgend Packagen goufen automatesch installéiert a sinn net méi "
+"erfuerderlech"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Use"
+msgstr "Benotzt"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove them"
+msgstr "fir se ze läschen"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "upgraded"
+msgstr "Upgrade"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "newly installed"
+msgstr "Nei installéiert"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove and"
+msgstr "ze läschen an"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "not upgraded"
+msgstr "net Upgrade"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Connected to"
+msgstr "Verbonne mat"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be REMOVED"
+msgstr "Déi folgend Packagen ginn ewechgeholl"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "After this operation"
+msgstr "No dëser Operatioun"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "disk space will be freed"
+msgstr "Disk Space wäert befreit ginn"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Do you want to continue?"
+msgstr "Wëllt dir weiderfueren?"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Progress"
+msgstr "Kontrad"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Removing"
+msgstr "Erëmbellen"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Processing triggers for"
+msgstr "Veraarbechtung Auslänner fir"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be upgraded"
+msgstr "Déi folgend Packagen ginn opgehuewen"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading changelogs"
+msgstr "Liesen Changelogen"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preconfiguring packages"
+msgstr "Preconfiguring Packagen"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preparing to unpack"
+msgstr "Preparéieren op Unpack"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "files and directories currently installed"
+msgstr "Dateien an Direktnoriichten déi aktuell installéiert sinn"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Unpacking"
+msgstr "Ausverackten"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Setting up"
+msgstr "Ofsetzen"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "over"
+msgstr "Iwwergofon"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Installing new version of config file"
+msgstr "Installéiere nei Versioun vun der configer Datei"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "A new version"
+msgstr "Eng nei Versioun"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "of configuration file"
+msgstr "vun der Konfiguratiounssystem"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"is available, but the version installed currently has been locally modified"
+msgstr ""
+"ass verfügbar, awer d'Versioun installéiert huet de Moment lokal geännert "
+"ginn"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error, exiting now."
+msgstr "Feeler, elo aus."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: You need to run this script as"
+msgstr "Feeler: Dir musst dëst Skript lafen als"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: This script can't be piped!"
+msgstr "Feeler: Dëse Skript kann net gepickt ginn!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "failed!"
+msgstr "Feeler!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Finished!"
+msgstr "Fäerdeg!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating packet repository"
+msgstr "Update Packet Repository"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating system"
+msgstr "Update System"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Cleanup system"
+msgstr "Sanéierungssystem"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Installing"
+msgstr "Installéieren"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating"
+msgstr "Oddate"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Expanding Filesystem"
+msgstr "Ausbaue Dateien ausbauen"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Do you want to proceed?"
+msgstr "Wëllt Dir weidergoen?"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Ok, proceeding..."
+msgstr "Ok, weidergeet ..."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "No, exiting now."
+msgstr "NEE, NOCH NU."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Please answer yes or no."
+msgstr "W.e.g. geäntwert jo oder nee."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing path"
+msgstr "Réckgang"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Downloading"
+msgstr "NETKLOP"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/owner"
+msgstr "Änneren Datei Permissiounen / Besëtzer änneren"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/right"
+msgstr "Änneren Datei Permissiounen / riets änneren"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "To activate the changes, the system must be rebooted."
+msgstr "Fir den Ännerungen z'aktivéieren, muss de System nei entlooss ginn."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Could not find any user, exiting now."
+msgstr "Konnt kee Benotzer fannen, elo erausstellen."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Which user would you like to edit?"
+msgstr "Wéi ee Benotzer wëllt Dir änneren?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Define the password for user"
+msgstr "Definéiert d'Passwuert fir de Benotzer"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Do you want to edit another user?"
+msgstr "Wëllt Dir en anere Benotzer änneren?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "New password"
+msgstr "Neit Passwuert"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Retype new password"
+msgstr "Revetyp neit Passwuert"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "No password has been supplied."
+msgstr "Kee Passwuert gouf geliwwert."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Sorry, passwords do not match."
+msgstr "Sorry, Passwierder passen net."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Updating password"
+msgstr "Passwuert updatéieren"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Authentication token manipulation error"
+msgstr "Authentifikatioun Token Manipulatioun Feeler"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "password unchanged"
+msgstr "Passwuert onverännert"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "user"
+msgstr "Benotzer"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "does not exist"
+msgstr "gëtt et net"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Please connect the destination device you wish to use."
+msgstr "Bemmt w.e.g. den Destinatiounsapparat deen Dir benotze wëllt."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Hit enter when it is connected."
+msgstr "Hit Enter wann et ugeschloss ass."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find any devices, exiting now."
+msgstr "Konnt keng Geräter fannen, elo eraushuelen."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find specified device, exiting now."
+msgstr "Konnt de spezifizéierten Apparat net fannen, elo."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "What is your destination device?"
+msgstr "Wat ass Ären Destinatiounsapparat?"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Ok, using device:"
+msgstr "OK, benotzt Apparat:"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "target is busy"
+msgstr "Zil ass beschäftegt"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating image file"
+msgstr "Bilddatei ze kreéieren"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image file"
+msgstr "Schrumpft Bilddatei"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "copied"
+msgstr "erfouss"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records in"
+msgstr "records an"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records out"
+msgstr "records eraus"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Gathering data"
+msgstr "Donnéeën sammelen"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating new"
+msgstr "Neie kreéieren"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Checking filesystem"
+msgstr "Kontrolléiere Dateien"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "non-contiguous"
+msgstr "net contigéiert"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks"
+msgstr "blacken"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking filesystem"
+msgstr "Schrumpft Dateien"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Resizing the filesystem on"
+msgstr "D'Resise de Dateien"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Begin pass"
+msgstr "Fänken un"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Relocating blocks"
+msgstr "Verloschter Blocks"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Scanning inode table"
+msgstr "Scannen IndoDen Dësch"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Updating inode references"
+msgstr "Update Inode Referenzen"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "The filesystem on"
+msgstr "D'Dateiesystem op"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "is now"
+msgstr "gëtt elo"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks long"
+msgstr "blockéiert laang"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image"
+msgstr "Schrumpft Bild"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Using gzip on the shrunk image"
+msgstr "Benotzt GZIP op de schrumpft Bild"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrunk"
+msgstr "Gezwregens"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "from"
+msgstr "iwwuerten"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "to"
+msgstr "zu"
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid ""
+"Please connect the destination device (sd-card, usb-stick) you wish to use."
+msgstr ""
+"W.e.g. verbënnt d'Destinatioun Apparat (SD-Card, USB-Stick) Dir wëllt "
+"benotzen."
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid "WARNING: All data on the destination device will be deleted!"
+msgstr "Opgepasst: All Daten op der Destinatioun Apparat gëtt geläscht!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting frequency is"
+msgstr "Radio Bericht Frequenz ass"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting bandwidth is"
+msgstr "Radio Bericht Bandbreedung ass"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting TX power is"
+msgstr "Radio Bericht TX Kraaft ass"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting spreading factor is"
+msgstr "Radio Bericht Verloscht Faktor ass"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting coding rate is"
+msgstr "Radio Bericht Coding Taux ass"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware initialisation error"
+msgstr "Hardware initialisation Feeler"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware TX error"
+msgstr "Hardware TX Feeler"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware error"
+msgstr "Hardware Feeler"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "serial read timeout"
+msgstr "Serien Liesen Timeout"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while detecting hardware for"
+msgstr "En io Feeler ass beim Detterware fir"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring frequency for"
+msgstr "En io Feeler ass beim Konfiguratioun vun der Frequenz gemaach fir"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring bandwidth for"
+msgstr "En io Feeler ass beim Konfiguratioun vum Bandbreedung geschitt fir"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring TX power for"
+msgstr "En io Feeler ass beim Konfiguratioun vun TX Kraaft"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring spreading factor for"
+msgstr "En io Feeler ass beim Konfigurë vum Verwaltungsfaktor gemaach fir"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring coding rate for"
+msgstr "En io Feeler ass beim Konfiguratioun vum Coding Taux ofgeschloss"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state for"
+msgstr "En IO Feeler ass beim Konfiguratioun vum Radio Staat fir"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring device mode"
+msgstr "En io Feeler ass beim Configuring Gerät Modus geschitt"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while wiping EEPROM"
+msgstr "En IO Feeler ass beim Wippe EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while restarting device"
+msgstr "En io Feeler ass beim Restart vum Gerät geschitt"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while writing EEPROM"
+msgstr "En Io Feeler ass beim Schreiwen EPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state"
+msgstr "En IO Feeler ass beim Konfiguratioun vum Radio Staat"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download EEPROM from device. Is a valid firmware installed?"
+msgstr ""
+"Konnt kee EPROM vum Apparat eroflueden. Ass eng gëlteg Firmware installéiert?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum mismatch"
+msgstr "Eeprom Checksum Mësshandlung"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum correct"
+msgstr "EEPROM Checksum korrekt"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load local signing key"
+msgstr "Konnt net lokal Ënnerschrëft Schlëssel lueden"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize local signing key"
+msgstr "Konnt net lokalen Ënnerschreiwe Schlëssel dissiséieren"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validated"
+msgstr "Apparat Ënnerschrëft validéiert"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validation failed"
+msgstr "Apparat Ënnerschrëft Validatioun ass net gescheitert"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid EEPROM data, could not parse device EEPROM."
+msgstr "Ongëlteg EPROM Daten, konnt net den Apparat EEPROM paken."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Hello!\n"
+"\n"
+"This guide will help you install the RNode firmware on supported\n"
+"and homebrew devices. Please connect the device you wish to set\n"
+"up now."
+msgstr ""
+"Hallo! \n"
+"\n"
+" Dëse Guide hëlleft Iech de Rnede Firmware op ënnerstëtzt ze installéieren \n"
+" an Heembriecher Geräter. Connectéiert de Gerät deen Dir wëllt setzen \n"
+" erophuelen elo."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please connect the device you wish to setup now."
+msgstr "Connectéiert den Apparat dat Dir elo wëllt astellen."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find any port, exiting now."
+msgstr "Konnt kee Port fannen, elo erausstellen."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Detected serial ports:"
+msgstr "Sielle Häfen erkannt:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What serial port is your device connected to?"
+msgstr "Wat Serior Hafen ass Ären Apparat mat?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That port does not exist, exiting now."
+msgstr "Deen Hafen gëtt et net, daatéiert elo."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not select port, exiting now."
+msgstr "Konnt den Hafen auswielen, da schätzen elo."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Ok, using device on"
+msgstr "OK, benotzt Apparat op"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "using device on"
+msgstr "Mat Hëllef vun Apparat un"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find specified port"
+msgstr "Konnt net spezifizéiert Port fannen"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "exiting now"
+msgstr "elo eraus"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Probing device"
+msgstr "Probing Apparat"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not open the specified serial port. The contained exception was:"
+msgstr ""
+"Konnt de spezifizéierte Seriorport net opmaachen. Déi enthalen Ausnam war:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No answer from device"
+msgstr "Keng Äntwert vum Apparat"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Trying to read EEPROM"
+msgstr "Probéieren EPROM ze liesen"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device is already installed and provisioned. No further action will\n"
+"be taken. If you wish to completely reinstall this device, you must first\n"
+"wipe the current EEPROM. See the help for more info.\n"
+"\n"
+"Exiting now."
+msgstr ""
+"Dësen Apparat ass scho installéiert a provisionéiert. Keng weider Aktioun "
+"wäert \n"
+" geholl ginn. Wann Dir dëst Apparat nei installéiert wëllt, musst Dir fir "
+"d'éischt \n"
+" Wischt den aktuellen EEPROM. Kuckt d'Hëllef fir méi Info. \n"
+"\n"
+" Elo erauszéien."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"The device seems to have an RNode firmware installed, but it was not\n"
+"provisioned correctly, or it is corrupt. We are going to reinstall the\n"
+"correct firmware and provision it."
+msgstr ""
+"Den Apparat schéngt eng RNODE Firmware installéiert ze hunn, awer et war "
+"net \n"
+" provisionéiert richteg, oder et ass korrupt. Mir ginn de \n"
+" korrekt Firmware an d'Bestëmmung et."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "It looks like this is a fresh device with no RNode firmware."
+msgstr "Et gesäit aus wéi dëst e frësche Gerät ouni Rnodware ass."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of device is this?"
+msgstr "Wat fir en Apparat ass dat?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Important! Using RNode firmware on"
+msgstr "Wichteg gutt! Benotzt RNODE Firmware op"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"should currently be\n"
+"considered experimental. It is not intended for production or critical use.\n"
+"The currently supplied firmware is provided AS-IS as a courtesey to those\n"
+"who would like to experiment with it. Hit enter to continue."
+msgstr ""
+"soll de Moment sinn \n"
+" als experimentell ugesinn. Et ass net fir Produktioun oder kritesch "
+"Benotzung virgesinn. \n"
+" De Moment geliwwert Firmware gëtt als ugebueden \n"
+" déi géif gären dermat experimentéieren. Hit Enter fir weider ze goen."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That device type does not exist, exiting now."
+msgstr "Dëse Gerät Typ gëtt net existéiert, daating elo."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of microcontroller is your board based on?"
+msgstr "Wéi eng Zort Microcontroller ass Äre Board baséiert?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That MCU type does not exist, exiting now."
+msgstr "Dass MCU-Typ existéiert net, wielt elo."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What transceiver module does your board use?"
+msgstr "Wat Transcerviver Modul mécht Äre Board benotzt?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That transceiver type does not exist, exiting now."
+msgstr "Datt Transceiver Typ existéiert, gëtt et elo nach."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What model is this RNode?"
+msgstr "Wéi ee Modell ass dëst Rnod?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That model does not exist, exiting now."
+msgstr "Dëse Modell gëtt et net existéiert, da schätzen elo."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this T-Beam for?"
+msgstr "Wéi eng Band ass dësen T-Steam fir?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That band does not exist, exiting now."
+msgstr "Déi Band gëtt net existéiert, elo."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this LoRa32 for?"
+msgstr "Wéi eng Band ass dës Lora32 fir?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this Heltec LoRa32 for?"
+msgstr "Wéi eng Band ass dës Helpec lora32 fir?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of ESP32 board is this?"
+msgstr "Wéi eng Zort esp32 Board ass dëst?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That ESP32 board does not exist, exiting now."
+msgstr "Datt esp32 Board net existéiert, da schätzt elo."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Sorry, no firmware for your board currently exists.\n"
+"Help making it a reality by contributing code or by\n"
+"donating to the project."
+msgstr ""
+"Sorry, keng Firmware fir Äre Board aktuell existéiert. \n"
+" Hëllefen et eng Realitéit ze maachen andeems Dir Code bäidréit oder "
+"duerch \n"
+" de Spende un de Projet."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Ok, that should be all the information we need. Please confirm the "
+"following\n"
+"summary before proceeding. In the next step, the device will be flashed and\n"
+"provisioned, so make that you are satisfied with your choices."
+msgstr ""
+"Ok, dat sollt all Informatioun sinn déi mir brauchen. Confirméiert w.e.g. "
+"déi folgend \n"
+" Resumé ier Dir weidergeet. Am nächste Schrëtt gëtt den Apparat blénkt an \n"
+" Provisionéiert, also maacht datt Dir mat Äre Wiel zefridden sidd."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial port"
+msgstr "Serielle Hafen"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device type"
+msgstr "Postpas"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device MCU"
+msgstr "Apparat MCU"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file"
+msgstr "Firmware Datei"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Is the above correct?"
+msgstr "Ass déi uewe genannte richteg?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "OK, aborting now."
+msgstr "Ok, abortéiert elo."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device connected"
+msgstr "Apparat verbonne"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Current firmware version:"
+msgstr "Aktuell Firmware Versioun:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Got invalid response while detecting device"
+msgstr "Krut ongëlteg Äntwert beim Detektiounsapparat"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download required firmware file. The contained exception was:"
+msgstr ""
+"Konnt net erfuerderlech Firmware Datei eroflueden. Déi enthalen Ausnam war:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial module could not be found"
+msgstr "Serial Modul konnt net fonnt ginn"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs pyserial to work.\n"
+"You can install it with: pip3 install pyserial"
+msgstr ""
+"Rnoded configilitéit brauche pyseal fir ze schaffen. \n"
+" Kënnt Dir et installéieren mat: Pip3 installéieren Pyseal"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cryptography module could not be found"
+msgstr "CRYPTOGRAPHY MODULE KANN NET Fonnt ginn"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs the cryptography module to work.\n"
+"You can install it with: pip3 install cryptography"
+msgstr ""
+"Rnodde configility brauch d'Cryptografie Modul fir ze schaffen. \n"
+" Kënnt Dir et installéieren mat: Pip3 installéieren Cryptographie"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Downloading latest frimware from GitHub"
+msgstr "Eroflueden Last Firmware aus Github"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware download completed"
+msgstr "Firmware Download ofgeschloss"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware extracted"
+msgstr "Firmware extrahéiert"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not extract firmware from downloaded zip file"
+msgstr "Konnt d'Firmware auswierken aus erofgeluede Zip Datei"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing RNode firmware to device on"
+msgstr "Blénkt Rnoded Firmware fir en Apparat op"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Done flashing"
+msgstr "Gemaach blénkt"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Waiting for ESP32 reset"
+msgstr "Waart op esp32 Reset"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while flashing"
+msgstr "Feeler beim Flasting"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file not found"
+msgstr "Firmware Datei net fonnt"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download firmware package"
+msgstr "Konnt de Firmware Package eroflueden"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The contained exception was:"
+msgstr "Déi enthalen Ausnam war:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Skipping online check, using local firmware file:"
+msgstr ""
+"Online Iwwerpréifung iwwerloossen, mat Hëllef vun der lokaler Firmware Datei:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load signing key"
+msgstr "Konnt net en Ënnerschreiwe Schlëssel lueden"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize signing key"
+msgstr "Konnt net dem Ënnerschreiwe-Tast"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Generating a new signing key"
+msgstr "Generéieren en neie Ënnerschreiwe Schlëssel"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Signing key already exists, not overwriting!\n"
+"Manually delete this key to create a new one."
+msgstr ""
+"Ënnerschreiwe Schlëssel gëtt et scho, net iwwerdriwwe! \n"
+" Manuell läschen dëse Schlëssel fir en neien ze kreéieren."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The firmware directory does not exist, can't write key!"
+msgstr "De Firmware-Verzeechnes gëtt et net, kann net de Schlëssel schreiwen!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Extracting firmware"
+msgstr "Extrahieren Firmware"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Opening serial port"
+msgstr "Serial Port opmaachen"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Serial port opened, but RNode did not respond. Is a valid firmware installed?"
+msgstr ""
+"Serielle Port opgemaach, awer rnede huet net geäntwert. Ass eng gëlteg "
+"Firmware installéiert?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"WARNING: EEPROM is being wiped! Power down device NOW if you do not want "
+"this!"
+msgstr ""
+"Opgepasst: EEPROM gëtt geworf! Muecht erof Gerät elo wann Dir dëst net wëllt!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Reading EEPROM"
+msgstr "Liesen EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "ERROR: No firmware found for this board. Cannot update."
+msgstr "Feeler: Keng Firmware fir dëse Board fonnt. Kann net aktualiséieren."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cannot update device firmware"
+msgstr "Kann den Apparat Firmware net aktualiséieren"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Updating RNode firmware for device on"
+msgstr "Update RNODE Firmware fir Apparat op"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing new firmware completed"
+msgstr "Flashing nei Firmware ofgeschloss"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update completed successfully"
+msgstr "Firmware Update erfollegräich ofgeschloss"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while flashing the new firmware, exiting now."
+msgstr "E Feeler ass beim Splille déi nei Firmware erofgeet, dayns elo."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while updating firmware"
+msgstr "Feeler beim Update Firmware"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update file not found"
+msgstr "Firmware Update Datei net fonnt"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM contents"
+msgstr "Eeprom Inhalter"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM backup written to"
+msgstr "EEPRORO BACKEUP PRIEFT FIR"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"EEPROM was successfully downloaded from device,\n"
+"but file could not be written to disk."
+msgstr ""
+"EEPROM gouf erfollegräich vum Apparat erofgeluede gelooss, \n"
+" Awer Datei konnt net op Disk geschriwwen ginn."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device info:"
+msgstr "Apparat Info:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Product"
+msgstr "Produktenzelel"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature"
+msgstr "Apparat Ënnerschrëft"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware version"
+msgstr "Firmware Versioun"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Hardware revision"
+msgstr "Hardware Revisioun"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial number"
+msgstr "Seriennummer"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency range"
+msgstr "Frequenz Range"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Max TX power"
+msgstr "Max tx Kraaft"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Manufactured"
+msgstr "Horméiert"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device mode"
+msgstr "Apparat un"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency"
+msgstr "Frequenz"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth"
+msgstr "Bandséierel"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "TX power"
+msgstr "TX Muecht"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor"
+msgstr "Verdreift Faktor"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate"
+msgstr "Coding Taux"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "On-air bitrate"
+msgstr "On-Loftbritat"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM is invalid, no further information available"
+msgstr "EEPROM ass ongëlteg, keng weider Informatioun verfügbar"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM bootstrap was requested, but a valid EEPROM was already present."
+msgstr "EEPMOR BOOTSTRAP gouf gefrot, awer eng gëlteg EPROM war scho präsent."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No changes are being made."
+msgstr "Keng Ännerunge ginn gemaach."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Clearing old EEPROM, this will take about 15 seconds"
+msgstr "Alen EEPROM läschen, dauert dëse 15 Sekonnen"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not create device serial number, exiting"
+msgstr "Konnt d'Apparat Seriennummer net erstellen, ausprobéieren"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Loading signing key"
+msgstr "Luede Signing Schlëssel"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while signing EEPROM"
+msgstr "Feeler beim Ënnerschreiwe vun EPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bootstrapping device EEPROM"
+msgstr "Bootstrapping Apparat EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM written! Validating"
+msgstr "EEPRO SIXT! Validéieren"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM Bootstrapping successful!"
+msgstr "EPROM Bootstrapping erfollegräich!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "RNode Firmware autoinstallation complete!"
+msgstr "RNODE Firmware Autoinstalatioun fäerdeg!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "To use your device with Reticulum, read the documetation at:"
+msgstr "Ären Apparat mat Reticulum ze benotzen, liesen d'Dokumentatioun beim:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Thank you for using this utility! Please help the project by\n"
+"contributing code and reporting bugs, or by donating!"
+msgstr ""
+"Merci fir dës Utility benotzt! Hëllef w.e.g. de Projet vum \n"
+" Bäitrage Code a Bericht vu Käferen, oder duerch Spenden!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Your contributions and donations directly further the realisation\n"
+"of truly open, free and resilient communications systems."
+msgstr ""
+"Är Contributiounen an Spende ginn direkt d'Realisatioun direkt \n"
+" Ursprénge wierklech op, fräi an el meeschte Communectionesystemer."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "WARNING: Could not backup device EEPROM to disk"
+msgstr "OPGEPASST: Konnt net Backupapparat EEPROM an Disk"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM was written, but validation failed. Check your settings."
+msgstr ""
+"De EPROM war geschriwwen, awer validatioun geschriwwe ginn. Préift Är "
+"Astellungen."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while writing EEPROM. The contained exception was:"
+msgstr "E Feeler ass beim Schreiwen Ehermon geschitt. Déi enthalen Ausnam war:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid data specified, cancelling EEPROM write"
+msgstr "Ongëlteg Daten uginn, annuléieren EPRORORORY Schreifweis"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to normal (host-controlled) operating mode"
+msgstr "Apparat gesat fir normal (Host-kontrolléiert) Operatiounsmodus"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please input startup configuration:"
+msgstr "W.e.g. Input Startup Configuratioun:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency in Hz:"
+msgstr "Frequenz am HZ:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth in Hz:"
+msgstr "Bandbreedung an Hz:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor:"
+msgstr "Verdreift Faktor:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate:"
+msgstr "Codod Taux:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to TNC operating mode"
+msgstr "Apparat op TNC Operatiounsmodus gesat"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device contains a valid firmware, but EEPROM is invalid.\n"
+"Probably the device has not been initialised, or the EEPROM has been "
+"erased.\n"
+"Please correctly initialise the device and try again!"
+msgstr ""
+"Dësen Apparat enthält eng gëlteg Firmware, awer EEPROM ass ongëlteg. \n"
+" Wahrscheinlech ass den Apparat net initiéiert ginn, oder den EPROM ass "
+"geläscht. \n"
+" W.e.g. korrigéiert d'Initial dat Apparat a probéiert et nach eng Kéier!"

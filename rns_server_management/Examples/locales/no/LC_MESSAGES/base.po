@@ -1,0 +1,2043 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-01 19:45+0100\n"
+"PO-Revision-Date: 2023-12-12 09:40\n"
+"Last-Translator: SebastianObi\n"
+"Language-Team: SebastianObi\n"
+"Language: no\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#: infos
+#, fuzzy
+msgid "Software - Python"
+msgstr "Programvare - Python"
+
+#: infos
+#, fuzzy
+msgid "Software - Reticulum"
+msgstr "Programvare - Retikulum"
+
+#: infos
+#, fuzzy
+msgid "Software - System"
+msgstr "Programvare - System"
+
+#: infos
+#, fuzzy
+msgid "System - Drives & data storage"
+msgstr "System - stasjoner og datalagring"
+
+#: infos
+#, fuzzy
+msgid "System - General system information"
+msgstr "System - Generell systeminformasjon"
+
+#: infos
+#, fuzzy
+msgid "System - Interfaces"
+msgstr "System - Grensesnitt"
+
+#: infos
+#, fuzzy
+msgid "System - Network connections"
+msgstr "System - Nettverkstilkoblinger"
+
+#: infos
+#, fuzzy
+msgid "System time"
+msgstr "system tid"
+
+#: infos
+#, fuzzy
+msgid "Start time"
+msgstr "Starttid"
+
+#: infos
+#, fuzzy
+msgid "Runtime"
+msgstr "Runtime"
+
+#: infos
+#, fuzzy
+msgid "Version"
+msgstr "Versjon"
+
+#: infos
+#, fuzzy
+msgid "Status:"
+msgstr "Status:"
+
+#: infos
+#, fuzzy
+msgid "Clients:"
+msgstr "Klienter:"
+
+#: infos
+#, fuzzy
+msgid "Peers:"
+msgstr "Kolleger:"
+
+#: infos
+#, fuzzy
+msgid "Mode:"
+msgstr "Modus:"
+
+#: infos
+#, fuzzy
+msgid "Speed:"
+msgstr "Hastighet:"
+
+#: infos
+#, fuzzy
+msgid "Airtime:"
+msgstr "Sendingstid:"
+
+#: infos
+#, fuzzy
+msgid "Ch. Load:"
+msgstr "Ch. Laste:"
+
+#: infos
+#, fuzzy
+msgid "Queued:"
+msgstr "Køte:"
+
+#: infos
+#, fuzzy
+msgid "announce"
+msgstr "kunngjøre"
+
+#: infos
+#, fuzzy
+msgid "announces"
+msgstr "kunngjør"
+
+#: infos
+#, fuzzy
+msgid "Held:"
+msgstr "Holdt:"
+
+#: infos
+#, fuzzy
+msgid "Announces:"
+msgstr "Kunngjør:"
+
+#: infos
+#, fuzzy
+msgid "Transport Instance"
+msgstr "Transportforekomst"
+
+#: infos
+#, fuzzy
+msgid "Probe responder"
+msgstr "Sonde responder"
+
+#: infos
+#, fuzzy
+msgid "Uptime"
+msgstr "Oppetid"
+
+#: infos
+#, fuzzy
+msgid "[b]Size:[/b]"
+msgstr "[b] Størrelse: [/b]"
+
+#: infos
+#, fuzzy
+msgid "[b]Free:[/b]"
+msgstr "[b] Gratis: [/b]"
+
+#: infos
+#, fuzzy
+msgid "[b]Type:[/b]"
+msgstr "[b] Type: [/b]"
+
+#: infos
+#, fuzzy
+msgid "Platform"
+msgstr "Plattform"
+
+#: infos
+#, fuzzy
+msgid "Release"
+msgstr "Utgivelse"
+
+#: infos
+#, fuzzy
+msgid "Release name"
+msgstr "Slippenavn"
+
+#: infos
+#, fuzzy
+msgid "Model"
+msgstr "Modell"
+
+#: infos
+#, fuzzy
+msgid "Hostname"
+msgstr "Vertsnavn"
+
+#: infos
+#, fuzzy
+msgid "CPU load"
+msgstr "CPU -belastning"
+
+#: infos
+#, fuzzy
+msgid "CPU cores"
+msgstr "CPU -kjerner"
+
+#: infos
+#, fuzzy
+msgid "System temperature"
+msgstr "Systemtemperatur"
+
+#: infos
+#, fuzzy
+msgid "LAN"
+msgstr "Lan"
+
+#: infos
+#, fuzzy
+msgid "WiFi"
+msgstr "Wifi"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks"
+msgstr "WiFi -nettverk"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks connected"
+msgstr "WiFi -nettverk tilkoblet"
+
+#: infos
+#, fuzzy
+msgid "USB"
+msgstr "USB"
+
+#: infos
+#, fuzzy
+msgid "Bluetooth"
+msgstr "blåtann"
+
+#: infos
+#, fuzzy
+msgid "Serial"
+msgstr "Serie"
+
+#: logs
+#, fuzzy
+msgid "FDN - Reticulum, Channel, Group, Shop"
+msgstr "FDN - retikulum, kanal, gruppe, butikk"
+
+#: logs
+#, fuzzy
+msgid "Software"
+msgstr "Programvare"
+
+#: logs
+#, fuzzy
+msgid "Dhcpd - DHCP Server"
+msgstr "DHCPD - DHCP -server"
+
+#: logs
+#, fuzzy
+msgid "Dnsmasq - DNS Server"
+msgstr "DNSMASQ - DNS -server"
+
+#: logs
+#, fuzzy
+msgid "Hostapd - WiFi AP"
+msgstr "Hostapd - wifi ap"
+
+#: logs
+#, fuzzy
+msgid "System"
+msgstr "System"
+
+#: logs
+#, fuzzy
+msgid "Auth - Authentication"
+msgstr "Auth - Autentisering"
+
+#: logs
+#, fuzzy
+msgid "Daemon - System daemons"
+msgstr "Daemon - System DAEMONS"
+
+#: logs
+#, fuzzy
+msgid "Fail - Failed login attempts"
+msgstr "Mislykket - mislykkede påloggingsforsøk"
+
+#: logs
+#, fuzzy
+msgid "Kern - Kernel"
+msgstr "Kern - Kernel"
+
+#: logs
+#, fuzzy
+msgid "Mail - Email-related events"
+msgstr "Mail - E -postrelaterte hendelser"
+
+#: logs
+#, fuzzy
+msgid "Messages - General system events"
+msgstr "Meldinger - Generelle systemhendelser"
+
+#: logs
+#, fuzzy
+msgid "Syslog - System"
+msgstr "Syslog - System"
+
+#: logs
+#, fuzzy
+msgid "User - User activities"
+msgstr "Bruker - Brukeraktiviteter"
+
+#: scripts
+#, fuzzy
+msgid "Backup & Restore"
+msgstr "Gjenopprette fra sikkerhetskopi"
+
+#: scripts
+#, fuzzy
+msgid "Examples"
+msgstr "Eksempler"
+
+#: scripts
+#, fuzzy
+msgid "Examples 1"
+msgstr "Eksempler 1"
+
+#: scripts
+#, fuzzy
+msgid "Examples 2"
+msgstr "Eksempler 2"
+
+#: scripts
+msgid "Examples - Test Configurations"
+msgstr ""
+
+#: scripts
+#, fuzzy
+msgid "Examples - User interface test functions"
+msgstr "Eksempler - Testfunksjoner for brukergrensesnitt"
+
+#: scripts
+#, fuzzy
+msgid "Reticulum - LoRadio & RNode"
+msgstr "Reticulum - Loradio & rnode"
+
+#: scripts
+#, fuzzy
+msgid "Software - Installation"
+msgstr "Programvare - Installasjon"
+
+#: scripts
+#, fuzzy
+msgid "Software - Uninstallation"
+msgstr "Programvare - avinstallering"
+
+#: scripts
+#, fuzzy
+msgid "Software - Update"
+msgstr "Programvare oppdatering"
+
+#: scripts
+#, fuzzy
+msgid "System - Configuration"
+msgstr "Systemkonfigurasjon"
+
+#: scripts
+#, fuzzy
+msgid "System - Update"
+msgstr "System oppdatering"
+
+#: scripts
+#, fuzzy
+msgid "Management - Restart"
+msgstr "Ledelse - Start på nytt"
+
+#: scripts
+#, fuzzy
+msgid "System - Reboot"
+msgstr "System - Start på nytt"
+
+#: scripts
+#, fuzzy
+msgid "System - Shutdown"
+msgstr "System - Avstengning"
+
+#: scripts
+#, fuzzy
+msgid "System Clone - Creates a direct copy of the system drive"
+msgstr "Systemklone - Oppretter en direkte kopi av systemstasjonen"
+
+#: scripts
+#, fuzzy
+msgid "System Image - Creates an image of the system drive"
+msgstr "Systembilde - Oppretter et bilde av systemstasjonen"
+
+#: scripts
+#, fuzzy
+msgid "Example - All input elements"
+msgstr "Eksempel - Alle inngangselementer"
+
+#: scripts
+#, fuzzy
+msgid "Example - Exit codes"
+msgstr "Eksempel - Avslutt koder"
+
+#: scripts
+#, fuzzy
+msgid "Example - Waiting time"
+msgstr "Eksempel - ventetid"
+
+#: scripts
+#, fuzzy
+msgid "Info - Read out information"
+msgstr "Info - Les opp informasjon"
+
+#: scripts
+#, fuzzy
+msgid "Install - Installing the firmware"
+msgstr "Installer - Installere firmware"
+
+#: scripts
+#, fuzzy
+msgid "Reset - Resetting the firmware"
+msgstr "Tilbakestill - Tilbakestill firmware"
+
+#: scripts
+#, fuzzy
+msgid "Update - Updating the firmware"
+msgstr "Oppdatering - Oppdatering av firmware"
+
+#: scripts
+#, fuzzy
+msgid "Bridge Matrix - Message bridge"
+msgstr "Bridge Matrix - Message Bridge"
+
+#: scripts
+#, fuzzy
+msgid "Console tools - Recommended tools"
+msgstr "Konsollverktøy - Anbefalte verktøy"
+
+#: scripts
+#, fuzzy
+msgid "Filesystem tools - Recommended tools"
+msgstr "Filesystemverktøy - Anbefalte verktøy"
+
+#: scripts
+#, fuzzy
+msgid "Server Blockchain - Gateway for payment and other blockchain functions"
+msgstr ""
+"Server blockchain - gateway for betaling og andre blockchain -funksjoner"
+
+#: scripts
+#, fuzzy
+msgid "Server Channel - Hosting the channel functionality"
+msgstr "Server Channel - Hosting Channel -funksjonaliteten"
+
+#: scripts
+#, fuzzy
+msgid "Server Group - Hosting the group functionality"
+msgstr "Server Group - Hosting Group Functionality"
+
+#: scripts
+#, fuzzy
+msgid "Server Page - Hosting the page functionality"
+msgstr "Serverside - Hosting Page -funksjonaliteten"
+
+#: scripts
+#, fuzzy
+msgid "Server Propagation - Hosting the propagation node functionality"
+msgstr "Serverutbredelse - Hosting for forplantningsnodefunksjonalitet"
+
+#: scripts
+#, fuzzy
+msgid "Server Shop - Hosting the shop functionality"
+msgstr "Serverbutikk - Hosting butikkfunksjonaliteten"
+
+#: scripts
+#, fuzzy
+msgid "Server - All hosting functions for channel, group, page, shop, etc."
+msgstr "Server - Alle hostingfunksjoner for kanal, gruppe, side, butikk osv."
+
+#: scripts
+#, fuzzy
+msgid "File system - Extend file system (Raspberry Pi)"
+msgstr "Filsystem - Utvid filsystem (Raspberry PI)"
+
+#: scripts
+#, fuzzy
+msgid "Password - Change operating system password"
+msgstr "Passord - Endre passord for operativsystem"
+
+#: scripts
+#, fuzzy
+msgid "Update check - Check for new versions"
+msgstr "Oppdateringssjekk - Sjekk for nye versjoner"
+
+#: scripts
+#, fuzzy
+msgid "Update cleanup - Cleaning up unneeded packages"
+msgstr "Oppdater opprydding - Rengjøring av unødvendige pakker"
+
+#: scripts
+#, fuzzy
+msgid "Update Update - Update the system"
+msgstr "OPPDATERING OPPDATERING - Oppdater systemet"
+
+#: scripts
+#, fuzzy
+msgid "Update Upgrade - Distribution update of the system"
+msgstr "Oppdateringsoppgradering - Distribusjonsoppdatering av systemet"
+
+#: scripts
+#, fuzzy
+msgid "Installing.."
+msgstr "Installere .."
+
+#: scripts
+#, fuzzy
+msgid "Uninstalling..."
+msgstr "Avinstallere ..."
+
+#: scripts
+#, fuzzy
+msgid "Updating..."
+msgstr "Oppdatering ..."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The management server will restart. You must reconnect to re-establish a "
+"connection."
+msgstr ""
+"Administrasjonsserveren starter på nytt. Du må koble til igjen for å "
+"gjenopprette en forbindelse."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will reboot. You must reconnect to re-establish a connection."
+msgstr ""
+"Systemet starter på nytt. Du må koble til igjen for å gjenopprette en "
+"forbindelse."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will shut down. You must then start it manually to re-establish a "
+"connection."
+msgstr ""
+"Systemet vil slå seg av. Du må deretter starte den manuelt for å "
+"gjenopprette en forbindelse."
+
+#: scripts
+#, fuzzy
+msgid "No installed services found. Exiting."
+msgstr "Ingen installerte tjenester funnet. Utgang."
+
+#: scripts
+#, fuzzy
+msgid "Select a service:"
+msgstr "Velg en tjeneste:"
+
+#: scripts
+#, fuzzy
+msgid "Enter the name for the service: (only a-z 0-9)"
+msgstr "Skriv inn navnet for tjenesten: (Bare A-Z 0-9)"
+
+#: scripts
+#, fuzzy
+msgid "Enter the display name for the application:"
+msgstr "Skriv inn visningsnavnet for applikasjonen:"
+
+#: scripts
+#, fuzzy
+msgid "Invalid choice!"
+msgstr "Ugyldig valg!"
+
+#: scripts
+#, fuzzy
+msgid "Update successfully completed!"
+msgstr "Oppdatering fullført!"
+
+#: scripts
+#, fuzzy
+msgid "Uninstallation successfully completed!"
+msgstr "Avinstallasjon fullført!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a shop successfully completed!"
+msgstr "Installasjon av en butikk med hell fullført!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of an echo server successfully completed!"
+msgstr "Installasjon av en Echo -server fullført!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a channel successfully completed!"
+msgstr "Installasjon av en kanal fullført!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a group successfully completed!"
+msgstr "Installasjon av en gruppe fullført!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a propagation node successfully completed!"
+msgstr "Installasjon av en forplantningsnode fullført!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a provisioning node successfully completed!"
+msgstr "Installasjon av en bestemmelsesnode fullført!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a page successfully completed!"
+msgstr "Installasjon av en side med hell fullført!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a blockchain node successfully completed!"
+msgstr "Installasjon av en blockchain -node fullført!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a message bridge successfully completed!"
+msgstr "Installasjon av en meldingsbro fullført!"
+
+#: scripts
+#, fuzzy
+msgid ""
+"No further configuration is necessary. Connect to the shop to make all the "
+"necessary settings in the shop app. You should find the new shop in the "
+"announcement list."
+msgstr ""
+"Ingen ytterligere konfigurasjon er nødvendig. Koble til butikken for å lage "
+"alle nødvendige innstillinger i butikkappen. Du bør finne den nye butikken i "
+"kunngjøringslisten."
+
+#: scripts
+#, fuzzy
+msgid ""
+"To make further settings, please edit the corresponding configuration files "
+"in the following folder:"
+msgstr ""
+"For å gjøre ytterligere innstillinger, vennligst rediger de tilsvarende "
+"konfigurasjonsfilene i følgende mappe:"
+
+#: scripts
+#, fuzzy
+msgid "Then you must restart the following service:"
+msgstr "Da må du starte følgende tjeneste på nytt:"
+
+#: services
+#, fuzzy
+msgid "All"
+msgstr "Alle"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Hit:"
+msgstr "Truffet:"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading package lists"
+msgstr "Lesing av pakkelister"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Building dependency tree"
+msgstr "Bygningsavhengighetstre"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading state information"
+msgstr "Leser tilstandsinformasjon"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading database"
+msgstr "Lesedatabase"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Calculating upgrade"
+msgstr "Beregning av oppgradering"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Waiting for headers"
+msgstr "Venter på overskrifter"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Working"
+msgstr "Arbeider"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "All packages are up to date"
+msgstr "Alle pakker er oppdatert"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Done"
+msgstr "Ferdig"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"The following packages were automatically installed and are no longer "
+"required"
+msgstr "Følgende pakker ble automatisk installert og er ikke lenger påkrevd"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Use"
+msgstr "Bruk"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove them"
+msgstr "å fjerne dem"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "upgraded"
+msgstr "oppgradert"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "newly installed"
+msgstr "Nylig installert"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove and"
+msgstr "å fjerne og"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "not upgraded"
+msgstr "ikke oppgradert"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Connected to"
+msgstr "Koblet til"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be REMOVED"
+msgstr "Følgende pakker blir fjernet"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "After this operation"
+msgstr "Etter denne operasjonen"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "disk space will be freed"
+msgstr "diskplass vil bli frigjort"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Do you want to continue?"
+msgstr "Vil du fortsette?"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Progress"
+msgstr "Framgang"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Removing"
+msgstr "Fjerne"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Processing triggers for"
+msgstr "Behandler triggere for"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be upgraded"
+msgstr "Følgende pakker blir oppgradert"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading changelogs"
+msgstr "Lese Changelogs"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preconfiguring packages"
+msgstr "Forhåndskonfigurerer pakker"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preparing to unpack"
+msgstr "Forbereder seg på å pakke ut"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "files and directories currently installed"
+msgstr "filer og kataloger for øyeblikket installert"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Unpacking"
+msgstr "Pakke ut"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Setting up"
+msgstr "Setter opp"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "over"
+msgstr "over"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Installing new version of config file"
+msgstr "Installere ny versjon av konfigurasjonsfilen"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "A new version"
+msgstr "En ny versjon"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "of configuration file"
+msgstr "av konfigurasjonsfil"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"is available, but the version installed currently has been locally modified"
+msgstr ""
+"er tilgjengelig, men versjonen som er installert for øyeblikket er lokalt "
+"endret"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error, exiting now."
+msgstr "Feil, gå ut nå."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: You need to run this script as"
+msgstr "Feil: Du må kjøre dette skriptet som"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: This script can't be piped!"
+msgstr "Feil: Dette skriptet kan ikke ledes!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "failed!"
+msgstr "mislyktes!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Finished!"
+msgstr "Ferdig!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating packet repository"
+msgstr "Oppdatering av pakkelager"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating system"
+msgstr "Oppdateringssystem"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Cleanup system"
+msgstr "Oppryddingssystem"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Installing"
+msgstr "Installere"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating"
+msgstr "Oppdatering"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Expanding Filesystem"
+msgstr "Utvide filsystem"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Do you want to proceed?"
+msgstr "Vil du fortsette?"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Ok, proceeding..."
+msgstr "Ok, fortsetter ..."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "No, exiting now."
+msgstr "Nei, fritt nå."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Please answer yes or no."
+msgstr "Vennligst svar ja eller nei."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing path"
+msgstr "Skiftende sti"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Downloading"
+msgstr "Last ned"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/owner"
+msgstr "Endre filtillatelser/eier"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/right"
+msgstr "Endre filtillatelser/Right"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "To activate the changes, the system must be rebooted."
+msgstr "For å aktivere endringene, må systemet starte på nytt."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Could not find any user, exiting now."
+msgstr "Kunne ikke finne noen bruker, som forlater nå."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Which user would you like to edit?"
+msgstr "Hvilken bruker vil du redigere?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Define the password for user"
+msgstr "Definer passordet for brukeren"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Do you want to edit another user?"
+msgstr "Vil du redigere en annen bruker?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "New password"
+msgstr "Nytt passord"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Retype new password"
+msgstr "Skriv inn nytt passord på nytt"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "No password has been supplied."
+msgstr "Ingen passord er levert."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Sorry, passwords do not match."
+msgstr "Beklager, passord stemmer ikke overens."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Updating password"
+msgstr "Oppdatering av passord"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Authentication token manipulation error"
+msgstr "Autentiseringstoken -manipulasjonsfeil"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "password unchanged"
+msgstr "Passord uendret"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "user"
+msgstr "bruker"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "does not exist"
+msgstr "eksisterer ikke"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Please connect the destination device you wish to use."
+msgstr "Vennligst koble destinasjonsenheten du ønsker å bruke."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Hit enter when it is connected."
+msgstr "Hit Enter når den er tilkoblet."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find any devices, exiting now."
+msgstr "Kunne ikke finne noen enheter som forlater nå."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find specified device, exiting now."
+msgstr "Kunne ikke finne spesifisert enhet, som forlater nå."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "What is your destination device?"
+msgstr "Hva er destinasjonsenheten din?"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Ok, using device:"
+msgstr "OK, bruk enhet:"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "target is busy"
+msgstr "Målet er travelt"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating image file"
+msgstr "Opprette bildefil"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image file"
+msgstr "Krympende bildefil"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "copied"
+msgstr "kopiert"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records in"
+msgstr "poster i"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records out"
+msgstr "registrerer seg"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Gathering data"
+msgstr "Samler data"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating new"
+msgstr "Skape nytt"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Checking filesystem"
+msgstr "Kontroller filsystem"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "non-contiguous"
+msgstr "ikke-sammenhengende"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks"
+msgstr "blokker"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking filesystem"
+msgstr "Krympende filsystem"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Resizing the filesystem on"
+msgstr "Endre størrelse på filsystemet på"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Begin pass"
+msgstr "Begynn pass"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Relocating blocks"
+msgstr "Flytte blokker"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Scanning inode table"
+msgstr "Skanne inodebord"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Updating inode references"
+msgstr "Oppdatering av inode -referanser"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "The filesystem on"
+msgstr "Filsystemet på"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "is now"
+msgstr "er nå"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks long"
+msgstr "blokkerer lang"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image"
+msgstr "Krympende bilde"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Using gzip on the shrunk image"
+msgstr "Bruker gzip på det krympete bildet"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrunk"
+msgstr "Krympet"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "from"
+msgstr "fra"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "to"
+msgstr "til"
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid ""
+"Please connect the destination device (sd-card, usb-stick) you wish to use."
+msgstr ""
+"Vennligst koble destinasjonsenheten (SD-kort, USB-Pinne) du ønsker å bruke."
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid "WARNING: All data on the destination device will be deleted!"
+msgstr "Advarsel: Alle data på destinasjonsenheten blir slettet!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting frequency is"
+msgstr "Radiorapportering Frekvens er"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting bandwidth is"
+msgstr "Radiorapportering Båndbredde er"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting TX power is"
+msgstr "Radiorapportering TX Power er"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting spreading factor is"
+msgstr "Radiorapporteringsspredningsfaktor er"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting coding rate is"
+msgstr "Radiorapporteringskodingsfrekvens er"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware initialisation error"
+msgstr "Maskinvareinitialiseringsfeil"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware TX error"
+msgstr "Maskinvare TX -feil"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware error"
+msgstr "Maskinvarefeil"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "serial read timeout"
+msgstr "Seriell lest timeout"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while detecting hardware for"
+msgstr "En IO -feil oppstod mens du oppdaget maskinvare for"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring frequency for"
+msgstr "Det oppstod en IO -feil mens du konfigurerer frekvens for"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring bandwidth for"
+msgstr "En IO -feil oppstod mens du konfigurerer båndbredde for"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring TX power for"
+msgstr "En IO -feil oppstod mens du konfigurerer TX -strøm for"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring spreading factor for"
+msgstr "En IO -feil oppstod mens du konfigurerer spredningsfaktor for"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring coding rate for"
+msgstr "Det oppstod en IO -feil mens du konfigurerer kodingsfrekvens for"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state for"
+msgstr "Det oppstod en IO -feil mens du konfigurerer radiostilstand for"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring device mode"
+msgstr "En IO -feil oppstod mens konfigurering av enhetsmodus"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while wiping EEPROM"
+msgstr "En IO -feil oppstod mens du tørker av EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while restarting device"
+msgstr "En IO -feil oppstod mens du starter på nytt -enhet"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while writing EEPROM"
+msgstr "En IO -feil oppstod mens du skrev EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state"
+msgstr "Det oppstod en IO -feil mens du konfigurerer radiostilstand"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download EEPROM from device. Is a valid firmware installed?"
+msgstr ""
+"Kunne ikke laste ned EEPROM fra enheten. Er en gyldig firmware installert?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum mismatch"
+msgstr "EEPROM CHECKSUM MISMATCH"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum correct"
+msgstr "EEPROM CHECKSUM Riktig"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load local signing key"
+msgstr "Kunne ikke laste inn lokal signeringstast"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize local signing key"
+msgstr "Kunne ikke deserialisere lokal signeringsnøkkel"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validated"
+msgstr "Enhetssignatur validert"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validation failed"
+msgstr "Enhetssignaturvalidering mislyktes"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid EEPROM data, could not parse device EEPROM."
+msgstr "Ugyldige EEPROM -data, kunne ikke analysere EEPROM."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Hello!\n"
+"\n"
+"This guide will help you install the RNode firmware on supported\n"
+"and homebrew devices. Please connect the device you wish to set\n"
+"up now."
+msgstr ""
+"Hallo! \n"
+"\n"
+" Denne guiden hjelper deg med å installere rNode -firmware på støttet \n"
+" og homebrew -enheter. Vennligst koble enheten du ønsker å angi \n"
+" opp nå."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please connect the device you wish to setup now."
+msgstr "Vennligst koble enheten du ønsker å konfigurere nå."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find any port, exiting now."
+msgstr "Kunne ikke finne noen havn, som forlater nå."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Detected serial ports:"
+msgstr "Oppdaget serielle porter:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What serial port is your device connected to?"
+msgstr "Hvilken seriell port er enheten din koblet til?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That port does not exist, exiting now."
+msgstr "Den havnen eksisterer ikke, og går ut nå."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not select port, exiting now."
+msgstr "Kunne ikke velge port, gå ut nå."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Ok, using device on"
+msgstr "OK, bruk enhet på"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "using device on"
+msgstr "Bruker enhet på"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find specified port"
+msgstr "Kunne ikke finne spesifisert port"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "exiting now"
+msgstr "Utganger nå"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Probing device"
+msgstr "Sonderingsenhet"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not open the specified serial port. The contained exception was:"
+msgstr ""
+"Kunne ikke åpne den spesifiserte serieporten. Det inneholdte unntaket var:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No answer from device"
+msgstr "Ingen svar fra enheten"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Trying to read EEPROM"
+msgstr "Prøver å lese EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device is already installed and provisioned. No further action will\n"
+"be taken. If you wish to completely reinstall this device, you must first\n"
+"wipe the current EEPROM. See the help for more info.\n"
+"\n"
+"Exiting now."
+msgstr ""
+"Denne enheten er allerede installert og levert. Ingen ytterligere handlinger "
+"vil \n"
+" Å være tatt. Hvis du ønsker å installere denne enheten fullstendig, må du "
+"først \n"
+" Tørk gjeldende EEPROM. Se hjelpen for mer info. \n"
+"\n"
+" Utganger nå."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"The device seems to have an RNode firmware installed, but it was not\n"
+"provisioned correctly, or it is corrupt. We are going to reinstall the\n"
+"correct firmware and provision it."
+msgstr ""
+"Enheten ser ut til å ha en rnode firmware installert, men det var det ikke \n"
+" bestilt riktig, eller det er korrupt. Vi kommer til å installere på nytt \n"
+" Riktig firmware og levere det."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "It looks like this is a fresh device with no RNode firmware."
+msgstr "Det ser ut som dette er en fersk enhet uten rnode firmware."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of device is this?"
+msgstr "Hva slags enhet er dette?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Important! Using RNode firmware on"
+msgstr "Viktig! Bruker rNode firmware på"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"should currently be\n"
+"considered experimental. It is not intended for production or critical use.\n"
+"The currently supplied firmware is provided AS-IS as a courtesey to those\n"
+"who would like to experiment with it. Hit enter to continue."
+msgstr ""
+"skal for øyeblikket være \n"
+" ansett som eksperimentell. Det er ikke ment for produksjon eller kritisk "
+"bruk. \n"
+" Den for øyeblikket leverte firmware leveres som et domstol til dem \n"
+" som vil eksperimentere med det. Treff Enter for å fortsette."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That device type does not exist, exiting now."
+msgstr "Den enhetstypen eksisterer ikke, og går ut nå."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of microcontroller is your board based on?"
+msgstr "Hva slags mikrokontroller er styret ditt basert på?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That MCU type does not exist, exiting now."
+msgstr "Den MCU -typen eksisterer ikke, og går ut nå."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What transceiver module does your board use?"
+msgstr "Hvilken mottakermodul bruker styret ditt?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That transceiver type does not exist, exiting now."
+msgstr "Den sendersemnertypen eksisterer ikke, og går ut nå."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What model is this RNode?"
+msgstr "Hvilken modell er denne rnoden?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That model does not exist, exiting now."
+msgstr "Den modellen eksisterer ikke, og går ut nå."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this T-Beam for?"
+msgstr "Hvilket band er dette T-Beam for?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That band does not exist, exiting now."
+msgstr "Det bandet eksisterer ikke, som kommer ut nå."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this LoRa32 for?"
+msgstr "Hvilket band er dette Lora32 for?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this Heltec LoRa32 for?"
+msgstr "Hvilket band er dette Heltc Lora32 for?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of ESP32 board is this?"
+msgstr "Hva slags ESP32 -styre er dette?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That ESP32 board does not exist, exiting now."
+msgstr "Det ESP32 -styret eksisterer ikke, og går ut nå."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Sorry, no firmware for your board currently exists.\n"
+"Help making it a reality by contributing code or by\n"
+"donating to the project."
+msgstr ""
+"Beklager, ingen firmware for styret ditt eksisterer for øyeblikket. \n"
+" Bidra til å gjøre det til en realitet ved å bidra med kode eller av \n"
+" donerer til prosjektet."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Ok, that should be all the information we need. Please confirm the "
+"following\n"
+"summary before proceeding. In the next step, the device will be flashed and\n"
+"provisioned, so make that you are satisfied with your choices."
+msgstr ""
+"OK, det skal være all informasjonen vi trenger. Bekreft følgende \n"
+" Sammendrag før du fortsetter. I neste trinn vil enheten bli blinket og \n"
+" bestilt, så gjør at du er fornøyd med valgene dine."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial port"
+msgstr "Seriell port"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device type"
+msgstr "Enhetstype"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device MCU"
+msgstr "Enhet MCU"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file"
+msgstr "Firmwarefil"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Is the above correct?"
+msgstr "Er ovennevnte riktig?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "OK, aborting now."
+msgstr "Ok, aborterer nå."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device connected"
+msgstr "Enhet tilkoblet"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Current firmware version:"
+msgstr "Gjeldende firmwareversjon:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Got invalid response while detecting device"
+msgstr "Fikk ugyldig respons mens du oppdager enheten"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download required firmware file. The contained exception was:"
+msgstr "Kunne ikke laste ned påkrevd firmwarefil. Det inneholdte unntaket var:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial module could not be found"
+msgstr "Seriell modul ble ikke funnet"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs pyserial to work.\n"
+"You can install it with: pip3 install pyserial"
+msgstr ""
+"RNode Config Utility trenger pyserial for å fungere. \n"
+" Du kan installere den med: pip3 installer pyserial"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cryptography module could not be found"
+msgstr "Kryptografimodul ble ikke funnet"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs the cryptography module to work.\n"
+"You can install it with: pip3 install cryptography"
+msgstr ""
+"RNode Config -verktøyet trenger kryptografimodulen for å fungere. \n"
+" Du kan installere den med: Pip3 installer kryptografi"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Downloading latest frimware from GitHub"
+msgstr "Last ned siste firmware fra github"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware download completed"
+msgstr "Firmware nedlasting fullført"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware extracted"
+msgstr "Firmware trukket ut"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not extract firmware from downloaded zip file"
+msgstr "Kunne ikke hente ut firmware fra nedlastet ZIP -fil"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing RNode firmware to device on"
+msgstr "Blinkende rnode firmware til enhet på"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Done flashing"
+msgstr "Ferdig blinkende"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Waiting for ESP32 reset"
+msgstr "Venter på tilbakestilling av ESP32"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while flashing"
+msgstr "Feil mens du blinker"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file not found"
+msgstr "Firmwarefil ikke funnet"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download firmware package"
+msgstr "Kunne ikke laste ned firmwarepakke"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The contained exception was:"
+msgstr "Det inneholdte unntaket var:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Skipping online check, using local firmware file:"
+msgstr "Hopp over online sjekk, ved hjelp av lokal firmwarefil:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load signing key"
+msgstr "Kunne ikke laste inn signeringstast"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize signing key"
+msgstr "Kunne ikke deserialisere signeringstasten"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Generating a new signing key"
+msgstr "Generere en ny signeringsnøkkel"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Signing key already exists, not overwriting!\n"
+"Manually delete this key to create a new one."
+msgstr ""
+"Signeringstast eksisterer allerede, ikke overskriving! \n"
+" Slett denne tasten manuelt for å opprette en ny."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The firmware directory does not exist, can't write key!"
+msgstr "Firmware -katalogen eksisterer ikke, kan ikke skrive nøkkel!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Extracting firmware"
+msgstr "Trekke ut firmware"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Opening serial port"
+msgstr "Åpne seriell port"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Serial port opened, but RNode did not respond. Is a valid firmware installed?"
+msgstr ""
+"Seriell port åpnet, men RNode svarte ikke. Er en gyldig firmware installert?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"WARNING: EEPROM is being wiped! Power down device NOW if you do not want "
+"this!"
+msgstr ""
+"ADVARSEL: EEPROM blir tørket! Slå ned enheten nå hvis du ikke vil ha dette!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Reading EEPROM"
+msgstr "Leser Eeprom"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "ERROR: No firmware found for this board. Cannot update."
+msgstr "Feil: Ingen firmware funnet for dette brettet. Kan ikke oppdatere."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cannot update device firmware"
+msgstr "Kan ikke oppdatere firmware for enheter"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Updating RNode firmware for device on"
+msgstr "Oppdatering av rnode firmware for enhet på"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing new firmware completed"
+msgstr "Blinkende ny firmware fullført"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update completed successfully"
+msgstr "Firmwareoppdatering fullført vellykket"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while flashing the new firmware, exiting now."
+msgstr "Det oppstod en feil mens du blinket den nye firmware, og forlater nå."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while updating firmware"
+msgstr "Feil mens du oppdaterer firmware"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update file not found"
+msgstr "Firmwareoppdateringsfil ikke funnet"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM contents"
+msgstr "EEPROM -innhold"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM backup written to"
+msgstr "Eeprom backup skrevet til"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"EEPROM was successfully downloaded from device,\n"
+"but file could not be written to disk."
+msgstr ""
+"EEPROM ble lastet ned fra enheten, \n"
+" Men filen kunne ikke skrives til disken."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device info:"
+msgstr "Enhetsinformasjon:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Product"
+msgstr "Produkt"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature"
+msgstr "Enhetssignatur"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware version"
+msgstr "Firmwareversjon"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Hardware revision"
+msgstr "Maskinvarerevisjon"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial number"
+msgstr "Serienummer"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency range"
+msgstr "Frekvensområde"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Max TX power"
+msgstr "Max TX Power"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Manufactured"
+msgstr "Produsert"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device mode"
+msgstr "Enhetsmodus"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency"
+msgstr "Frekvens"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth"
+msgstr "Båndbredde"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "TX power"
+msgstr "TX Power"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor"
+msgstr "Spredningsfaktor"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate"
+msgstr "Kodingsfrekvens"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "On-air bitrate"
+msgstr "On-Air bitrate"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM is invalid, no further information available"
+msgstr "EEPROM er ugyldig, ingen ytterligere informasjon tilgjengelig"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM bootstrap was requested, but a valid EEPROM was already present."
+msgstr ""
+"EEPROM bootstrap ble bedt om, men en gyldig EEPROM var allerede til stede."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No changes are being made."
+msgstr "Det blir ikke gjort endringer."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Clearing old EEPROM, this will take about 15 seconds"
+msgstr "Å rydde gammel EEPROM, dette vil ta omtrent 15 sekunder"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not create device serial number, exiting"
+msgstr "Kunne ikke opprette serienummer for enheter, og gå ut"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Loading signing key"
+msgstr "Last inn signeringstast"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while signing EEPROM"
+msgstr "Feil mens du signerer EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bootstrapping device EEPROM"
+msgstr "Bootstrapping Device EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM written! Validating"
+msgstr "Eeprom skrevet! Validering"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM Bootstrapping successful!"
+msgstr "Eeprom bootstrapping vellykket!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "RNode Firmware autoinstallation complete!"
+msgstr "RNode firmware autoinstallasjon komplett!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "To use your device with Reticulum, read the documetation at:"
+msgstr "For å bruke enheten din med retikulum, les dokumentasjonen på:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Thank you for using this utility! Please help the project by\n"
+"contributing code and reporting bugs, or by donating!"
+msgstr ""
+"Takk for at du bruker dette verktøyet! Vennligst hjelp prosjektet innen \n"
+" Bidrag med kode og rapportering av feil, eller ved å donere!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Your contributions and donations directly further the realisation\n"
+"of truly open, free and resilient communications systems."
+msgstr ""
+"Dine bidrag og donasjoner direkte ytterligere realiseringen \n"
+" av virkelig åpne, gratis og spenstige kommunikasjonssystemer."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "WARNING: Could not backup device EEPROM to disk"
+msgstr "Advarsel: Kunne ikke sikkerhetskopiere enheten EEPROM til disken"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM was written, but validation failed. Check your settings."
+msgstr ""
+"EEPROM ble skrevet, men validering mislyktes. Sjekk innstillingene dine."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while writing EEPROM. The contained exception was:"
+msgstr ""
+"Det oppstod en feil under skriving av EEPROM. Det inneholdte unntaket var:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid data specified, cancelling EEPROM write"
+msgstr "Ugyldige data spesifisert, avbryter EEPROM -skriving"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to normal (host-controlled) operating mode"
+msgstr "Enhet satt til normal (vertskontrollert) driftsmodus"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please input startup configuration:"
+msgstr "Vennligst skriv inn oppstartkonfigurasjon:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency in Hz:"
+msgstr "Frekvens i Hz:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth in Hz:"
+msgstr "Båndbredde i Hz:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor:"
+msgstr "Spredningsfaktor:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate:"
+msgstr "Kodingsfrekvens:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to TNC operating mode"
+msgstr "Enhet satt til TNC -driftsmodus"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device contains a valid firmware, but EEPROM is invalid.\n"
+"Probably the device has not been initialised, or the EEPROM has been "
+"erased.\n"
+"Please correctly initialise the device and try again!"
+msgstr ""
+"Denne enheten inneholder en gyldig firmware, men EEPROM er ugyldig. \n"
+" Sannsynligvis har ikke enheten ikke blitt initialisert, eller EEPROM er "
+"blitt slettet. \n"
+" Vennligst initialiser enheten riktig og prøv igjen!"

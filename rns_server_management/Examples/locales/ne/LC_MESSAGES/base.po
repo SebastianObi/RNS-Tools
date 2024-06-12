@@ -1,0 +1,2026 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-01 19:45+0100\n"
+"PO-Revision-Date: 2023-12-12 09:40\n"
+"Last-Translator: SebastianObi\n"
+"Language-Team: SebastianObi\n"
+"Language: ne\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#: infos
+#, fuzzy
+msgid "Software - Python"
+msgstr "सफ्टवेयर - Python"
+
+#: infos
+#, fuzzy
+msgid "Software - Reticulum"
+msgstr "सफ्टवेयर - रेटिकुल"
+
+#: infos
+#, fuzzy
+msgid "Software - System"
+msgstr "सफ्टवेयर - प्रणाली"
+
+#: infos
+#, fuzzy
+msgid "System - Drives & data storage"
+msgstr "प्रणाली - ड्राइभहरू र डाटा भण्डारण"
+
+#: infos
+#, fuzzy
+msgid "System - General system information"
+msgstr "प्रणाली - सामान्य प्रणाली जानकारी"
+
+#: infos
+#, fuzzy
+msgid "System - Interfaces"
+msgstr "प्रणाली - इन्टरफेस"
+
+#: infos
+#, fuzzy
+msgid "System - Network connections"
+msgstr "प्रणाली - नेटवर्क जडानहरू"
+
+#: infos
+#, fuzzy
+msgid "System time"
+msgstr "प्रणालीको समय"
+
+#: infos
+#, fuzzy
+msgid "Start time"
+msgstr "सुरु गर"
+
+#: infos
+#, fuzzy
+msgid "Runtime"
+msgstr "रनटाइम"
+
+#: infos
+#, fuzzy
+msgid "Version"
+msgstr "रुपान्तर"
+
+#: infos
+#, fuzzy
+msgid "Status:"
+msgstr "स्थिति:"
+
+#: infos
+#, fuzzy
+msgid "Clients:"
+msgstr "ग्राहकहरु:"
+
+#: infos
+#, fuzzy
+msgid "Peers:"
+msgstr "साथीहरू:"
+
+#: infos
+#, fuzzy
+msgid "Mode:"
+msgstr "मोड:"
+
+#: infos
+#, fuzzy
+msgid "Speed:"
+msgstr "गति:"
+
+#: infos
+#, fuzzy
+msgid "Airtime:"
+msgstr "एयरटाइम:"
+
+#: infos
+#, fuzzy
+msgid "Ch. Load:"
+msgstr "Ch। लोड:"
+
+#: infos
+#, fuzzy
+msgid "Queued:"
+msgstr "लाम:"
+
+#: infos
+#, fuzzy
+msgid "announce"
+msgstr "घोषित गर्नु"
+
+#: infos
+#, fuzzy
+msgid "announces"
+msgstr "घोषणा गर्दछ"
+
+#: infos
+#, fuzzy
+msgid "Held:"
+msgstr "आयोजित:"
+
+#: infos
+#, fuzzy
+msgid "Announces:"
+msgstr "घोषणा गर्दछ:"
+
+#: infos
+#, fuzzy
+msgid "Transport Instance"
+msgstr "यातायात उदाहरण"
+
+#: infos
+#, fuzzy
+msgid "Probe responder"
+msgstr "प्रोब प्रतिक्रियाकर्ता"
+
+#: infos
+#, fuzzy
+msgid "Uptime"
+msgstr "उठेको समय"
+
+#: infos
+#, fuzzy
+msgid "[b]Size:[/b]"
+msgstr "[b] आकार: [b]"
+
+#: infos
+#, fuzzy
+msgid "[b]Free:[/b]"
+msgstr "[b] नि: शुल्क: [/ b]"
+
+#: infos
+#, fuzzy
+msgid "[b]Type:[/b]"
+msgstr "[b] प्रकार: [/ b]"
+
+#: infos
+#, fuzzy
+msgid "Platform"
+msgstr "मंच"
+
+#: infos
+#, fuzzy
+msgid "Release"
+msgstr "प्रकाशन"
+
+#: infos
+#, fuzzy
+msgid "Release name"
+msgstr "रिहा गर्नुहोस् नाम"
+
+#: infos
+#, fuzzy
+msgid "Model"
+msgstr "नमुना"
+
+#: infos
+#, fuzzy
+msgid "Hostname"
+msgstr "होस्टनाम"
+
+#: infos
+#, fuzzy
+msgid "CPU load"
+msgstr "CPU लोड"
+
+#: infos
+#, fuzzy
+msgid "CPU cores"
+msgstr "CPU कोर"
+
+#: infos
+#, fuzzy
+msgid "System temperature"
+msgstr "प्रणालीको तापक्रम"
+
+#: infos
+#, fuzzy
+msgid "LAN"
+msgstr "लान"
+
+#: infos
+#, fuzzy
+msgid "WiFi"
+msgstr "वाइफाइ"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks"
+msgstr "वाइफाइ नेटवर्कहरू"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks connected"
+msgstr "वाइफाइ नेटवर्क जडित"
+
+#: infos
+#, fuzzy
+msgid "USB"
+msgstr "USB"
+
+#: infos
+#, fuzzy
+msgid "Bluetooth"
+msgstr "ब्लुटुथ"
+
+#: infos
+#, fuzzy
+msgid "Serial"
+msgstr "क्रमिक"
+
+#: logs
+#, fuzzy
+msgid "FDN - Reticulum, Channel, Group, Shop"
+msgstr "FDN - रिटकुलम, च्यानल, ग्रुप, पसल"
+
+#: logs
+#, fuzzy
+msgid "Software"
+msgstr "सल्लो सफ्टवेयर"
+
+#: logs
+#, fuzzy
+msgid "Dhcpd - DHCP Server"
+msgstr "DHCPD - DHCP सर्भर"
+
+#: logs
+#, fuzzy
+msgid "Dnsmasq - DNS Server"
+msgstr "Dnsmasq - DNS सर्भर"
+
+#: logs
+#, fuzzy
+msgid "Hostapd - WiFi AP"
+msgstr "होस्टपाइप - वाइफाइ एपी"
+
+#: logs
+#, fuzzy
+msgid "System"
+msgstr "प्रणाली"
+
+#: logs
+#, fuzzy
+msgid "Auth - Authentication"
+msgstr "Authth - प्रमाणीकरण"
+
+#: logs
+#, fuzzy
+msgid "Daemon - System daemons"
+msgstr "डेमन - प्रणाली डेमन्स"
+
+#: logs
+#, fuzzy
+msgid "Fail - Failed login attempts"
+msgstr "असफल - असफल लगइन प्रयासहरू"
+
+#: logs
+#, fuzzy
+msgid "Kern - Kernel"
+msgstr "केरिय - कर्नेल"
+
+#: logs
+#, fuzzy
+msgid "Mail - Email-related events"
+msgstr "मेल - ईमेल सम्बन्धित घटनाहरू"
+
+#: logs
+#, fuzzy
+msgid "Messages - General system events"
+msgstr "सन्देशहरू - सामान्य प्रणाली घटनाहरू"
+
+#: logs
+#, fuzzy
+msgid "Syslog - System"
+msgstr "Syslog - प्रणाली"
+
+#: logs
+#, fuzzy
+msgid "User - User activities"
+msgstr "प्रयोगकर्ता - प्रयोगकर्ता गतिविधिहरू"
+
+#: scripts
+#, fuzzy
+msgid "Backup & Restore"
+msgstr "ब्याकअप र पुनर्स्थापना"
+
+#: scripts
+#, fuzzy
+msgid "Examples"
+msgstr "देखाउनु"
+
+#: scripts
+#, fuzzy
+msgid "Examples 1"
+msgstr "उदाहरण 1"
+
+#: scripts
+#, fuzzy
+msgid "Examples 2"
+msgstr "उदाहरण 2"
+
+#: scripts
+msgid "Examples - Test Configurations"
+msgstr ""
+
+#: scripts
+#, fuzzy
+msgid "Examples - User interface test functions"
+msgstr "उदाहरण - प्रयोगकर्ता ईन्टरफेस परीक्षण प्रकार्यहरू"
+
+#: scripts
+#, fuzzy
+msgid "Reticulum - LoRadio & RNode"
+msgstr "Reticulum - loaradio र rnode"
+
+#: scripts
+#, fuzzy
+msgid "Software - Installation"
+msgstr "सफ्टवेयर - स्थापना"
+
+#: scripts
+#, fuzzy
+msgid "Software - Uninstallation"
+msgstr "सफ्टवेयर - विस्थापन"
+
+#: scripts
+#, fuzzy
+msgid "Software - Update"
+msgstr "सफ्टवेयर - अपडेट"
+
+#: scripts
+#, fuzzy
+msgid "System - Configuration"
+msgstr "प्रणाली - कन्फिगरेसन"
+
+#: scripts
+#, fuzzy
+msgid "System - Update"
+msgstr "प्रणाली - अपडेट"
+
+#: scripts
+#, fuzzy
+msgid "Management - Restart"
+msgstr "व्यवस्थापन - पुन: सुरु गर्नुहोस्"
+
+#: scripts
+#, fuzzy
+msgid "System - Reboot"
+msgstr "प्रणाली - रिबुट गर्नुहोस्"
+
+#: scripts
+#, fuzzy
+msgid "System - Shutdown"
+msgstr "प्रणाली - बन्द"
+
+#: scripts
+#, fuzzy
+msgid "System Clone - Creates a direct copy of the system drive"
+msgstr "प्रणाली क्लोन - प्रणाली ड्राइभको प्रत्यक्ष प्रतिलिपि सिर्जना गर्दछ"
+
+#: scripts
+#, fuzzy
+msgid "System Image - Creates an image of the system drive"
+msgstr "प्रणाली छवि - प्रणाली ड्राइव को एक छवि सिर्जना गर्दछ"
+
+#: scripts
+#, fuzzy
+msgid "Example - All input elements"
+msgstr "उदाहरण - सबै इनपुट तत्वहरू"
+
+#: scripts
+#, fuzzy
+msgid "Example - Exit codes"
+msgstr "उदाहरण - कोड बाहिर निस्कनुहोस्"
+
+#: scripts
+#, fuzzy
+msgid "Example - Waiting time"
+msgstr "उदाहरण - पर्खँदै समय"
+
+#: scripts
+#, fuzzy
+msgid "Info - Read out information"
+msgstr "जानकारी - जानकारी पढ्नुहोस्"
+
+#: scripts
+#, fuzzy
+msgid "Install - Installing the firmware"
+msgstr "स्थापना - फर्मवेयर स्थापना गर्दै"
+
+#: scripts
+#, fuzzy
+msgid "Reset - Resetting the firmware"
+msgstr "रिसेट - फर्मवेयर रिसेट गर्दै"
+
+#: scripts
+#, fuzzy
+msgid "Update - Updating the firmware"
+msgstr "अद्यावधिक गर्नुहोस् - फर्मवेयर अपडेट गर्दै"
+
+#: scripts
+#, fuzzy
+msgid "Bridge Matrix - Message bridge"
+msgstr "ब्रिज म्याट्रिक्स - सन्देश पुल"
+
+#: scripts
+#, fuzzy
+msgid "Console tools - Recommended tools"
+msgstr "कन्सोल उपकरणहरू - सिफारिश उपकरणहरू"
+
+#: scripts
+#, fuzzy
+msgid "Filesystem tools - Recommended tools"
+msgstr "फाइल प्रणालीहरू - सिफारिश उपकरणहरू"
+
+#: scripts
+#, fuzzy
+msgid "Server Blockchain - Gateway for payment and other blockchain functions"
+msgstr "सर्भर ब्लकचिन्सिन - भुक्तानी र अन्य ब्रूचचेन प्रकार्यहरूको लागि गेटवे"
+
+#: scripts
+#, fuzzy
+msgid "Server Channel - Hosting the channel functionality"
+msgstr "सर्भर च्यानल - च्यानल कार्यक्षमता होस्ट गर्दै"
+
+#: scripts
+#, fuzzy
+msgid "Server Group - Hosting the group functionality"
+msgstr "सर्भर समूह - समूह कार्यक्षमता होस्टिंग गर्दै"
+
+#: scripts
+#, fuzzy
+msgid "Server Page - Hosting the page functionality"
+msgstr "सर्भर पृष्ठ - पृष्ठ कार्यक्षमता होस्ट गर्दै"
+
+#: scripts
+#, fuzzy
+msgid "Server Propagation - Hosting the propagation node functionality"
+msgstr "सर्भर प्रचार - प्रचार नोड कार्यक्षमता होस्ट गर्दै"
+
+#: scripts
+#, fuzzy
+msgid "Server Shop - Hosting the shop functionality"
+msgstr "सर्भर शप - पसल कार्यक्षमता होस्ट गर्दै"
+
+#: scripts
+#, fuzzy
+msgid "Server - All hosting functions for channel, group, page, shop, etc."
+msgstr "सर्भर - च्यानल, समूह, पृष्ठ, पसल, आदि।."
+
+#: scripts
+#, fuzzy
+msgid "File system - Extend file system (Raspberry Pi)"
+msgstr "फाइल प्रणाली - फाईल प्रणाली (रास्पबेरी पाटी) विस्तार गर्नुहोस्"
+
+#: scripts
+#, fuzzy
+msgid "Password - Change operating system password"
+msgstr "पासवर्ड - अपरेटिंग प्रणाली पासवर्ड परिवर्तन गर्नुहोस्"
+
+#: scripts
+#, fuzzy
+msgid "Update check - Check for new versions"
+msgstr "अद्यावधिक चेक - नयाँ संस्करणहरूको लागि जाँच गर्नुहोस्"
+
+#: scripts
+#, fuzzy
+msgid "Update cleanup - Cleaning up unneeded packages"
+msgstr "अपडेटिअप अपडेट गर्नुहोस् - unneded प्याकेजहरू सफा गर्दै"
+
+#: scripts
+#, fuzzy
+msgid "Update Update - Update the system"
+msgstr "अपडेट अपडेट अपडेट गर्नुहोस् - प्रणाली अपडेट गर्नुहोस्"
+
+#: scripts
+#, fuzzy
+msgid "Update Upgrade - Distribution update of the system"
+msgstr "अपग्रेड अपग्रेड गर्नुहोस् - प्रणालीको वितरण अपडेट"
+
+#: scripts
+#, fuzzy
+msgid "Installing.."
+msgstr "स्थापना गर्दै .."
+
+#: scripts
+#, fuzzy
+msgid "Uninstalling..."
+msgstr "स्थापना रद्द गर्दै ..."
+
+#: scripts
+#, fuzzy
+msgid "Updating..."
+msgstr "अपडेट गर्दै ..."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The management server will restart. You must reconnect to re-establish a "
+"connection."
+msgstr "व्यवस्थापन सर्भर पुन: सुरु हुनेछ। तपाईंले जडान पुन: स्थापना गर्न पुन: जडान गर्नुपर्दछ।."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will reboot. You must reconnect to re-establish a connection."
+msgstr "प्रणाली रिबुट हुनेछ। तपाईंले जडान पुन: स्थापना गर्न पुन: जडान गर्नुपर्दछ।."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will shut down. You must then start it manually to re-establish a "
+"connection."
+msgstr ""
+"प्रणाली बन्द हुनेछ। त्यसपछि तपाईंले यसलाई जडान पुन: स्थापित गर्न म्यानुअली सुरु गर्नुपर्दछ।."
+
+#: scripts
+#, fuzzy
+msgid "No installed services found. Exiting."
+msgstr "कुनै स्थापित सेवाहरू फेला परेन। बाहिर निस्कदै।."
+
+#: scripts
+#, fuzzy
+msgid "Select a service:"
+msgstr "एक सेवा चयन गर्नुहोस्:"
+
+#: scripts
+#, fuzzy
+msgid "Enter the name for the service: (only a-z 0-9)"
+msgstr "सेवाको लागि नाम प्रविष्ट गर्नुहोस्: (केवल A-z 0-9)"
+
+#: scripts
+#, fuzzy
+msgid "Enter the display name for the application:"
+msgstr "अनुप्रयोगको लागि प्रदर्शन नाम प्रविष्ट गर्नुहोस्:"
+
+#: scripts
+#, fuzzy
+msgid "Invalid choice!"
+msgstr "अवैध विकल्प!"
+
+#: scripts
+#, fuzzy
+msgid "Update successfully completed!"
+msgstr "अपडेट सफलतापूर्वक पूरा भयो!"
+
+#: scripts
+#, fuzzy
+msgid "Uninstallation successfully completed!"
+msgstr "स्थापना सफलतापूर्वक पूरा भयो!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a shop successfully completed!"
+msgstr "शपको स्थापना सफलतापूर्वक सम्पन्न भयो!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of an echo server successfully completed!"
+msgstr "इको सर्वरको स्थापना सफलतापूर्वक पूरा भयो!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a channel successfully completed!"
+msgstr "एक च्यानल को स्थापना सफलतापूर्वक पूरा भयो!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a group successfully completed!"
+msgstr "एक समूह सफलतापूर्वक सम्पन्न भयो!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a propagation node successfully completed!"
+msgstr "एक प्रचार नोडको स्थापना सफलतापूर्वक समाप्त भयो!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a provisioning node successfully completed!"
+msgstr "एक प्रावधान एक प्रावधान सफलतापूर्वक सम्पन्न भयो!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a page successfully completed!"
+msgstr "पृष्ठको सफलतापूर्वक सम्पन्न भयो!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a blockchain node successfully completed!"
+msgstr "एक ब्रूचचेन नोडको स्थापना सफलतापूर्वक समाप्त भयो!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a message bridge successfully completed!"
+msgstr "सन्देश पुलको स्थापना सफलतापूर्वक समाप्त भयो!"
+
+#: scripts
+#, fuzzy
+msgid ""
+"No further configuration is necessary. Connect to the shop to make all the "
+"necessary settings in the shop app. You should find the new shop in the "
+"announcement list."
+msgstr ""
+"कुनै थप कन्फिगरेसन आवश्यक छैन। पसल अनुप्रयोगमा सबै आवश्यक सेटिंग्स बनाउन पसलमा जडान "
+"गर्नुहोस्। तपाईंले घोषणा सूचीमा नयाँ पसल पाउनु पर्छ।."
+
+#: scripts
+#, fuzzy
+msgid ""
+"To make further settings, please edit the corresponding configuration files "
+"in the following folder:"
+msgstr "थप सेटिंग्स बनाउन, निम्न फोल्डरमा सम्बन्धित कन्फिगरेसन फाइलहरू सम्पादन गर्नुहोस्:"
+
+#: scripts
+#, fuzzy
+msgid "Then you must restart the following service:"
+msgstr "त्यसोभए तपाईंले निम्न सेवा पुनः सुरु गर्नुपर्दछ:"
+
+#: services
+#, fuzzy
+msgid "All"
+msgstr "सबै"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Hit:"
+msgstr "हिट:"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading package lists"
+msgstr "प्याकेज सूचीहरू पढ्दै"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Building dependency tree"
+msgstr "निर्माण निर्भरता रूख"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading state information"
+msgstr "राज्य जानकारी पढ्दै"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading database"
+msgstr "डाटाबेस पढ्दै"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Calculating upgrade"
+msgstr "अपग्रेड अप गणना गर्दै"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Waiting for headers"
+msgstr "हेडरहरूको लागि प्रतिक्षा गर्दै"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Working"
+msgstr "काम गर्नु"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "All packages are up to date"
+msgstr "सबै प्याकेजहरू अप टु डेट छन्"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Done"
+msgstr "पूरा"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"The following packages were automatically installed and are no longer "
+"required"
+msgstr "निम्न प्याकेजहरू स्वचालित रूपमा स्थापना गरियो र अब आवश्यक छैन"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Use"
+msgstr "प्रयोग गर्नु"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove them"
+msgstr "तिनीहरूलाई हटाउनको लागि"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "upgraded"
+msgstr "अपग्रेड गरिएको"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "newly installed"
+msgstr "नयाँ स्थापना गरिएको"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove and"
+msgstr "हटाउन र"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "not upgraded"
+msgstr "अपग्रेड गरिएको छैन"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Connected to"
+msgstr "जडित"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be REMOVED"
+msgstr "निम्न प्याकेजहरू हटाइनेछ"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "After this operation"
+msgstr "यो अपरेशन पछि"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "disk space will be freed"
+msgstr "डिस्क स्पेसलाई मुक्त गरिनेछ"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Do you want to continue?"
+msgstr "के तपाइँ जारी राख्न चाहानुहुन्छ?"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Progress"
+msgstr "प्रगति"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Removing"
+msgstr "हटाउन"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Processing triggers for"
+msgstr "प्रशोधन गर्ने ट्रिगरहरू"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be upgraded"
+msgstr "निम्न प्याकेजहरू अपग्रेड हुनेछ"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading changelogs"
+msgstr "Regelogs पढ्दै"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preconfiguring packages"
+msgstr "PEConfigring प्याकेजहरू"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preparing to unpack"
+msgstr "अनप्याक गर्न तैयार"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "files and directories currently installed"
+msgstr "फाईलहरू र निर्देशकहरू हालै स्थापित"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Unpacking"
+msgstr "बाध्ने"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Setting up"
+msgstr "स्थापित गर्दै"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "over"
+msgstr "को माथी"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Installing new version of config file"
+msgstr "कन्फिग फाइल को नयाँ संस्करण स्थापना गर्दै"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "A new version"
+msgstr "नयाँ संस्करण"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "of configuration file"
+msgstr "कन्फिगरेसन फाईल को"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"is available, but the version installed currently has been locally modified"
+msgstr "उपलब्ध छ, तर संस्करण स्थापना गरिएको छ हाल स्थानीय रूपमा परिमार्जन गरिएको छ"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error, exiting now."
+msgstr "अब त्रुटि, अब बाहिर निस्कदै।."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: You need to run this script as"
+msgstr "त्रुटि: तपाईले यो स्क्रिप्ट चलाउन आवश्यक छ"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: This script can't be piped!"
+msgstr "त्रुटि: यो स्क्रिप्ट पाइप हुन सक्दैन!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "failed!"
+msgstr "असफल भयो!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Finished!"
+msgstr "समाप्त भयो!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating packet repository"
+msgstr "प्याकेट भण्डार अपडेट गर्दै"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating system"
+msgstr "प्रणाली अपडेट गर्दै"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Cleanup system"
+msgstr "सफाई प्रणाली"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Installing"
+msgstr "स्थापना"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating"
+msgstr "अद्यावधिक गर्नु"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Expanding Filesystem"
+msgstr "फाइलप्रणाली विस्तार गर्दै"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Do you want to proceed?"
+msgstr "के तपाई अगाडि बढ्न चाहानुहुन्छ?"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Ok, proceeding..."
+msgstr "ठीक छ, अगाडि बढ्दै ..."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "No, exiting now."
+msgstr "होईन, अब बाहिर निस्कन।."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Please answer yes or no."
+msgstr "कृपया हो वा होइन जवाफ दिनुहोस्।."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing path"
+msgstr "परिवर्तन मार्ग"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Downloading"
+msgstr "डाउनलोड गर्नु"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/owner"
+msgstr "फाइल अनुमतिहरू / मालिक परिवर्तन गर्दै"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/right"
+msgstr "फाइल अनुमतिहरू / दायाँ परिवर्तन गर्दै"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "To activate the changes, the system must be rebooted."
+msgstr "परिवर्तनहरू सक्रिय गर्न, प्रणाली रिबुट गर्नुपर्दछ।."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Could not find any user, exiting now."
+msgstr "कुनै प्रयोगकर्ता फेला पार्न सकेन, अब बाहिर निस्कन सकेन।."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Which user would you like to edit?"
+msgstr "तपाई कुन प्रयोगकर्तालाई सम्पादन गर्न चाहानुहुन्छ?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Define the password for user"
+msgstr "प्रयोगकर्ताको लागि पासवर्ड परिभाषित गर्नुहोस्"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Do you want to edit another user?"
+msgstr "के तपाइँ अर्को प्रयोगकर्ता सम्पादन गर्न चाहानुहुन्छ?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "New password"
+msgstr "नया पासवर्ड"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Retype new password"
+msgstr "नयाँ पासवर्ड पुन: टाइप गर्नुहोस्"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "No password has been supplied."
+msgstr "कुनै पासवर्ड आपूर्ति गरिएको छैन।."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Sorry, passwords do not match."
+msgstr "माफ गर्नुहोस्, पासवर्डहरू मेल खाँदैनन्।."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Updating password"
+msgstr "पासवर्ड अपडेट गर्दै"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Authentication token manipulation error"
+msgstr "प्रमाणीकरण टोकन हेरफेर त्रुटि"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "password unchanged"
+msgstr "पासवर्ड अपरिवर्तित"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "user"
+msgstr "प्रयोग कर्ता"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "does not exist"
+msgstr "अ स् ति त् व मा छै न"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Please connect the destination device you wish to use."
+msgstr "कृपया तपाईले प्रयोग गर्न चाहानु भएको गन्तव्य उपकरण जडान गर्नुहोस्।."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Hit enter when it is connected."
+msgstr "प्रविष्ट गर्नुहोस् जब यो जडान हुन्छ।."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find any devices, exiting now."
+msgstr "अब बाहिर निस्कन कुनै पनि उपकरणहरू फेला पार्न सकेन।."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find specified device, exiting now."
+msgstr "निर्दिष्ट उपकरण फेला पार्न सकेन, अब बाहिर निस्कन सकेन।."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "What is your destination device?"
+msgstr "तपाईंको गन्तव्य उपकरण के हो?"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Ok, using device:"
+msgstr "ठीक छ, उपकरण प्रयोग गर्दै:"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "target is busy"
+msgstr "लक्ष्य व्यस्त छ"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating image file"
+msgstr "छवि फाईल सिर्जना गर्दै"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image file"
+msgstr "संकुचन छवि फाईल"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "copied"
+msgstr "प्रतिलिपि गरिएको"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records in"
+msgstr "रेकर्ड"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records out"
+msgstr "लेखिएको छ"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Gathering data"
+msgstr "डाटा जम्मा गर्नु"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating new"
+msgstr "नयाँ सिर्जना गर्दै"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Checking filesystem"
+msgstr "फाईलहरू प्रणाली जाँच गर्दै"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "non-contiguous"
+msgstr "गैर मिल्दो"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks"
+msgstr "बाजा"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking filesystem"
+msgstr "संकुचन गरिएको फाईलप्रसार"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Resizing the filesystem on"
+msgstr "फाईलशिली पानालाई पुनः पेश गर्नुहोस्"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Begin pass"
+msgstr "पारित गर्नुहोस"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Relocating blocks"
+msgstr "ब्लकहरू पुनः स्थानान्तरण गर्दै"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Scanning inode table"
+msgstr "स्क्यान गर्दै आएका तालिका"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Updating inode references"
+msgstr "एडड सन्दर्भ अपडेट गर्दै"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "The filesystem on"
+msgstr "फाइल प्रणाली"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "is now"
+msgstr "अहिले हो"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks long"
+msgstr "ब्लक लामो"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image"
+msgstr "संकुचन छवि"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Using gzip on the shrunk image"
+msgstr "संकुण छविमा Gzip प्रयोग गर्दै"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrunk"
+msgstr "चिन्या"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "from"
+msgstr "बाट"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "to"
+msgstr "तिर"
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid ""
+"Please connect the destination device (sd-card, usb-stick) you wish to use."
+msgstr ""
+"कृपया गन्तव्य उपकरण (एसडी कार्ड, युएसबी-स्टिक) प्रयोग गर्नुहोस् तपाईं प्रयोग गर्न "
+"चाहानुहुन्छ।."
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid "WARNING: All data on the destination device will be deleted!"
+msgstr "चेतावनी: गन्तव्य उपकरणमा सबै डाटा मेटाइनेछ!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting frequency is"
+msgstr "रेडियो रिपोर्टिंग फ्रिक्वेन्सी हो"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting bandwidth is"
+msgstr "रेडियो रिपोर्टिंग ब्यान्डविथ हो"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting TX power is"
+msgstr "रेडियो रिपोर्टिंग TX पावर हो"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting spreading factor is"
+msgstr "रेडियो रिपोर्टिंग प्रसार कारक हो"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting coding rate is"
+msgstr "रेडियो रिपोर्टिंग कोडिंग दर हो"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware initialisation error"
+msgstr "हार्डवेयर आरम्भ त्रुटि"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware TX error"
+msgstr "हार्डवेयर TX त्रुटि"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware error"
+msgstr "हार्डवेयर त्रुटि"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "serial read timeout"
+msgstr "क्रमशब्द पढ्ने टाइमआउट"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while detecting hardware for"
+msgstr "एक io त्रुटि देखा पर्यो जब हार्डवेयर पत्ता लगाउँदै"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring frequency for"
+msgstr "एक io त्रुटि फ्रिक्वेन्सी कन्फिगर गर्दा एक io त्रुटि देखा पर्यो"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring bandwidth for"
+msgstr "ब्यान्डविथलाई कन्फिगर गर्दा एक io त्रुटि देखा पर्यो"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring TX power for"
+msgstr "एक io त्रुटि tx शक्ति कन्फिगर गर्दा भयो"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring spreading factor for"
+msgstr "एक io त्रुटि देखा पर्यो जब कारक प्रसारण कारक कन्फिगर गर्दै"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring coding rate for"
+msgstr "कोडिंग दर कन्फिगर गर्दा एक io त्रुटि देखा पर्यो"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state for"
+msgstr "एक io त्रुटि पुनः रेडियो राज्य कन्फिगर गर्दा भयो"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring device mode"
+msgstr "उपकरण मोड कन्फिगर गर्दा एक io त्रुटि देखा पर्यो"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while wiping EEPROM"
+msgstr "EOO त्रुटि देखा पर्यो"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while restarting device"
+msgstr "उपकरण पुनः सुरु गर्दा एक IO त्रुटि देखा पर्यो"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while writing EEPROM"
+msgstr "EOO RESERENTERENTER COERDERENTERENTER COPROM लेख्ने क्रममा"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state"
+msgstr "रेडियो राज्य कन्फिगर गर्दा एक IO त्रुटि भयो"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download EEPROM from device. Is a valid firmware installed?"
+msgstr "उपकरणबाट EEPROM डाउनलोड गर्न सकेन। के एक मान्य फर्मवेयर स्थापना गरिएको छ?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum mismatch"
+msgstr "Eeprom चेकसम बेमेल"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum correct"
+msgstr "Eeprom चेकसम सही"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load local signing key"
+msgstr "स्थानीय हस्ताक्षर कुञ्जी लोड गर्न सकेन"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize local signing key"
+msgstr "स्थानीय साइनिंग कुञ्जीको आराधना गर्न सकेन"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validated"
+msgstr "उपकरण हस्ताक्षर मान्य गरियो"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validation failed"
+msgstr "उपकरण हस्ताक्षर मान्यता असफल भयो"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid EEPROM data, could not parse device EEPROM."
+msgstr "अवैध EEPROM डाटा, कोड EEPROM पार्स गर्न सक्दैन।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Hello!\n"
+"\n"
+"This guide will help you install the RNode firmware on supported\n"
+"and homebrew devices. Please connect the device you wish to set\n"
+"up now."
+msgstr ""
+"नमस्कार! \n"
+"\n"
+" यो गाईडले तपाईंलाई समर्थितमा rnode फर्मवेयर स्थापना गर्न मद्दत गर्दछ \n"
+" र होमबुटी उपकरणहरू। कृपया तपाइँ सेट गर्न चाहानु भएको उपकरण जडान गर्नुहोस् \n"
+" अहिले माथि।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please connect the device you wish to setup now."
+msgstr "कृपया उपकरण जडान गर्नुहोस् जुन तपाईं अहिले सेटअप गर्न चाहानुहुन्छ।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find any port, exiting now."
+msgstr "कुनै पोर्ट फेला पार्न सकेन, अब बाहिर निस्कन सकेन।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Detected serial ports:"
+msgstr "सिरियल पोर्टहरू पत्ता लगाउन सकिन्छ:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What serial port is your device connected to?"
+msgstr "तपाईको उपकरण कुन सिरियल पोर्ट जडान भएको छ?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That port does not exist, exiting now."
+msgstr "त्यो पोर्ट अवस्थित छैन, अब बाहिर निस्कन।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not select port, exiting now."
+msgstr "अब पोर्ट चयन गर्न सकेन, अब बाहिर निस्कन सकेन।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Ok, using device on"
+msgstr "ठीक छ, उपकरण प्रयोग गर्दै"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "using device on"
+msgstr "उपकरण प्रयोग गर्दै"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find specified port"
+msgstr "निर्दिष्ट पोर्ट फेला पार्न सकेन"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "exiting now"
+msgstr "अहिले बाहिर निस्कदै"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Probing device"
+msgstr "प्रोबिंग उपकरण"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not open the specified serial port. The contained exception was:"
+msgstr "निर्दिष्ट सिरियल पोर्ट खोल्न सकेन। समावेश अपवाद थियो:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No answer from device"
+msgstr "उपकरणबाट उत्तर छैन"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Trying to read EEPROM"
+msgstr "EEPROM पढ्न प्रयास गर्दै"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device is already installed and provisioned. No further action will\n"
+"be taken. If you wish to completely reinstall this device, you must first\n"
+"wipe the current EEPROM. See the help for more info.\n"
+"\n"
+"Exiting now."
+msgstr ""
+"यो उपकरण पहिले नै स्थापित र प्रावधान गरिएको छ। कुनै थप कार्य हुनेछैन \n"
+" लिइनुहोस्। यदि तपाईं यस उपकरणलाई पुन: स्थापना गर्न चाहानुहुन्छ भने, तपाईंले पहिले नै "
+"गर्नुपर्छ \n"
+" हालको EEPROM सफा गर्नुहोस्। अधिक जानकारीको लागि मद्दत हेर्नुहोस्। \n"
+"\n"
+" अब बाहिर निस्कदै।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"The device seems to have an RNode firmware installed, but it was not\n"
+"provisioned correctly, or it is corrupt. We are going to reinstall the\n"
+"correct firmware and provision it."
+msgstr ""
+"उपकरणसँग एक rnode फर्मवेयर स्थापना भएको छ, तर यो थिएन \n"
+" सही प्रावधान गरिएको, वा यो भ्रष्ट छ। हामी पुन: स्थापना गर्न जाँदैछौं \n"
+" सही फर्मवेयर र यो प्रावधान।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "It looks like this is a fresh device with no RNode firmware."
+msgstr "यस्तो देखिन्छ कि यो कुनै रिनोड फर्मवेयरको साथ ताजा उपकरण हो।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of device is this?"
+msgstr "यो कस्तो प्रकारको उपकरण हो?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Important! Using RNode firmware on"
+msgstr "महत्वपूर्ण! Rnode फर्मवेयर प्रयोग गर्दै"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"should currently be\n"
+"considered experimental. It is not intended for production or critical use.\n"
+"The currently supplied firmware is provided AS-IS as a courtesey to those\n"
+"who would like to experiment with it. Hit enter to continue."
+msgstr ""
+"हाल हुनु पर्छ \n"
+" प्रयोग मानिन्छ। यो उत्पादन वा आलोचनात्मक प्रयोगको लागि होइन। \n"
+" हाल आपूर्ति गरिएको फर्मवेयर प्रदान गरिएको छ - ती लागि एक अदालतको रूपमा छ \n"
+" कोसँग प्रयोग गर्न मनपराउन चाहन्थ्यो। जारी राख्न प्रविष्ट गर्नुहोस्।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That device type does not exist, exiting now."
+msgstr "त्यो उपकरण प्रकार अवस्थित छैन, अब बाहिर निस्कन।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of microcontroller is your board based on?"
+msgstr "कस्तो प्रकारको माइक्रोकोन्ट्रोलर तपाईको बोर्डमा आधारित छ?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That MCU type does not exist, exiting now."
+msgstr "त्यो mccer प्रकार अवस्थित छैन, अब बाहिर निस्कन।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What transceiver module does your board use?"
+msgstr "तपाईको बोर्ड प्रयोगको प्रयोग के अनुवादक मोड्युल गर्दछ?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That transceiver type does not exist, exiting now."
+msgstr "त्यो अनुवादक प्रकार अवस्थित छैन, अब बाहिर निस्कन।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What model is this RNode?"
+msgstr "यो rnode के मोडल छ?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That model does not exist, exiting now."
+msgstr "त्यो मोडल अवस्थित छैन, अब बाहिर निस्कन।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this T-Beam for?"
+msgstr "कुन ब्यान्ड यो T-किरणको लागि छ?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That band does not exist, exiting now."
+msgstr "त्यो ब्यान्ड अवस्थित छैन, अब बाहिर निस्कन।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this LoRa32 for?"
+msgstr "यस लोरा 322 को लागि यो कुन ब्यान्ड छ?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this Heltec LoRa32 for?"
+msgstr "कुन ब्यान्डको लागि यो हेटेक लोरा 322 को लागि छ?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of ESP32 board is this?"
+msgstr "यो कस्तो प्रकारको बोर्ड हो?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That ESP32 board does not exist, exiting now."
+msgstr "त्यो ESP32 बोर्ड अवस्थित छैन, अब बाहिर निस्कन।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Sorry, no firmware for your board currently exists.\n"
+"Help making it a reality by contributing code or by\n"
+"donating to the project."
+msgstr ""
+"माफ गर्नुहोस्, तपाईंको बोर्डको लागि कुनै फर्मवेयर हाल अवस्थित छ। \n"
+" योगदान वा द्वारा एक वास्तविकता बनाउन मद्दत गर्न मद्दत गर्नुहोस् \n"
+" परियोजनामा दान गर्दै।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Ok, that should be all the information we need. Please confirm the "
+"following\n"
+"summary before proceeding. In the next step, the device will be flashed and\n"
+"provisioned, so make that you are satisfied with your choices."
+msgstr ""
+"ठीक छ, त्यो हामीलाई चाहिने सबै जानकारी हुनुपर्दछ। कृपया निम्न निश्चित गर्नुहोस् \n"
+" अगाडि बढ्नु अघि सारांश। अर्को चरणमा, उपकरण फ्ल्यास हुनेछ र \n"
+" प्रावधान गरिएको, त्यसैले बनाउनुहोस् जुन तपाईं आफ्नो छनौटबाट सन्तुष्ट हुनुहुन्छ।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial port"
+msgstr "सिरियल पोर्ट"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device type"
+msgstr "उपकरण प्रकार"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device MCU"
+msgstr "उपकरण mqu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file"
+msgstr "फर्मवेयर फाइल"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Is the above correct?"
+msgstr "के माथिको सहि छ?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "OK, aborting now."
+msgstr "ठीक छ, अब परित्याग गर्दै।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device connected"
+msgstr "उपकरण जोडिएको"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Current firmware version:"
+msgstr "वर्तमान फर्मवेयर संस्करण:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Got invalid response while detecting device"
+msgstr "उपकरण पत्ता लगाउँदा अवैध प्रतिक्रिया पायो"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download required firmware file. The contained exception was:"
+msgstr "आवश्यक फर्मवेयर फाइल डाउनलोड गर्न सकेन। समावेश अपवाद थियो:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial module could not be found"
+msgstr "सिरियल मोड्युल फेला पार्न सकिएन"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs pyserial to work.\n"
+"You can install it with: pip3 install pyserial"
+msgstr ""
+"RNEDD कन्फिगर उपयोगितालाई काम गर्न pyraial आवश्यक छ। \n"
+" तपाईं यसलाई स्थापना गर्न सक्नुहुनेछ: PIP3 PIP3 प्रीमिय स्थापना गर्नुहोस्"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cryptography module could not be found"
+msgstr "क्रिप्टोग्राफी मोड्युल फेला पार्न सकिएन"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs the cryptography module to work.\n"
+"You can install it with: pip3 install cryptography"
+msgstr ""
+"RNODS कन्फिगर उपयोगितालाई रोप्थेलोग्राफी मोड्युल काम गर्न आवश्यक छ। \n"
+" तपाईं यसलाई स्थापना गर्न सक्नुहुनेछ: PIP3 स्थापना क्रिप्टोग्राफी"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Downloading latest frimware from GitHub"
+msgstr "Github बाट पछिल्लो फर्मवेयर डाउनलोड गर्दै"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware download completed"
+msgstr "फर्मवेयर डाउनलोड पूरा भयो"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware extracted"
+msgstr "फर्मवेयर निकाले"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not extract firmware from downloaded zip file"
+msgstr "डाउनलोड गरिएको जिप फाइलबाट फर्मवेयर निकाल्न सकेन"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing RNode firmware to device on"
+msgstr "फ्ल्याशिंग rnode फर्मवेयर मा उपकरण को लागी"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Done flashing"
+msgstr "फ्ल्यास गर्दै"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Waiting for ESP32 reset"
+msgstr "ESP32 रिसेटको लागि प्रतिक्षा गर्दै"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while flashing"
+msgstr "फ्ल्याशिंगको क्रममा त्रुटि"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file not found"
+msgstr "फर्मवेयर फाईल फेला परेन"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download firmware package"
+msgstr "फर्मवेयर प्याकेज डाउनलोड गर्न सकेन"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The contained exception was:"
+msgstr "समावेश अपवाद थियो:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Skipping online check, using local firmware file:"
+msgstr "स्थानीय फर्मवेयर फाइल प्रयोग गरेर अनलाइन जाँच स्किपि .:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load signing key"
+msgstr "कुञ्जी चिन्ह लोड गर्न सकेन"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize signing key"
+msgstr "कुञ्जी साइनिंग कुञ्जी विनिमरण गर्न सकेन"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Generating a new signing key"
+msgstr "नयाँ हस्ताक्षर कुञ्जी उत्पन्न गर्दै"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Signing key already exists, not overwriting!\n"
+"Manually delete this key to create a new one."
+msgstr ""
+"कुञ्जी साइन अप कुञ्जी पहिल्यै अवस्थित छ, अधिलेखन छैन! \n"
+" म्यानुअल रूपमा नयाँ सिर्जना गर्न यो कुञ्जी मेटाउनुहोस्।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The firmware directory does not exist, can't write key!"
+msgstr "फर्मवेयर डाइरेक्टरी अवस्थित छैन, कुञ्जी लेख्न सक्दैन!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Extracting firmware"
+msgstr "फर्मवेयर निकाल्ने"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Opening serial port"
+msgstr "सिरियल पोर्ट खोल्दै"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Serial port opened, but RNode did not respond. Is a valid firmware installed?"
+msgstr ""
+"सिरियल पोर्टले खोलियो, तर रिमडले जवाफ दिएन। के एक मान्य फर्मवेयर स्थापना गरिएको छ?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"WARNING: EEPROM is being wiped! Power down device NOW if you do not want "
+"this!"
+msgstr ""
+"चेतावनी: EEPROM WIDPED भइरहेको छ! पावर डाउन उपकरण अब यदि तपाईं यो चाहनुहुन्न!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Reading EEPROM"
+msgstr "Eaprom पढ्दै"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "ERROR: No firmware found for this board. Cannot update."
+msgstr "त्रुटि: यस बोर्डका लागि कुनै फर्मवेयर फेला परेन। अपडेट गर्न सक्दैन।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cannot update device firmware"
+msgstr "उपकरण फर्मवेयर अपडेट गर्न सक्दैन"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Updating RNode firmware for device on"
+msgstr "उपकरणको लागि rnode फर्मवेयर अपडेट गर्दै"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing new firmware completed"
+msgstr "फ्ल्याशिंग नयाँ फर्मवेयर सम्पन्न भयो"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update completed successfully"
+msgstr "फर्मवेयर अपडेट सफलतापूर्वक पूरा भयो"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while flashing the new firmware, exiting now."
+msgstr "नयाँ फर्मवेयर फ्ल्याशिंग फ्ल्याशिंग गर्दा एक त्रुटि भयो, अब बाहिर निस्कँदा।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while updating firmware"
+msgstr "फर्मवेयर अपडेट गर्दा त्रुटि"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update file not found"
+msgstr "फर्मवेयर अपडेट फाईल फेला परेन"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM contents"
+msgstr "Eeprom सामग्री"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM backup written to"
+msgstr "Eaprom ब्याकअप मा लेखिएको"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"EEPROM was successfully downloaded from device,\n"
+"but file could not be written to disk."
+msgstr ""
+"EEPROM सफलतापूर्वक उपकरणबाट डाउनलोड गरियो, \n"
+" तर फाईल डिस्कमा लेख्न सकिएन।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device info:"
+msgstr "उपकरण जानकारी:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Product"
+msgstr "परिणाम"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature"
+msgstr "उपकरण हस्ताक्षर"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware version"
+msgstr "फर्मवेयर संस्करण"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Hardware revision"
+msgstr "हार्डवेयर संशोधन"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial number"
+msgstr "क्रम संख्या"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency range"
+msgstr "फ्रिक्ने दायरा"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Max TX power"
+msgstr "अधिकतम tx शक्ति"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Manufactured"
+msgstr "निर्मित"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device mode"
+msgstr "उपकरण मोड"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency"
+msgstr "आवृति"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth"
+msgstr "ब्याडविडिथ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "TX power"
+msgstr "TX शक्ति"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor"
+msgstr "फैलाउने कारक"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate"
+msgstr "Coding दर"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "On-air bitrate"
+msgstr "अन-एयर बिटरेट"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM is invalid, no further information available"
+msgstr "EEPROM अवैध छ, कुनै थप जानकारी उपलब्ध छैन"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM bootstrap was requested, but a valid EEPROM was already present."
+msgstr ""
+"EEPRM बूटस्ट्र्याप अनुरोध गरिएको थियो, तर एक मान्य EEPROM पहिले नै उपस्थित थियो।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No changes are being made."
+msgstr "कुनै परिवर्तनहरू भइरहेको छैन।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Clearing old EEPROM, this will take about 15 seconds"
+msgstr "पुरानो EEPROM खाली गर्दै, यसले 1 seconds सेकेन्ड लिन्छ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not create device serial number, exiting"
+msgstr "उपकरण सिरियल नम्बर सिर्जना गर्न सकेन, बाहिर निस्कन"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Loading signing key"
+msgstr "कुञ्जी साइन इन गर्दै"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while signing EEPROM"
+msgstr "EEPROM साइन इन गर्दा त्रुटि"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bootstrapping device EEPROM"
+msgstr "बुटस्ट्र्यापिंग उपकरण EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM written! Validating"
+msgstr "Eeever लेखिएको! स्वीकार"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM Bootstrapping successful!"
+msgstr "Eeprom बुटस्ट्रपिंग सफल!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "RNode Firmware autoinstallation complete!"
+msgstr "Rnode फर्मवेयर स्वत: स्थापना पूर्ण!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "To use your device with Reticulum, read the documetation at:"
+msgstr "तपाईंको उपकरण रिटिकुलमसँग प्रयोग गर्न, कागजातहरू पढ्नुहोस्:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Thank you for using this utility! Please help the project by\n"
+"contributing code and reporting bugs, or by donating!"
+msgstr ""
+"यो उपयोगिता प्रयोग गर्नु भएकोमा धन्यवाद! कृपया परियोजना द्वारा मद्दत गर्नुहोस् \n"
+" योगदान गर्दै कोड र बगहरू रिपोर्टिंग, वा दान गरेर!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Your contributions and donations directly further the realisation\n"
+"of truly open, free and resilient communications systems."
+msgstr ""
+"तपाईंको योगदान र दान सीधा वास्तविकता \n"
+" वास्तवमा खुला, नि: शुल्क र लचिलो कुराकानी प्रणालीहरूको।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "WARNING: Could not backup device EEPROM to disk"
+msgstr "चेतावनी: डिस्कमा उपकरण EEPROM ब्याकअप गर्न सकेन"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM was written, but validation failed. Check your settings."
+msgstr "EEPROM लेखिएको थियो, तर मान्यता असफल भयो। तपाईंको सेटिंग्स जाँच गर्नुहोस्।."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while writing EEPROM. The contained exception was:"
+msgstr "EEPROM लेख्दा त्रुटि देखा पर्यो। समावेश अपवाद थियो:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid data specified, cancelling EEPROM write"
+msgstr "अवैध डाटा निर्दिष्ट, eaprom लेखन रद्द गर्दै"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to normal (host-controlled) operating mode"
+msgstr "उपकरण सामान्य (होस्ट-नियन्त्रित) अपरेटिंग मोड"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please input startup configuration:"
+msgstr "कृपया स्टार्टअप कन्फिगरेसन इनपुट गर्नुहोस्:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency in Hz:"
+msgstr "HZ मा फ्रिक्वेन्सी:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth in Hz:"
+msgstr "HZ मा ब्यान्डविथ:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor:"
+msgstr "फैलाउने कारक:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate:"
+msgstr "कोडिंग दर:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to TNC operating mode"
+msgstr "उपकरण अपरेटिंग मोडमा सेट गर्नुहोस्"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device contains a valid firmware, but EEPROM is invalid.\n"
+"Probably the device has not been initialised, or the EEPROM has been "
+"erased.\n"
+"Please correctly initialise the device and try again!"
+msgstr ""
+"यस उपकरणले वैध फर्मवेयर समावेश गर्दछ, तर EEPROM अवैध छ। \n"
+" सायद उपकरण आरम्भ गरिएको छैन, वा EEPROM मेटिएकी छ। \n"
+" कृपया उपकरणको सही रूपमा आरम्भ गर्नुहोस् र फेरि प्रयास गर्नुहोस्!"

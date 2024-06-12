@@ -1,0 +1,2062 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-01 19:45+0100\n"
+"PO-Revision-Date: 2023-12-12 09:37\n"
+"Last-Translator: SebastianObi\n"
+"Language-Team: SebastianObi\n"
+"Language: co\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#: infos
+#, fuzzy
+msgid "Software - Python"
+msgstr "Software - python"
+
+#: infos
+#, fuzzy
+msgid "Software - Reticulum"
+msgstr "SOFTWARE - reticulo"
+
+#: infos
+#, fuzzy
+msgid "Software - System"
+msgstr "Software - Sistema"
+
+#: infos
+#, fuzzy
+msgid "System - Drives & data storage"
+msgstr "SISTEMA - Drivel & Dati Storage"
+
+#: infos
+#, fuzzy
+msgid "System - General system information"
+msgstr "Sistema - Informazioni Informazioni Generale"
+
+#: infos
+#, fuzzy
+msgid "System - Interfaces"
+msgstr "Sistema - Interfaces"
+
+#: infos
+#, fuzzy
+msgid "System - Network connections"
+msgstr "SISTEMA - Cunnessione di Network"
+
+#: infos
+#, fuzzy
+msgid "System time"
+msgstr "U tempu di u Sistema"
+
+#: infos
+#, fuzzy
+msgid "Start time"
+msgstr "Tempu di iniziu"
+
+#: infos
+#, fuzzy
+msgid "Runtime"
+msgstr "Runtime"
+
+#: infos
+#, fuzzy
+msgid "Version"
+msgstr "Versione"
+
+#: infos
+#, fuzzy
+msgid "Status:"
+msgstr "Status:"
+
+#: infos
+#, fuzzy
+msgid "Clients:"
+msgstr "Clienti:"
+
+#: infos
+#, fuzzy
+msgid "Peers:"
+msgstr "Peers:"
+
+#: infos
+#, fuzzy
+msgid "Mode:"
+msgstr "Modu:"
+
+#: infos
+#, fuzzy
+msgid "Speed:"
+msgstr "Velocità:"
+
+#: infos
+#, fuzzy
+msgid "Airtime:"
+msgstr "Airtime:"
+
+#: infos
+#, fuzzy
+msgid "Ch. Load:"
+msgstr "Ch. Carica:"
+
+#: infos
+#, fuzzy
+msgid "Queued:"
+msgstr "Queed:"
+
+#: infos
+#, fuzzy
+msgid "announce"
+msgstr "annunziu"
+
+#: infos
+#, fuzzy
+msgid "announces"
+msgstr "annuncia"
+
+#: infos
+#, fuzzy
+msgid "Held:"
+msgstr "TENU:"
+
+#: infos
+#, fuzzy
+msgid "Announces:"
+msgstr "Annuncia:"
+
+#: infos
+#, fuzzy
+msgid "Transport Instance"
+msgstr "Istanza di trasportu"
+
+#: infos
+#, fuzzy
+msgid "Probe responder"
+msgstr "Sonda responder"
+
+#: infos
+#, fuzzy
+msgid "Uptime"
+msgstr "Upttime"
+
+#: infos
+#, fuzzy
+msgid "[b]Size:[/b]"
+msgstr "[b] dimensione: [/ B]"
+
+#: infos
+#, fuzzy
+msgid "[b]Free:[/b]"
+msgstr "[b] Gratuitu: [/ B]"
+
+#: infos
+#, fuzzy
+msgid "[b]Type:[/b]"
+msgstr "[b] tippu: [/ B]"
+
+#: infos
+#, fuzzy
+msgid "Platform"
+msgstr "Piattaforma"
+
+#: infos
+#, fuzzy
+msgid "Release"
+msgstr "Liberazione"
+
+#: infos
+#, fuzzy
+msgid "Release name"
+msgstr "Nome di liberazione"
+
+#: infos
+#, fuzzy
+msgid "Model"
+msgstr "Mudellu"
+
+#: infos
+#, fuzzy
+msgid "Hostname"
+msgstr "Nome d'host"
+
+#: infos
+#, fuzzy
+msgid "CPU load"
+msgstr "Carga di cpu"
+
+#: infos
+#, fuzzy
+msgid "CPU cores"
+msgstr "CUTU CORES"
+
+#: infos
+#, fuzzy
+msgid "System temperature"
+msgstr "Temperatura di u sistema"
+
+#: infos
+#, fuzzy
+msgid "LAN"
+msgstr "LAN LAN"
+
+#: infos
+#, fuzzy
+msgid "WiFi"
+msgstr "Wifi"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks"
+msgstr "Rete wifi"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks connected"
+msgstr "Wifi rete cunnessi"
+
+#: infos
+#, fuzzy
+msgid "USB"
+msgstr "USB"
+
+#: infos
+#, fuzzy
+msgid "Bluetooth"
+msgstr "Bluetooth"
+
+#: infos
+#, fuzzy
+msgid "Serial"
+msgstr "Seriale"
+
+#: logs
+#, fuzzy
+msgid "FDN - Reticulum, Channel, Group, Shop"
+msgstr "FDN - Reticulum, cancella, gruppo, negozio"
+
+#: logs
+#, fuzzy
+msgid "Software"
+msgstr "Software"
+
+#: logs
+#, fuzzy
+msgid "Dhcpd - DHCP Server"
+msgstr "DHCPD - servitore DHCP"
+
+#: logs
+#, fuzzy
+msgid "Dnsmasq - DNS Server"
+msgstr "DNSMaq - Servitore DNS"
+
+#: logs
+#, fuzzy
+msgid "Hostapd - WiFi AP"
+msgstr "HostApd - Wifi Ap"
+
+#: logs
+#, fuzzy
+msgid "System"
+msgstr "Sistema"
+
+#: logs
+#, fuzzy
+msgid "Auth - Authentication"
+msgstr "Auth - autentificazione"
+
+#: logs
+#, fuzzy
+msgid "Daemon - System daemons"
+msgstr "Daemon - Demoni di Sistema"
+
+#: logs
+#, fuzzy
+msgid "Fail - Failed login attempts"
+msgstr "FAILD - Tentativi di login falluti"
+
+#: logs
+#, fuzzy
+msgid "Kern - Kernel"
+msgstr "Kern - kernel"
+
+#: logs
+#, fuzzy
+msgid "Mail - Email-related events"
+msgstr "Mail - Avvenimenti relativi à Email"
+
+#: logs
+#, fuzzy
+msgid "Messages - General system events"
+msgstr "Missaghji - Eventi di u sistema generale"
+
+#: logs
+#, fuzzy
+msgid "Syslog - System"
+msgstr "Syslog - sistema"
+
+#: logs
+#, fuzzy
+msgid "User - User activities"
+msgstr "Usuariu - Attività d'Usuariu"
+
+#: scripts
+#, fuzzy
+msgid "Backup & Restore"
+msgstr "Salvà & Ristore"
+
+#: scripts
+#, fuzzy
+msgid "Examples"
+msgstr "Esempii"
+
+#: scripts
+#, fuzzy
+msgid "Examples 1"
+msgstr "Esempii 1"
+
+#: scripts
+#, fuzzy
+msgid "Examples 2"
+msgstr "Esempi 2"
+
+#: scripts
+msgid "Examples - Test Configurations"
+msgstr ""
+
+#: scripts
+#, fuzzy
+msgid "Examples - User interface test functions"
+msgstr "Esempii - funzioni di prova d'interfaccia d'utilizatore"
+
+#: scripts
+#, fuzzy
+msgid "Reticulum - LoRadio & RNode"
+msgstr "Reticula - Lordio & rnode"
+
+#: scripts
+#, fuzzy
+msgid "Software - Installation"
+msgstr "Software - installazione"
+
+#: scripts
+#, fuzzy
+msgid "Software - Uninstallation"
+msgstr "Software - Uninstallazione"
+
+#: scripts
+#, fuzzy
+msgid "Software - Update"
+msgstr "Software - aghjurnamentu"
+
+#: scripts
+#, fuzzy
+msgid "System - Configuration"
+msgstr "Sistema - Configurazione"
+
+#: scripts
+#, fuzzy
+msgid "System - Update"
+msgstr "Sistema - aghjurnamentu"
+
+#: scripts
+#, fuzzy
+msgid "Management - Restart"
+msgstr "Management - Ristartate"
+
+#: scripts
+#, fuzzy
+msgid "System - Reboot"
+msgstr "Sistema - riavvia"
+
+#: scripts
+#, fuzzy
+msgid "System - Shutdown"
+msgstr "System - Shutdown"
+
+#: scripts
+#, fuzzy
+msgid "System Clone - Creates a direct copy of the system drive"
+msgstr "Clone di u Sistema - crea una copia diretta di l'unità di u sistema"
+
+#: scripts
+#, fuzzy
+msgid "System Image - Creates an image of the system drive"
+msgstr "Image di u sistema - crea una maghjina di u sistema di u sistema"
+
+#: scripts
+#, fuzzy
+msgid "Example - All input elements"
+msgstr "Esempiu - tutti l'elementi di input"
+
+#: scripts
+#, fuzzy
+msgid "Example - Exit codes"
+msgstr "Esempiu - codici di surtite"
+
+#: scripts
+#, fuzzy
+msgid "Example - Waiting time"
+msgstr "Esempiu - Tempu di aspittà"
+
+#: scripts
+#, fuzzy
+msgid "Info - Read out information"
+msgstr "Info - Leghjite l'infurmazioni"
+
+#: scripts
+#, fuzzy
+msgid "Install - Installing the firmware"
+msgstr "Installa - installazione di u firmware"
+
+#: scripts
+#, fuzzy
+msgid "Reset - Resetting the firmware"
+msgstr "Resettate - resettendu u firmware"
+
+#: scripts
+#, fuzzy
+msgid "Update - Updating the firmware"
+msgstr "Aghjurnamentu - aghjurnendu u firmware"
+
+#: scripts
+#, fuzzy
+msgid "Bridge Matrix - Message bridge"
+msgstr "Matrice Bridge - Ponte di messagiu"
+
+#: scripts
+#, fuzzy
+msgid "Console tools - Recommended tools"
+msgstr "Prublemi di Console - arnesi cunsigliati"
+
+#: scripts
+#, fuzzy
+msgid "Filesystem tools - Recommended tools"
+msgstr "Trools di i FileSistimenti - Arbusti Recomandati"
+
+#: scripts
+#, fuzzy
+msgid "Server Blockchain - Gateway for payment and other blockchain functions"
+msgstr ""
+"Servitore Blockchain - Gateway per pagamentu è altre funzioni di blockchain"
+
+#: scripts
+#, fuzzy
+msgid "Server Channel - Hosting the channel functionality"
+msgstr "Canale di u Server - Hosting the Formality di Channel"
+
+#: scripts
+#, fuzzy
+msgid "Server Group - Hosting the group functionality"
+msgstr "Gruppu di u Servitore - Hosting the Form Formality"
+
+#: scripts
+#, fuzzy
+msgid "Server Page - Hosting the page functionality"
+msgstr "Pagina di Server - Hosting a funziunalità di a pagina"
+
+#: scripts
+#, fuzzy
+msgid "Server Propagation - Hosting the propagation node functionality"
+msgstr ""
+"Propagerazione di u servitore - accoglie a funziunalità node di propagazione"
+
+#: scripts
+#, fuzzy
+msgid "Server Shop - Hosting the shop functionality"
+msgstr "Negoziu di Servitore - Hosting the Shop Funzionalità"
+
+#: scripts
+#, fuzzy
+msgid "Server - All hosting functions for channel, group, page, shop, etc."
+msgstr ""
+"Server - Tutte e funzioni d'ospitazione per u canale, gruppu, pagina, "
+"acquisti, etc."
+
+#: scripts
+#, fuzzy
+msgid "File system - Extend file system (Raspberry Pi)"
+msgstr "Sistema di File - Extender u sistema di fugliale (PASs Raspberry PI)"
+
+#: scripts
+#, fuzzy
+msgid "Password - Change operating system password"
+msgstr "Password - Cambia a password di u sistema Operativu"
+
+#: scripts
+#, fuzzy
+msgid "Update check - Check for new versions"
+msgstr "Actualizazione di cuntrollu - verificate e versioni novi"
+
+#: scripts
+#, fuzzy
+msgid "Update cleanup - Cleaning up unneeded packages"
+msgstr "Actualizazione CleanUp - Pulizzia di i pacchetti inutili"
+
+#: scripts
+#, fuzzy
+msgid "Update Update - Update the system"
+msgstr "Actualizazione Actualizazione - Aggiornà u sistema"
+
+#: scripts
+#, fuzzy
+msgid "Update Upgrade - Distribution update of the system"
+msgstr "Updattu aghjurnamentu - L'aghjurnamentu di Distribuzione di u Sistema"
+
+#: scripts
+#, fuzzy
+msgid "Installing.."
+msgstr "Installazione .."
+
+#: scripts
+#, fuzzy
+msgid "Uninstalling..."
+msgstr "Imunginazione ..."
+
+#: scripts
+#, fuzzy
+msgid "Updating..."
+msgstr "Actualizazione ..."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The management server will restart. You must reconnect to re-establish a "
+"connection."
+msgstr ""
+"U servitore di gestione riavvia. Duvete riconnettà à riutilà una cunnessione."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will reboot. You must reconnect to re-establish a connection."
+msgstr "U sistema riavvia. Duvete riconnettà à riutilà una cunnessione."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will shut down. You must then start it manually to re-establish a "
+"connection."
+msgstr ""
+"U sistema hà chjusu. Duvete dopu cumincià manualmente per ritruvà una "
+"cunnessione."
+
+#: scripts
+#, fuzzy
+msgid "No installed services found. Exiting."
+msgstr "Nisun serviziu installatu truvatu. Esce."
+
+#: scripts
+#, fuzzy
+msgid "Select a service:"
+msgstr "Selezziunate un serviziu:"
+
+#: scripts
+#, fuzzy
+msgid "Enter the name for the service: (only a-z 0-9)"
+msgstr "Ingressu u nome per u serviziu: (solu a-z 0-9)"
+
+#: scripts
+#, fuzzy
+msgid "Enter the display name for the application:"
+msgstr "Ingressu u nome di visualizazione per l'applicazione:"
+
+#: scripts
+#, fuzzy
+msgid "Invalid choice!"
+msgstr "Scelta invalida!"
+
+#: scripts
+#, fuzzy
+msgid "Update successfully completed!"
+msgstr "Aghjurnà cù successu!"
+
+#: scripts
+#, fuzzy
+msgid "Uninstallation successfully completed!"
+msgstr "Uninstallazione cumpletata cù successu!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a shop successfully completed!"
+msgstr "Installazione di una buttrega hè stata finita bè!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of an echo server successfully completed!"
+msgstr "Installazione di un servitore Eco hè finitu cun successu!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a channel successfully completed!"
+msgstr "Installazione di un canali cumpletatu cù successu!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a group successfully completed!"
+msgstr "Installazione di un gruppu cumpletu cun successu!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a propagation node successfully completed!"
+msgstr "Installazione di un node di propagazione hè stata finita bè!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a provisioning node successfully completed!"
+msgstr "Installazione di un node di pruvisione hè stata finita bè!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a page successfully completed!"
+msgstr "Installazione di una pagina finita cun successu!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a blockchain node successfully completed!"
+msgstr "Installazione di un nodu di blockchain hè stata finita bè!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a message bridge successfully completed!"
+msgstr "Stallazione di un missaghju ponte cumpletu cù successu!"
+
+#: scripts
+#, fuzzy
+msgid ""
+"No further configuration is necessary. Connect to the shop to make all the "
+"necessary settings in the shop app. You should find the new shop in the "
+"announcement list."
+msgstr ""
+"Nisuna configurazione più hè necessaria. Cunnette à a buttrega per fà tutti "
+"i paràmetri necessarii in l'app di a buttrega. Duvete truvà a nova buttrega "
+"in a lista di l'annunziu."
+
+#: scripts
+#, fuzzy
+msgid ""
+"To make further settings, please edit the corresponding configuration files "
+"in the following folder:"
+msgstr ""
+"Per fà altre paràmetri, per piacè edità i fugliali di cunfigurazione "
+"currispondente in u seguente cartulare:"
+
+#: scripts
+#, fuzzy
+msgid "Then you must restart the following service:"
+msgstr "Allora duvete rinuvà u serviziu seguenti:"
+
+#: services
+#, fuzzy
+msgid "All"
+msgstr "Tuttu"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Hit:"
+msgstr "Hit:"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading package lists"
+msgstr "Liste di lettura Lista"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Building dependency tree"
+msgstr "Arbulu di a custruzzione di a custruzzione"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading state information"
+msgstr "Lettura infurmazione di u Statu"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading database"
+msgstr "Base di lettura"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Calculating upgrade"
+msgstr "Upgrade di u calculu"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Waiting for headers"
+msgstr "Aspettendu Headers"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Working"
+msgstr "Travaglia"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "All packages are up to date"
+msgstr "Tutti i pacchetti sò attuali"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Done"
+msgstr "Fattu"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"The following packages were automatically installed and are no longer "
+"required"
+msgstr ""
+"I pacchi seguenti sò stati installati automaticamente è ùn sò più richiesti"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Use"
+msgstr "Usu"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove them"
+msgstr "per caccià elli"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "upgraded"
+msgstr "aghjurnatu"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "newly installed"
+msgstr "novu installatu"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove and"
+msgstr "per caccià è"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "not upgraded"
+msgstr "micca aghjurnatu"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Connected to"
+msgstr "Cunnessu à"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be REMOVED"
+msgstr "I seguenti paquetes seranu cacciati"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "After this operation"
+msgstr "Dopu sta operazione"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "disk space will be freed"
+msgstr "U spaziu di u discu sarà liberatu"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Do you want to continue?"
+msgstr "Vulete cuntinuà?"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Progress"
+msgstr "Progressatu"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Removing"
+msgstr "Elimicendu"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Processing triggers for"
+msgstr "Trasfurmazioni di trigger per"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be upgraded"
+msgstr "I seguenti pacchetti saranu aghjurnati"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading changelogs"
+msgstr "Lettura di e camere"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preconfiguring packages"
+msgstr "Pacchetti di preconf avurante"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preparing to unpack"
+msgstr "Preparatu à u disame"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "files and directories currently installed"
+msgstr "I fugliali è i repertorii attualmente installati attualmente"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Unpacking"
+msgstr "Scaccià"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Setting up"
+msgstr "Creendu"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "over"
+msgstr "finitu"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Installing new version of config file"
+msgstr "Installazione nova versione di u fugliale di cunfigurazione"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "A new version"
+msgstr "Una nova versione"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "of configuration file"
+msgstr "di fugliale di cunfigurazione"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"is available, but the version installed currently has been locally modified"
+msgstr ""
+"hè dispunibule, ma a versione stallata attualmente hè stata mudificata in u "
+"locu"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error, exiting now."
+msgstr "Errore, esce avà."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: You need to run this script as"
+msgstr "Errore: Avete bisognu di curriri stu script cum'è"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: This script can't be piped!"
+msgstr "Errore: Stu script ùn pò micca esse piped!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "failed!"
+msgstr "Fallitu!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Finished!"
+msgstr "Finitu!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating packet repository"
+msgstr "U repositoriu di u pacchettu di l'aghjurnamentu"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating system"
+msgstr "L'aghjurnamentu di u sistema"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Cleanup system"
+msgstr "Sistema di pulizia"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Installing"
+msgstr "INSTALLATING"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating"
+msgstr "Updentazione"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Expanding Filesystem"
+msgstr "Impanditulesstem"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Do you want to proceed?"
+msgstr "Vulete procederà?"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Ok, proceeding..."
+msgstr "OK, procedendu ..."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "No, exiting now."
+msgstr "Innò, esce avà."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Please answer yes or no."
+msgstr "Per piacè risponde sì o no."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing path"
+msgstr "Cambiamentu per"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Downloading"
+msgstr "Scaricà"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/owner"
+msgstr "Cambiendu Permessi / Proprietariu di File"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/right"
+msgstr "Cambiendu Permessi di File / Right"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "To activate the changes, the system must be rebooted."
+msgstr "Per attivà i cambiamenti, u sistema deve esse riavviatu."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Could not find any user, exiting now."
+msgstr "Ùn pudia truvà alcun utilizatore, esce avà."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Which user would you like to edit?"
+msgstr "Quale utilizatore vulete edità?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Define the password for user"
+msgstr "Definisce a password per l'utilizatore"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Do you want to edit another user?"
+msgstr "Vulete edità un altru utilizatore?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "New password"
+msgstr "Nova password"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Retype new password"
+msgstr "Reype New Password"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "No password has been supplied."
+msgstr "Nisuna password hè stata furnita."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Sorry, passwords do not match."
+msgstr "Scusate, password ùn currispondenu micca."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Updating password"
+msgstr "Aghjurnamentu di a password"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Authentication token manipulation error"
+msgstr "Errore di manipulazione token di autentificazione"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "password unchanged"
+msgstr "password inutile"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "user"
+msgstr "Usuariu"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "does not exist"
+msgstr "ùn esiste micca"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Please connect the destination device you wish to use."
+msgstr "Per piacè cunnette u dispositivu di destinazione chì vulete utilizà."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Hit enter when it is connected."
+msgstr "Hit ENTER quandu hè cunnessu."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find any devices, exiting now."
+msgstr "Ùn pudia micca truvà qualsiasi dispositi, esce avà."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find specified device, exiting now."
+msgstr "Ùn pudia micca truvà dispusitivu specificatu, esce avà."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "What is your destination device?"
+msgstr "Chì ghjè u vostru dispositivu di destinazione?"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Ok, using device:"
+msgstr "OK, aduprendu u dispositivu:"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "target is busy"
+msgstr "u scopu hè occupatu"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating image file"
+msgstr "Creendu fugliale di maghjine"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image file"
+msgstr "U schedariu di l'imagine scorri"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "copied"
+msgstr "Copiatu"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records in"
+msgstr "Registri in"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records out"
+msgstr "registra"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Gathering data"
+msgstr "Dati di riunione"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating new"
+msgstr "Creendu novu"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Checking filesystem"
+msgstr "Verificà Phystionstem"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "non-contiguous"
+msgstr "non contiguu"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks"
+msgstr "blocchi"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking filesystem"
+msgstr "Quarretti praceisteystem"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Resizing the filesystem on"
+msgstr "Rinnendu u sistema di fugliale"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Begin pass"
+msgstr "Cuminciate à passà"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Relocating blocks"
+msgstr "Traslendu blocchi"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Scanning inode table"
+msgstr "Scanning indode table"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Updating inode references"
+msgstr "L'aghjurnamentu di Referenze Inde"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "The filesystem on"
+msgstr "U sistema di System On"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "is now"
+msgstr "hè avà"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks long"
+msgstr "blocchi longu"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image"
+msgstr "Maghjina"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Using gzip on the shrunk image"
+msgstr "Aduprendu gzip nantu à l'imaghjini arricchiti"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrunk"
+msgstr "Shrunk"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "from"
+msgstr "da"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "to"
+msgstr "à"
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid ""
+"Please connect the destination device (sd-card, usb-stick) you wish to use."
+msgstr ""
+"Per piacè cunnette u dispositivu di destinazione (SD-Card, USB-Bastone) "
+"Vulete aduprà."
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid "WARNING: All data on the destination device will be deleted!"
+msgstr ""
+"Avvertimentu: Tutti i dati nantu à u dispositivu di destinazione serà "
+"eliminatu!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting frequency is"
+msgstr "A frequenza di rapportu radio hè"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting bandwidth is"
+msgstr "Radio raportu di larghezza di banda hè"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting TX power is"
+msgstr "U putere TX Rapportu Radio hè"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting spreading factor is"
+msgstr "U fattore di spartimentu di u rapportu di radio hè"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting coding rate is"
+msgstr "A tarifa di codificazione di u raportu di a radio hè"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware initialisation error"
+msgstr "Errore di inizializazione hardware"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware TX error"
+msgstr "Errore TX hardware"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware error"
+msgstr "Errore di hardware"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "serial read timeout"
+msgstr "Serial Read Timeout"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while detecting hardware for"
+msgstr "Un errore IO hè accadutu durante u detectà hardware per"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring frequency for"
+msgstr "Un errore io hè accadutu mentre cunfigurendu a frequenza per"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring bandwidth for"
+msgstr ""
+"Un errore IO hè accadutu mentre cunfigurendu a larghezza di a banda per"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring TX power for"
+msgstr "Un errore io hè accadutu mentre configuurà u putere tx per"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring spreading factor for"
+msgstr ""
+"Un errore io hè accadutu mentre cunfigurendu u fattore di spreczione per"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring coding rate for"
+msgstr ""
+"Un errore io hè accadutu mentre configuurà a tarifa di codificazione per"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state for"
+msgstr "Un errore io hè accadutu mentre configuurà u statu di radio per"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring device mode"
+msgstr "Un errore io hè accadutu mentre configuurà u modu di u dispusitivu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while wiping EEPROM"
+msgstr "Un errore io hè accadutu mentre sguassate EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while restarting device"
+msgstr "Un errore IO hè accadutu mentre u dispositivu riavviare"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while writing EEPROM"
+msgstr "Un errore IO hè accadutu mentre scrive EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state"
+msgstr "Un errore io hè accadutu mentre cunfigurendu u statu radio"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download EEPROM from device. Is a valid firmware installed?"
+msgstr ""
+"Ùn pudia micca scaricà eEprom da u dispusitivu. Hè un firmware validu "
+"installatu?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum mismatch"
+msgstr "EEPROM CHECKSUM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum correct"
+msgstr "EEPROM CHECKSUM CORRECT"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load local signing key"
+msgstr "Ùn pudia micca carricà a chjave di firmazione locale"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize local signing key"
+msgstr "Ùn pudia micca deserializà a chjave di firmazione lucale"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validated"
+msgstr "Firma First validata"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validation failed"
+msgstr "A validazione di signatura di u dispositivu hà fiascatu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid EEPROM data, could not parse device EEPROM."
+msgstr "Dati EEPROM micca validu, ùn pudia micca parse u dispositivu EEPROM."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Hello!\n"
+"\n"
+"This guide will help you install the RNode firmware on supported\n"
+"and homebrew devices. Please connect the device you wish to set\n"
+"up now."
+msgstr ""
+"Bonghjornu! \n"
+"\n"
+" Sta guida vi aiuterà à stallà u firmware rnode in supportu \n"
+" è i dispositi di Homebrew. Per piacè cunnette u dispusitivu chì vulete "
+"stabilisce \n"
+" avà."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please connect the device you wish to setup now."
+msgstr "Per piacè cunnette u dispusitivu chì vulete stallà avà."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find any port, exiting now."
+msgstr "Ùn pudia micca truvà nisun portu, esce avà."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Detected serial ports:"
+msgstr "Porti seriali rilevati:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What serial port is your device connected to?"
+msgstr "Chì portu seriale hè cunnessu u vostru dispositivu?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That port does not exist, exiting now."
+msgstr "Ddu portu ùn esiste micca, esce avà."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not select port, exiting now."
+msgstr "Ùn pudia micca selezziunate portu, esce avà."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Ok, using device on"
+msgstr "OK, utilizendu u dispositivu annantu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "using device on"
+msgstr "Aduprendu u dispositivu annantu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find specified port"
+msgstr "Ùn pudia truvà u portu specificatu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "exiting now"
+msgstr "esce avà"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Probing device"
+msgstr "Strumentu di probing"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not open the specified serial port. The contained exception was:"
+msgstr ""
+"Ùn pudia micca apre u portu seriale specificatu. L'eccezzioni continuata era:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No answer from device"
+msgstr "Nisuna risposta da u dispositivu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Trying to read EEPROM"
+msgstr "Circhendu di leghje eEprom"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device is already installed and provisioned. No further action will\n"
+"be taken. If you wish to completely reinstall this device, you must first\n"
+"wipe the current EEPROM. See the help for more info.\n"
+"\n"
+"Exiting now."
+msgstr ""
+"Stu dispusitivu hè digià stallatu è pruvisti. Nisuna altra azione sarà \n"
+" esse pigliatu. Se vulete reinstallà completamente stu dispusitivu, duvete "
+"prima \n"
+" Asciugate l'EEprom attuale. Vede l'aiutu per più infurmazioni. \n"
+"\n"
+" Esce avà."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"The device seems to have an RNode firmware installed, but it was not\n"
+"provisioned correctly, or it is corrupt. We are going to reinstall the\n"
+"correct firmware and provision it."
+msgstr ""
+"U dispusitivu pare avè un firmware rnode installatu, ma ùn era micca \n"
+" Pruvisioni currettamente, o hè corruzzione. Andemu à reinstalla u \n"
+" u firmware currettu è a prestazione."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "It looks like this is a fresh device with no RNode firmware."
+msgstr "Sembra chì questu hè un dispusitivu frescu senza firma di rnode."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of device is this?"
+msgstr "Chì tippu di dispusitivu hè questu?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Important! Using RNode firmware on"
+msgstr "IMPORTANTE! Utilizendu firmware rnode nantu à"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"should currently be\n"
+"considered experimental. It is not intended for production or critical use.\n"
+"The currently supplied firmware is provided AS-IS as a courtesey to those\n"
+"who would like to experiment with it. Hit enter to continue."
+msgstr ""
+"duverebbe esse attualmente \n"
+" cunsideratu sperimentale. Ùn hè micca destinatu à a produzzione o l'usu "
+"criticu. \n"
+" U firmware attualmente furnitu hè furnitu cum'è una corte di a corte \n"
+" chì vuleria sperimentà cun ella. Hit ENTER per continuà."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That device type does not exist, exiting now."
+msgstr "Quellu tippu di u dispositivu ùn esiste micca, esce avà."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of microcontroller is your board based on?"
+msgstr "Chì tippu di microcontroller hè u vostru Cunsigliu basatu?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That MCU type does not exist, exiting now."
+msgstr "Chì u tippu MCU ùn esiste micca, esce avà."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What transceiver module does your board use?"
+msgstr "Chì u modulu di trascimentu hè u vostru cunsigliu?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That transceiver type does not exist, exiting now."
+msgstr "U tippu di transceveru ùn esiste micca, esce avà."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What model is this RNode?"
+msgstr "Chì mudellu hè questu rnode?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That model does not exist, exiting now."
+msgstr "Chì u mudellu ùn esiste micca, esce avà."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this T-Beam for?"
+msgstr "À chì banda hè questu T-Beam?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That band does not exist, exiting now."
+msgstr "Chì a banda ùn esiste micca, esce avà."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this LoRa32 for?"
+msgstr "À chì banda hè questa Lora32?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this Heltec LoRa32 for?"
+msgstr "À chì banda hè questu heltec Lora32 per?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of ESP32 board is this?"
+msgstr "Chì tippu di bordu Esp32 hè questu?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That ESP32 board does not exist, exiting now."
+msgstr "Chì es32 board ùn esiste micca, esce avà."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Sorry, no firmware for your board currently exists.\n"
+"Help making it a reality by contributing code or by\n"
+"donating to the project."
+msgstr ""
+"Scusate, nisun firmware per u vostru cunsigliu esiste attualmente. \n"
+" Aiuta à fà una realità cuntribuisce u codice o da \n"
+" donazione à u prugettu."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Ok, that should be all the information we need. Please confirm the "
+"following\n"
+"summary before proceeding. In the next step, the device will be flashed and\n"
+"provisioned, so make that you are satisfied with your choices."
+msgstr ""
+"Vale, chì duverebbe esse tutte l'infurmazioni chì avemu bisognu. Per piacè "
+"cunfirmate i seguenti \n"
+" riassuntu prima di procederà. In u prossimu passu, u dispusitivu serà "
+"lampatu è \n"
+" Pruvisioni, cusì fate chì site soddisfatti di e vostre scelte."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial port"
+msgstr "Portu seriale"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device type"
+msgstr "Tipu di Dispositivu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device MCU"
+msgstr "Strumentu, un mico"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file"
+msgstr "File di firmware"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Is the above correct?"
+msgstr "Hè u currettu sopra?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "OK, aborting now."
+msgstr "OK, abortendu avà."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device connected"
+msgstr "U dispusitivu cunnessu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Current firmware version:"
+msgstr "Versione di u Firmware attuale:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Got invalid response while detecting device"
+msgstr "Avè una risposta invalida mentre detectà u dispusitivu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download required firmware file. The contained exception was:"
+msgstr ""
+"Ùn pudia micca scaricà u schedariu di firmware necessariu. L'eccezzioni "
+"continuata era:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial module could not be found"
+msgstr "U modulu seriale ùn hè micca truvatu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs pyserial to work.\n"
+"You can install it with: pip3 install pyserial"
+msgstr ""
+"U utilità di cunfigurazione Rnude hà bisognu di u travagliu per u "
+"travagliu. \n"
+" Pudete installà cù: Pip3 Installa a Pmenteria"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cryptography module could not be found"
+msgstr "U modulu Cryptografia ùn hè micca truvatu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs the cryptography module to work.\n"
+"You can install it with: pip3 install cryptography"
+msgstr ""
+"U utilità di cunfigurazione RNODE hà bisognu di u modulu di cryptografia per "
+"travaglià. \n"
+" Pudete installà cù: Pip3 Installa Criptografia"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Downloading latest frimware from GitHub"
+msgstr "Scaricendu u ultimu firmware da GitHub"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware download completed"
+msgstr "Scaricamentu di u firmware finitu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware extracted"
+msgstr "Firmatì firmata"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not extract firmware from downloaded zip file"
+msgstr "Ùn pudia micca estrattà u firitu da u schedariu zip scaricatu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing RNode firmware to device on"
+msgstr "FLACE RHEOD Rhode à u dispositivu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Done flashing"
+msgstr "Fattu lampu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Waiting for ESP32 reset"
+msgstr "Aspittendu resettore esp32"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while flashing"
+msgstr "Errore mentre lampeghja"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file not found"
+msgstr "U schedariu di firmware micca truvatu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download firmware package"
+msgstr "Ùn pudia micca scaricà u pacchettu di firmware"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The contained exception was:"
+msgstr "L'eccezzioni continuata era:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Skipping online check, using local firmware file:"
+msgstr "Saltare u cuntrollu in linea, utilizendu u file di firmware locale:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load signing key"
+msgstr "Ùn pudia micca carricà a chjave di firmazione"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize signing key"
+msgstr "Ùn pudia micca deseralizà a chjave di firmatura"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Generating a new signing key"
+msgstr "Generazione una nova chjave di firmazione"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Signing key already exists, not overwriting!\n"
+"Manually delete this key to create a new one."
+msgstr ""
+"A chjave di firmazione esiste digià, micca rimpiazzà! \n"
+" Elimina manualmente sta chjave per creà un novu."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The firmware directory does not exist, can't write key!"
+msgstr "U repertoriu di u firmware ùn esiste micca, ùn pò micca scrive chjave!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Extracting firmware"
+msgstr "Extracting firmware"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Opening serial port"
+msgstr "Apertura u portu seriale"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Serial port opened, but RNode did not respond. Is a valid firmware installed?"
+msgstr ""
+"U portu di seriale hà apertu, ma rnode ùn hà micca rispostu. Hè un firmware "
+"validu installatu?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"WARNING: EEPROM is being wiped! Power down device NOW if you do not want "
+"this!"
+msgstr ""
+"Avvertimentu: EEPROM hè stata sguassata! U dispositivu Power Down avà se ùn "
+"vulete micca questu!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Reading EEPROM"
+msgstr "Lettura EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "ERROR: No firmware found for this board. Cannot update."
+msgstr ""
+"Errore: Nisun firmware truvatu per questu cunsigliu. Ùn pò micca aghjurnà."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cannot update device firmware"
+msgstr "Ùn pò micca aghjurnà u firmware di u dispositivu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Updating RNode firmware for device on"
+msgstr "L'aghjurnamentu di u firmware rnode per u dispositivu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing new firmware completed"
+msgstr "Flashing New Firstware hà finitu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update completed successfully"
+msgstr "L'aghjurnamentu di u firmware hè finitu cun successu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while flashing the new firmware, exiting now."
+msgstr "Un errore hè accadutu mentre lampeghja u novu firmware, esce avà."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while updating firmware"
+msgstr "Errore mentre l'aghjurnamentu di u firmware"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update file not found"
+msgstr "U schedariu di aghjurnamentu di u firmware ùn hè micca truvatu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM contents"
+msgstr "Cuntenutu EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM backup written to"
+msgstr "EEPROM BACKUP scritta à"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"EEPROM was successfully downloaded from device,\n"
+"but file could not be written to disk."
+msgstr ""
+"EEPROM hè stata scaricata cun successu da u dispusitivu, \n"
+" Ma u fugliale ùn pudia micca esse scrittu à u discu."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device info:"
+msgstr "Info di u Dispositivu:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Product"
+msgstr "Pruduttu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature"
+msgstr "Firma di u dispositivu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware version"
+msgstr "Versione firmata"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Hardware revision"
+msgstr "Rivisione di u hardware"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial number"
+msgstr "Numeru d'ordine"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency range"
+msgstr "Corru di frequenza"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Max TX power"
+msgstr "Potenza Max TX"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Manufactured"
+msgstr "Fabricatu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device mode"
+msgstr "Modu di u Dispositivu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency"
+msgstr "Frezza"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth"
+msgstr "Larghezza di banda"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "TX power"
+msgstr "TX POWER"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor"
+msgstr "Spreading fattor"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate"
+msgstr "RAZZA DI CODIZIONE"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "On-air bitrate"
+msgstr "Bitrate in aria"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM is invalid, no further information available"
+msgstr "EEPROM hè invalidu, ùn ci hè più infurmazione dispunibule"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM bootstrap was requested, but a valid EEPROM was already present."
+msgstr ""
+"EEPROM Bootstrap hè stata dumandata, ma un EEPROM validu era digià prisente."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No changes are being made."
+msgstr "Ùn ci sò cambiamenti."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Clearing old EEPROM, this will take about 15 seconds"
+msgstr "Clearing Old Eeprom, questu piglià circa 15 seconde"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not create device serial number, exiting"
+msgstr "Ùn pudia micca creà u numeru di serie di u dispositivu, esci"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Loading signing key"
+msgstr "Carica chjave di firma"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while signing EEPROM"
+msgstr "Errore mentre firmà EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bootstrapping device EEPROM"
+msgstr "U dispusitivu di bootstrapping EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM written! Validating"
+msgstr "EEPROM scritta! Validà"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM Bootstrapping successful!"
+msgstr "EEPROM BOWSTRATING SITUATA!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "RNode Firmware autoinstallation complete!"
+msgstr "Rhood Firmware Autoinstallazione Completa!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "To use your device with Reticulum, read the documetation at:"
+msgstr ""
+"Per aduprà u vostru dispusitivu cù reticulum, leghjite a documentazione à:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Thank you for using this utility! Please help the project by\n"
+"contributing code and reporting bugs, or by donating!"
+msgstr ""
+"Grazie per avè aduprà sta utilità! Per piacè aiuta u prugettu \n"
+" Codice di cuntribuisce è i bugs di rapportu, o donendu!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Your contributions and donations directly further the realisation\n"
+"of truly open, free and resilient communications systems."
+msgstr ""
+"I vostri cuntributi è donazioni direttamente più a realizazione \n"
+" di sistemi di cumunicazioni veramente aperti, gratuiti è resistenti."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "WARNING: Could not backup device EEPROM to disk"
+msgstr "AVVISU: Ùn pudia micca copia di salvezza eEprom à u discu"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM was written, but validation failed. Check your settings."
+msgstr ""
+"EEPROM hè stata scritta, ma a validazione hà fiascatu. Verificate i vostri "
+"paràmetri."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while writing EEPROM. The contained exception was:"
+msgstr ""
+"Un errore hè accadutu mentre scrive EEPROM. L'eccezzioni continuata era:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid data specified, cancelling EEPROM write"
+msgstr "Dati di dati micca validi, annullamentu di EEPROP"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to normal (host-controlled) operating mode"
+msgstr "Device stabilitu à u modalità operativa normale (controla operata)"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please input startup configuration:"
+msgstr "Per piacè inserite Configurazione Startup:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency in Hz:"
+msgstr "Frequenza in Hz:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth in Hz:"
+msgstr "Bandawidth in HZ:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor:"
+msgstr "Factore Spreading:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate:"
+msgstr "Ratezzione di CODI:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to TNC operating mode"
+msgstr "Strumentu stabilitu à u modu di operazione TNC"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device contains a valid firmware, but EEPROM is invalid.\n"
+"Probably the device has not been initialised, or the EEPROM has been "
+"erased.\n"
+"Please correctly initialise the device and try again!"
+msgstr ""
+"Stu dispusitivu cuntene un firmware validu, ma EEPROM ùn hè micca validu. \n"
+" Probabilmente u dispusitivu ùn hè micca statu inizializatu, o l'EEPROM hè "
+"stata sguassata. \n"
+" Per piacè inizializà currettamente u dispusitivu è pruvà torna!"

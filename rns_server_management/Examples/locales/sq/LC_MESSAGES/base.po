@@ -1,0 +1,2065 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-01 19:45+0100\n"
+"PO-Revision-Date: 2023-12-12 09:40\n"
+"Last-Translator: SebastianObi\n"
+"Language-Team: SebastianObi\n"
+"Language: sq\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#: infos
+#, fuzzy
+msgid "Software - Python"
+msgstr "Softuer - Python"
+
+#: infos
+#, fuzzy
+msgid "Software - Reticulum"
+msgstr "Softuer - retikulum"
+
+#: infos
+#, fuzzy
+msgid "Software - System"
+msgstr "Softuer - Sistemi"
+
+#: infos
+#, fuzzy
+msgid "System - Drives & data storage"
+msgstr "Sistemi - Drives & Ruajtja e të Dhënave"
+
+#: infos
+#, fuzzy
+msgid "System - General system information"
+msgstr "Sistemi - Informacioni i përgjithshëm i sistemit"
+
+#: infos
+#, fuzzy
+msgid "System - Interfaces"
+msgstr "Sistemi - Ndërfaqet"
+
+#: infos
+#, fuzzy
+msgid "System - Network connections"
+msgstr "Sistemi - Lidhjet e rrjetit"
+
+#: infos
+#, fuzzy
+msgid "System time"
+msgstr "Koha e sistemit"
+
+#: infos
+#, fuzzy
+msgid "Start time"
+msgstr "Koha e nisjes"
+
+#: infos
+#, fuzzy
+msgid "Runtime"
+msgstr "Orari"
+
+#: infos
+#, fuzzy
+msgid "Version"
+msgstr "Version"
+
+#: infos
+#, fuzzy
+msgid "Status:"
+msgstr "Statusi:"
+
+#: infos
+#, fuzzy
+msgid "Clients:"
+msgstr "Klientët:"
+
+#: infos
+#, fuzzy
+msgid "Peers:"
+msgstr "Bashkëmoshatarët:"
+
+#: infos
+#, fuzzy
+msgid "Mode:"
+msgstr "Mënyra:"
+
+#: infos
+#, fuzzy
+msgid "Speed:"
+msgstr "Shpejtësia:"
+
+#: infos
+#, fuzzy
+msgid "Airtime:"
+msgstr "Koha e transmetimit:"
+
+#: infos
+#, fuzzy
+msgid "Ch. Load:"
+msgstr "Ch. Ngarkesa:"
+
+#: infos
+#, fuzzy
+msgid "Queued:"
+msgstr "Në radhë:"
+
+#: infos
+#, fuzzy
+msgid "announce"
+msgstr "njoftoj"
+
+#: infos
+#, fuzzy
+msgid "announces"
+msgstr "njofton"
+
+#: infos
+#, fuzzy
+msgid "Held:"
+msgstr "Mbajtur:"
+
+#: infos
+#, fuzzy
+msgid "Announces:"
+msgstr "Njofton:"
+
+#: infos
+#, fuzzy
+msgid "Transport Instance"
+msgstr "Instanca e transportit"
+
+#: infos
+#, fuzzy
+msgid "Probe responder"
+msgstr "Hetues"
+
+#: infos
+#, fuzzy
+msgid "Uptime"
+msgstr "Kohë e sipërme"
+
+#: infos
+#, fuzzy
+msgid "[b]Size:[/b]"
+msgstr "[B] Madhësia: [/b]"
+
+#: infos
+#, fuzzy
+msgid "[b]Free:[/b]"
+msgstr "[b] falas: [/b]"
+
+#: infos
+#, fuzzy
+msgid "[b]Type:[/b]"
+msgstr "[b] lloji: [/b]"
+
+#: infos
+#, fuzzy
+msgid "Platform"
+msgstr "Platformë"
+
+#: infos
+#, fuzzy
+msgid "Release"
+msgstr "Lëshim"
+
+#: infos
+#, fuzzy
+msgid "Release name"
+msgstr "Lëshoj emrin"
+
+#: infos
+#, fuzzy
+msgid "Model"
+msgstr "Model"
+
+#: infos
+#, fuzzy
+msgid "Hostname"
+msgstr "Emër pritës"
+
+#: infos
+#, fuzzy
+msgid "CPU load"
+msgstr "Ngarkesë CPU"
+
+#: infos
+#, fuzzy
+msgid "CPU cores"
+msgstr "Bërthama"
+
+#: infos
+#, fuzzy
+msgid "System temperature"
+msgstr "Temperatura e sistemit"
+
+#: infos
+#, fuzzy
+msgid "LAN"
+msgstr "Kornizë"
+
+#: infos
+#, fuzzy
+msgid "WiFi"
+msgstr "Wifi"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks"
+msgstr "Rrjete wifi"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks connected"
+msgstr "Rrjetet wifi të lidhura"
+
+#: infos
+#, fuzzy
+msgid "USB"
+msgstr "Usb"
+
+#: infos
+#, fuzzy
+msgid "Bluetooth"
+msgstr "I verdhë"
+
+#: infos
+#, fuzzy
+msgid "Serial"
+msgstr "Serial"
+
+#: logs
+#, fuzzy
+msgid "FDN - Reticulum, Channel, Group, Shop"
+msgstr "FDN - retikul, kanal, grup, dyqan"
+
+#: logs
+#, fuzzy
+msgid "Software"
+msgstr "Softuer"
+
+#: logs
+#, fuzzy
+msgid "Dhcpd - DHCP Server"
+msgstr "DHCPD - Serveri DHCP"
+
+#: logs
+#, fuzzy
+msgid "Dnsmasq - DNS Server"
+msgstr "DNSMASQ - Server DNS"
+
+#: logs
+#, fuzzy
+msgid "Hostapd - WiFi AP"
+msgstr "Hostapd - wifi ap"
+
+#: logs
+#, fuzzy
+msgid "System"
+msgstr "Sistem"
+
+#: logs
+#, fuzzy
+msgid "Auth - Authentication"
+msgstr "Auth - Autentifikimi"
+
+#: logs
+#, fuzzy
+msgid "Daemon - System daemons"
+msgstr "Daemon - Daemonët e Sistemit"
+
+#: logs
+#, fuzzy
+msgid "Fail - Failed login attempts"
+msgstr "Dështimi - Përpjekjet e Dështuara të Hyrjes"
+
+#: logs
+#, fuzzy
+msgid "Kern - Kernel"
+msgstr "Kern - kernel"
+
+#: logs
+#, fuzzy
+msgid "Mail - Email-related events"
+msgstr "Posta - Ngjarje të lidhura me email"
+
+#: logs
+#, fuzzy
+msgid "Messages - General system events"
+msgstr "Mesazhet - Ngjarjet e përgjithshme të sistemit"
+
+#: logs
+#, fuzzy
+msgid "Syslog - System"
+msgstr "Syslog - Sistemi"
+
+#: logs
+#, fuzzy
+msgid "User - User activities"
+msgstr "Përdoruesi - Aktivitetet e Përdoruesit"
+
+#: scripts
+#, fuzzy
+msgid "Backup & Restore"
+msgstr "Kopje rezervë dhe rivendos"
+
+#: scripts
+#, fuzzy
+msgid "Examples"
+msgstr "Shembuj"
+
+#: scripts
+#, fuzzy
+msgid "Examples 1"
+msgstr "Shembuj 1"
+
+#: scripts
+#, fuzzy
+msgid "Examples 2"
+msgstr "Shembuj 2"
+
+#: scripts
+msgid "Examples - Test Configurations"
+msgstr ""
+
+#: scripts
+#, fuzzy
+msgid "Examples - User interface test functions"
+msgstr "Shembuj - Funksionet e Testit të Ndërfaqes së Përdoruesit"
+
+#: scripts
+#, fuzzy
+msgid "Reticulum - LoRadio & RNode"
+msgstr "Reticulum - Loradio & Rnode"
+
+#: scripts
+#, fuzzy
+msgid "Software - Installation"
+msgstr "Softuer - Instalim"
+
+#: scripts
+#, fuzzy
+msgid "Software - Uninstallation"
+msgstr "Softuer - çinstalimi"
+
+#: scripts
+#, fuzzy
+msgid "Software - Update"
+msgstr "Softuer - Përditëso"
+
+#: scripts
+#, fuzzy
+msgid "System - Configuration"
+msgstr "Sistemi - Konfigurimi"
+
+#: scripts
+#, fuzzy
+msgid "System - Update"
+msgstr "Sistemi - Përditësimi"
+
+#: scripts
+#, fuzzy
+msgid "Management - Restart"
+msgstr "Menaxhimi - Rinisni"
+
+#: scripts
+#, fuzzy
+msgid "System - Reboot"
+msgstr "Sistemi - rindizni"
+
+#: scripts
+#, fuzzy
+msgid "System - Shutdown"
+msgstr "Sistemi - Mbyllja"
+
+#: scripts
+#, fuzzy
+msgid "System Clone - Creates a direct copy of the system drive"
+msgstr ""
+"Kloni i sistemit - krijon një kopje të drejtpërdrejtë të makinës së sistemit"
+
+#: scripts
+#, fuzzy
+msgid "System Image - Creates an image of the system drive"
+msgstr "Imazhi i sistemit - krijon një imazh të makinës së sistemit"
+
+#: scripts
+#, fuzzy
+msgid "Example - All input elements"
+msgstr "Shembull - Të gjithë elementët e hyrjes"
+
+#: scripts
+#, fuzzy
+msgid "Example - Exit codes"
+msgstr "Shembull - Kodet e Daljes"
+
+#: scripts
+#, fuzzy
+msgid "Example - Waiting time"
+msgstr "Shembull - Koha e pritjes"
+
+#: scripts
+#, fuzzy
+msgid "Info - Read out information"
+msgstr "Info - Lexo informacionin"
+
+#: scripts
+#, fuzzy
+msgid "Install - Installing the firmware"
+msgstr "Instaloni - instalimin e firmware -it"
+
+#: scripts
+#, fuzzy
+msgid "Reset - Resetting the firmware"
+msgstr "Rivendosja - Rivendosja e firmware -it"
+
+#: scripts
+#, fuzzy
+msgid "Update - Updating the firmware"
+msgstr "Përditësimi - Përditësimi i firmware"
+
+#: scripts
+#, fuzzy
+msgid "Bridge Matrix - Message bridge"
+msgstr "Matrica e Urës - Ura e Mesazhit"
+
+#: scripts
+#, fuzzy
+msgid "Console tools - Recommended tools"
+msgstr "Mjetet e tastierës - mjete të rekomanduara"
+
+#: scripts
+#, fuzzy
+msgid "Filesystem tools - Recommended tools"
+msgstr "Mjetet e sistemit të skedarëve - mjete të rekomanduara"
+
+#: scripts
+#, fuzzy
+msgid "Server Blockchain - Gateway for payment and other blockchain functions"
+msgstr ""
+"Blockchain Server - Gateway për Pagesë dhe Funksionet e tjera të Blockchain"
+
+#: scripts
+#, fuzzy
+msgid "Server Channel - Hosting the channel functionality"
+msgstr "Kanali i Serverit - Pritja e Funksionimit të Kanalit"
+
+#: scripts
+#, fuzzy
+msgid "Server Group - Hosting the group functionality"
+msgstr "Grupi i Serverit - Pritja e Funksionimit të Grupit"
+
+#: scripts
+#, fuzzy
+msgid "Server Page - Hosting the page functionality"
+msgstr "Faqja e Serverit - Pritja e Funksionimit të Faqes"
+
+#: scripts
+#, fuzzy
+msgid "Server Propagation - Hosting the propagation node functionality"
+msgstr "Përhapja e Serverit - Pritja e Funksionimit të Nodës së Propagimit"
+
+#: scripts
+#, fuzzy
+msgid "Server Shop - Hosting the shop functionality"
+msgstr "Dyqani i Serverit - Pritja e Funksionimit të Dyqanit"
+
+#: scripts
+#, fuzzy
+msgid "Server - All hosting functions for channel, group, page, shop, etc."
+msgstr ""
+"Serveri - Të gjitha funksionet e pritjes për kanalin, grupin, faqen, "
+"dyqanin, etj."
+
+#: scripts
+#, fuzzy
+msgid "File system - Extend file system (Raspberry Pi)"
+msgstr "Sistemi i skedarëve - Zgjatni sistemin e skedarëve (Raspberry PI)"
+
+#: scripts
+#, fuzzy
+msgid "Password - Change operating system password"
+msgstr "Fjalëkalimi - Ndryshoni fjalëkalimin e sistemit operativ"
+
+#: scripts
+#, fuzzy
+msgid "Update check - Check for new versions"
+msgstr "Kontrolli i azhurnimit - Kontrolloni për versione të reja"
+
+#: scripts
+#, fuzzy
+msgid "Update cleanup - Cleaning up unneeded packages"
+msgstr "Azhurnoni pastrimin - Pastrimi i paketave të padenjë"
+
+#: scripts
+#, fuzzy
+msgid "Update Update - Update the system"
+msgstr "Përditësimi i azhurnimit - Përditësoni sistemin"
+
+#: scripts
+#, fuzzy
+msgid "Update Upgrade - Distribution update of the system"
+msgstr "Përditësoni azhurnimin - Përditësimi i shpërndarjes së sistemit"
+
+#: scripts
+#, fuzzy
+msgid "Installing.."
+msgstr "Instalimi .."
+
+#: scripts
+#, fuzzy
+msgid "Uninstalling..."
+msgstr "Çinstaloni ..."
+
+#: scripts
+#, fuzzy
+msgid "Updating..."
+msgstr "Përditësimi ..."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The management server will restart. You must reconnect to re-establish a "
+"connection."
+msgstr ""
+"Serveri i menaxhimit do të rindizet. Ju duhet të lidheni përsëri për të "
+"rivendosur një lidhje."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will reboot. You must reconnect to re-establish a connection."
+msgstr ""
+"Sistemi do të rindizet. Ju duhet të lidheni përsëri për të rivendosur një "
+"lidhje."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will shut down. You must then start it manually to re-establish a "
+"connection."
+msgstr ""
+"Sistemi do të mbyllet. Pastaj duhet ta filloni me dorë për të rivendosur një "
+"lidhje."
+
+#: scripts
+#, fuzzy
+msgid "No installed services found. Exiting."
+msgstr "Nuk u gjet asnjë shërbim i instaluar. Duke dalë."
+
+#: scripts
+#, fuzzy
+msgid "Select a service:"
+msgstr "Zgjidhni një shërbim:"
+
+#: scripts
+#, fuzzy
+msgid "Enter the name for the service: (only a-z 0-9)"
+msgstr "Vendosni emrin për shërbimin: (Vetëm A-Z 0-9)"
+
+#: scripts
+#, fuzzy
+msgid "Enter the display name for the application:"
+msgstr "Vendosni emrin e ekranit për aplikacionin:"
+
+#: scripts
+#, fuzzy
+msgid "Invalid choice!"
+msgstr "Zgjedhje e pavlefshme!"
+
+#: scripts
+#, fuzzy
+msgid "Update successfully completed!"
+msgstr "Përditësimi i përfunduar me sukses!"
+
+#: scripts
+#, fuzzy
+msgid "Uninstallation successfully completed!"
+msgstr "Ininstalimi përfundoi me sukses!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a shop successfully completed!"
+msgstr "Instalimi i një dyqani të përfunduar me sukses!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of an echo server successfully completed!"
+msgstr "Instalimi i një serveri ECHO përfundoi me sukses!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a channel successfully completed!"
+msgstr "Instalimi i një kanali të përfunduar me sukses!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a group successfully completed!"
+msgstr "Instalimi i një grupi të përfunduar me sukses!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a propagation node successfully completed!"
+msgstr "Instalimi i një nyje përhapjeje të përfunduar me sukses!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a provisioning node successfully completed!"
+msgstr "Instalimi i një nyje sigurimi të përfunduar me sukses!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a page successfully completed!"
+msgstr "Instalimi i një faqe të përfunduar me sukses!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a blockchain node successfully completed!"
+msgstr "Instalimi i një nyje blockchain të përfunduar me sukses!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a message bridge successfully completed!"
+msgstr "Instalimi i një ure mesazhesh të përfunduar me sukses!"
+
+#: scripts
+#, fuzzy
+msgid ""
+"No further configuration is necessary. Connect to the shop to make all the "
+"necessary settings in the shop app. You should find the new shop in the "
+"announcement list."
+msgstr ""
+"Asnjë konfigurim i mëtejshëm nuk është i nevojshëm. Lidhu me dyqanin për të "
+"bërë të gjitha cilësimet e nevojshme në aplikacionin e dyqanit. Ju duhet të "
+"gjeni dyqanin e ri në listën e njoftimeve."
+
+#: scripts
+#, fuzzy
+msgid ""
+"To make further settings, please edit the corresponding configuration files "
+"in the following folder:"
+msgstr ""
+"Për të bërë cilësime të mëtejshme, ju lutemi modifikoni skedarët përkatës të "
+"konfigurimit në dosjen e mëposhtme:"
+
+#: scripts
+#, fuzzy
+msgid "Then you must restart the following service:"
+msgstr "Atëherë duhet të rindizni shërbimin e mëposhtëm:"
+
+#: services
+#, fuzzy
+msgid "All"
+msgstr "Të gjithë"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Hit:"
+msgstr "Goditja:"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading package lists"
+msgstr "Leximi i listave të paketave"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Building dependency tree"
+msgstr "Pemë e varësisë së ndërtimit"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading state information"
+msgstr "Leximi i informacionit të shtetit"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading database"
+msgstr "Baza e të dhënave për leximin"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Calculating upgrade"
+msgstr "Llogaritja e azhurnimit"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Waiting for headers"
+msgstr "Në pritje të kokës"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Working"
+msgstr "Punim"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "All packages are up to date"
+msgstr "Të gjitha paketat janë të azhurnuara"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Done"
+msgstr "I mbaruar"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"The following packages were automatically installed and are no longer "
+"required"
+msgstr "Paketat e mëposhtme janë instaluar automatikisht dhe nuk kërkohen më"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Use"
+msgstr "Përdorim"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove them"
+msgstr "Për t'i hequr ato"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "upgraded"
+msgstr "i azhurnuar"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "newly installed"
+msgstr "i instaluar rishtas"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove and"
+msgstr "për të hequr dhe"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "not upgraded"
+msgstr "jo i azhurnuar"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Connected to"
+msgstr "Lidhur me"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be REMOVED"
+msgstr "Paketat e mëposhtme do të hiqen"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "After this operation"
+msgstr "Pas këtij operacioni"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "disk space will be freed"
+msgstr "Hapësira e diskut do të çlirohet"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Do you want to continue?"
+msgstr "Doni të vazhdoni?"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Progress"
+msgstr "Përparim"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Removing"
+msgstr "Largues"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Processing triggers for"
+msgstr "Përpunimi shkakton për"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be upgraded"
+msgstr "Paketat e mëposhtme do të përmirësohen"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading changelogs"
+msgstr "Ndryshimet e leximit"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preconfiguring packages"
+msgstr "Paketat e parakohshme"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preparing to unpack"
+msgstr "Përgatitja për të shpaketuar"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "files and directories currently installed"
+msgstr "skedarët dhe drejtoritë e instaluara aktualisht"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Unpacking"
+msgstr "I pakuptimtë"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Setting up"
+msgstr "Vendosje"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "over"
+msgstr "i tepërt"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Installing new version of config file"
+msgstr "Instalimi i versionit të ri të skedarit të konfigurimit"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "A new version"
+msgstr "Një version i ri"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "of configuration file"
+msgstr "të skedarit të konfigurimit"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"is available, but the version installed currently has been locally modified"
+msgstr ""
+"është në dispozicion, por versioni i instaluar aktualisht është modifikuar "
+"në vend"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error, exiting now."
+msgstr "Gabim, duke dalë tani."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: You need to run this script as"
+msgstr "Gabim: Ju duhet ta ekzekutoni këtë skenar si"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: This script can't be piped!"
+msgstr "Gabim: Ky skenar nuk mund të tubohet!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "failed!"
+msgstr "Dështoi!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Finished!"
+msgstr "Mbaroi!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating packet repository"
+msgstr "Përditësimi i depove të paketave"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating system"
+msgstr "Sistemi i azhurnimit"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Cleanup system"
+msgstr "Sistem pastrimi"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Installing"
+msgstr "Instalim"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating"
+msgstr "Azhurnim"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Expanding Filesystem"
+msgstr "Zgjerimi i sistemit të skedarëve"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Do you want to proceed?"
+msgstr "A doni të vazhdoni?"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Ok, proceeding..."
+msgstr "Ok, duke vazhduar ..."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "No, exiting now."
+msgstr "Jo, duke dalë tani."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Please answer yes or no."
+msgstr "Ju lutemi përgjigjuni po ose jo."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing path"
+msgstr "Rrugë në ndryshim"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Downloading"
+msgstr "Shkarkim"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/owner"
+msgstr "Ndryshimi i lejeve/pronarit të skedarit"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/right"
+msgstr "Ndryshimi i lejeve/e djathta e skedarit"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "To activate the changes, the system must be rebooted."
+msgstr "Për të aktivizuar ndryshimet, sistemi duhet të rindizet."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Could not find any user, exiting now."
+msgstr "Nuk mund të gjente ndonjë përdorues, të dilte tani."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Which user would you like to edit?"
+msgstr "Cilin përdorues do të dëshironit të redaktonit?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Define the password for user"
+msgstr "Përcaktoni fjalëkalimin për përdoruesin"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Do you want to edit another user?"
+msgstr "A doni të redaktoni një përdorues tjetër?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "New password"
+msgstr "Fjalëkalim i ri"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Retype new password"
+msgstr "Ritype Fjalëkalimi i ri"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "No password has been supplied."
+msgstr "Asnjë fjalëkalim nuk është furnizuar."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Sorry, passwords do not match."
+msgstr "Na vjen keq, fjalëkalimet nuk përputhen."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Updating password"
+msgstr "Përditësimi i fjalëkalimit"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Authentication token manipulation error"
+msgstr "Gabim i manipulimit të shenjës së vërtetimit"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "password unchanged"
+msgstr "fjalëkalim i pandryshuar"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "user"
+msgstr "përdorues"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "does not exist"
+msgstr "nuk ekziston"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Please connect the destination device you wish to use."
+msgstr "Ju lutemi lidhni pajisjen e destinacionit që dëshironi të përdorni."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Hit enter when it is connected."
+msgstr "Hit Enter kur është i lidhur."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find any devices, exiting now."
+msgstr "Nuk mund të gjente ndonjë pajisje, të dilte tani."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find specified device, exiting now."
+msgstr "Nuk mund të gjente pajisje të specifikuar, duke dalë tani."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "What is your destination device?"
+msgstr "Cila është pajisja juaj e destinacionit?"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Ok, using device:"
+msgstr "Ok, duke përdorur pajisjen:"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "target is busy"
+msgstr "Synimi është i zënë"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating image file"
+msgstr "Krijimi i skedarit të imazhit"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image file"
+msgstr "Tkurrja e skedarit të imazhit"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "copied"
+msgstr "i kopjuar"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records in"
+msgstr "regjistron në"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records out"
+msgstr "regjistron"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Gathering data"
+msgstr "Mbledhja e të dhënave"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating new"
+msgstr "Krijimi i ri"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Checking filesystem"
+msgstr "Kontrollimi i sistemit të skedarëve"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "non-contiguous"
+msgstr "jo i vazhdueshëm"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks"
+msgstr "blloqet"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking filesystem"
+msgstr "Tkurrja e sistemit të skedarëve"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Resizing the filesystem on"
+msgstr "Ndryshimi i madhësisë së sistemit të skedarëve"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Begin pass"
+msgstr "Filloj"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Relocating blocks"
+msgstr "Zhvendosja e blloqeve"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Scanning inode table"
+msgstr "Skanimi i tabelës së inodës"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Updating inode references"
+msgstr "Përditësimi i Referencave të Inode"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "The filesystem on"
+msgstr "Sistemi i skedarëve në"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "is now"
+msgstr "eshte tani"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks long"
+msgstr "blloqe gjatë"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image"
+msgstr "Imazh i tkurrur"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Using gzip on the shrunk image"
+msgstr "Përdorimi i GZIP në imazhin e tkurrur"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrunk"
+msgstr "Tkurrje"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "from"
+msgstr "nga"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "to"
+msgstr "nga"
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid ""
+"Please connect the destination device (sd-card, usb-stick) you wish to use."
+msgstr ""
+"Ju lutemi lidhni pajisjen e destinacionit (SD-Card, USB-Stick) që dëshironi "
+"të përdorni."
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid "WARNING: All data on the destination device will be deleted!"
+msgstr ""
+"Paralajmërim: Të gjitha të dhënat në pajisjen e destinacionit do të fshihen!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting frequency is"
+msgstr "Frekuenca e raportimit në radio është"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting bandwidth is"
+msgstr "Bandwidth i raportimit të radios është"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting TX power is"
+msgstr "Raportimi i radios Fuqia TX është"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting spreading factor is"
+msgstr "Faktori i përhapjes së raportimit në radio është"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting coding rate is"
+msgstr "Shkalla e kodimit të raportimit në radio është"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware initialisation error"
+msgstr "Gabim i inicializimit të harduerit"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware TX error"
+msgstr "Gabim TX Hardware"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware error"
+msgstr "gabim në harduer"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "serial read timeout"
+msgstr "Kohëzgjatja e leximit serial"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while detecting hardware for"
+msgstr "Ndodhi një gabim IO gjatë zbulimit të pajisjeve për të"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring frequency for"
+msgstr "Një gabim IO ndodhi gjatë konfigurimit të frekuencës për"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring bandwidth for"
+msgstr "Ndodhi një gabim IO gjatë konfigurimit të gjerësisë së bandës për"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring TX power for"
+msgstr "Një gabim i IO ndodhi gjatë konfigurimit të fuqisë TX për"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring spreading factor for"
+msgstr "Ndodhi një gabim IO gjatë konfigurimit të faktorit të përhapjes për"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring coding rate for"
+msgstr "Ndodhi një gabim IO gjatë konfigurimit të shkallës së kodimit për"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state for"
+msgstr "Ndodhi një gabim IO gjatë konfigurimit të gjendjes së radios"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring device mode"
+msgstr "Ndodhi një gabim IO gjatë konfigurimit të modalitetit të pajisjes"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while wiping EEPROM"
+msgstr "Një gabim i IO ndodhi gjatë fshirjes së EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while restarting device"
+msgstr "Një gabim i IO ndodhi gjatë rinovimit të pajisjes"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while writing EEPROM"
+msgstr "Një gabim i IO ndodhi gjatë shkrimit të EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state"
+msgstr "Një gabim i IO ndodhi gjatë konfigurimit të gjendjes së radios"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download EEPROM from device. Is a valid firmware installed?"
+msgstr ""
+"Nuk mund ta shkarkonte EEPROM nga pajisja. A është i instaluar një firmware "
+"i vlefshëm?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum mismatch"
+msgstr "EEPROM CHECKSUM mospërputhja"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum correct"
+msgstr "EEPROM CHECKSUM E saktë"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load local signing key"
+msgstr "Nuk mund të ngarkojë çelësin lokal të nënshkrimit"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize local signing key"
+msgstr "Nuk mund të deserializohet çelësi lokal i nënshkrimit"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validated"
+msgstr "Nënshkrimi i pajisjes i vlefshëm"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validation failed"
+msgstr "Vlerësimi i nënshkrimit të pajisjes dështoi"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid EEPROM data, could not parse device EEPROM."
+msgstr "Të dhëna të pavlefshme EEPROM, nuk mund të analizojnë pajisjen EEPROM."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Hello!\n"
+"\n"
+"This guide will help you install the RNode firmware on supported\n"
+"and homebrew devices. Please connect the device you wish to set\n"
+"up now."
+msgstr ""
+"Përshëndetje! \n"
+"\n"
+" Ky udhëzues do t'ju ndihmojë të instaloni firmware RNode në mbështetje \n"
+" dhe pajisje shtëpiake. Ju lutemi lidhni pajisjen që dëshironi të vendosni \n"
+" lart tani."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please connect the device you wish to setup now."
+msgstr "Ju lutemi lidhni pajisjen që dëshironi të konfiguroni tani."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find any port, exiting now."
+msgstr "Nuk mund të gjente ndonjë port, duke dalë tani."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Detected serial ports:"
+msgstr "Portet serike të zbuluara:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What serial port is your device connected to?"
+msgstr "Me cilin portë seriale është e lidhur pajisja juaj?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That port does not exist, exiting now."
+msgstr "Ai port nuk ekziston, duke dalë tani."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not select port, exiting now."
+msgstr "Nuk mund të zgjidhte Portin, duke dalë tani."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Ok, using device on"
+msgstr "Ok, duke përdorur pajisjen e ndezur"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "using device on"
+msgstr "Përdorimi i pajisjes në"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find specified port"
+msgstr "Nuk mund të gjente portin e specifikuar"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "exiting now"
+msgstr "duke dalë tani"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Probing device"
+msgstr "Pajisje provuese"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not open the specified serial port. The contained exception was:"
+msgstr ""
+"Nuk mund të hapte portin serik të specifikuar. Përjashtimi i përmbajtur "
+"ishte:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No answer from device"
+msgstr "Asnjë përgjigje nga pajisja"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Trying to read EEPROM"
+msgstr "Duke u përpjekur të lexoni eeprom"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device is already installed and provisioned. No further action will\n"
+"be taken. If you wish to completely reinstall this device, you must first\n"
+"wipe the current EEPROM. See the help for more info.\n"
+"\n"
+"Exiting now."
+msgstr ""
+"Kjo pajisje është instaluar dhe parashikuar tashmë. Asnjë veprim i mëtejshëm "
+"nuk do \n"
+" të merret. Nëse dëshironi të instaloni përsëri plotësisht këtë pajisje, së "
+"pari duhet \n"
+" Fshini EEPROM -in aktual. Shikoni ndihmën për më shumë informacion. \n"
+"\n"
+" Duke dalë tani."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"The device seems to have an RNode firmware installed, but it was not\n"
+"provisioned correctly, or it is corrupt. We are going to reinstall the\n"
+"correct firmware and provision it."
+msgstr ""
+"Pajisja duket se ka të instaluar një firmware RNode, por nuk ishte \n"
+" e parashikuar në mënyrë korrekte, ose është e korruptuar. Ne do të "
+"instalojmë përsëri \n"
+" Korrigjoni firmware dhe sigurimin e tij."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "It looks like this is a fresh device with no RNode firmware."
+msgstr "Duket sikur kjo është një pajisje e freskët pa firmware RNode."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of device is this?"
+msgstr "Çfarë lloj pajisje është kjo?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Important! Using RNode firmware on"
+msgstr "E rëndësishme! Përdorimi i firmware RNODE në"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"should currently be\n"
+"considered experimental. It is not intended for production or critical use.\n"
+"The currently supplied firmware is provided AS-IS as a courtesey to those\n"
+"who would like to experiment with it. Hit enter to continue."
+msgstr ""
+"aktualisht duhet të jetë \n"
+" konsiderohet eksperimentale. Nuk është menduar për prodhim ose përdorim "
+"kritik. \n"
+" Firmware i furnizuar aktualisht sigurohet si-është si një Courtesey për "
+"ata \n"
+" Kush do të donte të eksperimentonte me të. Hit Enter për të vazhduar."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That device type does not exist, exiting now."
+msgstr "Ai lloj pajisje nuk ekziston, duke dalë tani."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of microcontroller is your board based on?"
+msgstr "Në cilin lloj mikrokontrolluesi është bazuar në bordi juaj?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That MCU type does not exist, exiting now."
+msgstr "Ai lloj MCU nuk ekziston, duke dalë tani."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What transceiver module does your board use?"
+msgstr "Modulfarë moduli transmetues përdor bordi juaj?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That transceiver type does not exist, exiting now."
+msgstr "Ai lloj transmetues nuk ekziston, duke dalë tani."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What model is this RNode?"
+msgstr "Cili model është ky rnode?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That model does not exist, exiting now."
+msgstr "Ai model nuk ekziston, duke dalë tani."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this T-Beam for?"
+msgstr "Për cilën grup është kjo rreze T?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That band does not exist, exiting now."
+msgstr "Ai grup nuk ekziston, duke dalë tani."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this LoRa32 for?"
+msgstr "Për cilin grup është kjo LORA32?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this Heltec LoRa32 for?"
+msgstr "Për cilin grup është kjo Heltec Lora32?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of ESP32 board is this?"
+msgstr "Kindfarë lloj bordi ESP32 është kjo?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That ESP32 board does not exist, exiting now."
+msgstr "Ai bordi ESP32 nuk ekziston, duke dalë tani."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Sorry, no firmware for your board currently exists.\n"
+"Help making it a reality by contributing code or by\n"
+"donating to the project."
+msgstr ""
+"Na vjen keq, asnjë firmware për bordin tuaj nuk ekziston aktualisht. \n"
+" Ndihmoni në bërjen e realitetit duke kontribuar kodin ose nga \n"
+" Dhurimi në projekt."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Ok, that should be all the information we need. Please confirm the "
+"following\n"
+"summary before proceeding. In the next step, the device will be flashed and\n"
+"provisioned, so make that you are satisfied with your choices."
+msgstr ""
+"Ok, kjo duhet të jetë i gjithë informacioni që na nevojitet. Ju lutemi "
+"konfirmoni sa vijon \n"
+" Përmbledhje para se të vazhdoni. Në hapin tjetër, pajisja do të ndizet "
+"dhe \n"
+" Provuar, kështu që bëjeni që të jeni të kënaqur me zgjedhjet tuaja."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial port"
+msgstr "Portë seriale"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device type"
+msgstr "Lloji i pajisjes"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device MCU"
+msgstr "Pajisja MCU"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file"
+msgstr "Skedar firmware"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Is the above correct?"
+msgstr "A është e saktë e mësipërme?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "OK, aborting now."
+msgstr "Ok, duke abortuar tani."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device connected"
+msgstr "Pajisje e lidhur"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Current firmware version:"
+msgstr "Versioni aktual i firmware:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Got invalid response while detecting device"
+msgstr "Mori përgjigje të pavlefshme gjatë zbulimit të pajisjes"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download required firmware file. The contained exception was:"
+msgstr ""
+"Nuk mund të shkarkoni skedarin e kërkuar të firmware -it. Përjashtimi i "
+"përmbajtur ishte:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial module could not be found"
+msgstr "Moduli serial nuk mund të gjendej"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs pyserial to work.\n"
+"You can install it with: pip3 install pyserial"
+msgstr ""
+"Shërbimi i konfigurimit RNODE ka nevojë për pyserial për të punuar. \n"
+" Mund ta instaloni me: PIP3 Instaloni Pyserial"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cryptography module could not be found"
+msgstr "Moduli i kriptografisë nuk mund të gjendej"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs the cryptography module to work.\n"
+"You can install it with: pip3 install cryptography"
+msgstr ""
+"Shërbimi i konfigurimit RNODE ka nevojë për modulin e kriptografisë për të "
+"punuar. \n"
+" Mund ta instaloni me: pip3 instaloni kriptografinë"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Downloading latest frimware from GitHub"
+msgstr "Shkarkimi i firmware -it të fundit nga GitHub"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware download completed"
+msgstr "Shkarkimi i firmware përfundoi"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware extracted"
+msgstr "Firmware i nxjerrë"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not extract firmware from downloaded zip file"
+msgstr "Nuk mund të nxirrte firmware nga skedari i shkarkuar zip"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing RNode firmware to device on"
+msgstr "Firmware Flashing RNODE në Pajisjen e ndezur"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Done flashing"
+msgstr "Bërë ndezje"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Waiting for ESP32 reset"
+msgstr "Në pritje të rivendosjes së ESP32"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while flashing"
+msgstr "Gabim gjatë ndezjes"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file not found"
+msgstr "Skedari i firmware nuk u gjet"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download firmware package"
+msgstr "Nuk mund të shkarkoni paketën e firmware"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The contained exception was:"
+msgstr "Përjashtimi i përmbajtur ishte:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Skipping online check, using local firmware file:"
+msgstr ""
+"Kalimi i kontrollit në internet, duke përdorur skedarin lokal të firmware:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load signing key"
+msgstr "Nuk mund të ngarkojë çelësin e nënshkrimit"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize signing key"
+msgstr "Nuk mund të deserializojë çelësin e nënshkrimit"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Generating a new signing key"
+msgstr "Gjenerimi i një çelësi të ri nënshkrimi"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Signing key already exists, not overwriting!\n"
+"Manually delete this key to create a new one."
+msgstr ""
+"Nënshkrimi i çelësit tashmë ekziston, jo duke e mbingarkuar! \n"
+" Fshini manualisht këtë çelës për të krijuar një të ri."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The firmware directory does not exist, can't write key!"
+msgstr "Drejtoria e firmware nuk ekziston, nuk mund të shkruajë çelës!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Extracting firmware"
+msgstr "Nxjerrja e firmware -it"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Opening serial port"
+msgstr "Hapja e portit serik"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Serial port opened, but RNode did not respond. Is a valid firmware installed?"
+msgstr ""
+"Porti serik u hap, por RNode nuk u përgjigj. A është i instaluar një "
+"firmware i vlefshëm?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"WARNING: EEPROM is being wiped! Power down device NOW if you do not want "
+"this!"
+msgstr ""
+"Paralajmërim: EEPROM po fshihet! Fuqizoni pajisjen poshtë tani nëse nuk e "
+"doni këtë!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Reading EEPROM"
+msgstr "Leximi EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "ERROR: No firmware found for this board. Cannot update."
+msgstr ""
+"Gabim: Asnjë firmware nuk u gjet për këtë bord. Nuk mund të azhurnohet."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cannot update device firmware"
+msgstr "Nuk mund të azhurnojë firmware të pajisjes"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Updating RNode firmware for device on"
+msgstr "Përditësimi i firmware -it RNODE për Pajisjen në"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing new firmware completed"
+msgstr "Firmware i ri i ndezur përfundoi"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update completed successfully"
+msgstr "Përditësimi i firmware përfundoi me sukses"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while flashing the new firmware, exiting now."
+msgstr "Ndodhi një gabim gjatë ndezjes së firmware -it të ri, duke dalë tani."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while updating firmware"
+msgstr "Gabim gjatë azhurnimit të firmware"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update file not found"
+msgstr "Skedari i azhurnimit të firmware nuk u gjet"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM contents"
+msgstr "Përmbajtja EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM backup written to"
+msgstr "EEPROM rezervë e shkruar për të"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"EEPROM was successfully downloaded from device,\n"
+"but file could not be written to disk."
+msgstr ""
+"EEPROM u shkarkua me sukses nga pajisja, \n"
+" Por skedari nuk mund të shkruhej në disk."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device info:"
+msgstr "Informacioni i pajisjes:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Product"
+msgstr "Produkt"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature"
+msgstr "Nënshkrim i pajisjes"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware version"
+msgstr "Version firmware"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Hardware revision"
+msgstr "Rishikim i harduerit"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial number"
+msgstr "Numër serik"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency range"
+msgstr "Varg frekuence"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Max TX power"
+msgstr "Fuqia Max TX"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Manufactured"
+msgstr "I prodhuar"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device mode"
+msgstr "Mënyra e pajisjes"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency"
+msgstr "Frekuencë"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth"
+msgstr "Gjerësi"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "TX power"
+msgstr "TX Fuqia"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor"
+msgstr "Faktor përhapjeje"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate"
+msgstr "Normë kodimi"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "On-air bitrate"
+msgstr "Barrate në ajër"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM is invalid, no further information available"
+msgstr ""
+"EEPROM është e pavlefshme, nuk ka informacione të mëtejshme në dispozicion"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM bootstrap was requested, but a valid EEPROM was already present."
+msgstr ""
+"U kërkua EEPROM Bootstrap, por një EEPROM i vlefshëm ishte tashmë i "
+"pranishëm."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No changes are being made."
+msgstr "Asnjë ndryshim nuk po bëhet."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Clearing old EEPROM, this will take about 15 seconds"
+msgstr "Duke pastruar EEPROM -in e vjetër, kjo do të zgjasë rreth 15 sekonda"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not create device serial number, exiting"
+msgstr "Nuk mund të krijojë numrin serik të pajisjes, të dilte"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Loading signing key"
+msgstr "Ngarkimi i çelësit të nënshkrimit"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while signing EEPROM"
+msgstr "Gabim gjatë nënshkrimit të EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bootstrapping device EEPROM"
+msgstr "Pajisja Bootstrapping EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM written! Validating"
+msgstr "Eeprom shkruar! I vlefshëm"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM Bootstrapping successful!"
+msgstr "EEPROM Bootstrapping i suksesshëm!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "RNode Firmware autoinstallation complete!"
+msgstr "RNODE Firmware AutoInstalimi i plotë!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "To use your device with Reticulum, read the documetation at:"
+msgstr "Për të përdorur pajisjen tuaj me retikulum, lexoni dokumentacionin në:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Thank you for using this utility! Please help the project by\n"
+"contributing code and reporting bugs, or by donating!"
+msgstr ""
+"Faleminderit për përdorimin e këtij shërbimi! Ju lutemi ndihmoni projektin "
+"nga \n"
+" Kodi kontribues dhe raportimi i gabimeve, ose duke dhuruar!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Your contributions and donations directly further the realisation\n"
+"of truly open, free and resilient communications systems."
+msgstr ""
+"Kontributet dhe dhurimet tuaja direkt më tej realizimin \n"
+" të sistemeve të komunikimit me të vërtetë të hapura, të lira dhe elastike."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "WARNING: Could not backup device EEPROM to disk"
+msgstr "KUJDES: Nuk mund të rezervoni pajisjen EEPROM në disk"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM was written, but validation failed. Check your settings."
+msgstr "EEPROM u shkrua, por vlefshmëria dështoi. Kontrolloni cilësimet tuaja."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while writing EEPROM. The contained exception was:"
+msgstr ""
+"Ndodhi një gabim gjatë shkrimit të EEPROM. Përjashtimi i përmbajtur ishte:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid data specified, cancelling EEPROM write"
+msgstr "Të dhëna të pavlefshme të specifikuara, duke anuluar shkrimin eeprom"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to normal (host-controlled) operating mode"
+msgstr ""
+"Pajisja e vendosur në modalitetin e funksionimit normal (të kontrolluar nga "
+"hosti)"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please input startup configuration:"
+msgstr "Ju lutemi futni konfigurimin e fillimit:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency in Hz:"
+msgstr "Frekuenca në Hz:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth in Hz:"
+msgstr "Gjerësia e bandës në Hz:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor:"
+msgstr "Faktori i përhapjes:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate:"
+msgstr "Shkalla e kodimit:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to TNC operating mode"
+msgstr "Pajisja e vendosur në modalitetin e funksionimit TNC"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device contains a valid firmware, but EEPROM is invalid.\n"
+"Probably the device has not been initialised, or the EEPROM has been "
+"erased.\n"
+"Please correctly initialise the device and try again!"
+msgstr ""
+"Kjo pajisje përmban një firmware të vlefshëm, por EEPROM është e "
+"pavlefshme. \n"
+" Ndoshta pajisja nuk është inicializuar, ose EEPROM është fshirë. \n"
+" Ju lutemi filloni saktë pajisjen dhe provoni përsëri!"

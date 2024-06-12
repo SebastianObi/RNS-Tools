@@ -1,0 +1,2022 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-01 19:45+0100\n"
+"PO-Revision-Date: 2023-12-12 09:39\n"
+"Last-Translator: SebastianObi\n"
+"Language-Team: SebastianObi\n"
+"Language: my\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#: infos
+#, fuzzy
+msgid "Software - Python"
+msgstr "ဆော့ဗ်ဝဲ - Python"
+
+#: infos
+#, fuzzy
+msgid "Software - Reticulum"
+msgstr "ဆော့ဗ်ဝဲ - reticulum"
+
+#: infos
+#, fuzzy
+msgid "Software - System"
+msgstr "software - စနစ်"
+
+#: infos
+#, fuzzy
+msgid "System - Drives & data storage"
+msgstr "System - drives & data သိုလှောင်မှု"
+
+#: infos
+#, fuzzy
+msgid "System - General system information"
+msgstr "System - အထွေထွေစနစ်သတင်းအချက်အလက်"
+
+#: infos
+#, fuzzy
+msgid "System - Interfaces"
+msgstr "စနစ် - interfles များ"
+
+#: infos
+#, fuzzy
+msgid "System - Network connections"
+msgstr "စနစ် - ကွန်ယက်ဆက်သွယ်မှုများ"
+
+#: infos
+#, fuzzy
+msgid "System time"
+msgstr "စနစ်အချိန်"
+
+#: infos
+#, fuzzy
+msgid "Start time"
+msgstr "စတင်ချိန်"
+
+#: infos
+#, fuzzy
+msgid "Runtime"
+msgstr "လွဲထားခြင်း"
+
+#: infos
+#, fuzzy
+msgid "Version"
+msgstr "ထင်မြင်ချက်"
+
+#: infos
+#, fuzzy
+msgid "Status:"
+msgstr "အခြေအနေ:"
+
+#: infos
+#, fuzzy
+msgid "Clients:"
+msgstr "ဖောက်သည်များ :"
+
+#: infos
+#, fuzzy
+msgid "Peers:"
+msgstr "ရွယ်တူချင်းများ:"
+
+#: infos
+#, fuzzy
+msgid "Mode:"
+msgstr "Mode:"
+
+#: infos
+#, fuzzy
+msgid "Speed:"
+msgstr "မြန်နှုန်း:"
+
+#: infos
+#, fuzzy
+msgid "Airtime:"
+msgstr "airtime:"
+
+#: infos
+#, fuzzy
+msgid "Ch. Load:"
+msgstr "ch ။ ဝန်:"
+
+#: infos
+#, fuzzy
+msgid "Queued:"
+msgstr "တန်းစီ:"
+
+#: infos
+#, fuzzy
+msgid "announce"
+msgstr "ကေြညာ"
+
+#: infos
+#, fuzzy
+msgid "announces"
+msgstr "ကြေညာ"
+
+#: infos
+#, fuzzy
+msgid "Held:"
+msgstr "ကျင်းပ:"
+
+#: infos
+#, fuzzy
+msgid "Announces:"
+msgstr "ကြေငြာချက် :"
+
+#: infos
+#, fuzzy
+msgid "Transport Instance"
+msgstr "သယ်ယူပို့ဆောင်ရေးဥပမာ"
+
+#: infos
+#, fuzzy
+msgid "Probe responder"
+msgstr "စုံစမ်းစစ်ဆေးတုံ့ပြန်"
+
+#: infos
+#, fuzzy
+msgid "Uptime"
+msgstr "အထက်က"
+
+#: infos
+#, fuzzy
+msgid "[b]Size:[/b]"
+msgstr "[ခ] အရွယ်အစား - [/ ခ]"
+
+#: infos
+#, fuzzy
+msgid "[b]Free:[/b]"
+msgstr "[ခ] အခမဲ့: [/ ခ]"
+
+#: infos
+#, fuzzy
+msgid "[b]Type:[/b]"
+msgstr "[ခ] အမျိုးအစား: [/ b]"
+
+#: infos
+#, fuzzy
+msgid "Platform"
+msgstr "ဇါတ်စင်"
+
+#: infos
+#, fuzzy
+msgid "Release"
+msgstr "ထုတ်ဝေခြင်း"
+
+#: infos
+#, fuzzy
+msgid "Release name"
+msgstr "အမည်"
+
+#: infos
+#, fuzzy
+msgid "Model"
+msgstr "ပုံစံ"
+
+#: infos
+#, fuzzy
+msgid "Hostname"
+msgstr "Hostname"
+
+#: infos
+#, fuzzy
+msgid "CPU load"
+msgstr "CPU ဝန်"
+
+#: infos
+#, fuzzy
+msgid "CPU cores"
+msgstr "CPU cores"
+
+#: infos
+#, fuzzy
+msgid "System temperature"
+msgstr "စနစ်အပူချိန်"
+
+#: infos
+#, fuzzy
+msgid "LAN"
+msgstr "လမ်း"
+
+#: infos
+#, fuzzy
+msgid "WiFi"
+msgstr "ဝိုင်ဖိုင်"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks"
+msgstr "ဝိုင်ဖိုင်ကွန်ယက်များ"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks connected"
+msgstr "wifi ကွန်ယက်ချိတ်ဆက်"
+
+#: infos
+#, fuzzy
+msgid "USB"
+msgstr "ယူအက်စ်ဘီ"
+
+#: infos
+#, fuzzy
+msgid "Bluetooth"
+msgstr "ဘလူးတုသ်"
+
+#: infos
+#, fuzzy
+msgid "Serial"
+msgstr "လက်ရှိဖြစ်သော"
+
+#: logs
+#, fuzzy
+msgid "FDN - Reticulum, Channel, Group, Shop"
+msgstr "FDN - Reticulum, Channel, Group, ဆိုင်, ဆိုင်"
+
+#: logs
+#, fuzzy
+msgid "Software"
+msgstr "ဆော့ (ဆော့ဆစ်"
+
+#: logs
+#, fuzzy
+msgid "Dhcpd - DHCP Server"
+msgstr "DHCPD - DHCP ဆာဗာ"
+
+#: logs
+#, fuzzy
+msgid "Dnsmasq - DNS Server"
+msgstr "dnsmasq - DNS server"
+
+#: logs
+#, fuzzy
+msgid "Hostapd - WiFi AP"
+msgstr "Hostapd - WiFi AP"
+
+#: logs
+#, fuzzy
+msgid "System"
+msgstr "စံနစ်"
+
+#: logs
+#, fuzzy
+msgid "Auth - Authentication"
+msgstr "Auth - authentication ကို"
+
+#: logs
+#, fuzzy
+msgid "Daemon - System daemons"
+msgstr "Daemon - စနစ် Daemons"
+
+#: logs
+#, fuzzy
+msgid "Fail - Failed login attempts"
+msgstr "ပျက်ကွက် - ဝင်ရောက်ရန်ကြိုးစားမှုမအောင်မြင်ပါ"
+
+#: logs
+#, fuzzy
+msgid "Kern - Kernel"
+msgstr "Kernel - kernel"
+
+#: logs
+#, fuzzy
+msgid "Mail - Email-related events"
+msgstr "မေးလ် - အီးမေးလ်နှင့်သက်ဆိုင်သောဖြစ်ရပ်များ"
+
+#: logs
+#, fuzzy
+msgid "Messages - General system events"
+msgstr "မက်ဆေ့ခ်ျများ - အထွေထွေစနစ်ဖြစ်ရပ်များ"
+
+#: logs
+#, fuzzy
+msgid "Syslog - System"
+msgstr "SYSLOG - စနစ်"
+
+#: logs
+#, fuzzy
+msgid "User - User activities"
+msgstr "အသုံးပြုသူ - အသုံးပြုသူလှုပ်ရှားမှုများ"
+
+#: scripts
+#, fuzzy
+msgid "Backup & Restore"
+msgstr "backup & restore"
+
+#: scripts
+#, fuzzy
+msgid "Examples"
+msgstr "ရာထူးဥပမာ"
+
+#: scripts
+#, fuzzy
+msgid "Examples 1"
+msgstr "ဥပမာ 1"
+
+#: scripts
+#, fuzzy
+msgid "Examples 2"
+msgstr "ဥပမာ 2"
+
+#: scripts
+msgid "Examples - Test Configurations"
+msgstr ""
+
+#: scripts
+#, fuzzy
+msgid "Examples - User interface test functions"
+msgstr "ဥပမာ - အသုံးပြုသူ interface ကိုစမ်းသပ်လုပ်ဆောင်ချက်များ"
+
+#: scripts
+#, fuzzy
+msgid "Reticulum - LoRadio & RNode"
+msgstr "Reticulum - Loradio & RNODE"
+
+#: scripts
+#, fuzzy
+msgid "Software - Installation"
+msgstr "ဆော့ဖ်ဝဲ - တပ်ဆင်ခြင်း"
+
+#: scripts
+#, fuzzy
+msgid "Software - Uninstallation"
+msgstr "ဆော့ဗ်ဝဲ - uninstallation"
+
+#: scripts
+#, fuzzy
+msgid "Software - Update"
+msgstr "ဆော့ဝဲလ်ဗားရှင်းမြှင့်တင်မှု"
+
+#: scripts
+#, fuzzy
+msgid "System - Configuration"
+msgstr "စနစ် - configuration ကို"
+
+#: scripts
+#, fuzzy
+msgid "System - Update"
+msgstr "စနစ် - အသစ်ပြောင်းခြင်း"
+
+#: scripts
+#, fuzzy
+msgid "Management - Restart"
+msgstr "စီမံခန့်ခွဲမှု - Restart"
+
+#: scripts
+#, fuzzy
+msgid "System - Reboot"
+msgstr "စနစ် - Reboot"
+
+#: scripts
+#, fuzzy
+msgid "System - Shutdown"
+msgstr "System - Shutdown"
+
+#: scripts
+#, fuzzy
+msgid "System Clone - Creates a direct copy of the system drive"
+msgstr "System Clone - system drive ၏တိုက်ရိုက်မိတ္တူကိုဖန်တီးသည်"
+
+#: scripts
+#, fuzzy
+msgid "System Image - Creates an image of the system drive"
+msgstr "System Image - System Drive ၏ပုံရိပ်ကိုဖန်တီးသည်"
+
+#: scripts
+#, fuzzy
+msgid "Example - All input elements"
+msgstr "ဥပမာ - input element အားလုံး"
+
+#: scripts
+#, fuzzy
+msgid "Example - Exit codes"
+msgstr "ဥပမာ - Exit Codes များ"
+
+#: scripts
+#, fuzzy
+msgid "Example - Waiting time"
+msgstr "ဥပမာ - အချိန်စောင့်ဆိုင်းအချိန်"
+
+#: scripts
+#, fuzzy
+msgid "Info - Read out information"
+msgstr "Info - သတင်းအချက်အလက်ကိုထုတ်ယူပါ"
+
+#: scripts
+#, fuzzy
+msgid "Install - Installing the firmware"
+msgstr "install - firmware ကို install လုပ်ခြင်း"
+
+#: scripts
+#, fuzzy
+msgid "Reset - Resetting the firmware"
+msgstr "Reset - firmware ကိုပြန်လည်သတ်မှတ်ခြင်း"
+
+#: scripts
+#, fuzzy
+msgid "Update - Updating the firmware"
+msgstr "Update ကို - firmware ကိုအသစ်ပြောင်းခြင်း"
+
+#: scripts
+#, fuzzy
+msgid "Bridge Matrix - Message bridge"
+msgstr "Bridge Matrix - Message Bridge"
+
+#: scripts
+#, fuzzy
+msgid "Console tools - Recommended tools"
+msgstr "Console Tools များ - အကြံပြုထားသောကိရိယာများ"
+
+#: scripts
+#, fuzzy
+msgid "Filesystem tools - Recommended tools"
+msgstr "Filesystem tools များ - အကြံပြုထားသောကိရိယာများ"
+
+#: scripts
+#, fuzzy
+msgid "Server Blockchain - Gateway for payment and other blockchain functions"
+msgstr "ဆာဗာ blockchain - ငွေပေးချေမှုနှင့်အခြား blockchain လုပ်ဆောင်မှုများအတွက် Gateway"
+
+#: scripts
+#, fuzzy
+msgid "Server Channel - Hosting the channel functionality"
+msgstr "ဆာဗာချန်နယ် - ရုပ်သံလိုင်းလုပ်ဆောင်နိုင်စွမ်းကို hosting"
+
+#: scripts
+#, fuzzy
+msgid "Server Group - Hosting the group functionality"
+msgstr "ဆာဗာ Group - အုပ်စုလိုက်လုပ်ဆောင်နိုင်စွမ်းကိုလက်ခံခြင်း"
+
+#: scripts
+#, fuzzy
+msgid "Server Page - Hosting the page functionality"
+msgstr "ဆာဗာစာမျက်နှာ - စာမျက်နှာလုပ်ဆောင်နိုင်စွမ်းကို hosting"
+
+#: scripts
+#, fuzzy
+msgid "Server Propagation - Hosting the propagation node functionality"
+msgstr "ဆာဗာဝါဒဖြန့်ခြင်း - ဝါဒဖြန့် node node လုပ်ဆောင်နိုင်စွမ်းကို hosting"
+
+#: scripts
+#, fuzzy
+msgid "Server Shop - Hosting the shop functionality"
+msgstr "ဆာဗာဆိုင် - ဆိုင်လုပ်ဆောင်နိုင်စွမ်းကိုလက်ခံခြင်း"
+
+#: scripts
+#, fuzzy
+msgid "Server - All hosting functions for channel, group, page, shop, etc."
+msgstr "ဆာဗာ - ရုပ်သံလိုင်း, စာမျက်နှာ, ဆိုင်, ဆိုင်များအတွက် hosting functions အားလုံးသည်."
+
+#: scripts
+#, fuzzy
+msgid "File system - Extend file system (Raspberry Pi)"
+msgstr "ဖိုင်စနစ် - File System (Raspberry Pi)"
+
+#: scripts
+#, fuzzy
+msgid "Password - Change operating system password"
+msgstr "စကားဝှက် - operating system password ကိုပြောင်းပါ"
+
+#: scripts
+#, fuzzy
+msgid "Update check - Check for new versions"
+msgstr "အသစ်ပြောင်းခြင်းစစ်ဆေးမှု - ဗားရှင်းအသစ်များအတွက်စစ်ဆေးပါ"
+
+#: scripts
+#, fuzzy
+msgid "Update cleanup - Cleaning up unneeded packages"
+msgstr "Update ကိုသန့်ရှင်းရေးလုပ်ခြင်း - မလိုအပ်သော packages များကိုသန့်ရှင်းရေးလုပ်ပါ"
+
+#: scripts
+#, fuzzy
+msgid "Update Update - Update the system"
+msgstr "Update Update ကို - စနစ်ကိုမွမ်းမံပါ"
+
+#: scripts
+#, fuzzy
+msgid "Update Upgrade - Distribution update of the system"
+msgstr "Update Upgrade - စနစ်၏ဖြန့်ဖြူးရေးအသစ်ပြောင်းခြင်း"
+
+#: scripts
+#, fuzzy
+msgid "Installing.."
+msgstr "ထည့်သွင်း .."
+
+#: scripts
+#, fuzzy
+msgid "Uninstalling..."
+msgstr "uninstall ..."
+
+#: scripts
+#, fuzzy
+msgid "Updating..."
+msgstr "အသစ်ပြောင်းခြင်း ..."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The management server will restart. You must reconnect to re-establish a "
+"connection."
+msgstr "စီမံခန့်ခွဲမှုဆာဗာပြန်လည်စတင်လိမ့်မည်။ သင်ဆက်သွယ်မှုပြန်လည်တည်ဆောက်ခြင်းနှင့်ပြန်လည်ချိတ်ဆက်ရမည်။."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will reboot. You must reconnect to re-establish a connection."
+msgstr "စနစ်က reboot လုပ်လိမ့်မယ်။ သင်ဆက်သွယ်မှုပြန်လည်တည်ဆောက်ခြင်းနှင့်ပြန်လည်ချိတ်ဆက်ရမည်။."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will shut down. You must then start it manually to re-establish a "
+"connection."
+msgstr "စနစ်ပိတ်လိမ့်မည်။ သို့ဖြစ်လျှင်သင်ဆက်သွယ်မှုကိုပြန်လည်တည်ဆောက်ရန်၎င်းကိုကိုယ်တိုင်စတင်ပါ။."
+
+#: scripts
+#, fuzzy
+msgid "No installed services found. Exiting."
+msgstr "တပ်ဆင်ထားသည့် 0 န်ဆောင်မှုများကိုရှာမတွေ့ပါ။ ထွက်။."
+
+#: scripts
+#, fuzzy
+msgid "Select a service:"
+msgstr "ဝန်ဆောင်မှုကိုရွေးချယ်ပါ။:"
+
+#: scripts
+#, fuzzy
+msgid "Enter the name for the service: (only a-z 0-9)"
+msgstr "0 န်ဆောင်မှုအတွက်နာမည်ကိုရိုက်ထည့်ပါ။ (A-Z 0 မှ 9)"
+
+#: scripts
+#, fuzzy
+msgid "Enter the display name for the application:"
+msgstr "လျှောက်လွှာအတွက် display name ကိုရိုက်ထည့်ပါ။:"
+
+#: scripts
+#, fuzzy
+msgid "Invalid choice!"
+msgstr "မမှန်ကန်သောရွေးချယ်မှု!"
+
+#: scripts
+#, fuzzy
+msgid "Update successfully completed!"
+msgstr "update ကိုအောင်မြင်စွာပြီးစီးခဲ့!"
+
+#: scripts
+#, fuzzy
+msgid "Uninstallation successfully completed!"
+msgstr "uninstallation အောင်မြင်စွာပြီးစီးခဲ့!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a shop successfully completed!"
+msgstr "စျေးဝယ်ပြီးစီးခဲ့ဆိုင်တစ်ဆိုင်တပ်ဆင်ခြင်း!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of an echo server successfully completed!"
+msgstr "ပဲ့တင်သံဆာဗာတစ်ခုတပ်ဆင်ပြီးအောင်မြင်စွာပြီးစီးခဲ့သည်။!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a channel successfully completed!"
+msgstr "အောင်မြင်စွာပြီးစီးသောရုပ်သံလိုင်း၏ installation!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a group successfully completed!"
+msgstr "အောင်မြင်စွာပြီးစီးခဲ့အုပ်စုတစ်စု၏ installation!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a propagation node successfully completed!"
+msgstr "ဖြန့်ဖြူးဖြည့်စွက်မှု node ကိုအောင်မြင်စွာထည့်သွင်းပါ။!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a provisioning node successfully completed!"
+msgstr "ထောက်ပံ့ပေးသည့် node တစ်ခုတပ်ဆင်ခြင်းကိုအောင်မြင်စွာပြီးစီးခဲ့သည်။!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a page successfully completed!"
+msgstr "စာမျက်နှာတစ်ခုတပ်ဆင်ပြီးအောင်မြင်စွာပြီးစီးခဲ့သည်။!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a blockchain node successfully completed!"
+msgstr "bloodchain node ကိုအောင်မြင်စွာပြီးစီးခဲ့သည်။!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a message bridge successfully completed!"
+msgstr "မက်ဆေ့ခ်ျကူးတံတားကိုမြှင့်တင်ပြီးအောင်မြင်စွာပြီးစီးခဲ့သည်။!"
+
+#: scripts
+#, fuzzy
+msgid ""
+"No further configuration is necessary. Connect to the shop to make all the "
+"necessary settings in the shop app. You should find the new shop in the "
+"announcement list."
+msgstr ""
+"အဘယ်သူမျှမနောက်ထပ်ပြင်ဆင်မှုလိုအပ်ပါသည်။ ဆိုင်အက်ပလီကေးရှင်းတွင်လိုအပ်သောချိန်ညှိချက်များကိုပြုလုပ်ရန်ဆိုင်သို့ဆက်သွယ်ပါ။ "
+"ကြေငြာချက်စာရင်းတွင်ဆိုင်အသစ်ကိုသင်ရှာသင့်သည်။."
+
+#: scripts
+#, fuzzy
+msgid ""
+"To make further settings, please edit the corresponding configuration files "
+"in the following folder:"
+msgstr ""
+"နောက်ထပ်ချိန်ညှိချက်များပြုလုပ်ရန် ကျေးဇူးပြု. အောက်ပါဖိုင်တွဲတွင်သက်ဆိုင်ရာ configuration files "
+"များကိုတည်းဖြတ်ပါ။:"
+
+#: scripts
+#, fuzzy
+msgid "Then you must restart the following service:"
+msgstr "ထို့နောက်သင်သည်အောက်ပါ 0 န်ဆောင်မှုကိုပြန်လည်စတင်ရမည်။:"
+
+#: services
+#, fuzzy
+msgid "All"
+msgstr "အားလုံး"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Hit:"
+msgstr "နှိပ်ပါ:"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading package lists"
+msgstr "စာဖတ်ခြင်းအထုပ်စာရင်း"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Building dependency tree"
+msgstr "မှီခိုသစ်ပင်တစ်ပင်"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading state information"
+msgstr "စာဖတ်ခြင်းပြည်နယ်သတင်းအချက်အလက်"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading database"
+msgstr "ဒေတာဘေ့စဖတ်စာဖတ်ခြင်း"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Calculating upgrade"
+msgstr "အဆင့်မြှင့်တွက်ချက်ခြင်း"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Waiting for headers"
+msgstr "ခေါင်းစီးများကိုစောင့်နေသည်"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Working"
+msgstr "အလုပ်လုပ်နေ"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "All packages are up to date"
+msgstr "အားလုံး packages များနေ့စွဲအထိဖြစ်ကြသည်"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Done"
+msgstr "ပြီးပြီ"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"The following packages were automatically installed and are no longer "
+"required"
+msgstr "အောက်ပါ package များကိုအလိုအလျောက်တပ်ဆင်ပြီးမလိုအပ်တော့ပါ"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Use"
+msgstr "အသုံးပြု"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove them"
+msgstr "သူတို့ကိုဖယ်ရှားပစ်ရန်"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "upgraded"
+msgstr "အဆင့်မြှင့်တင်ခဲ့သည်"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "newly installed"
+msgstr "အသစ်တပ်ဆင်ထားသည်"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove and"
+msgstr "ဖယ်ရှားရန်နှင့်"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "not upgraded"
+msgstr "အဆင့်မြှင့်မရ"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Connected to"
+msgstr "ချိတ်ဆက်"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be REMOVED"
+msgstr "အောက်ပါ packages များကိုဖယ်ရှားလိမ့်မည်"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "After this operation"
+msgstr "ဒီစစ်ဆင်ရေးပြီးနောက်"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "disk space will be freed"
+msgstr "disk ကိုအာကာသလွတ်မြောက်လိမ့်မည်"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Do you want to continue?"
+msgstr "သင်ဆက်လုပ်ချင်ပါသလား?"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Progress"
+msgstr "တိုးတက်ခြင်း"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Removing"
+msgstr "ပယ်ဖျက်ခြင်း"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Processing triggers for"
+msgstr "များအတွက်အပြောင်းအလဲနဲ့အစပျိုး"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be upgraded"
+msgstr "အောက်ပါ package များကိုအဆင့်မြှင့်တင်လိမ့်မည်"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading changelogs"
+msgstr "Changelogs ဖတ်နေ"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preconfiguring packages"
+msgstr "prefiguring packages များ"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preparing to unpack"
+msgstr "ဖြည်ရန်ပြင်ဆင်နေ"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "files and directories currently installed"
+msgstr "လက်ရှိထည့်သွင်းထားသောဖိုင်များနှင့်လမ်းညွှန်များ"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Unpacking"
+msgstr "ဘော့ပီတာပိတ်ဆို့ခြင်း"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Setting up"
+msgstr "တက် setting"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "over"
+msgstr "ကျော်လွန်"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Installing new version of config file"
+msgstr "config file ၏ဗားရှင်းအသစ်ကို install လုပ်ခြင်း"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "A new version"
+msgstr "ဗားရှင်းအသစ်"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "of configuration file"
+msgstr "configuration ဖိုင်၏"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"is available, but the version installed currently has been locally modified"
+msgstr "ရရှိနိုင်ပေမယ့် install လုပ်ထားတဲ့ဗားရှင်းကိုဒေသအလိုက်ပြုပြင်မွမ်းမံခဲ့သည်"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error, exiting now."
+msgstr "အမှား, ယခုထွက်ပေါက်။."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: You need to run this script as"
+msgstr "ချို့ယွင်းချက် - သင်ဤ script ကိုဖွင့်ရန်လိုအပ်သည်"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: This script can't be piped!"
+msgstr "ချို့ယွင်းချက် - ဤ script ကို piped မရနိုင်ပါ!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "failed!"
+msgstr "မအောင်မြင်ပါ!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Finished!"
+msgstr "ပြီးပြီ!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating packet repository"
+msgstr "packet repository ကို update"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating system"
+msgstr "စနစ်မွမ်းမံခြင်းစနစ်"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Cleanup system"
+msgstr "သန့်ရှင်းရေးစနစ်"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Installing"
+msgstr "ထည့်သွင်းခြင်း"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating"
+msgstr "အသစ်ပြောင်းခြင်း"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Expanding Filesystem"
+msgstr "ဖိုင်စနစ်ကိုချဲ့ထွင်ခြင်း"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Do you want to proceed?"
+msgstr "သင်ဆက်လက်ဆောင်ရွက်လိုပါသလား?"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Ok, proceeding..."
+msgstr "အိုကေ ..."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "No, exiting now."
+msgstr "အဘယ်သူမျှမ, ယခုထွက်ပေါက်။."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Please answer yes or no."
+msgstr "ကျေးဇူးပြု. ဟုတ်ကဲ့သို့မဟုတ်မဖြေပါ။."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing path"
+msgstr "ပြောင်းလဲနေတဲ့လမ်းကြောင်း"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Downloading"
+msgstr "ဒေါင်းလုပ်ပြုခြင်း"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/owner"
+msgstr "ဖိုင်ခွင့်ပြုချက် / ပိုင်ရှင်ပြောင်းလဲခြင်း"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/right"
+msgstr "ဖိုင်ခွင့်ပြုချက် / ညာဘက်ပြောင်းလဲနေတဲ့"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "To activate the changes, the system must be rebooted."
+msgstr "အပြောင်းအလဲများကိုသက်ဝင်စေဖို့ system ကို reboot လုပ်ထားရမယ်။."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Could not find any user, exiting now."
+msgstr "မည်သည့်အသုံးပြုသူကိုရှာမတွေ့နိုင်ပါ။."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Which user would you like to edit?"
+msgstr "ဘယ်အသုံးပြုသူကိုတည်းဖြတ်ချင်ပါသလဲ။?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Define the password for user"
+msgstr "အသုံးပြုသူအတွက်စကားဝှက်ကိုသတ်မှတ်ပါ"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Do you want to edit another user?"
+msgstr "အခြားအသုံးပြုသူကိုသင်တည်းဖြတ်လိုပါသလား။?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "New password"
+msgstr "စကားဝှက်အသစ်"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Retype new password"
+msgstr "စကားဝှက်အသစ်ပြန်ရိုက်ပါ"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "No password has been supplied."
+msgstr "စကားဝှက်မရှိပါ။."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Sorry, passwords do not match."
+msgstr "တောင်းပန်ပါတယ်, စကားဝှက်တွေမကိုက်ညီဘူး။."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Updating password"
+msgstr "စကားဝှက်ကိုမွမ်းမံခြင်း"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Authentication token manipulation error"
+msgstr "authentication ကိုလက္ခဏာသက်သေချို့တဲ့အမှား"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "password unchanged"
+msgstr "စကားဝှက်မပြောင်းလဲ"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "user"
+msgstr "အသုံးပြုသူကို"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "does not exist"
+msgstr "မတည်ရှိပါဘူး"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Please connect the destination device you wish to use."
+msgstr "သင်အသုံးပြုလိုသော destination device ကိုဆက်သွယ်ပါ။."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Hit enter when it is connected."
+msgstr "ချိတ်ဆက်သောအခါ ENTER ကိုနှိပ်ပါ။."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find any devices, exiting now."
+msgstr "ယခုအခါမည်သည့်ကိရိယာမဆိုရှာမတွေ့နိုင်ပါ။."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find specified device, exiting now."
+msgstr "ယခုမှထွက်သောသတ်မှတ်ထားသော device ကိုရှာမတွေ့နိုင်ပါ။."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "What is your destination device?"
+msgstr "မင်းရဲ့ ဦး တည်ရာကိရိယာကဘာလဲ။?"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Ok, using device:"
+msgstr "ok စက်ကိုသုံးပြီး :"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "target is busy"
+msgstr "ပစ်မှတ်အလုပ်များသည်"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating image file"
+msgstr "Image ဖိုင်ကိုဖန်တီးခြင်း"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image file"
+msgstr "ပုံရိပ်ဖိုင်ကျုံ့"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "copied"
+msgstr "ကူးယူ"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records in"
+msgstr "မှတ်တမ်းများ"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records out"
+msgstr "မှတ်တမ်းများ"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Gathering data"
+msgstr "ဒေတာစုဆောင်း"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating new"
+msgstr "အသစ်ကိုဖန်တီးခြင်း"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Checking filesystem"
+msgstr "ဖိုင်စနစ်ကိုစစ်ဆေးခြင်း"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "non-contiguous"
+msgstr "မမှန်မကန်"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks"
+msgstr "လုပ်ကွက်များ"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking filesystem"
+msgstr "ကျုံ့နေသောဖိုင်စနစ်"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Resizing the filesystem on"
+msgstr "အပေါ် filesystem အရွယ်အစား"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Begin pass"
+msgstr "စတင်ပါ"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Relocating blocks"
+msgstr "လုပ်ကွက်များပြောင်းရွှေ့"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Scanning inode table"
+msgstr "inode table ကို scan ဖတ်ပါ"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Updating inode references"
+msgstr "inode ကိုးကားမွမ်းမံ"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "The filesystem on"
+msgstr "အပေါ်ဖိုင်စနစ်"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "is now"
+msgstr "ယခု"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks long"
+msgstr "ပိတ်ပင်တားဆီးမှုရှည်လျား"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image"
+msgstr "ကျုံ့ပုံ"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Using gzip on the shrunk image"
+msgstr "ယိုယွင်းနေသောပုံတွင် gzip ကိုအသုံးပြုခြင်း"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrunk"
+msgstr "ကျုံ့"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "from"
+msgstr "မှ"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "to"
+msgstr "သို့"
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid ""
+"Please connect the destination device (sd-card, usb-stick) you wish to use."
+msgstr "သင်အသုံးပြုလိုသော destination device (SD-Card, USB-Stat) ကိုဆက်သွယ်ပါ။."
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid "WARNING: All data on the destination device will be deleted!"
+msgstr "သတိပေးချက် - ဦး တည်ရာကိရိယာပေါ်ရှိအချက်အလက်အားလုံးကိုဖျက်ပစ်လိမ့်မည်။!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting frequency is"
+msgstr "ရေဒီယိုသတင်းပို့ခြင်းကြိမ်နှုန်းဖြစ်ပါတယ်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting bandwidth is"
+msgstr "Bandwidth ကရေဒီယိုသတင်းပို့ခြင်း"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting TX power is"
+msgstr "ရေဒီယိုက TX ပါဝါမှာ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting spreading factor is"
+msgstr "ရေဒီယိုကပြန့်နှံ့သောအချက်မှာ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting coding rate is"
+msgstr "ရေဒီယိုသတင်းပို့သည့် coding နှုန်းသည်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware initialisation error"
+msgstr "ဟာ့ဒ်ဝဲကော်မတီအမှား"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware TX error"
+msgstr "ဟာ့ဒ်ဝဲ TX အမှား"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware error"
+msgstr "ဟာ့ဒ်ဝဲအမှား"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "serial read timeout"
+msgstr "Serial Read Timeout"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while detecting hardware for"
+msgstr "ဟာ့ဒ်ဝဲရှာဖွေတွေ့ရှိနေစဉ် IO အမှားတစ်ခုဖြစ်ပွားခဲ့သည်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring frequency for"
+msgstr "Frequency ကိုပြင်ဆင်နေစဉ် IO အမှားတစ်ခုဖြစ်ပွားခဲ့သည်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring bandwidth for"
+msgstr "bandwidth ကို configure လုပ်စဉ် IO အမှားတစ်ခုဖြစ်ပွားခဲ့သည်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring TX power for"
+msgstr "TX ပါဝါကို configure လုပ်နေစဉ် IO အမှားတစ်ခုဖြစ်ပွားခဲ့သည်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring spreading factor for"
+msgstr "ပြန့်နှံ့သောအချက်များကိုပြင်ဆင်နေစဉ် IO အမှားတစ်ခုဖြစ်ပွားခဲ့သည်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring coding rate for"
+msgstr "coding နှုန်းကို configure လုပ်နေစဉ် IO အမှားတစ်ခုဖြစ်ပွားခဲ့သည်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state for"
+msgstr "IO အမှားတစ်ခုသည်ရေဒီယိုအခြေအနေကိုပြင်ဆင်နေစဉ်တွင်ဖြစ်ပွားခဲ့သည်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring device mode"
+msgstr "device mode ကို configuring လုပ်နေစဉ် IO အမှားတစ်ခုဖြစ်ပွားခဲ့သည်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while wiping EEPROM"
+msgstr "EEPROM ကိုသုတ်နေစဉ် IO အမှားတစ်ခုဖြစ်ပွားခဲ့သည်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while restarting device"
+msgstr "device ကိုပြန်လည်စတင်နေစဉ် IO အမှားတစ်ခုဖြစ်ပွားခဲ့သည်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while writing EEPROM"
+msgstr "EEPROM ရေးသားစဉ် IO အမှားတစ်ခုဖြစ်ပွားခဲ့သည်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state"
+msgstr "ရေဒီယိုအခြေအနေကိုပြင်ဆင်စဉ် IO အမှားတစ်ခုဖြစ်ပွားခဲ့သည်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download EEPROM from device. Is a valid firmware installed?"
+msgstr "ကိရိယာမှ EEPROM ကိုဒေါင်းလုတ်ဆွဲ။ မရပါ။ ခိုင်လုံသော firmware ကိုတပ်ဆင်ထားပါသလား။?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum mismatch"
+msgstr "EEPROM checksum mismatch"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum correct"
+msgstr "EEPROM checksum မှန်ကန်သော"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load local signing key"
+msgstr "ဒေသခံလက်မှတ်ထိုးသော့ကိုမဖွင့်နိုင်ပါ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize local signing key"
+msgstr "ဒေသခံလက်မှတ်ရေးထိုးသော့ကို deserialize နိုင်ဘူး"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validated"
+msgstr "device လက်မှတ်အတည်ပြု"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validation failed"
+msgstr "စက်လက်မှတ်အတည်ပြုခြင်းမအောင်မြင်ပါ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid EEPROM data, could not parse device EEPROM."
+msgstr "မမှန်ကန်သော EEPROM အချက်အလက်များသည် Device EEPROM ကိုမခွဲနိုင်ပါ။."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Hello!\n"
+"\n"
+"This guide will help you install the RNode firmware on supported\n"
+"and homebrew devices. Please connect the device you wish to set\n"
+"up now."
+msgstr ""
+"မင်္ဂလာပါ! \n"
+"\n"
+" ဤလမ်းညွှန်သည်သင့်အား RNODE firmware ကိုထောက်ပံ့ရန်ကူညီလိမ့်မည် \n"
+" နှင့် homebrew ကိရိယာများ။ သင်သတ်မှတ်လိုသော device ကိုဆက်သွယ်ပါ \n"
+" အခု."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please connect the device you wish to setup now."
+msgstr "သင်ယခုတည်ဆောက်လိုသော device ကိုဆက်သွယ်ပါ။."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find any port, exiting now."
+msgstr "မည်သည့် port ကိုမဆိုရှာမတွေ့နိုင်ပါ။."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Detected serial ports:"
+msgstr "အမှတ်စဉ် ports များကိုရှာဖွေတွေ့ရှိ:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What serial port is your device connected to?"
+msgstr "သင့်စက်သည်မည်သည့် Serial port ကိုချိတ်ဆက်ထားသနည်း။?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That port does not exist, exiting now."
+msgstr "ထို port သည်ယခုအခါ ထွက်. မတည်ရှိပါ။."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not select port, exiting now."
+msgstr "Port ကိုမရွေးနိုင်တော့ပါ။."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Ok, using device on"
+msgstr "OK ကိုစက်ကိုသုံးပြီး"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "using device on"
+msgstr "အပေါ် device ကိုအသုံးပြုခြင်း"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find specified port"
+msgstr "သတ်မှတ်ထားသော port ကိုရှာမတွေ့ပါ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "exiting now"
+msgstr "ယခုထွက်ထွက်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Probing device"
+msgstr "profing device ကို"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not open the specified serial port. The contained exception was:"
+msgstr "သတ်မှတ်ထားသော serial port ကိုဖွင့်လှစ်နိုင်ဘူး။ ပါရှိသောခြွင်းချက်မှာ :"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No answer from device"
+msgstr "ကိရိယာမှအဖြေမရှိပါ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Trying to read EEPROM"
+msgstr "EEPROM ကိုဖတ်ရန်ကြိုးစားခြင်း"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device is already installed and provisioned. No further action will\n"
+"be taken. If you wish to completely reinstall this device, you must first\n"
+"wipe the current EEPROM. See the help for more info.\n"
+"\n"
+"Exiting now."
+msgstr ""
+"ဒီကိရိယာကို install လုပ်ပြီးဖြစ်သည်။ နောက်ထပ်အရေးယူမှုအလိုရှိပါလိမ့်မယ် \n"
+" ယူပါ။ ဤကိရိယာကိုလုံးဝပြန်လည်ထည့်သွင်းလိုပါကသင်ပထမ ဦး ဆုံးရမည်ဖြစ်သည် \n"
+" လက်ရှိ EEPROM ကိုသုတ်ပါ။ နောက်ထပ်အချက်အလက်အတွက်အကူအညီကိုကြည့်ပါ။ \n"
+"\n"
+" ယခုထွက်ပေါက်။."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"The device seems to have an RNode firmware installed, but it was not\n"
+"provisioned correctly, or it is corrupt. We are going to reinstall the\n"
+"correct firmware and provision it."
+msgstr ""
+"ဒီကိရိယာမှာ RNOETE FILTWAMES ကိုထည့်သွင်းထားပုံရတယ်, ဒါပေမယ့်မဟုတ်ဘူး \n"
+" မှန်ကန်စွာပြင်ဆင်ပေး, ဒါမှမဟုတ်ကအကျင့်ပျက်ခြစားမှုဖြစ်ပါတယ်။ ကျနော်တို့ reinstall သွားလိမ့်မယ် \n"
+" မှန်ကန်သော firmware နှင့် respacemed ကိုပြင်ဆင်ပါ။."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "It looks like this is a fresh device with no RNode firmware."
+msgstr "၎င်းသည် RNODEDED firmware မရှိသောလတ်ဆတ်သော device တစ်ခုဖြစ်သည်။."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of device is this?"
+msgstr "ဒါကဘယ်လိုကိရိယာမျိုးလဲ။?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Important! Using RNode firmware on"
+msgstr "အရေးကြီး! RNOEDED ကို firmware ကိုအသုံးပြုခြင်း"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"should currently be\n"
+"considered experimental. It is not intended for production or critical use.\n"
+"The currently supplied firmware is provided AS-IS as a courtesey to those\n"
+"who would like to experiment with it. Hit enter to continue."
+msgstr ""
+"လောလောဆယ်ဖြစ်သင့်သည် \n"
+" စမ်းသပ်စဉ်းစား။ ၎င်းသည်ထုတ်လုပ်မှုသို့မဟုတ်အရေးပါသောအသုံးပြုမှုအတွက်မရည်ရွယ်ပါ။ \n"
+" လက်ရှိထောက်ပံ့ထားသော firmware ကိုတစ် ဦး အားယဉ်ယဉ်ကျေးကျေးအဖြစ်သတ်မှတ်သည် \n"
+" ဘယ်သူနဲ့စမ်းသပ်ချင်ပါသလဲ ဆက်လုပ်ရန် Enter ကိုနှိပ်ပါ။."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That device type does not exist, exiting now."
+msgstr "ထိုကိရိယာအမျိုးအစားသည်ယခုမှ ထွက်. မတည်ရှိပါ။."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of microcontroller is your board based on?"
+msgstr "သင့်ဘုတ်အဖွဲ့ကို အခြေခံ. မည်သည့် microcontroller အမျိုးအစားမျိုးကိုအခြေခံသနည်း။?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That MCU type does not exist, exiting now."
+msgstr "MCU အမျိုးအစားသည်ယခုမှ ထွက်. မတည်ရှိပါ။."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What transceiver module does your board use?"
+msgstr "အဘယ် transceiver module ကိုသင်၏ဘုတ်အဖွဲ့ကိုအသုံးပြုပါသလဲ။?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That transceiver type does not exist, exiting now."
+msgstr "ကြောင်း transceiver type အမျိုးအစားမတည်ရှိပါဘူးယခုထွက်ထွက်။."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What model is this RNode?"
+msgstr "ဒီ RNOMED ကဘာလဲ။?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That model does not exist, exiting now."
+msgstr "ထိုမော်ဒယ်မတည်ရှိပါ။."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this T-Beam for?"
+msgstr "ဒီ t-befer အတွက်ဘာတီးဝိုင်းကဘာလဲ?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That band does not exist, exiting now."
+msgstr "အဲဒီတီးဝိုင်းမတည်ရှိပါဘူးအခုထွက်လာပြီ။."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this LoRa32 for?"
+msgstr "ဒီ Lora32 အတွက်ဘာတီးဝိုင်းကဘာလဲ?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this Heltec LoRa32 for?"
+msgstr "ဒီ Heltec Lora32 ဒီ band ကဘာလဲ။?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of ESP32 board is this?"
+msgstr "ဒီ app32 ဘုတ်အဖွဲ့ကဘယ်လိုလဲ။?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That ESP32 board does not exist, exiting now."
+msgstr "ESP32 ဘုတ်အဖွဲ့သည်ယခုမှ ထွက်. မတည်ရှိပါ။."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Sorry, no firmware for your board currently exists.\n"
+"Help making it a reality by contributing code or by\n"
+"donating to the project."
+msgstr ""
+"စိတ်မကောင်းပါ, သင်၏ဘုတ်အဖွဲ့အတွက် firmware မရှိပါ။ \n"
+" code ကိုပံ့ပိုးခြင်းဖြင့်ဖြစ်စေ, \n"
+" စီမံကိန်းကိုလှူဒါန်းခြင်း။."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Ok, that should be all the information we need. Please confirm the "
+"following\n"
+"summary before proceeding. In the next step, the device will be flashed and\n"
+"provisioned, so make that you are satisfied with your choices."
+msgstr ""
+"အိုကေ, ဒါကငါတို့လိုအပ်တဲ့အချက်အလက်အားလုံးဖြစ်သင့်တယ်။ ကျေးဇူးပြု. အောက်ပါတို့ကိုအတည်ပြုပါ \n"
+" ရှေ့ဆက်မတိုင်မီအကျဉ်းချုပ်။ နောက်တစ်ဆင့်မှာစက်ကိုတောက်ပနေလိမ့်မယ် \n"
+" သင့်ရွေးချယ်မှုများကိုသင်ကျေနပ်ရောင့်ရဲစေပါ။."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial port"
+msgstr "အမှတ်စဉ်ဆိပ်ကမ်း"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device type"
+msgstr "ကိရိယာအမျိုးအစား"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device MCU"
+msgstr "စက် McU"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file"
+msgstr "firmware ဖိုင်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Is the above correct?"
+msgstr "အထက်ပါမှန်ကန်သောလား?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "OK, aborting now."
+msgstr "အိုကေ, ယခုဖျက်သိမ်း။."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device connected"
+msgstr "ကိရိယာချိတ်ဆက်စက်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Current firmware version:"
+msgstr "လက်ရှိ firmware ဗားရှင်း:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Got invalid response while detecting device"
+msgstr "device ကိုရှာဖွေတွေ့ရှိနေစဉ်မမှန်ကန်သောတုံ့ပြန်မှုရှိသည်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download required firmware file. The contained exception was:"
+msgstr "လိုအပ်သော firmware ဖိုင်ကို download မလုပ်နိုင်ပါ။ ပါရှိသောခြွင်းချက်မှာ :"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial module could not be found"
+msgstr "Serial module ကိုရှာမတွေ့ပါ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs pyserial to work.\n"
+"You can install it with: pip3 install pyserial"
+msgstr ""
+"RNOETE Config utility ကိုအလုပ်လုပ်ရန် Pyserial လိုအပ်သည်။ \n"
+" Pip3 Install Pyserial ကိုတပ်ဆင်ထားပါ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cryptography module could not be found"
+msgstr "cryptography module ကိုရှာမတွေ့ပါ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs the cryptography module to work.\n"
+"You can install it with: pip3 install cryptography"
+msgstr ""
+"RNOETE config utility သည်အလုပ်လုပ်ရန် cryptography module တစ်ခုလိုအပ်သည်။ \n"
+" သင်နှင့် install လုပ်နိုင်သည် - Pip3 Cryptography install လုပ်ပါ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Downloading latest frimware from GitHub"
+msgstr "GitHub မှနောက်ဆုံးပေါ် firmware ကိုဒေါင်းလုပ်ချခြင်း"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware download completed"
+msgstr "Firmware Download ပြီးစီးခဲ့သည်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware extracted"
+msgstr "firmware ထုတ်ယူ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not extract firmware from downloaded zip file"
+msgstr "download လုပ်ထားသော zip file မှ firmware ကိုထုတ်ယူ။ မရပါ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing RNode firmware to device on"
+msgstr "မှထွက်ပေါ်လာသော rnode firmware ကိုမှ flashing"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Done flashing"
+msgstr "မှိတ်တုတ်မှိတ်တုတ်သည်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Waiting for ESP32 reset"
+msgstr "ESP32 Reset ကိုစောင့်ဆိုင်း"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while flashing"
+msgstr "မှိတ်တုတ်မှိတ်နေစဉ်အမှား"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file not found"
+msgstr "Firmware ဖိုင်ကိုမတွေ့ပါ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download firmware package"
+msgstr "Firmware Package ကိုဒေါင်းလုတ်လုပ်လို့မရပါ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The contained exception was:"
+msgstr "ပါရှိသောခြွင်းချက်မှာ :"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Skipping online check, using local firmware file:"
+msgstr "အွန်လိုင်း firmware ဖိုင်ကို သုံး. အွန်လိုင်းစစ်ဆေးမှုများကိုကျော်သွားသည်။:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load signing key"
+msgstr "လက်မှတ်ထိုးသော့ကို တင်. မရပါ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize signing key"
+msgstr "လက်မှတ်ထိုးသော့ကို deserialize နိုင်ဘူး"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Generating a new signing key"
+msgstr "အသစ်လက်မှတ်ထိုးသော့ကိုထုတ်လုပ်ခြင်း"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Signing key already exists, not overwriting!\n"
+"Manually delete this key to create a new one."
+msgstr ""
+"သော့လက်မှတ်ထိုးခြင်းပြီးသားရှိပြီးသား, overwriting မဟုတ်! \n"
+" အသစ်တစ်ခုကိုဖန်တီးရန်ဤသော့ကိုကိုယ်တိုင်ဖျက်ပါ။."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The firmware directory does not exist, can't write key!"
+msgstr "firmware လမ်းညွှန်မရှိပါကသော့မရေးနိုင်ပါ။!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Extracting firmware"
+msgstr "firmware ကိုထုတ်ယူ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Opening serial port"
+msgstr "Serial Port ကိုဖွင့်လှစ်ခြင်း"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Serial port opened, but RNode did not respond. Is a valid firmware installed?"
+msgstr ""
+"Serial Port ကိုဖွင့်လိုက်ပြီ, ဒါပေမယ့် RNODE ကမတုံ့ပြန်ဘူး။ ခိုင်လုံသော firmware ကိုတပ်ဆင်ထားပါသလား။?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"WARNING: EEPROM is being wiped! Power down device NOW if you do not want "
+"this!"
+msgstr "သတိပေးချက် - EEPROM ကိုသုတ်ခြင်းခံရသည်။ သင်ဤမလိုချင်ပါကစက်ကိုဆင်းပါဝါပါ။!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Reading EEPROM"
+msgstr "EEPROM ဖတ်နေ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "ERROR: No firmware found for this board. Cannot update."
+msgstr "ချို့ယွင်းချက် - ဒီဘုတ်အဖွဲ့အတွက် firmware မရှိပါ။ မွမ်းမံလို့မရပါဘူး."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cannot update device firmware"
+msgstr "device firmware ကိုမွမ်းမံလို့မရပါဘူး"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Updating RNode firmware for device on"
+msgstr "RNOETH firmware ကို device အတွက် update လုပ်ခြင်း"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing new firmware completed"
+msgstr "flash firmware အသစ်ပြီးစီးခဲ့သည်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update completed successfully"
+msgstr "Firmware update ကိုအောင်မြင်စွာပြီးစီးခဲ့သည်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while flashing the new firmware, exiting now."
+msgstr "firmware အသစ်ကိုမှိတ်တုတ်မှိတ်တုတ်နေစဉ်တွင်အမှားတစ်ခုဖြစ်ပွားခဲ့သည်။."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while updating firmware"
+msgstr "firmware ကိုအသစ်ပြောင်းခြင်းနေစဉ်အမှား"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update file not found"
+msgstr "Firmware Update ကိုဖိုင်မတွေ့ပါ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM contents"
+msgstr "EEPROM Contents"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM backup written to"
+msgstr "EEPROM အရန်ကူးခြင်း"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"EEPROM was successfully downloaded from device,\n"
+"but file could not be written to disk."
+msgstr ""
+"EEPROM ကို device မှအောင်မြင်စွာဒေါင်းလုပ်လုပ်ပြီး, \n"
+" သို့သော်ဖိုင်ကို disk သို့မရေးနိုင်ပါ။."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device info:"
+msgstr "Device Info:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Product"
+msgstr "အထွက်ပစ္စည်းများ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature"
+msgstr "ကိရိယာလက်မှတ်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware version"
+msgstr "firmware ဗားရှင်း"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Hardware revision"
+msgstr "ဟာ့ဒ်ပြင်ဆင်ခြင်း"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial number"
+msgstr "နံပါတ်စဥ်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency range"
+msgstr "ကြိမ်နှုန်းအကွာအဝေး"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Max TX power"
+msgstr "max ကို tx ပါဝါ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Manufactured"
+msgstr "ထုတ်လုပ်သည်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device mode"
+msgstr "ကိရိယာ mode ကို"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency"
+msgstr "ခဏခဏဖြစ်ခြင်း"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth"
+msgstr "Bandwidth"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "TX power"
+msgstr "tx ပါဝါ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor"
+msgstr "ဖြန့်ဖြူးဆန့်ကျင်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate"
+msgstr "coding နှုန်း"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "On-air bitrate"
+msgstr "On-Air Bitrate"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM is invalid, no further information available"
+msgstr "EEPROM သည်မမှန်ကန်ပါ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM bootstrap was requested, but a valid EEPROM was already present."
+msgstr "EEPROM BOOTSHRAP ကိုတောင်းဆိုသော်လည်းမှန်ကန်သော EEPROM သည်လက်ရှိအခြေအနေဖြစ်သည်။."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No changes are being made."
+msgstr "အဘယ်သူမျှမအပြောင်းအလဲများကိုလုပ်လျက်ရှိသည်။."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Clearing old EEPROM, this will take about 15 seconds"
+msgstr "EEPROM ဟောင်းကိုရှင်းလင်းခြင်း, ၎င်းသည် 15 စက္ကန့်ခန့်ကြာလိမ့်မည်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not create device serial number, exiting"
+msgstr "device ကိုအမှတ်စဉ်နံပါတ်ကိုဖန်တီးလို့မရဘူး"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Loading signing key"
+msgstr "လက်မှတ်ထိုးသော့ကိုတင်နေသည်"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while signing EEPROM"
+msgstr "EEPROM လက်မှတ်ရေးထိုးနေစဉ်အမှား"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bootstrapping device EEPROM"
+msgstr "bootstrapping device ကို EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM written! Validating"
+msgstr "EeProm ရေးသားထားသော! အတည်ပြုခြင်း"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM Bootstrapping successful!"
+msgstr "EEPROM BOOTSPRAPPED အောင်မြင်စွာ!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "RNode Firmware autoinstallation complete!"
+msgstr "RNOETH Firmware Autoinstallation ပြီးစီး!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "To use your device with Reticulum, read the documetation at:"
+msgstr "သင်၏ကိရိယာကို reticulum နှင့်အသုံးပြုရန်, စာရွက်စာတမ်းများကိုဖတ်ပါ။:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Thank you for using this utility! Please help the project by\n"
+"contributing code and reporting bugs, or by donating!"
+msgstr ""
+"ဒီ utility ကိုသုံးပြီးအတွက်ကျေးဇူးတင်ပါတယ်။ ကျေးဇူးပြု. စီမံကိန်းကိုကူညီပါ \n"
+" code ကိုပံ့ပိုးခြင်းနှင့် bug များအစီရင်ခံခြင်းသို့မဟုတ်လှူဒါန်းခြင်းအားဖြင့်!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Your contributions and donations directly further the realisation\n"
+"of truly open, free and resilient communications systems."
+msgstr ""
+"သင်၏ပံ့ပိုးမှုများနှင့်အလှူငွေများကိုတိုက်ရိုက်အကောင်အထည်ဖော်ခြင်း \n"
+" အမှန်တကယ်ပွင့်လင်း။ အခမဲ့နှင့်ဒဏ်ခံနိုင်သည့်ဆက်သွယ်ရေးစနစ်များ။."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "WARNING: Could not backup device EEPROM to disk"
+msgstr "သတိပေးချက် - Device EeProm ကို disk ထဲကိုကူးယူ။ မရပါ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM was written, but validation failed. Check your settings."
+msgstr "EEPROM ရေးသားခဲ့သည်။ သို့သော် validation မအောင်မြင်ပါ။ သင်၏ချိန်ညှိချက်များကိုစစ်ဆေးပါ။."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while writing EEPROM. The contained exception was:"
+msgstr "EEPROM ရေးသားစဉ်အမှားတစ်ခုဖြစ်ပွားခဲ့သည်။ ပါရှိသောခြွင်းချက်မှာ :"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid data specified, cancelling EEPROM write"
+msgstr "မမှန်ကန်သောဒေတာများကိုသတ်မှတ်ထားသော EEPROM ရေးရန်ဖျက်သိမ်းခြင်း"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to normal (host-controlled) operating mode"
+msgstr "ပုံမှန် (host-controlled) operating mode ကိုသတ်မှတ်ပါ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please input startup configuration:"
+msgstr "ကျေးဇူးပြု. startup configuration ကိုထည့်သွင်းပါ။:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency in Hz:"
+msgstr "hz အတွက်ကြိမ်နှုန်း:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth in Hz:"
+msgstr "hz အတွက် bandwidth:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor:"
+msgstr "ဖြန့်ဖြူးဆန့်ကျင်:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate:"
+msgstr "Coding နှုန်း:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to TNC operating mode"
+msgstr "TNC operating mode ကိုသတ်မှတ်ပါ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device contains a valid firmware, but EEPROM is invalid.\n"
+"Probably the device has not been initialised, or the EEPROM has been "
+"erased.\n"
+"Please correctly initialise the device and try again!"
+msgstr ""
+"ဒီကိရိယာမှာခိုင်လုံတဲ့ firmware ပါ 0 င်ပေမယ့် EEPROM ကမမှန်ကန်ဘူး။ \n"
+" ဖြစ်ကောင်းဖြစ်နိုင်သည် device ကိုအစပြုမထားပါဘူး, ဒါမှမဟုတ် EEPROM ဖျက်ပစ်လိုက်ပါတယ်။ \n"
+" ကျေးဇူးပြု. ကိရိယာကိုမှန်ကန်စွာစတင်ပါ။!"

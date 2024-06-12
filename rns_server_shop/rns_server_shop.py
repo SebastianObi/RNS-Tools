@@ -284,7 +284,7 @@ class ServerShop:
                 RNS.log("Server - Destination length is invalid", RNS.LOG_ERROR)
                 return False
 
-            try:    
+            try:
                 destination = bytes.fromhex(destination)
             except Exception as e:
                 RNS.log("Server - Destination is invalid", RNS.LOG_ERROR)
@@ -996,6 +996,15 @@ class Core:
         self.__db_commit()
 
 
+    def db_lock(self, value=True):
+        if value:
+            db = self.__db_connect()
+            dbc = db.cursor()
+            dbc.execute("BEGIN EXCLUSIVE")
+        else:
+            self.__db_commit()
+
+
     def __db_sanitize(self, value):
         value = str(value)
         value = value.replace('\\', "")
@@ -1018,8 +1027,28 @@ class Core:
         dbc.execute("CREATE TABLE IF NOT EXISTS shop (id BLOB PRIMARY KEY, config BLOB, categorys BLOB, categorys_count BLOB, images BLOB, pages BLOB, users BLOB, statistic BLOB, cmd BLOB, ts_config INTEGER DEFAULT 0, ts_categorys INTEGER DEFAULT 0, ts_categorys_count INTEGER DEFAULT 0, ts_images INTEGER DEFAULT 0, ts_pages INTEGER DEFAULT 0, ts_users INTEGER DEFAULT 0, ts_statistic INTEGER DEFAULT 0, ts_cmd INTEGER DEFAULT 0, ts_sync INTEGER DEFAULT 0, pin INTEGER DEFAULT 0, storage_duration INTEGER DEFAULT 0, archive INTEGER DEFAULT 0)")
 
         if init:
+            dbc.execute("DROP TABLE IF EXISTS shop_cart")
+        dbc.execute("CREATE TABLE IF NOT EXISTS shop_cart (shop_id BLOB, entry_id BLOB, variant INTEGER DEFAULT 0, quantity INTEGER DEFAULT 0, PRIMARY KEY(shop_id, entry_id, variant))")
+
+        if init:
             dbc.execute("DROP TABLE IF EXISTS shop_entry")
         dbc.execute("CREATE TABLE IF NOT EXISTS shop_entry (entry_id BLOB, shop_id BLOB, vendor_id BLOB, category0 INTEGER DEFAULT 0, category1 INTEGER DEFAULT 0, enabled INTEGER DEFAULT 0, title0 TEXT DEFAULT '', title1 TEXT DEFAULT '', title2 TEXT DEFAULT '', text0 TEXT DEFAULT '', text1 TEXT DEFAULT '', text2 TEXT DEFAULT '', text3 TEXT DEFAULT '', text4 TEXT DEFAULT '', text5 TEXT DEFAULT '', num0 INTEGER DEFAULT 0, num1 INTEGER DEFAULT 0, num2 INTEGER DEFAULT 0, num3 INTEGER DEFAULT 0, num4 INTEGER DEFAULT 0, num5 INTEGER DEFAULT 0, option0 INTEGER DEFAULT 0, option1 INTEGER DEFAULT 0, option2 INTEGER DEFAULT 0, option3 INTEGER DEFAULT 0, option4 INTEGER DEFAULT 0, option5 INTEGER DEFAULT 0, option6 INTEGER DEFAULT 0, option7 INTEGER DEFAULT 0, tags0 TEXT DEFAULT '', tags1 TEXT DEFAULT '', tags2 TEXT DEFAULT '', tags3 TEXT DEFAULT '', tags4 TEXT DEFAULT '', tags5 TEXT DEFAULT '', tags6 TEXT DEFAULT '', tags7 TEXT DEFAULT '', images BLOB, files BLOB, files_data BLOB, price REAL DEFAULT 0, currency INTEGER DEFAULT 0, variants BLOB, q_available INTEGER DEFAULT 0, q_min INTEGER DEFAULT 0, q_max INTEGER DEFAULT 0, rate INTEGER DEFAULT 0, location_lat REAL DEFAULT 0, location_lon REAL DEFAULT 0, ts INTEGER DEFAULT 0, ts_data INTEGER DEFAULT 0, ts_title INTEGER DEFAULT 0, ts_text INTEGER DEFAULT 0, ts_images INTEGER DEFAULT 0, ts_files INTEGER DEFAULT 0, ts_sync INTEGER DEFAULT 0, PRIMARY KEY(entry_id, shop_id))")
+
+        if init:
+            dbc.execute("DROP TABLE IF EXISTS shop_favorite")
+        dbc.execute("CREATE TABLE IF NOT EXISTS shop_favorite (shop_id BLOB, entry_id BLOB, PRIMARY KEY(shop_id, entry_id))")
+
+        if init:
+            dbc.execute("DROP TABLE IF EXISTS shop_notify")
+        dbc.execute("CREATE TABLE IF NOT EXISTS shop_notify (shop_id BLOB, entry_id BLOB, PRIMARY KEY(shop_id, entry_id))")
+
+        if init:
+            dbc.execute("DROP TABLE IF EXISTS shop_order")
+        dbc.execute("CREATE TABLE IF NOT EXISTS shop_order (order_id BLOB, shop_id BLOB, entry_id BLOB, vendor_id BLOB, variant INTEGER DEFAULT 0, variant_str TEXT DEFAULT '', quantity INTEGER DEFAULT 0, title0 TEXT DEFAULT '', title1 TEXT DEFAULT '', price REAL DEFAULT 0, currency INTEGER DEFAULT 0, type INTEGER DEFAULT 0, state INTEGER DEFAULT 0, ts INTEGER DEFAULT 0, PRIMARY KEY(order_id, shop_id, entry_id, variant))")
+
+        if init:
+            dbc.execute("DROP TABLE IF EXISTS shop_state")
+        dbc.execute("CREATE TABLE IF NOT EXISTS shop_state (state_id BLOB PRIMARY KEY, shop_id BLOB, type INTEGER DEFAULT 0, state INTEGER DEFAULT 0, ts INTEGER DEFAULT 0, size_rx INTEGER DEFAULT 0, size_tx INTEGER DEFAULT 0, duration FLOAT DEFAULT 0, count INTEGER DEFAULT 0)")
 
         self.__db_commit()
 
@@ -1028,99 +1057,7 @@ class Core:
         RNS.log("Core - Migrating database...", RNS.LOG_DEBUG)
         self.__db_init(False)
 
-        db = self.__db_connect()
-        dbc = db.cursor()
-
-        self.__db_commit()
-
-        # TODO: Remove in the future
-        self.__db_migrate_column_add("shop", "cmd", "BLOB", None, "statistic")
-        self.__db_migrate_column_add("shop", "ts_cmd", "INTEGER", "0", "ts_statistic")
-        self.__db_migrate_column_datatype("shop_entry", "ts", "INTEGER", "0")
-        self.__db_migrate_column_add("shop_entry", "num0", "INTEGER", "0", "text5")
-        self.__db_migrate_column_add("shop_entry", "num1", "INTEGER", "0", "num0")
-        self.__db_migrate_column_add("shop_entry", "num2", "INTEGER", "0", "num1")
-        self.__db_migrate_column_add("shop_entry", "num3", "INTEGER", "0", "num2")
-        self.__db_migrate_column_add("shop_entry", "num4", "INTEGER", "0", "num3")
-        self.__db_migrate_column_add("shop_entry", "num5", "INTEGER", "0", "num4")
-        self.__db_migrate_column_delete("shop_entry", "weight")
-        self.__db_migrate_column_delete("shop_entry", "tag0")
-        self.__db_migrate_column_delete("shop_entry", "tag1")
-        self.__db_migrate_column_delete("shop_entry", "tag2")
-        self.__db_migrate_column_delete("shop_entry", "tag3")
-        self.__db_migrate_column_delete("shop_entry", "tag4")
-        self.__db_migrate_column_delete("shop_entry", "tag5")
-        self.__db_migrate_column_add("shop_entry", "tags2", "TEXT", "''", "tags1")
-        self.__db_migrate_column_add("shop_entry", "tags3", "TEXT", "''", "tags2")
-        self.__db_migrate_column_add("shop_entry", "tags4", "TEXT", "''", "tags3")
-        self.__db_migrate_column_add("shop_entry", "tags5", "TEXT", "''", "tags4")
-        self.__db_migrate_column_add("shop_entry", "tags6", "TEXT", "''", "tags5")
-        self.__db_migrate_column_add("shop_entry", "tags7", "TEXT", "''", "tags6")
-        self.__db_migrate_column_add("shop_entry", "files", "BLOB", None, "images")
-        self.__db_migrate_column_add("shop_entry", "files_data", "BLOB", None, "files")
-        self.__db_migrate_column_add("shop_entry", "ts_files", "INTEGER", "0", "ts_images")
-
-        self.__db_migrate_column_rename("shop_entry", "category_id", "category0")
-        self.__db_migrate_column_rename("shop_entry", "type_id", "category1")
-
         self.__db_init(False)
-
-
-    def __db_migrate_exist(self, table, column=None):
-        db = self.__db_connect()
-        dbc = db.cursor()
-
-        if column:
-            dbc.execute("SELECT 1 FROM PRAGMA_TABLE_INFO('"+table+"') WHERE name = '"+column+"'")
-            if len(dbc.fetchall()) != 0:
-                return True
-        else:
-            dbc.execute("SELECT 1 FROM PRAGMA_TABLE_INFO('"+table+"')")
-            if len(dbc.fetchall()) != 0:
-                return True
-
-        return False
-
-
-    def __db_migrate_table_delete(self, table):
-        db = self.__db_connect()
-        dbc = db.cursor()
-
-        dbc.execute("DROP TABLE IF EXISTS "+table)
-
-        self.__db_commit()
-
-
-    def __db_migrate_column_delete(self, table, name):
-        db = self.__db_connect()
-        dbc = db.cursor()
-
-        dbc.execute("SELECT 1 FROM PRAGMA_TABLE_INFO('"+table+"') WHERE name = '"+name+"'")
-        if len(dbc.fetchall()) != 0:
-            try:
-                dbc.execute("ALTER TABLE "+table+" DROP COLUMN "+name)
-            except:
-                dbc.execute(f"PRAGMA table_info({table})")
-                columns_info = dbc.fetchall()
-
-                primary_key = ""
-                primary_keys = []
-                for i, column in enumerate(columns_info):
-                    if column[5]:
-                        primary_keys.append(column[1])
-                if len(primary_keys) > 1:
-                    primary_key = ", PRIMARY KEY("+", ".join(primary_keys)+")"
-
-                column_position = next(i for i, column in enumerate(columns_info) if column[1] == name)
-                del columns_info[column_position]
-
-                dbc.execute(f"DROP TABLE IF EXISTS {table}_old")
-                dbc.execute(f"ALTER TABLE {table} RENAME TO {table}_old")
-                dbc.execute(f"CREATE TABLE {table} ({', '.join([(f'{col[1]} {col[2]}') + (f' DEFAULT {col[4]}' if col[4] is not None else '') + (' PRIMARY KEY' if col[5] and primary_key == '' else '') for col in columns_info])}"+primary_key+")")
-                dbc.execute(f"INSERT INTO {table} ({', '.join([f'{col[1]}' for i, col in enumerate(columns_info)])}) SELECT {', '.join([f'{col[1]}' for i, col in enumerate(columns_info)])} FROM {table}_old")
-                dbc.execute(f"DROP TABLE {table}_old")
-
-        self.__db_commit()
 
 
     def __db_migrate_column_add(self, table, name, datatype, default=None, name_after=None):
@@ -1162,17 +1099,6 @@ class Core:
         self.__db_commit()
 
 
-    def __db_migrate_column_rename(self, table, name_old, name_new):
-        db = self.__db_connect()
-        dbc = db.cursor()
-
-        dbc.execute("SELECT 1 FROM PRAGMA_TABLE_INFO('"+table+"') WHERE name = '"+name_old+"'")
-        if len(dbc.fetchall()) != 0:
-            dbc.execute("ALTER TABLE "+table+" RENAME '"+name_old+"' TO '"+name_new+"'")
-
-        self.__db_commit()
-
-
     def __db_migrate_column_datatype(self, table, column, datatype, default=None):
         db = self.__db_connect()
         dbc = db.cursor()
@@ -1202,25 +1128,90 @@ class Core:
         self.__db_commit()
 
 
+    def __db_migrate_column_delete(self, table, name):
+        db = self.__db_connect()
+        dbc = db.cursor()
+
+        dbc.execute("SELECT 1 FROM PRAGMA_TABLE_INFO('"+table+"') WHERE name = '"+name+"'")
+        if len(dbc.fetchall()) != 0:
+            try:
+                dbc.execute("ALTER TABLE "+table+" DROP COLUMN "+name)
+            except:
+                dbc.execute(f"PRAGMA table_info({table})")
+                columns_info = dbc.fetchall()
+
+                primary_key = ""
+                primary_keys = []
+                for i, column in enumerate(columns_info):
+                    if column[5]:
+                        primary_keys.append(column[1])
+                if len(primary_keys) > 1:
+                    primary_key = ", PRIMARY KEY("+", ".join(primary_keys)+")"
+
+                column_position = next(i for i, column in enumerate(columns_info) if column[1] == name)
+                del columns_info[column_position]
+
+                dbc.execute(f"DROP TABLE IF EXISTS {table}_old")
+                dbc.execute(f"ALTER TABLE {table} RENAME TO {table}_old")
+                dbc.execute(f"CREATE TABLE {table} ({', '.join([(f'{col[1]} {col[2]}') + (f' DEFAULT {col[4]}' if col[4] is not None else '') + (' PRIMARY KEY' if col[5] and primary_key == '' else '') for col in columns_info])}"+primary_key+")")
+                dbc.execute(f"INSERT INTO {table} ({', '.join([f'{col[1]}' for i, col in enumerate(columns_info)])}) SELECT {', '.join([f'{col[1]}' for i, col in enumerate(columns_info)])} FROM {table}_old")
+                dbc.execute(f"DROP TABLE {table}_old")
+
+        self.__db_commit()
+
+
+    def __db_migrate_column_rename(self, table, name_old, name_new):
+        db = self.__db_connect()
+        dbc = db.cursor()
+
+        dbc.execute("SELECT 1 FROM PRAGMA_TABLE_INFO('"+table+"') WHERE name = '"+name_old+"'")
+        if len(dbc.fetchall()) != 0:
+            dbc.execute("ALTER TABLE "+table+" RENAME '"+name_old+"' TO '"+name_new+"'")
+
+        self.__db_commit()
+
+
+    def __db_migrate_exist(self, table, column=None):
+        db = self.__db_connect()
+        dbc = db.cursor()
+
+        if column:
+            dbc.execute("SELECT 1 FROM PRAGMA_TABLE_INFO('"+table+"') WHERE name = '"+column+"'")
+            if len(dbc.fetchall()) != 0:
+                return True
+        else:
+            dbc.execute("SELECT 1 FROM PRAGMA_TABLE_INFO('"+table+"')")
+            if len(dbc.fetchall()) != 0:
+                return True
+
+        return False
+
+
+    def __db_migrate_table_delete(self, table):
+        db = self.__db_connect()
+        dbc = db.cursor()
+
+        dbc.execute("DROP TABLE IF EXISTS "+table)
+
+        self.__db_commit()
+
+
     def __db_indices(self):
         pass
 
 
     def __db_vacuum(self):
-        db_retrys = 3
-        db_waitingtime = random.uniform(0.05, 0.2)
-
-        for i in range(db_retrys):
+        for i in range(3):
             try:
                 db = self.__db_connect()
                 dbc = db.cursor()
                 dbc.execute("VACUUM")
                 self.__db_commit()
-                return
+                return True
 
             except Exception as e:
                 error = str(e)
-                time.sleep(db_waitingtime)
+                time.sleep(random.uniform(0.05, 0.2))
 
         RNS.log("Core - An error occurred during vacuum database operation: "+error, RNS.LOG_ERROR)
 
@@ -1237,6 +1228,14 @@ class Core:
         else:
             self.__db_migrate()
             self.__db_indices()
+
+
+    def db_contacts_set(self, dest, name_announce=None):
+        pass
+
+
+    def db_contacts_add(self, dest, name=None, name_announce=None, trust=False, notify=False, receipt=None, telemetry_receive=None, telemetry_send=None, telemetry_requests=None, commands=None):
+        pass
 
 
     def db_shops_statistic(self, shop_id):
@@ -1331,6 +1330,8 @@ class Core:
         dbc.execute(query, (msgpack.packb(config), ts_config, ts_sync, shop_id))
 
         self.__db_commit()
+
+        self.db_contacts_set(dest=shop_id, name_announce=config["title"])
 
 
     def db_shops_get_categorys(self, shop_id, category_id=0):
@@ -1703,84 +1704,84 @@ class Core:
                 return len(data)
 
 
-    def db_shops_add(self, shop_id, name=None, name_announce=None, trust=False, storage_duration=None, config=None, categorys=None, categorys_count=None, images=None, pages=None, users=None, statistic=None, cmd=None, ts_config=None, ts_categorys=None, ts_categorys_count=None, ts_images=None, ts_pages=None, ts_users=None, ts_statistic=None, ts_cmd=None, ts_sync=None):
-        try:
-            if isinstance(shop_id, str):
-                if len(shop_id) != RNS.Reticulum.TRUNCATED_HASHLENGTH//8*2:
-                    return False
-                shop_id = bytes.fromhex(shop_id)
+    def db_shops_add(self, shop_id, name=None, name_announce=None, trust=False, telemetry_receive=None, storage_duration=None, config=None, categorys=None, categorys_count=None, images=None, pages=None, users=None, statistic=None, cmd=None, ts_config=None, ts_categorys=None, ts_categorys_count=None, ts_images=None, ts_pages=None, ts_users=None, ts_statistic=None, ts_cmd=None, ts_sync=None):
+        if isinstance(shop_id, str):
+            if len(shop_id) != RNS.Reticulum.TRUNCATED_HASHLENGTH//8*2:
+                return False
+            shop_id = bytes.fromhex(shop_id)
 
-            if name == None:
-                name = ""
+        if name == None:
+            name = ""
 
-            if name_announce == None:
-                name_announce = self.display_name_announce(shop_id)
+        if name_announce == None:
+            name_announce = self.display_name_announce(shop_id)
 
-            if storage_duration == None:
-                storage_duration = 0
+        if telemetry_receive == None:
+            telemetry_receive = False
 
-            if config == None:
-                config = {}
+        if storage_duration == None:
+            storage_duration = 0
 
-            if categorys == None:
-                categorys = {}
+        if config == None:
+            config = {}
 
-            if categorys_count == None:
-                categorys_count = {}
+        if categorys == None:
+            categorys = {}
 
-            if images == None:
-                images = {}
+        if categorys_count == None:
+            categorys_count = {}
 
-            if pages == None:
-                pages = {}
+        if images == None:
+            images = {}
 
-            if users == None:
-                users = {}
+        if pages == None:
+            pages = {}
 
-            if statistic == None:
-                statistic = {}
+        if users == None:
+            users = {}
 
-            if cmd == None:
-                cmd = {}
+        if statistic == None:
+            statistic = {}
 
-            if ts_config == None:
-                ts_config = 0
+        if cmd == None:
+            cmd = {}
 
-            if ts_categorys == None:
-                ts_categorys = 0
+        if ts_config == None:
+            ts_config = 0
 
-            if ts_categorys_count == None:
-                ts_categorys_count = 0
+        if ts_categorys == None:
+            ts_categorys = 0
 
-            if ts_images == None:
-                ts_images = 0
+        if ts_categorys_count == None:
+            ts_categorys_count = 0
 
-            if ts_pages == None:
-                ts_pages = 0
+        if ts_images == None:
+            ts_images = 0
 
-            if ts_users == None:
-                ts_users = 0
+        if ts_pages == None:
+            ts_pages = 0
 
-            if ts_statistic == None:
-                ts_statistic = 0
+        if ts_users == None:
+            ts_users = 0
 
-            if ts_cmd == None:
-                ts_cmd = 0
+        if ts_statistic == None:
+            ts_statistic = 0
 
-            if ts_sync == None:
-                ts_sync = 0
+        if ts_cmd == None:
+            ts_cmd = 0
 
-            db = self.__db_connect()
-            dbc = db.cursor()
+        if ts_sync == None:
+            ts_sync = 0
 
-            query = "INSERT INTO shop (id, config, categorys, categorys_count, images, pages, users, statistic, cmd, ts_config, ts_categorys, ts_categorys_count, ts_images, ts_pages, ts_users, ts_statistic, ts_cmd, ts_sync, storage_duration) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-            dbc.execute(query, (shop_id, msgpack.packb(config), msgpack.packb(categorys), msgpack.packb(categorys_count), msgpack.packb(images), msgpack.packb(pages), msgpack.packb(users), msgpack.packb(statistic), msgpack.packb(cmd), ts_config, ts_categorys, ts_categorys_count, ts_images, ts_pages, ts_users, ts_statistic, ts_cmd, ts_sync, storage_duration))
+        db = self.__db_connect()
+        dbc = db.cursor()
 
-            self.__db_commit()
+        query = "INSERT INTO shop (id, config, categorys, categorys_count, images, pages, users, statistic, cmd, ts_config, ts_categorys, ts_categorys_count, ts_images, ts_pages, ts_users, ts_statistic, ts_cmd, ts_sync, storage_duration) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        dbc.execute(query, (shop_id, msgpack.packb(config), msgpack.packb(categorys), msgpack.packb(categorys_count), msgpack.packb(images), msgpack.packb(pages), msgpack.packb(users), msgpack.packb(statistic), msgpack.packb(cmd), ts_config, ts_categorys, ts_categorys_count, ts_images, ts_pages, ts_users, ts_statistic, ts_cmd, ts_sync, storage_duration))
 
-        except Exception as e:
-            RNS.log("Core - Error while creating shop: "+str(e), RNS.LOG_ERROR)
-            return False
+        self.__db_commit()
+
+        self.db_contacts_add(dest=shop_id, name=name, name_announce=name_announce, trust=trust, telemetry_receive=telemetry_receive)
 
         return True
 
@@ -2170,8 +2171,8 @@ class Core:
         if variant == None:
             variant = 0
 
-        query = "SELECT * FROM shop_entry WHERE shop_entry.shop_id = ? AND shop_entry.entry_id = ?"
-        dbc.execute(query, (shop_id, entry_id))
+        query = "SELECT shop_entry.*, shop_cart.variant, shop_cart.quantity, IIF(shop_cart.variant IS NOT NULL, 1, 0), IIF(shop_favorite.shop_id IS NOT NULL, 1, 0), IIF(shop_notify.shop_id IS NOT NULL, 1, 0) FROM shop_entry LEFT JOIN shop_cart ON shop_cart.shop_id = shop_entry.shop_id AND shop_cart.entry_id = shop_entry.entry_id AND shop_cart.variant = ? LEFT JOIN shop_favorite ON shop_favorite.shop_id = shop_entry.shop_id AND shop_favorite.entry_id = shop_entry.entry_id LEFT JOIN shop_notify ON shop_notify.shop_id = shop_entry.shop_id AND shop_notify.entry_id = shop_entry.entry_id WHERE shop_entry.shop_id = ? AND shop_entry.entry_id = ?"
+        dbc.execute(query, (variant, shop_id, entry_id))
         result = dbc.fetchall()
 
         if len(result) < 1:
@@ -2264,6 +2265,11 @@ class Core:
 
             if not sync:
                 data["ts_sync"] = entry[55]
+                data["variant"] = entry[56]
+                data["quantity"] = entry[57]
+                data["cart"] = entry[58]
+                data["favorites"] = entry[59]
+                data["notify"] =entry[60]
 
             return data
 
@@ -2374,7 +2380,7 @@ class Core:
             self.__db_commit()
 
         except Exception as e:
-            RNS.log("Core - Error while creating shop entry: "+str(e), RNS.LOG_ERROR)
+            RNS.log("Core - DB - Error: "+str(e), RNS.LOG_ERROR)
             result = 0x00
             result_files = []
 
@@ -2419,12 +2425,21 @@ class Core:
         dbc = db.cursor()
 
         if entry != None:
+            query = "DELETE FROM shop_cart WHERE shop_id = ? AND entry_id = ?"
+            dbc.execute(query, (entry["shop_id"], entry["entry_id"]))
+
             query = "DELETE FROM shop_entry WHERE shop_id = ? AND entry_id = ?"
             dbc.execute(query, (entry["shop_id"], entry["entry_id"]))
 
             if not loopback:
                 query = "INSERT OR REPLACE INTO shop_entry (entry_id, shop_id, vendor_id, images, variants, files, files_data) values (?, ?, ?, ?, ?, ?, ?)"
                 dbc.execute(query, (entry["entry_id"], entry["shop_id"], entry["vendor_id"], msgpack.packb(None), msgpack.packb(None), msgpack.packb(None), msgpack.packb(None)))
+
+            query = "DELETE FROM shop_favorite WHERE shop_id = ? AND entry_id = ?"
+            dbc.execute(query, (entry["shop_id"], entry["entry_id"]))
+
+            query = "DELETE FROM shop_notify WHERE shop_id = ? AND entry_id = ?"
+            dbc.execute(query, (entry["shop_id"], entry["entry_id"]))
 
         elif shop_id != None and entry_id != None:
             query = "DELETE FROM shop_entry WHERE shop_id = ? AND entry_id = ?"
@@ -2866,7 +2881,7 @@ def log(text, level=3, file=None):
                 file_handle = open(file, "a")
                 file_handle.write(text + "\n")
                 file_handle.close()
-                
+
                 if os.path.getsize(file) > LOG_MAXSIZE:
                     file_prev = file + ".1"
                     if os.path.isfile(file_prev):

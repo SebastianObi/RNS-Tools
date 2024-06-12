@@ -1,0 +1,2054 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-01 19:45+0100\n"
+"PO-Revision-Date: 2023-12-12 09:41\n"
+"Last-Translator: SebastianObi\n"
+"Language-Team: SebastianObi\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#: infos
+#, fuzzy
+msgid "Software - Python"
+msgstr "Програмне забезпечення - Python"
+
+#: infos
+#, fuzzy
+msgid "Software - Reticulum"
+msgstr "Програмне забезпечення - reticulum"
+
+#: infos
+#, fuzzy
+msgid "Software - System"
+msgstr "Програмне забезпечення - Система"
+
+#: infos
+#, fuzzy
+msgid "System - Drives & data storage"
+msgstr "Система - накопичувачі та зберігання даних"
+
+#: infos
+#, fuzzy
+msgid "System - General system information"
+msgstr "Система - Загальна інформація про систему"
+
+#: infos
+#, fuzzy
+msgid "System - Interfaces"
+msgstr "Система - інтерфейси"
+
+#: infos
+#, fuzzy
+msgid "System - Network connections"
+msgstr "Система - мережеві з'єднання"
+
+#: infos
+#, fuzzy
+msgid "System time"
+msgstr "Системний час"
+
+#: infos
+#, fuzzy
+msgid "Start time"
+msgstr "Час початку"
+
+#: infos
+#, fuzzy
+msgid "Runtime"
+msgstr "Час виконання"
+
+#: infos
+#, fuzzy
+msgid "Version"
+msgstr "Версія"
+
+#: infos
+#, fuzzy
+msgid "Status:"
+msgstr "Статус:"
+
+#: infos
+#, fuzzy
+msgid "Clients:"
+msgstr "Клієнти:"
+
+#: infos
+#, fuzzy
+msgid "Peers:"
+msgstr "Однолітки:"
+
+#: infos
+#, fuzzy
+msgid "Mode:"
+msgstr "Режим:"
+
+#: infos
+#, fuzzy
+msgid "Speed:"
+msgstr "Швидкість:"
+
+#: infos
+#, fuzzy
+msgid "Airtime:"
+msgstr "Ефір:"
+
+#: infos
+#, fuzzy
+msgid "Ch. Load:"
+msgstr "Ч. Завантаження:"
+
+#: infos
+#, fuzzy
+msgid "Queued:"
+msgstr "Черга:"
+
+#: infos
+#, fuzzy
+msgid "announce"
+msgstr "оголошувати"
+
+#: infos
+#, fuzzy
+msgid "announces"
+msgstr "оголошення"
+
+#: infos
+#, fuzzy
+msgid "Held:"
+msgstr "Проводиться:"
+
+#: infos
+#, fuzzy
+msgid "Announces:"
+msgstr "Оголошує:"
+
+#: infos
+#, fuzzy
+msgid "Transport Instance"
+msgstr "Транспортний екземпляр"
+
+#: infos
+#, fuzzy
+msgid "Probe responder"
+msgstr "Зондувати"
+
+#: infos
+#, fuzzy
+msgid "Uptime"
+msgstr "Час роботи"
+
+#: infos
+#, fuzzy
+msgid "[b]Size:[/b]"
+msgstr "[b] Розмір: [/b]"
+
+#: infos
+#, fuzzy
+msgid "[b]Free:[/b]"
+msgstr "[b] безкоштовно: [/b]"
+
+#: infos
+#, fuzzy
+msgid "[b]Type:[/b]"
+msgstr "[b] Тип: [/b]"
+
+#: infos
+#, fuzzy
+msgid "Platform"
+msgstr "Платформа"
+
+#: infos
+#, fuzzy
+msgid "Release"
+msgstr "Звільнення"
+
+#: infos
+#, fuzzy
+msgid "Release name"
+msgstr "Назва випуску"
+
+#: infos
+#, fuzzy
+msgid "Model"
+msgstr "Модель"
+
+#: infos
+#, fuzzy
+msgid "Hostname"
+msgstr "Ім'я хоста"
+
+#: infos
+#, fuzzy
+msgid "CPU load"
+msgstr "Навантаження на процесор"
+
+#: infos
+#, fuzzy
+msgid "CPU cores"
+msgstr "Ядра процесора"
+
+#: infos
+#, fuzzy
+msgid "System temperature"
+msgstr "Температура системи"
+
+#: infos
+#, fuzzy
+msgid "LAN"
+msgstr "Локальна мережа"
+
+#: infos
+#, fuzzy
+msgid "WiFi"
+msgstr "Wifi"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks"
+msgstr "Wi -Fi Networks"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks connected"
+msgstr "Підключені мережі Wi -Fi"
+
+#: infos
+#, fuzzy
+msgid "USB"
+msgstr "USB"
+
+#: infos
+#, fuzzy
+msgid "Bluetooth"
+msgstr "Блюдот"
+
+#: infos
+#, fuzzy
+msgid "Serial"
+msgstr "Серіал"
+
+#: logs
+#, fuzzy
+msgid "FDN - Reticulum, Channel, Group, Shop"
+msgstr "Fdn - reticulum, канал, група, магазин"
+
+#: logs
+#, fuzzy
+msgid "Software"
+msgstr "Програмне забезпечення"
+
+#: logs
+#, fuzzy
+msgid "Dhcpd - DHCP Server"
+msgstr "DHCPD - DHCP -сервер"
+
+#: logs
+#, fuzzy
+msgid "Dnsmasq - DNS Server"
+msgstr "DNSMASQ - DNS -сервер"
+
+#: logs
+#, fuzzy
+msgid "Hostapd - WiFi AP"
+msgstr "Hostapd - wifi ap"
+
+#: logs
+#, fuzzy
+msgid "System"
+msgstr "Система"
+
+#: logs
+#, fuzzy
+msgid "Auth - Authentication"
+msgstr "АВТОРНА - автентифікація"
+
+#: logs
+#, fuzzy
+msgid "Daemon - System daemons"
+msgstr "Демон - системні демони"
+
+#: logs
+#, fuzzy
+msgid "Fail - Failed login attempts"
+msgstr "Невдача - невдалі спроби входу"
+
+#: logs
+#, fuzzy
+msgid "Kern - Kernel"
+msgstr "Ядро - ядро"
+
+#: logs
+#, fuzzy
+msgid "Mail - Email-related events"
+msgstr "Пошта - події, пов’язані з електронною поштою"
+
+#: logs
+#, fuzzy
+msgid "Messages - General system events"
+msgstr "Повідомлення - Загальні системні події"
+
+#: logs
+#, fuzzy
+msgid "Syslog - System"
+msgstr "Syslog - система"
+
+#: logs
+#, fuzzy
+msgid "User - User activities"
+msgstr "Користувач - діяльність користувача"
+
+#: scripts
+#, fuzzy
+msgid "Backup & Restore"
+msgstr "Резервне копіювання та відновлення"
+
+#: scripts
+#, fuzzy
+msgid "Examples"
+msgstr "Приклади"
+
+#: scripts
+#, fuzzy
+msgid "Examples 1"
+msgstr "Приклади 1"
+
+#: scripts
+#, fuzzy
+msgid "Examples 2"
+msgstr "Приклади 2"
+
+#: scripts
+msgid "Examples - Test Configurations"
+msgstr ""
+
+#: scripts
+#, fuzzy
+msgid "Examples - User interface test functions"
+msgstr "Приклади - Тест -інтерфейс користувача"
+
+#: scripts
+#, fuzzy
+msgid "Reticulum - LoRadio & RNode"
+msgstr "Reticulum - loradio & rnode"
+
+#: scripts
+#, fuzzy
+msgid "Software - Installation"
+msgstr "Програмне забезпечення - Встановлення"
+
+#: scripts
+#, fuzzy
+msgid "Software - Uninstallation"
+msgstr "Програмне забезпечення - видалення"
+
+#: scripts
+#, fuzzy
+msgid "Software - Update"
+msgstr "Оновлення програмного забезпечення"
+
+#: scripts
+#, fuzzy
+msgid "System - Configuration"
+msgstr "Конфігурація системи"
+
+#: scripts
+#, fuzzy
+msgid "System - Update"
+msgstr "Система - оновлення"
+
+#: scripts
+#, fuzzy
+msgid "Management - Restart"
+msgstr "Управління - перезапуск"
+
+#: scripts
+#, fuzzy
+msgid "System - Reboot"
+msgstr "Система - перезавантаження"
+
+#: scripts
+#, fuzzy
+msgid "System - Shutdown"
+msgstr "Система - відключення"
+
+#: scripts
+#, fuzzy
+msgid "System Clone - Creates a direct copy of the system drive"
+msgstr "Системний клон - створює пряму копію системного диска"
+
+#: scripts
+#, fuzzy
+msgid "System Image - Creates an image of the system drive"
+msgstr "Системне зображення - створює зображення системного приводу"
+
+#: scripts
+#, fuzzy
+msgid "Example - All input elements"
+msgstr "Приклад - Усі вхідні елементи"
+
+#: scripts
+#, fuzzy
+msgid "Example - Exit codes"
+msgstr "Приклад - Коди виходу"
+
+#: scripts
+#, fuzzy
+msgid "Example - Waiting time"
+msgstr "Приклад - Час очікування"
+
+#: scripts
+#, fuzzy
+msgid "Info - Read out information"
+msgstr "Інформація - Прочитайте інформацію"
+
+#: scripts
+#, fuzzy
+msgid "Install - Installing the firmware"
+msgstr "Встановлення - Встановлення прошивки"
+
+#: scripts
+#, fuzzy
+msgid "Reset - Resetting the firmware"
+msgstr "Скидання - скидання прошивки"
+
+#: scripts
+#, fuzzy
+msgid "Update - Updating the firmware"
+msgstr "Оновлення - Оновлення прошивки"
+
+#: scripts
+#, fuzzy
+msgid "Bridge Matrix - Message bridge"
+msgstr "МОДОВА МАТРИКА - Міст повідомлення"
+
+#: scripts
+#, fuzzy
+msgid "Console tools - Recommended tools"
+msgstr "Консольні інструменти - Рекомендовані інструменти"
+
+#: scripts
+#, fuzzy
+msgid "Filesystem tools - Recommended tools"
+msgstr "Інструменти файлової системи - рекомендовані інструменти"
+
+#: scripts
+#, fuzzy
+msgid "Server Blockchain - Gateway for payment and other blockchain functions"
+msgstr "Server Blockchain - шлюз для оплати та інших функцій blockchain"
+
+#: scripts
+#, fuzzy
+msgid "Server Channel - Hosting the channel functionality"
+msgstr "Серверний канал - розміщення функціональності каналу"
+
+#: scripts
+#, fuzzy
+msgid "Server Group - Hosting the group functionality"
+msgstr "Група серверів - розміщення функціональності групи"
+
+#: scripts
+#, fuzzy
+msgid "Server Page - Hosting the page functionality"
+msgstr "Сторінка сервера - розміщення функціональності сторінки"
+
+#: scripts
+#, fuzzy
+msgid "Server Propagation - Hosting the propagation node functionality"
+msgstr "Розповсюдження сервера - розміщення функціональності вузла поширення"
+
+#: scripts
+#, fuzzy
+msgid "Server Shop - Hosting the shop functionality"
+msgstr "Серверний магазин - розміщення функціональності магазину"
+
+#: scripts
+#, fuzzy
+msgid "Server - All hosting functions for channel, group, page, shop, etc."
+msgstr ""
+"Сервер - всі функції хостингу для каналу, групи, сторінки, магазину тощо."
+
+#: scripts
+#, fuzzy
+msgid "File system - Extend file system (Raspberry Pi)"
+msgstr "Файлова система - розширюйте файлову систему (Raspberry Pi)"
+
+#: scripts
+#, fuzzy
+msgid "Password - Change operating system password"
+msgstr "Пароль - Змінити пароль операційної системи"
+
+#: scripts
+#, fuzzy
+msgid "Update check - Check for new versions"
+msgstr "Оновлення перевірки - Перевірте наявність нових версій"
+
+#: scripts
+#, fuzzy
+msgid "Update cleanup - Cleaning up unneeded packages"
+msgstr "ОНОВЛЕННЯ ОБЛАДНЯ - Очищення непотрібних пакетів"
+
+#: scripts
+#, fuzzy
+msgid "Update Update - Update the system"
+msgstr "Оновлення оновлення - Оновіть систему"
+
+#: scripts
+#, fuzzy
+msgid "Update Upgrade - Distribution update of the system"
+msgstr "Оновлення оновлення - оновлення розподілу системи"
+
+#: scripts
+#, fuzzy
+msgid "Installing.."
+msgstr "Встановлення .."
+
+#: scripts
+#, fuzzy
+msgid "Uninstalling..."
+msgstr "Видалення ..."
+
+#: scripts
+#, fuzzy
+msgid "Updating..."
+msgstr "Оновлення ..."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The management server will restart. You must reconnect to re-establish a "
+"connection."
+msgstr ""
+"Сервер управління перезапуститься. Ви повинні знову підключитися, щоб "
+"відновити з'єднання."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will reboot. You must reconnect to re-establish a connection."
+msgstr ""
+"Система перезавантажиться. Ви повинні знову підключитися, щоб відновити "
+"з'єднання."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will shut down. You must then start it manually to re-establish a "
+"connection."
+msgstr ""
+"Система вимкнеться. Потім ви повинні запустити його вручну, щоб відновити "
+"зв’язок."
+
+#: scripts
+#, fuzzy
+msgid "No installed services found. Exiting."
+msgstr "Ніяких встановлених послуг не знайдено. Вихід."
+
+#: scripts
+#, fuzzy
+msgid "Select a service:"
+msgstr "Виберіть послугу:"
+
+#: scripts
+#, fuzzy
+msgid "Enter the name for the service: (only a-z 0-9)"
+msgstr "Введіть назву для служби: (лише A-Z 0-9)"
+
+#: scripts
+#, fuzzy
+msgid "Enter the display name for the application:"
+msgstr "Введіть ім’я відображення для програми:"
+
+#: scripts
+#, fuzzy
+msgid "Invalid choice!"
+msgstr "Недійсний вибір!"
+
+#: scripts
+#, fuzzy
+msgid "Update successfully completed!"
+msgstr "Оновлення успішно завершено!"
+
+#: scripts
+#, fuzzy
+msgid "Uninstallation successfully completed!"
+msgstr "Видалення успішно завершено!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a shop successfully completed!"
+msgstr "Встановлення магазину успішно завершено!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of an echo server successfully completed!"
+msgstr "Встановлення ехо -сервера успішно завершено!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a channel successfully completed!"
+msgstr "Встановлення каналу успішно завершено!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a group successfully completed!"
+msgstr "Встановлення групи успішно завершено!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a propagation node successfully completed!"
+msgstr "Встановлення вузла розповсюдження успішно завершено!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a provisioning node successfully completed!"
+msgstr "Встановлення вузла забезпечення успішно завершено!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a page successfully completed!"
+msgstr "Встановлення сторінки успішно завершено!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a blockchain node successfully completed!"
+msgstr "Встановлення блокчейн -вузла успішно завершено!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a message bridge successfully completed!"
+msgstr "Встановлення мосту повідомлення успішно завершено!"
+
+#: scripts
+#, fuzzy
+msgid ""
+"No further configuration is necessary. Connect to the shop to make all the "
+"necessary settings in the shop app. You should find the new shop in the "
+"announcement list."
+msgstr ""
+"Подальша конфігурація не потрібна. Підключіться до магазину, щоб зробити всі "
+"необхідні налаштування в магазині. Ви повинні знайти новий магазин у списку "
+"оголошень."
+
+#: scripts
+#, fuzzy
+msgid ""
+"To make further settings, please edit the corresponding configuration files "
+"in the following folder:"
+msgstr ""
+"Щоб зробити подальші налаштування, будь ласка, редагуйте відповідні файли "
+"конфігурації у наступній папці:"
+
+#: scripts
+#, fuzzy
+msgid "Then you must restart the following service:"
+msgstr "Тоді ви повинні перезапустити наступну послугу:"
+
+#: services
+#, fuzzy
+msgid "All"
+msgstr "Все"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Hit:"
+msgstr "Удар:"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading package lists"
+msgstr "Читання списків пакетів"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Building dependency tree"
+msgstr "Дерево залежності від будівництва"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading state information"
+msgstr "Інформація про стан читання"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading database"
+msgstr "Читання бази даних"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Calculating upgrade"
+msgstr "Обчислення оновлення"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Waiting for headers"
+msgstr "Чекає заголовків"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Working"
+msgstr "Робочий"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "All packages are up to date"
+msgstr "Усі пакети оновлені"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Done"
+msgstr "Виконаний"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"The following packages were automatically installed and are no longer "
+"required"
+msgstr "Наступні пакети були автоматично встановлені і більше не потрібні"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Use"
+msgstr "Використання"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove them"
+msgstr "Щоб їх видалити"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "upgraded"
+msgstr "модернізований"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "newly installed"
+msgstr "нещодавно встановлений"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove and"
+msgstr "для видалення та"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "not upgraded"
+msgstr "не оновлений"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Connected to"
+msgstr "Пов'язаний з"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be REMOVED"
+msgstr "Наступні пакети будуть видалені"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "After this operation"
+msgstr "Після цієї операції"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "disk space will be freed"
+msgstr "Простір дисків буде звільнений"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Do you want to continue?"
+msgstr "Ви хочете продовжувати?"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Progress"
+msgstr "Прогресувати"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Removing"
+msgstr "Видалення"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Processing triggers for"
+msgstr "Тригери обробки для"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be upgraded"
+msgstr "Наступні пакети будуть оновлені"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading changelogs"
+msgstr "Читання змінних"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preconfiguring packages"
+msgstr "Попередні налаштування пакетів"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preparing to unpack"
+msgstr "Підготовка до розпакування"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "files and directories currently installed"
+msgstr "В даний час файли та каталоги"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Unpacking"
+msgstr "Розпалювання"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Setting up"
+msgstr "Налаштовуючи"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "over"
+msgstr "над"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Installing new version of config file"
+msgstr "Встановлення нової версії конфігураційного файлу"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "A new version"
+msgstr "Нова версія"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "of configuration file"
+msgstr "файлу конфігурації"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"is available, but the version installed currently has been locally modified"
+msgstr ""
+"доступна, але встановлена версія на даний момент була локально модифікована"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error, exiting now."
+msgstr "Помилка, виходячи зараз."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: You need to run this script as"
+msgstr "Помилка: вам потрібно запустити цей сценарій як"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: This script can't be piped!"
+msgstr "Помилка: Цей сценарій неможливо подати!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "failed!"
+msgstr "Не вдалося!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Finished!"
+msgstr "Закувай!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating packet repository"
+msgstr "Оновлення сховища пакетів"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating system"
+msgstr "Система оновлення"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Cleanup system"
+msgstr "Система очищення"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Installing"
+msgstr "Встановлення"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating"
+msgstr "Оновлення"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Expanding Filesystem"
+msgstr "Розширення файлової системи"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Do you want to proceed?"
+msgstr "Ви хочете продовжити?"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Ok, proceeding..."
+msgstr "Гаразд, продовжуючи ..."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "No, exiting now."
+msgstr "Ні, зараз виходить."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Please answer yes or no."
+msgstr "Будь ласка, дайте відповідь так чи ні."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing path"
+msgstr "Зміна шляху"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Downloading"
+msgstr "Завантаження"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/owner"
+msgstr "Зміна дозволів на файл/власник"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/right"
+msgstr "Зміна дозволів на файл/право"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "To activate the changes, the system must be rebooted."
+msgstr "Щоб активувати зміни, систему потрібно перезавантажити."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Could not find any user, exiting now."
+msgstr "Не вдалося знайти жодного користувача, виходячи зараз."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Which user would you like to edit?"
+msgstr "Якого користувача ви хотіли б редагувати?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Define the password for user"
+msgstr "Визначте пароль для користувача"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Do you want to edit another user?"
+msgstr "Ви хочете редагувати іншого користувача?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "New password"
+msgstr "Новий пароль"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Retype new password"
+msgstr "Перетворіть новий пароль"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "No password has been supplied."
+msgstr "Пароль не постачається."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Sorry, passwords do not match."
+msgstr "Вибачте, паролі не відповідають."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Updating password"
+msgstr "Оновлення пароля"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Authentication token manipulation error"
+msgstr "Помилка маніпуляції з автентифікацією маркера"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "password unchanged"
+msgstr "Пароль незмінний"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "user"
+msgstr "користувач"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "does not exist"
+msgstr "не існує"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Please connect the destination device you wish to use."
+msgstr ""
+"Будь ласка, підключіть пристрій призначення, який ви хочете використовувати."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Hit enter when it is connected."
+msgstr "Натисніть ENTER, коли він підключений."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find any devices, exiting now."
+msgstr "Не вдалося знайти жодних пристроїв, що виходять зараз."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find specified device, exiting now."
+msgstr "Не вдалося знайти вказаний пристрій, виходячи зараз."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "What is your destination device?"
+msgstr "Який пристрій призначення?"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Ok, using device:"
+msgstr "Гаразд, використовуючи пристрій:"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "target is busy"
+msgstr "Ціль зайнята"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating image file"
+msgstr "Створення файлу зображення"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image file"
+msgstr "Скорочення файлу зображення"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "copied"
+msgstr "скопійований"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records in"
+msgstr "записи в"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records out"
+msgstr "записувати"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Gathering data"
+msgstr "Збір даних"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating new"
+msgstr "Створення нового"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Checking filesystem"
+msgstr "Перевірка файлової системи"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "non-contiguous"
+msgstr "непостійний"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks"
+msgstr "блоки"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking filesystem"
+msgstr "Скорочення файлової системи"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Resizing the filesystem on"
+msgstr "Зміна розміру файлової системи"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Begin pass"
+msgstr "Розпочати пропуск"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Relocating blocks"
+msgstr "Переміщення блоків"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Scanning inode table"
+msgstr "Сканування таблиці inode"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Updating inode references"
+msgstr "Оновлення посилань на інди"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "The filesystem on"
+msgstr "Файлова система"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "is now"
+msgstr "зараз"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks long"
+msgstr "Блоки довгі"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image"
+msgstr "Скорочення зображення"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Using gzip on the shrunk image"
+msgstr "Використання GZIP на зменшеному зображенні"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrunk"
+msgstr "Стискатися"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "from"
+msgstr "з"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "to"
+msgstr "до"
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid ""
+"Please connect the destination device (sd-card, usb-stick) you wish to use."
+msgstr ""
+"Будь ласка, підключіть пристрій призначення (SD-карта, USB-паличка), яку ви "
+"хочете використовувати."
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid "WARNING: All data on the destination device will be deleted!"
+msgstr "Попередження: Усі дані на пристрої призначення будуть видалені!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting frequency is"
+msgstr "Частота радіо звітування є"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting bandwidth is"
+msgstr "Пропускна здатність радіо звітування"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting TX power is"
+msgstr "Радіо звітування TX Power є"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting spreading factor is"
+msgstr "Фактор розповсюдження радіо звітування"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting coding rate is"
+msgstr "Швидкість кодування радіо звітування"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware initialisation error"
+msgstr "Помилка ініціалізації обладнання"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware TX error"
+msgstr "апаратна помилка TX"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware error"
+msgstr "помилка обладнання"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "serial read timeout"
+msgstr "серійний тайм -аут читання"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while detecting hardware for"
+msgstr ""
+"Під час виявлення обладнання для виявлення обладнання сталася помилка IO"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring frequency for"
+msgstr "Під час налаштування частоти сталася помилка IO"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring bandwidth for"
+msgstr "Під час налаштування пропускної здатності сталася помилка IO"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring TX power for"
+msgstr "Під час налаштування потужності TX сталася помилка IO"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring spreading factor for"
+msgstr "Під час налаштування коефіцієнта розповсюдження сталася помилка IO"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring coding rate for"
+msgstr "Під час налаштування швидкості кодування сталася помилка IO"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state for"
+msgstr "Під час налаштування радіо -стану сталася помилка IO"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring device mode"
+msgstr "Під час налаштування режиму пристрою сталася помилка IO"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while wiping EEPROM"
+msgstr "Під час витирання eeprom сталася помилка IO"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while restarting device"
+msgstr "Під час перезавантаження пристрою сталася помилка IO"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while writing EEPROM"
+msgstr "Під час написання eeprom сталася помилка вводу в Іо"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state"
+msgstr "Під час налаштування радіо -стану сталася помилка IO"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download EEPROM from device. Is a valid firmware installed?"
+msgstr ""
+"Не вдалося завантажити EEPROM з пристрою. Чи встановлюється дійсна прошивка?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum mismatch"
+msgstr "Невідповідність контрольної суми EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum correct"
+msgstr "Правильна контрольна сума EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load local signing key"
+msgstr "Не вдалося завантажити локальний ключ підписання"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize local signing key"
+msgstr "Не міг дезеріалізувати ключ локального підписання"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validated"
+msgstr "Підпис пристрою підтверджено"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validation failed"
+msgstr "Не вдалося врахувати перевірку підписів пристрою"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid EEPROM data, could not parse device EEPROM."
+msgstr "Недійсні дані EEPROM, не могли розібратися з пристроєм EEPROM."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Hello!\n"
+"\n"
+"This guide will help you install the RNode firmware on supported\n"
+"and homebrew devices. Please connect the device you wish to set\n"
+"up now."
+msgstr ""
+"Привіт! \n"
+"\n"
+" Цей посібник допоможе вам встановити прошивку RNode на підтримуваному \n"
+" та пристрої для домашнього пива. Будь ласка, підключіть пристрій, який ви "
+"хочете встановити \n"
+" вгору зараз."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please connect the device you wish to setup now."
+msgstr "Будь ласка, підключіть пристрій, який ви хочете налаштувати зараз."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find any port, exiting now."
+msgstr "Не вдалося знайти жодного порту, що виходять зараз."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Detected serial ports:"
+msgstr "Виявлені послідовні порти:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What serial port is your device connected to?"
+msgstr "До якого послідовного порту ваш пристрій підключений?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That port does not exist, exiting now."
+msgstr "Цього порту не існує, виходячи зараз."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not select port, exiting now."
+msgstr "Не вдалося вибрати порт, виходячи зараз."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Ok, using device on"
+msgstr "Гаразд, використовуючи пристрій"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "using device on"
+msgstr "за допомогою пристрою"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find specified port"
+msgstr "Не вдалося знайти вказаний порт"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "exiting now"
+msgstr "Вихід зараз"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Probing device"
+msgstr "Зондуючий пристрій"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not open the specified serial port. The contained exception was:"
+msgstr ""
+"Не вдалося відкрити вказаний послідовний порт. Виняток, що міститься, було:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No answer from device"
+msgstr "Немає відповіді з пристрою"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Trying to read EEPROM"
+msgstr "Намагаючись прочитати EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device is already installed and provisioned. No further action will\n"
+"be taken. If you wish to completely reinstall this device, you must first\n"
+"wipe the current EEPROM. See the help for more info.\n"
+"\n"
+"Exiting now."
+msgstr ""
+"Цей пристрій вже встановлений та забезпечений. Подальші дії не будуть \n"
+" приймати. Якщо ви хочете повністю перевстановити цей пристрій, ви повинні "
+"спочатку \n"
+" Витріть поточний EEPROM. Дивіться допомогу для отримання додаткової "
+"інформації. \n"
+"\n"
+" Вихід зараз."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"The device seems to have an RNode firmware installed, but it was not\n"
+"provisioned correctly, or it is corrupt. We are going to reinstall the\n"
+"correct firmware and provision it."
+msgstr ""
+"Здається, у пристрою встановлено програмне забезпечення RNODE, але цього не "
+"було \n"
+" забезпечений правильно, або він корумпований. Ми збираємось "
+"перевстановити \n"
+" Правильна прошивка та надання її."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "It looks like this is a fresh device with no RNode firmware."
+msgstr "Схоже, це свіжий пристрій без прошивки RNODE."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of device is this?"
+msgstr "Що це за пристрій?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Important! Using RNode firmware on"
+msgstr "Важливо! За допомогою прошивки RNode"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"should currently be\n"
+"considered experimental. It is not intended for production or critical use.\n"
+"The currently supplied firmware is provided AS-IS as a courtesey to those\n"
+"who would like to experiment with it. Hit enter to continue."
+msgstr ""
+"Наразі має бути \n"
+" вважається експериментальним. Він не призначений для виробництва або "
+"критичного використання. \n"
+" В даний час прошивка надається як є як ультра \n"
+" хто хотів би експериментувати з ним. Натисніть Enter, щоб продовжити."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That device type does not exist, exiting now."
+msgstr "Цього типу пристрою не існує, виходячи зараз."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of microcontroller is your board based on?"
+msgstr "На якому мікроконтролері базується ваша плата?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That MCU type does not exist, exiting now."
+msgstr "Цього типу MCU не існує, виходячи зараз."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What transceiver module does your board use?"
+msgstr "Який модуль приймача використовує ваша плата?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That transceiver type does not exist, exiting now."
+msgstr "Цього типу приймача не існує, виходячи зараз."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What model is this RNode?"
+msgstr "Яка модель ця rnode?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That model does not exist, exiting now."
+msgstr "Ця модель не існує, виходячи зараз."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this T-Beam for?"
+msgstr "Для чого це гурт цього T-променя?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That band does not exist, exiting now."
+msgstr "Цього гурту не існує, виходячи зараз."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this LoRa32 for?"
+msgstr "Для чого це група, це lora32?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this Heltec LoRa32 for?"
+msgstr "Для чого це гурт цього Heltec Lora32?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of ESP32 board is this?"
+msgstr "Що це за дошка ESP32?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That ESP32 board does not exist, exiting now."
+msgstr "Що дошка ESP32 не існує, виходить зараз."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Sorry, no firmware for your board currently exists.\n"
+"Help making it a reality by contributing code or by\n"
+"donating to the project."
+msgstr ""
+"Вибачте, не існує прошивки для вашої ради. \n"
+" Допомогти зробити це реальністю, вносячи код або \n"
+" Пожертвування проекту."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Ok, that should be all the information we need. Please confirm the "
+"following\n"
+"summary before proceeding. In the next step, the device will be flashed and\n"
+"provisioned, so make that you are satisfied with your choices."
+msgstr ""
+"Гаразд, це повинна бути вся необхідна інформація. Будь ласка, підтвердьте "
+"наступне \n"
+" резюме перед тим, як продовжувати. На наступному кроці пристрій буде "
+"спалахувати і \n"
+" Забезпечено, тому зробіть, щоб ви були задоволені своїм вибором."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial port"
+msgstr "Серійний порт"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device type"
+msgstr "Тип пристрою"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device MCU"
+msgstr "Пристрій MCU"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file"
+msgstr "Файл прошивки"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Is the above correct?"
+msgstr "Чи правильно вище?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "OK, aborting now."
+msgstr "Гаразд, аборт зараз."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device connected"
+msgstr "Пристрій підключений"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Current firmware version:"
+msgstr "Поточна версія прошивки:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Got invalid response while detecting device"
+msgstr "Отримав недійсну відповідь під час виявлення пристрою"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download required firmware file. The contained exception was:"
+msgstr ""
+"Не вдалося завантажити необхідний файл прошивки. Виняток, що міститься, було:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial module could not be found"
+msgstr "Серійний модуль не вдалося знайти"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs pyserial to work.\n"
+"You can install it with: pip3 install pyserial"
+msgstr ""
+"Утиліта Rnode Config потребує Pyserial для роботи. \n"
+" Ви можете встановити його за допомогою: PIP3 Встановіть Pyserial"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cryptography module could not be found"
+msgstr "Модуль криптографії не вдалося знайти"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs the cryptography module to work.\n"
+"You can install it with: pip3 install cryptography"
+msgstr ""
+"Утиліта Rnode Config потребує модуля криптографії для роботи. \n"
+" Ви можете встановити його з: PIP3 Встановити криптографію"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Downloading latest frimware from GitHub"
+msgstr "Завантаження останньої прошивки з Github"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware download completed"
+msgstr "Завантаження прошивки завершено"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware extracted"
+msgstr "Витягнуто мікропрограмне забезпечення"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not extract firmware from downloaded zip file"
+msgstr "Не вдалося витягнути програмне забезпечення з завантаженого zip -файлу"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing RNode firmware to device on"
+msgstr "Миготіння прошивки Rnode на пристрій"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Done flashing"
+msgstr "Зроблено миготіння"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Waiting for ESP32 reset"
+msgstr "Чекаючи скидання ESP32"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while flashing"
+msgstr "Помилка під час миготіння"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file not found"
+msgstr "Файл прошивки не знайдено"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download firmware package"
+msgstr "Не вдалося завантажити пакет прошивки"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The contained exception was:"
+msgstr "Виняток, що міститься, було:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Skipping online check, using local firmware file:"
+msgstr "Пропуск онлайн -перевірки, використовуючи файл локального прошивки:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load signing key"
+msgstr "Не вдалося завантажити ключ підписання"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize signing key"
+msgstr "Не міг дезеріалізувати ключ підписання"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Generating a new signing key"
+msgstr "Генерування нового ключа підписання"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Signing key already exists, not overwriting!\n"
+"Manually delete this key to create a new one."
+msgstr ""
+"Підписання ключа вже існує, а не перезапис! \n"
+" Вручну видаліть цей ключ, щоб створити новий."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The firmware directory does not exist, can't write key!"
+msgstr "Каталог прошивки не існує, не можна писати ключ!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Extracting firmware"
+msgstr "Витягування мікропрограмного забезпечення"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Opening serial port"
+msgstr "Відкриття серійного порту"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Serial port opened, but RNode did not respond. Is a valid firmware installed?"
+msgstr ""
+"Серійний порт відкрився, але RNode не відповів. Чи встановлюється дійсна "
+"прошивка?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"WARNING: EEPROM is being wiped! Power down device NOW if you do not want "
+"this!"
+msgstr ""
+"ПОПЕРЕДЖЕННЯ: EEPROM витере! Проведіть пристрій зараз, якщо ви цього не "
+"хочете!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Reading EEPROM"
+msgstr "Читання eeprom"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "ERROR: No firmware found for this board. Cannot update."
+msgstr ""
+"Помилка: для цієї дошки не знайдено жодної прошивки. Не вдається оновити."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cannot update device firmware"
+msgstr "Не вдається оновити прошивку пристрою"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Updating RNode firmware for device on"
+msgstr "Оновлення прошивки RNODE для пристрою"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing new firmware completed"
+msgstr "Миготіння нового прошивки завершено"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update completed successfully"
+msgstr "Оновлення прошивки успішно завершено"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while flashing the new firmware, exiting now."
+msgstr "Помилка сталася під час миготіння нової прошивки, виходячи зараз."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while updating firmware"
+msgstr "Помилка під час оновлення прошивки"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update file not found"
+msgstr "Файл оновлення прошивки не знайдено"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM contents"
+msgstr "Зміст EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM backup written to"
+msgstr "Резервне копіювання EEPROM, написаний на"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"EEPROM was successfully downloaded from device,\n"
+"but file could not be written to disk."
+msgstr ""
+"Eeprom був успішно завантажений з пристрою, \n"
+" Але файл не вдалося записати на диск."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device info:"
+msgstr "Інформація про пристрій:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Product"
+msgstr "Продукт"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature"
+msgstr "Підпис пристрою"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware version"
+msgstr "Версія прошивки"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Hardware revision"
+msgstr "Перегляд обладнання"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial number"
+msgstr "Серійний номер"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency range"
+msgstr "Діапазон частот"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Max TX power"
+msgstr "Max TX Power"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Manufactured"
+msgstr "Виготовлений"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device mode"
+msgstr "Режим пристрою"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency"
+msgstr "Частота"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth"
+msgstr "Пропускна здатність"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "TX power"
+msgstr "TX Power"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor"
+msgstr "Фактор поширення"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate"
+msgstr "Кодування кодування"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "On-air bitrate"
+msgstr "В ефірі бітрейт"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM is invalid, no further information available"
+msgstr "EEPROM недійсна, немає додаткової інформації"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM bootstrap was requested, but a valid EEPROM was already present."
+msgstr ""
+"Bootstrap Eeprom було запропоновано, але дійсне EEPROM вже був присутній."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No changes are being made."
+msgstr "Зміни не вносяться."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Clearing old EEPROM, this will take about 15 seconds"
+msgstr "Очищення старого eeprom, це займе близько 15 секунд"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not create device serial number, exiting"
+msgstr "Не вдалося створити серійний номер пристрою, вихідний"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Loading signing key"
+msgstr "Завантаження ключа підписання"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while signing EEPROM"
+msgstr "Помилка під час підписання EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bootstrapping device EEPROM"
+msgstr "Пристрій для завантаження eeprom"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM written! Validating"
+msgstr "Eeprom написано! Валідний"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM Bootstrapping successful!"
+msgstr "Eeprom Bootstrapping успішного!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "RNode Firmware autoinstallation complete!"
+msgstr "Прошивка RNODE Autoinstallation завершена!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "To use your device with Reticulum, read the documetation at:"
+msgstr ""
+"Щоб використовувати свій пристрій за допомогою ретикулуму, прочитайте "
+"документацію за адресою:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Thank you for using this utility! Please help the project by\n"
+"contributing code and reporting bugs, or by donating!"
+msgstr ""
+"Дякуємо за використання цієї утиліти! Будь ласка, допоможіть проекту \n"
+" Внесення коду та звітування помилок, або пожертвуючи!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Your contributions and donations directly further the realisation\n"
+"of truly open, free and resilient communications systems."
+msgstr ""
+"Ваші внески та пожертви безпосередньо ще більше здійснюють реалізацію \n"
+" справді відкритих, вільних та стійких систем зв'язку."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "WARNING: Could not backup device EEPROM to disk"
+msgstr "ПОПЕРЕДЖЕННЯ: Не вдалося резервного пристрою eeprom на диск"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM was written, but validation failed. Check your settings."
+msgstr ""
+"EEPROM був написаний, але перевірка не вдалося. Перевірте свої налаштування."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while writing EEPROM. The contained exception was:"
+msgstr "Під час написання EEPROM сталася помилка. Виняток, що міститься, було:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid data specified, cancelling EEPROM write"
+msgstr "Недійсні дані, визначені, скасування запису EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to normal (host-controlled) operating mode"
+msgstr "Пристрій встановлений у звичайний (контрольований хост) режим роботи"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please input startup configuration:"
+msgstr "Будь ласка, введіть конфігурацію запуску:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency in Hz:"
+msgstr "Частота в Гц:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth in Hz:"
+msgstr "Пропускна здатність в Гц:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor:"
+msgstr "Фактор поширення:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate:"
+msgstr "Швидкість кодування:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to TNC operating mode"
+msgstr "Пристрій встановлений в режимі роботи TNC"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device contains a valid firmware, but EEPROM is invalid.\n"
+"Probably the device has not been initialised, or the EEPROM has been "
+"erased.\n"
+"Please correctly initialise the device and try again!"
+msgstr ""
+"Цей пристрій містить дійсну прошивку, але EEPROM є недійсним. \n"
+" Напевно, пристрій не був ініціалізований, або EEPROM стертий. \n"
+" Будь ласка, правильно ініціалізуйте пристрій і спробуйте ще раз!"

@@ -18,6 +18,10 @@ For more information, see the detailed [README.md](rns_announce_view).
 For more information, see the detailed [README.md](rns_call_echo).
 
 
+## rns_hop_simulator
+For more information, see the detailed [README.md](rns_hop_simulator).
+
+
 ## rns_server_blockchain
 For more information, see the detailed [README.md](rns_server_blockchain).
 

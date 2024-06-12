@@ -1,0 +1,2024 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-01 19:45+0100\n"
+"PO-Revision-Date: 2023-12-12 09:36\n"
+"Last-Translator: SebastianObi\n"
+"Language-Team: SebastianObi\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#: infos
+#, fuzzy
+msgid "Software - Python"
+msgstr "البرمجيات - بيثون"
+
+#: infos
+#, fuzzy
+msgid "Software - Reticulum"
+msgstr "البرمجيات - الشبكة"
+
+#: infos
+#, fuzzy
+msgid "Software - System"
+msgstr "نظام البرمجيات"
+
+#: infos
+#, fuzzy
+msgid "System - Drives & data storage"
+msgstr "النظام - محركات الأقراص وتخزين البيانات"
+
+#: infos
+#, fuzzy
+msgid "System - General system information"
+msgstr "النظام - معلومات النظام العام"
+
+#: infos
+#, fuzzy
+msgid "System - Interfaces"
+msgstr "النظام - واجهات"
+
+#: infos
+#, fuzzy
+msgid "System - Network connections"
+msgstr "النظام - اتصالات الشبكة"
+
+#: infos
+#, fuzzy
+msgid "System time"
+msgstr "وقت النظام"
+
+#: infos
+#, fuzzy
+msgid "Start time"
+msgstr "وقت البدء"
+
+#: infos
+#, fuzzy
+msgid "Runtime"
+msgstr "مدة العرض"
+
+#: infos
+#, fuzzy
+msgid "Version"
+msgstr "إصدار"
+
+#: infos
+#, fuzzy
+msgid "Status:"
+msgstr "حالة:"
+
+#: infos
+#, fuzzy
+msgid "Clients:"
+msgstr "العملاء:"
+
+#: infos
+#, fuzzy
+msgid "Peers:"
+msgstr "الأقران:"
+
+#: infos
+#, fuzzy
+msgid "Mode:"
+msgstr "وضع:"
+
+#: infos
+#, fuzzy
+msgid "Speed:"
+msgstr "سرعة:"
+
+#: infos
+#, fuzzy
+msgid "Airtime:"
+msgstr "وقت البث:"
+
+#: infos
+#, fuzzy
+msgid "Ch. Load:"
+msgstr "الفصل. حمولة:"
+
+#: infos
+#, fuzzy
+msgid "Queued:"
+msgstr "قائمة الانتظار:"
+
+#: infos
+#, fuzzy
+msgid "announce"
+msgstr "يعلن"
+
+#: infos
+#, fuzzy
+msgid "announces"
+msgstr "تعلن"
+
+#: infos
+#, fuzzy
+msgid "Held:"
+msgstr "محتجز:"
+
+#: infos
+#, fuzzy
+msgid "Announces:"
+msgstr "تعلن:"
+
+#: infos
+#, fuzzy
+msgid "Transport Instance"
+msgstr "مثال النقل"
+
+#: infos
+#, fuzzy
+msgid "Probe responder"
+msgstr "المستجيب التحقيق"
+
+#: infos
+#, fuzzy
+msgid "Uptime"
+msgstr "مدة التشغيل"
+
+#: infos
+#, fuzzy
+msgid "[b]Size:[/b]"
+msgstr "[ب] الحجم: [/ب]"
+
+#: infos
+#, fuzzy
+msgid "[b]Free:[/b]"
+msgstr "[ب] مجانا: [/ب]"
+
+#: infos
+#, fuzzy
+msgid "[b]Type:[/b]"
+msgstr "[ب] النوع: [/b]"
+
+#: infos
+#, fuzzy
+msgid "Platform"
+msgstr "منصة"
+
+#: infos
+#, fuzzy
+msgid "Release"
+msgstr "يطلق"
+
+#: infos
+#, fuzzy
+msgid "Release name"
+msgstr "اسم الإصدار"
+
+#: infos
+#, fuzzy
+msgid "Model"
+msgstr "نموذج"
+
+#: infos
+#, fuzzy
+msgid "Hostname"
+msgstr "اسم المضيف"
+
+#: infos
+#, fuzzy
+msgid "CPU load"
+msgstr "تحميل وحدة المعالجة المركزية"
+
+#: infos
+#, fuzzy
+msgid "CPU cores"
+msgstr "مراكز وحدة المعالجة المركزية"
+
+#: infos
+#, fuzzy
+msgid "System temperature"
+msgstr "درجة حرارة النظام"
+
+#: infos
+#, fuzzy
+msgid "LAN"
+msgstr "LAN"
+
+#: infos
+#, fuzzy
+msgid "WiFi"
+msgstr "واي فاي"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks"
+msgstr "شبكات wifi"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks connected"
+msgstr "شبكات wifi متصلة"
+
+#: infos
+#, fuzzy
+msgid "USB"
+msgstr "USB"
+
+#: infos
+#, fuzzy
+msgid "Bluetooth"
+msgstr "بلوتوث"
+
+#: infos
+#, fuzzy
+msgid "Serial"
+msgstr "مسلسل"
+
+#: logs
+#, fuzzy
+msgid "FDN - Reticulum, Channel, Group, Shop"
+msgstr "FDN - Reticulum ، قناة ، مجموعة ، متجر"
+
+#: logs
+#, fuzzy
+msgid "Software"
+msgstr "برمجة"
+
+#: logs
+#, fuzzy
+msgid "Dhcpd - DHCP Server"
+msgstr "DHCPD - خادم DHCP"
+
+#: logs
+#, fuzzy
+msgid "Dnsmasq - DNS Server"
+msgstr "DNSMASQ - خادم DNS"
+
+#: logs
+#, fuzzy
+msgid "Hostapd - WiFi AP"
+msgstr "Hostapd - wifi ap"
+
+#: logs
+#, fuzzy
+msgid "System"
+msgstr "نظام"
+
+#: logs
+#, fuzzy
+msgid "Auth - Authentication"
+msgstr "مصادقة - المصادقة"
+
+#: logs
+#, fuzzy
+msgid "Daemon - System daemons"
+msgstr "Daemon - System Daemons"
+
+#: logs
+#, fuzzy
+msgid "Fail - Failed login attempts"
+msgstr "فشل - فاشلة محاولات تسجيل الدخول"
+
+#: logs
+#, fuzzy
+msgid "Kern - Kernel"
+msgstr "كيرن - kernel"
+
+#: logs
+#, fuzzy
+msgid "Mail - Email-related events"
+msgstr "البريد - الأحداث المتعلقة بالبريد الإلكتروني"
+
+#: logs
+#, fuzzy
+msgid "Messages - General system events"
+msgstr "الرسائل - أحداث النظام العام"
+
+#: logs
+#, fuzzy
+msgid "Syslog - System"
+msgstr "syslog - النظام"
+
+#: logs
+#, fuzzy
+msgid "User - User activities"
+msgstr "المستخدم - أنشطة المستخدم"
+
+#: scripts
+#, fuzzy
+msgid "Backup & Restore"
+msgstr "اسنرجاع البيانات"
+
+#: scripts
+#, fuzzy
+msgid "Examples"
+msgstr "أمثلة"
+
+#: scripts
+#, fuzzy
+msgid "Examples 1"
+msgstr "أمثلة 1"
+
+#: scripts
+#, fuzzy
+msgid "Examples 2"
+msgstr "أمثلة 2"
+
+#: scripts
+msgid "Examples - Test Configurations"
+msgstr ""
+
+#: scripts
+#, fuzzy
+msgid "Examples - User interface test functions"
+msgstr "أمثلة - وظائف اختبار واجهة المستخدم"
+
+#: scripts
+#, fuzzy
+msgid "Reticulum - LoRadio & RNode"
+msgstr "الشبكة - Loradio & rnode"
+
+#: scripts
+#, fuzzy
+msgid "Software - Installation"
+msgstr "تثبيت البرامج"
+
+#: scripts
+#, fuzzy
+msgid "Software - Uninstallation"
+msgstr "البرمجيات - إلغاء التثبيت"
+
+#: scripts
+#, fuzzy
+msgid "Software - Update"
+msgstr "تحديث النظام"
+
+#: scripts
+#, fuzzy
+msgid "System - Configuration"
+msgstr "أعدادات النظام"
+
+#: scripts
+#, fuzzy
+msgid "System - Update"
+msgstr "تحديث النظام"
+
+#: scripts
+#, fuzzy
+msgid "Management - Restart"
+msgstr "الإدارة - إعادة التشغيل"
+
+#: scripts
+#, fuzzy
+msgid "System - Reboot"
+msgstr "النظام - إعادة التشغيل"
+
+#: scripts
+#, fuzzy
+msgid "System - Shutdown"
+msgstr "إيقاف تشغيل النظام"
+
+#: scripts
+#, fuzzy
+msgid "System Clone - Creates a direct copy of the system drive"
+msgstr "استنساخ النظام - ينشئ نسخة مباشرة من محرك النظام"
+
+#: scripts
+#, fuzzy
+msgid "System Image - Creates an image of the system drive"
+msgstr "صورة النظام - إنشاء صورة لمحرك النظام"
+
+#: scripts
+#, fuzzy
+msgid "Example - All input elements"
+msgstr "مثال - جميع عناصر الإدخال"
+
+#: scripts
+#, fuzzy
+msgid "Example - Exit codes"
+msgstr "مثال - رموز الخروج"
+
+#: scripts
+#, fuzzy
+msgid "Example - Waiting time"
+msgstr "مثال - وقت الانتظار"
+
+#: scripts
+#, fuzzy
+msgid "Info - Read out information"
+msgstr "معلومات - اقرأ المعلومات"
+
+#: scripts
+#, fuzzy
+msgid "Install - Installing the firmware"
+msgstr "تثبيت - تثبيت البرامج الثابتة"
+
+#: scripts
+#, fuzzy
+msgid "Reset - Resetting the firmware"
+msgstr "إعادة تعيين - إعادة ضبط البرامج الثابتة"
+
+#: scripts
+#, fuzzy
+msgid "Update - Updating the firmware"
+msgstr "تحديث - تحديث البرامج الثابتة"
+
+#: scripts
+#, fuzzy
+msgid "Bridge Matrix - Message bridge"
+msgstr "مصفوفة الجسر - جسر الرسائل"
+
+#: scripts
+#, fuzzy
+msgid "Console tools - Recommended tools"
+msgstr "أدوات وحدة التحكم - الأدوات الموصى بها"
+
+#: scripts
+#, fuzzy
+msgid "Filesystem tools - Recommended tools"
+msgstr "أدوات نظام الملفات - الأدوات الموصى بها"
+
+#: scripts
+#, fuzzy
+msgid "Server Blockchain - Gateway for payment and other blockchain functions"
+msgstr "خادم blockchain - بوابة للدفع ووظائف blockchain الأخرى"
+
+#: scripts
+#, fuzzy
+msgid "Server Channel - Hosting the channel functionality"
+msgstr "قناة الخادم - استضافة وظيفة القناة"
+
+#: scripts
+#, fuzzy
+msgid "Server Group - Hosting the group functionality"
+msgstr "مجموعة الخادم - استضافة وظيفة المجموعة"
+
+#: scripts
+#, fuzzy
+msgid "Server Page - Hosting the page functionality"
+msgstr "صفحة الخادم - استضافة وظيفة الصفحة"
+
+#: scripts
+#, fuzzy
+msgid "Server Propagation - Hosting the propagation node functionality"
+msgstr "انتشار الخادم - استضافة وظيفة عقدة الانتشار"
+
+#: scripts
+#, fuzzy
+msgid "Server Shop - Hosting the shop functionality"
+msgstr "متجر الخادم - استضافة وظائف المتجر"
+
+#: scripts
+#, fuzzy
+msgid "Server - All hosting functions for channel, group, page, shop, etc."
+msgstr "الخادم - جميع وظائف الاستضافة للقناة ، المجموعة ، الصفحة ، متجر ، إلخ."
+
+#: scripts
+#, fuzzy
+msgid "File system - Extend file system (Raspberry Pi)"
+msgstr "نظام الملفات - تمديد نظام الملفات (Raspberry PI)"
+
+#: scripts
+#, fuzzy
+msgid "Password - Change operating system password"
+msgstr "كلمة المرور - تغيير كلمة مرور نظام التشغيل"
+
+#: scripts
+#, fuzzy
+msgid "Update check - Check for new versions"
+msgstr "تحديث تحقق - تحقق من وجود إصدارات جديدة"
+
+#: scripts
+#, fuzzy
+msgid "Update cleanup - Cleaning up unneeded packages"
+msgstr "تحديث التنظيف - تنظيف حزم غير ضرورية"
+
+#: scripts
+#, fuzzy
+msgid "Update Update - Update the system"
+msgstr "تحديث التحديث - قم بتحديث النظام"
+
+#: scripts
+#, fuzzy
+msgid "Update Upgrade - Distribution update of the system"
+msgstr "تحديث الترقية - توزيع تحديث النظام"
+
+#: scripts
+#, fuzzy
+msgid "Installing.."
+msgstr "التثبيت .."
+
+#: scripts
+#, fuzzy
+msgid "Uninstalling..."
+msgstr "إلغاء تثبيت ..."
+
+#: scripts
+#, fuzzy
+msgid "Updating..."
+msgstr "تحديث ..."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The management server will restart. You must reconnect to re-establish a "
+"connection."
+msgstr "سيتم إعادة تشغيل خادم الإدارة. يجب إعادة الاتصال لإعادة تأسيس اتصال."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will reboot. You must reconnect to re-establish a connection."
+msgstr "سيعيد تشغيل النظام. يجب إعادة الاتصال لإعادة تأسيس اتصال."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will shut down. You must then start it manually to re-establish a "
+"connection."
+msgstr "سيتم إغلاق النظام. يجب عليك بعد ذلك البدء يدويًا لإعادة تأسيس اتصال."
+
+#: scripts
+#, fuzzy
+msgid "No installed services found. Exiting."
+msgstr "لم يتم العثور على خدمات مثبتة. الخروج."
+
+#: scripts
+#, fuzzy
+msgid "Select a service:"
+msgstr "حدد خدمة:"
+
+#: scripts
+#, fuzzy
+msgid "Enter the name for the service: (only a-z 0-9)"
+msgstr "أدخل اسم الخدمة: (فقط A-Z 0-9)"
+
+#: scripts
+#, fuzzy
+msgid "Enter the display name for the application:"
+msgstr "أدخل اسم العرض للتطبيق:"
+
+#: scripts
+#, fuzzy
+msgid "Invalid choice!"
+msgstr "اختيار غير صالح!"
+
+#: scripts
+#, fuzzy
+msgid "Update successfully completed!"
+msgstr "التحديث بنجاح الانتهاء!"
+
+#: scripts
+#, fuzzy
+msgid "Uninstallation successfully completed!"
+msgstr "إلغاء التثبيت الانتهاء بنجاح!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a shop successfully completed!"
+msgstr "تم الانتهاء من تركيب متجر بنجاح!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of an echo server successfully completed!"
+msgstr "تركيب خادم صدى الانتهاء بنجاح!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a channel successfully completed!"
+msgstr "تم الانتهاء من تركيب قناة بنجاح!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a group successfully completed!"
+msgstr "تركيب مجموعة أكملت بنجاح!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a propagation node successfully completed!"
+msgstr "تركيب عقدة الانتشار الانتهاء بنجاح!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a provisioning node successfully completed!"
+msgstr "تركيب عقدة التوفير بنجاح الانتهاء!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a page successfully completed!"
+msgstr "اكتمال تثبيت صفحة بنجاح!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a blockchain node successfully completed!"
+msgstr "تركيب عقدة blockchain الانتهاء بنجاح!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a message bridge successfully completed!"
+msgstr "تركيب جسر الرسائل الانتهاء بنجاح!"
+
+#: scripts
+#, fuzzy
+msgid ""
+"No further configuration is necessary. Connect to the shop to make all the "
+"necessary settings in the shop app. You should find the new shop in the "
+"announcement list."
+msgstr ""
+"لا يوجد تكوين آخر ضروري. تواصل مع المتجر لإجراء جميع الإعدادات اللازمة في "
+"تطبيق المتجر. يجب أن تجد المتجر الجديد في قائمة الإعلان."
+
+#: scripts
+#, fuzzy
+msgid ""
+"To make further settings, please edit the corresponding configuration files "
+"in the following folder:"
+msgstr ""
+"لإجراء المزيد من الإعدادات ، يرجى تحرير ملفات التكوين المقابلة في المجلد "
+"التالي:"
+
+#: scripts
+#, fuzzy
+msgid "Then you must restart the following service:"
+msgstr "ثم يجب إعادة تشغيل الخدمة التالية:"
+
+#: services
+#, fuzzy
+msgid "All"
+msgstr "الجميع"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Hit:"
+msgstr "يضرب:"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading package lists"
+msgstr "قراءة قوائم حزمة"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Building dependency tree"
+msgstr "بناء شجرة التبعية"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading state information"
+msgstr "قراءة معلومات الدولة"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading database"
+msgstr "قراءة قاعدة البيانات"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Calculating upgrade"
+msgstr "حساب الترقية"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Waiting for headers"
+msgstr "في انتظار الرؤوس"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Working"
+msgstr "عمل"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "All packages are up to date"
+msgstr "جميع الحزم محدثة"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Done"
+msgstr "منتهي"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"The following packages were automatically installed and are no longer "
+"required"
+msgstr "تم تثبيت الحزم التالية تلقائيًا ولم تعد مطلوبة"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Use"
+msgstr "يستخدم"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove them"
+msgstr "لإزالتها"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "upgraded"
+msgstr "ترقية"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "newly installed"
+msgstr "مثبت حديثا"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove and"
+msgstr "لإزالة و"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "not upgraded"
+msgstr "لم تتم ترقيتها"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Connected to"
+msgstr "متصلا"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be REMOVED"
+msgstr "ستتم إزالة الحزم التالية"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "After this operation"
+msgstr "بعد هذه العملية"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "disk space will be freed"
+msgstr "سيتم تحرير مساحة القرص"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Do you want to continue?"
+msgstr "هل تريد الاستمرار؟?"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Progress"
+msgstr "تقدم"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Removing"
+msgstr "إزالة"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Processing triggers for"
+msgstr "معالجة مشغلات ل"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be upgraded"
+msgstr "سيتم ترقية الحزم التالية"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading changelogs"
+msgstr "قراءة changelogs"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preconfiguring packages"
+msgstr "الحزم المسبقة"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preparing to unpack"
+msgstr "التحضير لتفريغ"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "files and directories currently installed"
+msgstr "الملفات والأدلة المثبتة حاليًا"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Unpacking"
+msgstr "تفريغ"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Setting up"
+msgstr "اعداد"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "over"
+msgstr "زيادة"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Installing new version of config file"
+msgstr "تثبيت إصدار جديد من ملف التكوين"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "A new version"
+msgstr "نسخة جديدة"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "of configuration file"
+msgstr "ملف التكوين"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"is available, but the version installed currently has been locally modified"
+msgstr "متوفر ، ولكن تم تعديل الإصدار المثبت حاليًا محليًا"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error, exiting now."
+msgstr "خطأ ، الخروج الآن."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: You need to run this script as"
+msgstr "خطأ: تحتاج إلى تشغيل هذا البرنامج النصي كما"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: This script can't be piped!"
+msgstr "خطأ: لا يمكن أن يكون هذا البرنامج النصي!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "failed!"
+msgstr "فشل!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Finished!"
+msgstr "انتهى!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating packet repository"
+msgstr "تحديث مستودع الحزمة"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating system"
+msgstr "تحديث النظام"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Cleanup system"
+msgstr "نظام التنظيف"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Installing"
+msgstr "التثبيت"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating"
+msgstr "التحديث"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Expanding Filesystem"
+msgstr "توسيع نظام الملفات"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Do you want to proceed?"
+msgstr "هل تريد المتابعة؟?"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Ok, proceeding..."
+msgstr "حسنًا ، متابعة ..."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "No, exiting now."
+msgstr "لا ، الخروج الآن."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Please answer yes or no."
+msgstr "من فضلك أجب بنعم أو لا."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing path"
+msgstr "تغيير المسار"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Downloading"
+msgstr "جارى التحميل"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/owner"
+msgstr "تغيير أذونات الملف/المالك"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/right"
+msgstr "تغيير أذونات الملفات/الحق"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "To activate the changes, the system must be rebooted."
+msgstr "لتفعيل التغييرات ، يجب إعادة تشغيل النظام."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Could not find any user, exiting now."
+msgstr "لا يمكن العثور على أي مستخدم ، والخروج الآن."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Which user would you like to edit?"
+msgstr "أي مستخدم ترغب في تحريره؟?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Define the password for user"
+msgstr "حدد كلمة المرور للمستخدم"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Do you want to edit another user?"
+msgstr "هل تريد تحرير مستخدم آخر؟?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "New password"
+msgstr "كلمة المرور الجديدة"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Retype new password"
+msgstr "أعد كتابة كلمة السر الجديدة"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "No password has been supplied."
+msgstr "لم يتم توفير كلمة مرور."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Sorry, passwords do not match."
+msgstr "آسف ، لا تتطابق كلمات المرور."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Updating password"
+msgstr "تحديث كلمة المرور"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Authentication token manipulation error"
+msgstr "مصادقة خطأ في معالجة الرمز المميز"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "password unchanged"
+msgstr "كلمة المرور دون تغيير"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "user"
+msgstr "مستخدم"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "does not exist"
+msgstr "غير موجود"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Please connect the destination device you wish to use."
+msgstr "يرجى توصيل جهاز الوجهة الذي ترغب في استخدامه."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Hit enter when it is connected."
+msgstr "اضغط على Enter عندما يتم توصيله."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find any devices, exiting now."
+msgstr "لا يمكن العثور على أي أجهزة ، والخروج الآن."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find specified device, exiting now."
+msgstr "لا يمكن العثور على جهاز محدد ، والخروج الآن."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "What is your destination device?"
+msgstr "ما هو جهاز وجهتك؟?"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Ok, using device:"
+msgstr "حسنًا ، باستخدام الجهاز:"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "target is busy"
+msgstr "الهدف مشغول"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating image file"
+msgstr "إنشاء ملف الصورة"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image file"
+msgstr "تقليص ملف الصورة"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "copied"
+msgstr "نسخ"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records in"
+msgstr "السجلات في"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records out"
+msgstr "السجلات"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Gathering data"
+msgstr "جمع البيانات"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating new"
+msgstr "خلق جديد"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Checking filesystem"
+msgstr "التحقق من نظام الملفات"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "non-contiguous"
+msgstr "غير ضار"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks"
+msgstr "كتل"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking filesystem"
+msgstr "تقليص نظام الملفات"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Resizing the filesystem on"
+msgstr "تغيير حجم نظام الملفات"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Begin pass"
+msgstr "ابدأ بالمرور"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Relocating blocks"
+msgstr "نقل الكتل"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Scanning inode table"
+msgstr "مسح الجدول inode"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Updating inode references"
+msgstr "تحديث مراجع inode"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "The filesystem on"
+msgstr "نظام الملفات على"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "is now"
+msgstr "هو الآن"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks long"
+msgstr "كتل طويلة"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image"
+msgstr "تقلص الصورة"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Using gzip on the shrunk image"
+msgstr "باستخدام GZIP على صورة تقلص"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrunk"
+msgstr "تقلص"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "from"
+msgstr "من"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "to"
+msgstr "ل"
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid ""
+"Please connect the destination device (sd-card, usb-stick) you wish to use."
+msgstr "يرجى توصيل جهاز الوجهة (SD-Card ، USB-Stick) الذي ترغب في استخدامه."
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid "WARNING: All data on the destination device will be deleted!"
+msgstr "تحذير: سيتم حذف جميع البيانات الموجودة على جهاز الوجهة!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting frequency is"
+msgstr "تردد الإبلاغ الراديوي هو"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting bandwidth is"
+msgstr "عرض النطاق الترددي للراديو هو"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting TX power is"
+msgstr "تقارير الراديو TX Power"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting spreading factor is"
+msgstr "عامل انتشار التقارير الراديوية هو"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting coding rate is"
+msgstr "معدل ترميز التقارير الراديوية هو"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware initialisation error"
+msgstr "خطأ تهيئة الأجهزة"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware TX error"
+msgstr "أخطاء الأجهزة تكساس"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware error"
+msgstr "خطأ في الأجهزة"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "serial read timeout"
+msgstr "مهلة القراءة التسلسلية"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while detecting hardware for"
+msgstr "حدث خطأ IO أثناء اكتشاف الأجهزة لـ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring frequency for"
+msgstr "حدث خطأ IO أثناء تكوين التردد ل"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring bandwidth for"
+msgstr "حدث خطأ IO أثناء تكوين عرض النطاق الترددي لـ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring TX power for"
+msgstr "حدث خطأ IO أثناء تكوين TX Power"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring spreading factor for"
+msgstr "حدث خطأ IO أثناء تكوين عامل الانتشار لـ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring coding rate for"
+msgstr "حدث خطأ IO أثناء تكوين معدل الترميز لـ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state for"
+msgstr "حدث خطأ IO أثناء تكوين حالة الراديو لـ"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring device mode"
+msgstr "حدث خطأ IO أثناء تكوين وضع الجهاز"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while wiping EEPROM"
+msgstr "حدث خطأ IO أثناء مسح EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while restarting device"
+msgstr "حدث خطأ IO أثناء إعادة تشغيل الجهاز"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while writing EEPROM"
+msgstr "حدث خطأ IO أثناء كتابة Eeprom"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state"
+msgstr "حدث خطأ IO أثناء تكوين حالة الراديو"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download EEPROM from device. Is a valid firmware installed?"
+msgstr "لا يمكن تنزيل EEPROM من الجهاز. هل يتم تثبيت البرامج الثابتة صالحة؟?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum mismatch"
+msgstr "EEPROM الاختبارات عدم التطابق"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum correct"
+msgstr "eeprom checksum صحيح"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load local signing key"
+msgstr "لا يمكن تحميل مفتاح التوقيع المحلي"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize local signing key"
+msgstr "لا يمكن إلغاء توضيح مفتاح التوقيع المحلي"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validated"
+msgstr "توقيع الجهاز التحقق من صحة"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validation failed"
+msgstr "فشل التحقق من صحة توقيع الجهاز"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid EEPROM data, could not parse device EEPROM."
+msgstr "بيانات EEPROM غير صالحة ، لا يمكن تحليل الجهاز EEPROM."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Hello!\n"
+"\n"
+"This guide will help you install the RNode firmware on supported\n"
+"and homebrew devices. Please connect the device you wish to set\n"
+"up now."
+msgstr ""
+"مرحبًا! \n"
+"\n"
+" سيساعدك هذا الدليل على تثبيت البرامج الثابتة RNODE على دعمها \n"
+" والأجهزة البيرة. يرجى توصيل الجهاز الذي ترغب في تعيينه \n"
+" حتى الآن."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please connect the device you wish to setup now."
+msgstr "يرجى توصيل الجهاز الذي ترغب في إعداده الآن."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find any port, exiting now."
+msgstr "لا يمكن العثور على أي منفذ ، والخروج الآن."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Detected serial ports:"
+msgstr "المنافذ التسلسلية المكتشفة:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What serial port is your device connected to?"
+msgstr "ما المنفذ التسلسلي الذي يتصل به جهازك؟?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That port does not exist, exiting now."
+msgstr "هذا المنفذ غير موجود ، ويخرج الآن."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not select port, exiting now."
+msgstr "لا يمكن اختيار المنفذ ، والخروج الآن."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Ok, using device on"
+msgstr "حسنًا ، استخدام الجهاز"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "using device on"
+msgstr "باستخدام الجهاز"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find specified port"
+msgstr "لا يمكن العثور على منفذ محدد"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "exiting now"
+msgstr "الخروج الآن"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Probing device"
+msgstr "جهاز التحقيق"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not open the specified serial port. The contained exception was:"
+msgstr "لا يمكن فتح المنفذ التسلسلي المحدد. كان الاستثناء الوارد:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No answer from device"
+msgstr "لا توجد إجابة من الجهاز"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Trying to read EEPROM"
+msgstr "محاولة قراءة EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device is already installed and provisioned. No further action will\n"
+"be taken. If you wish to completely reinstall this device, you must first\n"
+"wipe the current EEPROM. See the help for more info.\n"
+"\n"
+"Exiting now."
+msgstr ""
+"تم تثبيت هذا الجهاز بالفعل وتوفيره. أي إجراء آخر سوف \n"
+" يتم أخذه. إذا كنت ترغب في إعادة تثبيت هذا الجهاز تمامًا ، فيجب عليك أولاً \n"
+" امسح EEPROM الحالي. انظر المساعدة لمزيد من المعلومات. \n"
+"\n"
+" الخروج الآن."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"The device seems to have an RNode firmware installed, but it was not\n"
+"provisioned correctly, or it is corrupt. We are going to reinstall the\n"
+"correct firmware and provision it."
+msgstr ""
+"يبدو أن الجهاز يحتوي على برنامج ثابت RNODE ، لكنه لم يكن كذلك \n"
+" تم توفيره بشكل صحيح ، أو فاسد. سنقوم بإعادة تثبيت \n"
+" تصحيح البرامج الثابتة وتوفيرها."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "It looks like this is a fresh device with no RNode firmware."
+msgstr "يبدو أن هذا جهاز جديد بدون برنامج ثابت RNODE."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of device is this?"
+msgstr "أي نوع من الجهاز هذا؟?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Important! Using RNode firmware on"
+msgstr "مهم! باستخدام البرامج الثابتة RNODE على"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"should currently be\n"
+"considered experimental. It is not intended for production or critical use.\n"
+"The currently supplied firmware is provided AS-IS as a courtesey to those\n"
+"who would like to experiment with it. Hit enter to continue."
+msgstr ""
+"يجب أن يكون حاليا \n"
+" تعتبر تجريبية. ليس مخصصًا للإنتاج أو الاستخدام الحاسم. \n"
+" يتم توفير البرامج الثابتة التي تم توفيرها حاليًا كما هو الحال مع هؤلاء \n"
+" الذين يرغبون في تجربة ذلك. ضرب أدخل للمتابعة."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That device type does not exist, exiting now."
+msgstr "نوع الجهاز هذا غير موجود ، ويخرج الآن."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of microcontroller is your board based on?"
+msgstr "أي نوع من متحكم microcontroller يعتمد على لوحتك؟?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That MCU type does not exist, exiting now."
+msgstr "هذا النوع MCU غير موجود ، ويخرج الآن."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What transceiver module does your board use?"
+msgstr "ما هي وحدة الإرسال والاستقبال التي تستخدمها لوحتك؟?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That transceiver type does not exist, exiting now."
+msgstr "نوع جهاز الإرسال والاستقبال هذا غير موجود ، ويخرج الآن."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What model is this RNode?"
+msgstr "ما هو النموذج هذا rnode؟?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That model does not exist, exiting now."
+msgstr "هذا النموذج غير موجود ، ويخرج الآن."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this T-Beam for?"
+msgstr "ما هي الفرقة هذه to-beam؟?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That band does not exist, exiting now."
+msgstr "تلك الفرقة غير موجودة ، وتخرج الآن."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this LoRa32 for?"
+msgstr "ما هي الفرقة هذه Lora32؟?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this Heltec LoRa32 for?"
+msgstr "ما هي الفرقة هذه Heltec lora32؟?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of ESP32 board is this?"
+msgstr "أي نوع من لوحة ESP32 هذا؟?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That ESP32 board does not exist, exiting now."
+msgstr "أن مجلس إدارة ESP32 غير موجود ، يخرج الآن."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Sorry, no firmware for your board currently exists.\n"
+"Help making it a reality by contributing code or by\n"
+"donating to the project."
+msgstr ""
+"آسف ، لا يوجد برنامج ثابت لمجلستك حاليًا. \n"
+" تساعد في جعلها حقيقة واقعة من خلال المساهمة في الرمز أو عن طريق \n"
+" التبرع للمشروع."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Ok, that should be all the information we need. Please confirm the "
+"following\n"
+"summary before proceeding. In the next step, the device will be flashed and\n"
+"provisioned, so make that you are satisfied with your choices."
+msgstr ""
+"حسنًا ، يجب أن تكون كل المعلومات التي نحتاجها. الرجاء تأكيد ما يلي \n"
+" ملخص قبل المتابعة. في الخطوة التالية ، سيتم وميض الجهاز و \n"
+" يتم توفيره ، لذا اجعل أنك راضٍ عن اختياراتك."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial port"
+msgstr "منفذ تسلسلي"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device type"
+msgstr "نوع الجهاز"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device MCU"
+msgstr "جهاز MCU"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file"
+msgstr "ملف البرامج الثابتة"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Is the above correct?"
+msgstr "هل ما سبق صحيح؟?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "OK, aborting now."
+msgstr "حسنًا ، الإجهاض الآن."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device connected"
+msgstr "الجهاز متصل"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Current firmware version:"
+msgstr "إصدار البرنامج الثابت الحالي:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Got invalid response while detecting device"
+msgstr "حصلت على استجابة غير صالحة أثناء اكتشاف الجهاز"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download required firmware file. The contained exception was:"
+msgstr "لا يمكن تنزيل ملف البرامج الثابتة المطلوبة. كان الاستثناء الوارد:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial module could not be found"
+msgstr "لا يمكن العثور على الوحدة التسلسلية"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs pyserial to work.\n"
+"You can install it with: pip3 install pyserial"
+msgstr ""
+"RNODE التكوين الأداة المساعدة تحتاج إلى العمل في العمل. \n"
+" يمكنك تثبيته بـ: PIP3 تثبيت Pyserial"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cryptography module could not be found"
+msgstr "لا يمكن العثور على وحدة التشفير"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs the cryptography module to work.\n"
+"You can install it with: pip3 install cryptography"
+msgstr ""
+"تحتاج الأداة المساعدة للتكوين RNODE إلى وحدة التشفير للعمل. \n"
+" يمكنك تثبيته باستخدام: PIP3 تثبيت التشفير"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Downloading latest frimware from GitHub"
+msgstr "تنزيل أحدث البرامج الثابتة من Github"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware download completed"
+msgstr "تنزيل البرامج الثابتة"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware extracted"
+msgstr "البرامج الثابتة المستخرجة"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not extract firmware from downloaded zip file"
+msgstr "لا يمكن استخراج البرامج الثابتة من ملف zip الذي تم تنزيله"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing RNode firmware to device on"
+msgstr "وميض البرامج الثابتة RNODE إلى الجهاز"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Done flashing"
+msgstr "فعلت الوميض"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Waiting for ESP32 reset"
+msgstr "في انتظار إعادة تعيين ESP32"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while flashing"
+msgstr "خطأ أثناء وميض"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file not found"
+msgstr "لم يتم العثور على ملف البرامج الثابتة"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download firmware package"
+msgstr "لا يمكن تنزيل حزمة البرامج الثابتة"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The contained exception was:"
+msgstr "كان الاستثناء الوارد:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Skipping online check, using local firmware file:"
+msgstr "تخطي التحقق عبر الإنترنت ، باستخدام ملف البرامج الثابتة المحلية:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load signing key"
+msgstr "لا يمكن تحميل مفتاح التوقيع"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize signing key"
+msgstr "لا يمكن إلغاء توقيع مفتاح التوقيع"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Generating a new signing key"
+msgstr "توليد مفتاح توقيع جديد"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Signing key already exists, not overwriting!\n"
+"Manually delete this key to create a new one."
+msgstr ""
+"توقيع مفتاح موجود بالفعل ، وليس الكتابة فوق! \n"
+" حذف هذا المفتاح يدويًا لإنشاء مفتاح جديد."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The firmware directory does not exist, can't write key!"
+msgstr "دليل البرامج الثابتة غير موجود ، لا يمكن كتابة المفتاح!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Extracting firmware"
+msgstr "استخراج البرامج الثابتة"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Opening serial port"
+msgstr "فتح ميناء التسلسلي"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Serial port opened, but RNode did not respond. Is a valid firmware installed?"
+msgstr ""
+"فتح المنفذ التسلسلي ، لكن Rnode لم يستجب. هل يتم تثبيت البرامج الثابتة "
+"صالحة؟?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"WARNING: EEPROM is being wiped! Power down device NOW if you do not want "
+"this!"
+msgstr "تحذير: يجري مسح EEPROM! الجهاز لأسفل الطاقة الآن إذا كنت لا تريد هذا!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Reading EEPROM"
+msgstr "قراءة eeprom"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "ERROR: No firmware found for this board. Cannot update."
+msgstr "خطأ: لم يتم العثور على البرامج الثابتة لهذا اللوحة. لا يمكن التحديث."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cannot update device firmware"
+msgstr "لا يمكن تحديث البرامج الثابتة للجهاز"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Updating RNode firmware for device on"
+msgstr "تحديث البرامج الثابتة RNODE للجهاز"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing new firmware completed"
+msgstr "وميض البرامج الثابتة الجديدة الانتهاء"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update completed successfully"
+msgstr "تم الانتهاء من تحديث البرامج الثابتة بنجاح"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while flashing the new firmware, exiting now."
+msgstr "حدث خطأ أثناء وميض البرامج الثابتة الجديدة ، والخروج الآن."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while updating firmware"
+msgstr "خطأ أثناء تحديث البرامج الثابتة"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update file not found"
+msgstr "لم يتم العثور على ملف تحديث البرامج الثابتة"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM contents"
+msgstr "محتويات eeprom"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM backup written to"
+msgstr "نسخة احتياطية EEPROM إلى"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"EEPROM was successfully downloaded from device,\n"
+"but file could not be written to disk."
+msgstr ""
+"تم تنزيل Eeprom بنجاح من الجهاز ، \n"
+" ولكن لا يمكن كتابة الملف إلى القرص."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device info:"
+msgstr "معلومات الجهاز:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Product"
+msgstr "منتج"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature"
+msgstr "توقيع الجهاز"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware version"
+msgstr "نسخة برنامج ثابت"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Hardware revision"
+msgstr "مراجعة الأجهزة"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial number"
+msgstr "رقم سري"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency range"
+msgstr "نطاق الترددات"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Max TX power"
+msgstr "Max TX Power"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Manufactured"
+msgstr "مصنعة"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device mode"
+msgstr "وضع الجهاز"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency"
+msgstr "تكرار"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth"
+msgstr "عرض النطاق"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "TX power"
+msgstr "قوة تكساس"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor"
+msgstr "عامل الانتشار"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate"
+msgstr "معدل الترميز"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "On-air bitrate"
+msgstr "البت على الهواء"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM is invalid, no further information available"
+msgstr "EEPROM غير صالح ، لا توجد معلومات أخرى متاحة"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM bootstrap was requested, but a valid EEPROM was already present."
+msgstr "تم طلب Bootstrap EEPROM ، ولكن كان EEPROM صالحة موجودة بالفعل."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No changes are being made."
+msgstr "لا توجد تغييرات."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Clearing old EEPROM, this will take about 15 seconds"
+msgstr "تطهير EEPROM القديم ، سيستغرق هذا حوالي 15 ثانية"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not create device serial number, exiting"
+msgstr "لا يمكن إنشاء الرقم التسلسلي للجهاز ، والخروج"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Loading signing key"
+msgstr "تحميل مفتاح توقيع"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while signing EEPROM"
+msgstr "خطأ أثناء توقيع EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bootstrapping device EEPROM"
+msgstr "جهاز bootstrapping EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM written! Validating"
+msgstr "مكتوبة eeprom! التحقق من التحقق"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM Bootstrapping successful!"
+msgstr "eeprom bootstrapping ناجحة!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "RNode Firmware autoinstallation complete!"
+msgstr "Rnode Firmware AutoInstallation كاملة!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "To use your device with Reticulum, read the documetation at:"
+msgstr "لاستخدام جهازك مع الشبكة ، اقرأ الوثائق على:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Thank you for using this utility! Please help the project by\n"
+"contributing code and reporting bugs, or by donating!"
+msgstr ""
+"شكرا لك على استخدام هذه الأداة! الرجاء مساعدة المشروع بواسطة \n"
+" رمز المساهمة والإبلاغ عن الأخطاء ، أو عن طريق التبرع!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Your contributions and donations directly further the realisation\n"
+"of truly open, free and resilient communications systems."
+msgstr ""
+"مساهماتك وتبرعاتك بشكل مباشر الإدراك \n"
+" من أنظمة الاتصالات المفتوحة والمجانية والمرنة."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "WARNING: Could not backup device EEPROM to disk"
+msgstr "تحذير: لم يستطع جهاز النسخ الاحتياطي Eeprom على القرص"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM was written, but validation failed. Check your settings."
+msgstr ""
+"تمت كتابة Eeprom ، لكن التحقق من الصحة فشل. تحقق من الإعدادات الخاصة بك."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while writing EEPROM. The contained exception was:"
+msgstr "حدث خطأ أثناء كتابة eeprom. كان الاستثناء الوارد:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid data specified, cancelling EEPROM write"
+msgstr "بيانات غير صالحة محددة ، إلغاء كتابة eeprom"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to normal (host-controlled) operating mode"
+msgstr "تم تعيين الجهاز على وضع التشغيل العادي (الذي يسيطر عليه المضيف)"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please input startup configuration:"
+msgstr "يرجى إدخال تكوين بدء التشغيل:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency in Hz:"
+msgstr "التردد في هرتز:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth in Hz:"
+msgstr "النطاق الترددي في هرتز:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor:"
+msgstr "عامل الانتشار:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate:"
+msgstr "معدل الترميز:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to TNC operating mode"
+msgstr "تعيين الجهاز على وضع التشغيل TNC"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device contains a valid firmware, but EEPROM is invalid.\n"
+"Probably the device has not been initialised, or the EEPROM has been "
+"erased.\n"
+"Please correctly initialise the device and try again!"
+msgstr ""
+"يحتوي هذا الجهاز على برنامج ثابت صالح ، لكن EEPROM غير صالح. \n"
+" ربما لم يتم تهيئة الجهاز ، أو تم محو EEPROM. \n"
+" يرجى تهيئة الجهاز بشكل صحيح وحاول مرة أخرى!"

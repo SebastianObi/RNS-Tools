@@ -1,0 +1,2028 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-01 19:45+0100\n"
+"PO-Revision-Date: 2023-12-12 09:39\n"
+"Last-Translator: SebastianObi\n"
+"Language-Team: SebastianObi\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#: infos
+#, fuzzy
+msgid "Software - Python"
+msgstr "소프트웨어 - 파이썬"
+
+#: infos
+#, fuzzy
+msgid "Software - Reticulum"
+msgstr "소프트웨어 -Reticulum"
+
+#: infos
+#, fuzzy
+msgid "Software - System"
+msgstr "소프트웨어 - 시스템"
+
+#: infos
+#, fuzzy
+msgid "System - Drives & data storage"
+msgstr "시스템 - 드라이브 및 데이터 저장"
+
+#: infos
+#, fuzzy
+msgid "System - General system information"
+msgstr "시스템 - 일반 시스템 정보"
+
+#: infos
+#, fuzzy
+msgid "System - Interfaces"
+msgstr "시스템 - 인터페이스"
+
+#: infos
+#, fuzzy
+msgid "System - Network connections"
+msgstr "시스템 - 네트워크 연결"
+
+#: infos
+#, fuzzy
+msgid "System time"
+msgstr "시스템 시간"
+
+#: infos
+#, fuzzy
+msgid "Start time"
+msgstr "시작 시간"
+
+#: infos
+#, fuzzy
+msgid "Runtime"
+msgstr "실행 시간"
+
+#: infos
+#, fuzzy
+msgid "Version"
+msgstr "버전"
+
+#: infos
+#, fuzzy
+msgid "Status:"
+msgstr "상태:"
+
+#: infos
+#, fuzzy
+msgid "Clients:"
+msgstr "클라이언트 :"
+
+#: infos
+#, fuzzy
+msgid "Peers:"
+msgstr "동료 :"
+
+#: infos
+#, fuzzy
+msgid "Mode:"
+msgstr "방법:"
+
+#: infos
+#, fuzzy
+msgid "Speed:"
+msgstr "속도:"
+
+#: infos
+#, fuzzy
+msgid "Airtime:"
+msgstr "방송 시간 :"
+
+#: infos
+#, fuzzy
+msgid "Ch. Load:"
+msgstr "ch. 짐:"
+
+#: infos
+#, fuzzy
+msgid "Queued:"
+msgstr "대기 :"
+
+#: infos
+#, fuzzy
+msgid "announce"
+msgstr "발표하다"
+
+#: infos
+#, fuzzy
+msgid "announces"
+msgstr "발표"
+
+#: infos
+#, fuzzy
+msgid "Held:"
+msgstr "유지된:"
+
+#: infos
+#, fuzzy
+msgid "Announces:"
+msgstr "발표 :"
+
+#: infos
+#, fuzzy
+msgid "Transport Instance"
+msgstr "전송 인스턴스"
+
+#: infos
+#, fuzzy
+msgid "Probe responder"
+msgstr "프로브 응답자"
+
+#: infos
+#, fuzzy
+msgid "Uptime"
+msgstr "가동 시간"
+
+#: infos
+#, fuzzy
+msgid "[b]Size:[/b]"
+msgstr "[B] 크기 : [/b]"
+
+#: infos
+#, fuzzy
+msgid "[b]Free:[/b]"
+msgstr "[B] 무료 : [/b]"
+
+#: infos
+#, fuzzy
+msgid "[b]Type:[/b]"
+msgstr "[B] 유형 : [/b]"
+
+#: infos
+#, fuzzy
+msgid "Platform"
+msgstr "플랫폼"
+
+#: infos
+#, fuzzy
+msgid "Release"
+msgstr "풀어 주다"
+
+#: infos
+#, fuzzy
+msgid "Release name"
+msgstr "릴리스 이름"
+
+#: infos
+#, fuzzy
+msgid "Model"
+msgstr "모델"
+
+#: infos
+#, fuzzy
+msgid "Hostname"
+msgstr "호스트 이름"
+
+#: infos
+#, fuzzy
+msgid "CPU load"
+msgstr "CPU로드"
+
+#: infos
+#, fuzzy
+msgid "CPU cores"
+msgstr "CPU 코어"
+
+#: infos
+#, fuzzy
+msgid "System temperature"
+msgstr "시스템 온도"
+
+#: infos
+#, fuzzy
+msgid "LAN"
+msgstr "란"
+
+#: infos
+#, fuzzy
+msgid "WiFi"
+msgstr "와이파이"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks"
+msgstr "Wi -Fi 네트워크"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks connected"
+msgstr "Wi -Fi 네트워크가 연결되었습니다"
+
+#: infos
+#, fuzzy
+msgid "USB"
+msgstr "USB"
+
+#: infos
+#, fuzzy
+msgid "Bluetooth"
+msgstr "블루투스"
+
+#: infos
+#, fuzzy
+msgid "Serial"
+msgstr "연속물"
+
+#: logs
+#, fuzzy
+msgid "FDN - Reticulum, Channel, Group, Shop"
+msgstr "FDN- 레티 큘럼, 채널, 그룹, 쇼핑"
+
+#: logs
+#, fuzzy
+msgid "Software"
+msgstr "소프트웨어"
+
+#: logs
+#, fuzzy
+msgid "Dhcpd - DHCP Server"
+msgstr "DHCPD -DHCP 서버"
+
+#: logs
+#, fuzzy
+msgid "Dnsmasq - DNS Server"
+msgstr "DNSMASQ -DNS 서버"
+
+#: logs
+#, fuzzy
+msgid "Hostapd - WiFi AP"
+msgstr "HostAPD -Wi -Fi AP"
+
+#: logs
+#, fuzzy
+msgid "System"
+msgstr "체계"
+
+#: logs
+#, fuzzy
+msgid "Auth - Authentication"
+msgstr "인증 - 인증"
+
+#: logs
+#, fuzzy
+msgid "Daemon - System daemons"
+msgstr "데몬 - 시스템 데몬"
+
+#: logs
+#, fuzzy
+msgid "Fail - Failed login attempts"
+msgstr "실패 - 실패 로그인 시도"
+
+#: logs
+#, fuzzy
+msgid "Kern - Kernel"
+msgstr "컨 - 커널"
+
+#: logs
+#, fuzzy
+msgid "Mail - Email-related events"
+msgstr "메일 - 이메일 관련 이벤트"
+
+#: logs
+#, fuzzy
+msgid "Messages - General system events"
+msgstr "메시지 - 일반 시스템 이벤트"
+
+#: logs
+#, fuzzy
+msgid "Syslog - System"
+msgstr "Syslog- 시스템"
+
+#: logs
+#, fuzzy
+msgid "User - User activities"
+msgstr "사용자 - 사용자 활동"
+
+#: scripts
+#, fuzzy
+msgid "Backup & Restore"
+msgstr "백업 및 복원"
+
+#: scripts
+#, fuzzy
+msgid "Examples"
+msgstr "예"
+
+#: scripts
+#, fuzzy
+msgid "Examples 1"
+msgstr "예 1"
+
+#: scripts
+#, fuzzy
+msgid "Examples 2"
+msgstr "예 2"
+
+#: scripts
+msgid "Examples - Test Configurations"
+msgstr ""
+
+#: scripts
+#, fuzzy
+msgid "Examples - User interface test functions"
+msgstr "예제 - 사용자 인터페이스 테스트 기능"
+
+#: scripts
+#, fuzzy
+msgid "Reticulum - LoRadio & RNode"
+msgstr "Reticulum -Loradio & Rnode"
+
+#: scripts
+#, fuzzy
+msgid "Software - Installation"
+msgstr "소프트웨어 설치"
+
+#: scripts
+#, fuzzy
+msgid "Software - Uninstallation"
+msgstr "소프트웨어 - 제거"
+
+#: scripts
+#, fuzzy
+msgid "Software - Update"
+msgstr "소프트웨어 업데이트"
+
+#: scripts
+#, fuzzy
+msgid "System - Configuration"
+msgstr "시스템 설정"
+
+#: scripts
+#, fuzzy
+msgid "System - Update"
+msgstr "시스템 업데이트"
+
+#: scripts
+#, fuzzy
+msgid "Management - Restart"
+msgstr "관리 - 다시 시작합니다"
+
+#: scripts
+#, fuzzy
+msgid "System - Reboot"
+msgstr "시스템 - 재부팅"
+
+#: scripts
+#, fuzzy
+msgid "System - Shutdown"
+msgstr "시스템 - 종료"
+
+#: scripts
+#, fuzzy
+msgid "System Clone - Creates a direct copy of the system drive"
+msgstr "시스템 클론 - 시스템 드라이브의 직접 사본을 만듭니다"
+
+#: scripts
+#, fuzzy
+msgid "System Image - Creates an image of the system drive"
+msgstr "시스템 이미지 - 시스템 드라이브의 이미지 생성"
+
+#: scripts
+#, fuzzy
+msgid "Example - All input elements"
+msgstr "예 - 모든 입력 요소"
+
+#: scripts
+#, fuzzy
+msgid "Example - Exit codes"
+msgstr "예제 - 종료 코드"
+
+#: scripts
+#, fuzzy
+msgid "Example - Waiting time"
+msgstr "예 - 대기 시간"
+
+#: scripts
+#, fuzzy
+msgid "Info - Read out information"
+msgstr "정보 - 정보를 읽으십시오"
+
+#: scripts
+#, fuzzy
+msgid "Install - Installing the firmware"
+msgstr "설치 - 펌웨어 설치"
+
+#: scripts
+#, fuzzy
+msgid "Reset - Resetting the firmware"
+msgstr "재설정 - 펌웨어 재설정"
+
+#: scripts
+#, fuzzy
+msgid "Update - Updating the firmware"
+msgstr "업데이트 - 펌웨어 업데이트"
+
+#: scripts
+#, fuzzy
+msgid "Bridge Matrix - Message bridge"
+msgstr "브리지 매트릭스 - 메시지 브리지"
+
+#: scripts
+#, fuzzy
+msgid "Console tools - Recommended tools"
+msgstr "콘솔 도구 - 권장 도구"
+
+#: scripts
+#, fuzzy
+msgid "Filesystem tools - Recommended tools"
+msgstr "파일 시스템 도구 - 권장 도구"
+
+#: scripts
+#, fuzzy
+msgid "Server Blockchain - Gateway for payment and other blockchain functions"
+msgstr "서버 블록 체인 - 결제 및 기타 블록 체인 기능을위한 게이트웨이"
+
+#: scripts
+#, fuzzy
+msgid "Server Channel - Hosting the channel functionality"
+msgstr "서버 채널 - 채널 기능을 호스팅합니다"
+
+#: scripts
+#, fuzzy
+msgid "Server Group - Hosting the group functionality"
+msgstr "서버 그룹 - 그룹 기능 호스팅"
+
+#: scripts
+#, fuzzy
+msgid "Server Page - Hosting the page functionality"
+msgstr "서버 페이지 - 페이지 기능을 호스팅합니다"
+
+#: scripts
+#, fuzzy
+msgid "Server Propagation - Hosting the propagation node functionality"
+msgstr "서버 전파 - 전파 노드 기능을 호스팅합니다"
+
+#: scripts
+#, fuzzy
+msgid "Server Shop - Hosting the shop functionality"
+msgstr "서버 상점 - 상점 기능을 호스팅합니다"
+
+#: scripts
+#, fuzzy
+msgid "Server - All hosting functions for channel, group, page, shop, etc."
+msgstr "서버 - 채널, 그룹, 페이지, 상점 등의 모든 호스팅 기능."
+
+#: scripts
+#, fuzzy
+msgid "File system - Extend file system (Raspberry Pi)"
+msgstr "파일 시스템 - 파일 시스템 확장 (Raspberry Pi)"
+
+#: scripts
+#, fuzzy
+msgid "Password - Change operating system password"
+msgstr "비밀번호 - 운영 체제 비밀번호 변경"
+
+#: scripts
+#, fuzzy
+msgid "Update check - Check for new versions"
+msgstr "업데이트 확인 - 새 버전을 확인하십시오"
+
+#: scripts
+#, fuzzy
+msgid "Update cleanup - Cleaning up unneeded packages"
+msgstr "업데이트 정리 - 불필요한 패키지 청소"
+
+#: scripts
+#, fuzzy
+msgid "Update Update - Update the system"
+msgstr "업데이트 - 시스템 업데이트"
+
+#: scripts
+#, fuzzy
+msgid "Update Upgrade - Distribution update of the system"
+msgstr "업데이트 업그레이드 - 시스템의 배포 업데이트"
+
+#: scripts
+#, fuzzy
+msgid "Installing.."
+msgstr "설치 .."
+
+#: scripts
+#, fuzzy
+msgid "Uninstalling..."
+msgstr "제거 ..."
+
+#: scripts
+#, fuzzy
+msgid "Updating..."
+msgstr "업데이트 ..."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The management server will restart. You must reconnect to re-establish a "
+"connection."
+msgstr ""
+"관리 서버가 다시 시작됩니다. 연결을 다시 설정하려면 다시 연결해야합니다."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will reboot. You must reconnect to re-establish a connection."
+msgstr "시스템이 재부팅됩니다. 연결을 다시 설정하려면 다시 연결해야합니다."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will shut down. You must then start it manually to re-establish a "
+"connection."
+msgstr ""
+"시스템이 종료됩니다. 그런 다음 연결을 다시 설정하려면 수동으로 시작해야합니"
+"다."
+
+#: scripts
+#, fuzzy
+msgid "No installed services found. Exiting."
+msgstr "설치된 서비스가 없습니다. 종료."
+
+#: scripts
+#, fuzzy
+msgid "Select a service:"
+msgstr "서비스 선택 :"
+
+#: scripts
+#, fuzzy
+msgid "Enter the name for the service: (only a-z 0-9)"
+msgstr "서비스 이름을 입력하십시오 : (A-Z 0-9 만)"
+
+#: scripts
+#, fuzzy
+msgid "Enter the display name for the application:"
+msgstr "응용 프로그램의 표시 이름을 입력하십시오:"
+
+#: scripts
+#, fuzzy
+msgid "Invalid choice!"
+msgstr "잘못된 선택!"
+
+#: scripts
+#, fuzzy
+msgid "Update successfully completed!"
+msgstr "업데이트가 성공적으로 완료되었습니다!"
+
+#: scripts
+#, fuzzy
+msgid "Uninstallation successfully completed!"
+msgstr "설치가 성공적으로 완료되었습니다!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a shop successfully completed!"
+msgstr "상점 설치가 성공적으로 완성되었습니다!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of an echo server successfully completed!"
+msgstr "에코 서버 설치가 성공적으로 완료되었습니다!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a channel successfully completed!"
+msgstr "채널 설치가 성공적으로 완료되었습니다!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a group successfully completed!"
+msgstr "그룹 설치가 성공적으로 완료되었습니다!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a propagation node successfully completed!"
+msgstr "전파 노드 설치가 성공적으로 완료되었습니다!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a provisioning node successfully completed!"
+msgstr "프로비저닝 노드 설치가 성공적으로 완료되었습니다!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a page successfully completed!"
+msgstr "페이지 설치가 성공적으로 완료되었습니다!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a blockchain node successfully completed!"
+msgstr "블록 체인 노드 설치가 성공적으로 완료되었습니다!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a message bridge successfully completed!"
+msgstr "메시지 브리지 설치가 성공적으로 완료되었습니다!"
+
+#: scripts
+#, fuzzy
+msgid ""
+"No further configuration is necessary. Connect to the shop to make all the "
+"necessary settings in the shop app. You should find the new shop in the "
+"announcement list."
+msgstr ""
+"더 이상 구성이 필요하지 않습니다. 상점에 연결하여 상점 앱에서 필요한 모든 설"
+"정을 만듭니다. 발표 목록에서 새 상점을 찾아야합니다."
+
+#: scripts
+#, fuzzy
+msgid ""
+"To make further settings, please edit the corresponding configuration files "
+"in the following folder:"
+msgstr "추가 설정을하려면 다음 폴더에서 해당 구성 파일을 편집하십시오:"
+
+#: scripts
+#, fuzzy
+msgid "Then you must restart the following service:"
+msgstr "그런 다음 다음 서비스를 다시 시작해야합니다:"
+
+#: services
+#, fuzzy
+msgid "All"
+msgstr "모두"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Hit:"
+msgstr "때리다:"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading package lists"
+msgstr "읽기 패키지 목록"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Building dependency tree"
+msgstr "건물 의존성 트리"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading state information"
+msgstr "상태 정보 읽기"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading database"
+msgstr "읽기 데이터베이스"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Calculating upgrade"
+msgstr "업그레이드 계산"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Waiting for headers"
+msgstr "헤더를 기다리고 있습니다"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Working"
+msgstr "일하고 있는"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "All packages are up to date"
+msgstr "모든 패키지는 최신입니다"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Done"
+msgstr "완료"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"The following packages were automatically installed and are no longer "
+"required"
+msgstr "다음 패키지가 자동으로 설치되었으며 더 이상 필요하지 않습니다"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Use"
+msgstr "사용"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove them"
+msgstr "그들을 제거합니다"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "upgraded"
+msgstr "업그레이드"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "newly installed"
+msgstr "새로 설치되었습니다"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove and"
+msgstr "제거하고"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "not upgraded"
+msgstr "업그레이드되지 않았습니다"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Connected to"
+msgstr "연결"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be REMOVED"
+msgstr "다음 패키지가 제거됩니다"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "After this operation"
+msgstr "이 작업 후"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "disk space will be freed"
+msgstr "디스크 공간이 해제됩니다"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Do you want to continue?"
+msgstr "계속 하시겠습니까?"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Progress"
+msgstr "진전"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Removing"
+msgstr "풀이"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Processing triggers for"
+msgstr "처리 트리거"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be upgraded"
+msgstr "다음 패키지가 업그레이드됩니다"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading changelogs"
+msgstr "Changelogs를 읽습니다"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preconfiguring packages"
+msgstr "사전 구성 패키지"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preparing to unpack"
+msgstr "포장 풀기 준비"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "files and directories currently installed"
+msgstr "현재 설치된 파일 및 디렉토리"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Unpacking"
+msgstr "포장 풀기"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Setting up"
+msgstr "설정"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "over"
+msgstr "~ 위에"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Installing new version of config file"
+msgstr "구성 파일의 새 버전 설치"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "A new version"
+msgstr "새 버전"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "of configuration file"
+msgstr "구성 파일의"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"is available, but the version installed currently has been locally modified"
+msgstr "사용할 수 있지만 현재 설치된 버전은 로컬로 수정되었습니다"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error, exiting now."
+msgstr "오류, 지금 종료."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: You need to run this script as"
+msgstr "오류 :이 스크립트를 다음과 같이 실행해야합니다"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: This script can't be piped!"
+msgstr "오류 :이 스크립트는 파이프를 할 수 없습니다!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "failed!"
+msgstr "실패한!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Finished!"
+msgstr "완성된!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating packet repository"
+msgstr "패킷 저장소 업데이트"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating system"
+msgstr "업데이트 시스템"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Cleanup system"
+msgstr "청소 시스템"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Installing"
+msgstr "설치"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating"
+msgstr "업데이트"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Expanding Filesystem"
+msgstr "파일 시스템 확장"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Do you want to proceed?"
+msgstr "진행 하시겠습니까?"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Ok, proceeding..."
+msgstr "좋아, 진행 중 ..."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "No, exiting now."
+msgstr "아니, 지금 나가."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Please answer yes or no."
+msgstr "예 또는 아니오에 대답하십시오."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing path"
+msgstr "변화하는 경로"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Downloading"
+msgstr "다운로드"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/owner"
+msgstr "파일 권한 변경/소유자"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/right"
+msgstr "파일 권한 변경/권리"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "To activate the changes, the system must be rebooted."
+msgstr "변경 사항을 활성화하려면 시스템을 재부팅해야합니다."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Could not find any user, exiting now."
+msgstr "지금 종료하는 사용자를 찾을 수 없습니다."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Which user would you like to edit?"
+msgstr "어떤 사용자를 편집하고 싶습니까?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Define the password for user"
+msgstr "사용자의 비밀번호를 정의하십시오"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Do you want to edit another user?"
+msgstr "다른 사용자를 편집 하시겠습니까?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "New password"
+msgstr "새 비밀번호"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Retype new password"
+msgstr "새 비밀번호를 다시 입력하세요"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "No password has been supplied."
+msgstr "암호가 제공되지 않았습니다."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Sorry, passwords do not match."
+msgstr "죄송합니다. 비밀번호가 일치하지 않습니다."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Updating password"
+msgstr "비밀번호 업데이트"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Authentication token manipulation error"
+msgstr "인증 토큰 조작 오류"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "password unchanged"
+msgstr "비밀번호는 변경되지 않았습니다"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "user"
+msgstr "사용자"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "does not exist"
+msgstr "존재하지 않는다"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Please connect the destination device you wish to use."
+msgstr "사용하려는 대상 장치를 연결하십시오."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Hit enter when it is connected."
+msgstr "연결되면 Enter를 누르십시오."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find any devices, exiting now."
+msgstr "지금 종료하는 장치를 찾을 수 없습니다."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find specified device, exiting now."
+msgstr "현재 종료 된 지정된 장치를 찾을 수 없습니다."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "What is your destination device?"
+msgstr "목적지 장치는 무엇입니까?"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Ok, using device:"
+msgstr "좋아, 장치 사용 :"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "target is busy"
+msgstr "대상이 바쁘다"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating image file"
+msgstr "이미지 파일 생성"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image file"
+msgstr "수축 이미지 파일"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "copied"
+msgstr "복사"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records in"
+msgstr "기록"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records out"
+msgstr "기록을 기록합니다"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Gathering data"
+msgstr "데이터 수집"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating new"
+msgstr "새로운 창조"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Checking filesystem"
+msgstr "파일 시스템 확인"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "non-contiguous"
+msgstr "연속성이 없습니다"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks"
+msgstr "블록"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking filesystem"
+msgstr "파일 시스템 수축"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Resizing the filesystem on"
+msgstr "파일 시스템의 크기 조정"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Begin pass"
+msgstr "패스를 시작하십시오"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Relocating blocks"
+msgstr "블록 재배치"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Scanning inode table"
+msgstr "스캐닝 inode 테이블"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Updating inode references"
+msgstr "inode 참조 업데이트"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "The filesystem on"
+msgstr "파일 시스템 켜짐"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "is now"
+msgstr "지금입니다"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks long"
+msgstr "블록 길이"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image"
+msgstr "수축 이미지"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Using gzip on the shrunk image"
+msgstr "축소 이미지에서 GZIP 사용"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrunk"
+msgstr "축소"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "from"
+msgstr "~에서"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "to"
+msgstr "에게"
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid ""
+"Please connect the destination device (sd-card, usb-stick) you wish to use."
+msgstr "사용하려는 대상 장치 (SD-Card, USB-Stick)를 연결하십시오."
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid "WARNING: All data on the destination device will be deleted!"
+msgstr "경고 : 대상 장치의 모든 데이터가 삭제됩니다!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting frequency is"
+msgstr "라디오보고 빈도입니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting bandwidth is"
+msgstr "라디오보고 대역폭입니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting TX power is"
+msgstr "라디오보고 TX Power는입니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting spreading factor is"
+msgstr "라디오보고 확산 계수입니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting coding rate is"
+msgstr "라디오보고 코딩 속도입니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware initialisation error"
+msgstr "하드웨어 초기화 오류"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware TX error"
+msgstr "하드웨어 TX 오류"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware error"
+msgstr "하드웨어 오류"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "serial read timeout"
+msgstr "일련의 읽기 시간 초과"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while detecting hardware for"
+msgstr "하드웨어를 감지하는 동안 IO 오류가 발생했습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring frequency for"
+msgstr "주파수를 구성하는 동안 IO 오류가 발생했습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring bandwidth for"
+msgstr "대역폭을 구성하는 동안 IO 오류가 발생했습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring TX power for"
+msgstr "TX 전원을 구성하는 동안 IO 오류가 발생했습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring spreading factor for"
+msgstr "스프레딩 팩터를 구성하는 동안 IO 오류가 발생했습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring coding rate for"
+msgstr "코딩 속도를 구성하는 동안 IO 오류가 발생했습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state for"
+msgstr "라디오 상태를 구성하는 동안 IO 오류가 발생했습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring device mode"
+msgstr "장치 모드를 구성하는 동안 IO 오류가 발생했습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while wiping EEPROM"
+msgstr "eeprom을 닦는 동안 IO 오류가 발생했습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while restarting device"
+msgstr "장치를 다시 시작하는 동안 IO 오류가 발생했습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while writing EEPROM"
+msgstr "EEPROM을 작성하는 동안 IO 오류가 발생했습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state"
+msgstr "무선 상태를 구성하는 동안 IO 오류가 발생했습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download EEPROM from device. Is a valid firmware installed?"
+msgstr ""
+"장치에서 eeprom을 다운로드 할 수 없습니다. 유효한 펌웨어가 설치되어 있습니까?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum mismatch"
+msgstr "eeprom 체크섬 불일치"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum correct"
+msgstr "EEPROM 체크섬 정확합니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load local signing key"
+msgstr "로컬 서명 키를로드 할 수 없습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize local signing key"
+msgstr "로컬 서명 키를 필사적으로 할 수 없었습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validated"
+msgstr "장치 서명 검증"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validation failed"
+msgstr "장치 서명 검증에 실패했습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid EEPROM data, could not parse device EEPROM."
+msgstr "잘못된 eeprom 데이터는 장치 eeprom을 구문 분석 할 수 없습니다."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Hello!\n"
+"\n"
+"This guide will help you install the RNode firmware on supported\n"
+"and homebrew devices. Please connect the device you wish to set\n"
+"up now."
+msgstr ""
+"안녕하세요! \n"
+"\n"
+" 이 안내서는 지원되는에 RNODE 펌웨어를 설치하는 데 도움이됩니다. \n"
+" 그리고 홈브류 장치. 설정하려는 장치를 연결하십시오 \n"
+" 지금."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please connect the device you wish to setup now."
+msgstr "지금 설정하려는 장치를 연결하십시오."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find any port, exiting now."
+msgstr "지금 종료하는 항구를 찾을 수 없었습니다."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Detected serial ports:"
+msgstr "감지 된 직렬 포트 :"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What serial port is your device connected to?"
+msgstr "장치는 어떤 직렬 포트에 연결되어 있습니까?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That port does not exist, exiting now."
+msgstr "해당 포트는 존재하지 않으며 지금 종료합니다."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not select port, exiting now."
+msgstr "지금 종료하는 포트를 선택할 수 없었습니다."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Ok, using device on"
+msgstr "좋아, 장치를 사용하여"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "using device on"
+msgstr "장치 사용"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find specified port"
+msgstr "지정된 포트를 찾을 수 없습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "exiting now"
+msgstr "지금 종료"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Probing device"
+msgstr "프로빙 장치"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not open the specified serial port. The contained exception was:"
+msgstr "지정된 직렬 포트를 열 수 없습니다. 포함 된 예외는 다음과 같습니다:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No answer from device"
+msgstr "장치의 답변이 없습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Trying to read EEPROM"
+msgstr "eeprom을 읽으려고합니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device is already installed and provisioned. No further action will\n"
+"be taken. If you wish to completely reinstall this device, you must first\n"
+"wipe the current EEPROM. See the help for more info.\n"
+"\n"
+"Exiting now."
+msgstr ""
+"이 장치는 이미 설치 및 프로비저닝되었습니다. 더 이상 조치가 없습니다 \n"
+" 찍으십시오. 이 장치를 완전히 다시 설치하려면 먼저 \n"
+" 현재 eeprom을 닦으십시오. 자세한 정보는 도움을 참조하십시오. \n"
+"\n"
+" 지금 종료."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"The device seems to have an RNode firmware installed, but it was not\n"
+"provisioned correctly, or it is corrupt. We are going to reinstall the\n"
+"correct firmware and provision it."
+msgstr ""
+"장치에는 RNODE 펌웨어가 설치된 것 같습니다. \n"
+" 올바르게 프로비저닝되거나 손상되었습니다. 우리는 다시 설치할 것입니다 \n"
+" 펌웨어를 올바르게하고 제공하십시오."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "It looks like this is a fresh device with no RNode firmware."
+msgstr "이것은 Rnode 펌웨어가없는 새로운 장치 인 것 같습니다."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of device is this?"
+msgstr "이것은 어떤 종류의 장치입니까?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Important! Using RNode firmware on"
+msgstr "중요한! Rnode 펌웨어 사용"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"should currently be\n"
+"considered experimental. It is not intended for production or critical use.\n"
+"The currently supplied firmware is provided AS-IS as a courtesey to those\n"
+"who would like to experiment with it. Hit enter to continue."
+msgstr ""
+"현재 \n"
+" 실험으로 간주됩니다. 생산이나 중요한 용도를위한 것이 아닙니다. \n"
+" 현재 제공되는 펌웨어는 그와 대조적으로 제공됩니다. \n"
+" 그것을 실험하고 싶은 사람. 계속하려면 Enter를 누르십시오."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That device type does not exist, exiting now."
+msgstr "해당 장치 유형은 존재하지 않으며 지금은 종료됩니다."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of microcontroller is your board based on?"
+msgstr "귀하의 보드는 어떤 종류의 마이크로 컨트롤러를 기반으로합니까?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That MCU type does not exist, exiting now."
+msgstr "그 MCU 유형은 존재하지 않으며 지금 종료합니다."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What transceiver module does your board use?"
+msgstr "보드는 어떤 트랜시버 모듈을 사용합니까?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That transceiver type does not exist, exiting now."
+msgstr "트랜스 시버 유형은 존재하지 않으며 지금은 종료됩니다."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What model is this RNode?"
+msgstr "이 rnode는 어떤 모델입니까?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That model does not exist, exiting now."
+msgstr "그 모델은 존재하지 않으며 지금 종료합니다."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this T-Beam for?"
+msgstr "이 T- 빔은 어떤 밴드입니까?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That band does not exist, exiting now."
+msgstr "그 밴드는 존재하지 않으며 지금 종료합니다."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this LoRa32 for?"
+msgstr "이 lora32는 어떤 밴드입니까?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this Heltec LoRa32 for?"
+msgstr "이 Heltec Lora32는 어떤 밴드입니까?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of ESP32 board is this?"
+msgstr "이것은 어떤 종류의 ESP32 보드입니까?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That ESP32 board does not exist, exiting now."
+msgstr "ESP32 보드는 존재하지 않으며 지금은 종료됩니다."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Sorry, no firmware for your board currently exists.\n"
+"Help making it a reality by contributing code or by\n"
+"donating to the project."
+msgstr ""
+"죄송합니다. 현재 이사회 용 펌웨어가 없습니다. \n"
+" 코드를 기여하거나 \n"
+" 프로젝트에 기부."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Ok, that should be all the information we need. Please confirm the "
+"following\n"
+"summary before proceeding. In the next step, the device will be flashed and\n"
+"provisioned, so make that you are satisfied with your choices."
+msgstr ""
+"좋아, 그것은 우리가 필요한 모든 정보 여야합니다. 다음을 확인하십시오 \n"
+" 진행하기 전에 요약. 다음 단계에서는 장치가 깜박이고 \n"
+" 프로비저닝되어 있으므로 선택에 만족하도록하십시오."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial port"
+msgstr "직렬 포트"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device type"
+msgstr "기기 종류"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device MCU"
+msgstr "장치 MCU"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file"
+msgstr "펌웨어 파일"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Is the above correct?"
+msgstr "위의 것이 맞습니까?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "OK, aborting now."
+msgstr "좋아, 지금 낙태."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device connected"
+msgstr "장치가 연결되어 있습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Current firmware version:"
+msgstr "현재 펌웨어 버전 :"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Got invalid response while detecting device"
+msgstr "장치를 감지하는 동안 잘못된 응답을 받았습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download required firmware file. The contained exception was:"
+msgstr ""
+"필요한 펌웨어 파일을 다운로드 할 수 없습니다. 포함 된 예외는 다음과 같습니다:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial module could not be found"
+msgstr "직렬 모듈을 찾을 수 없었습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs pyserial to work.\n"
+"You can install it with: pip3 install pyserial"
+msgstr ""
+"Rnode 구성 유틸리티는 작동하려면 양가비가 필요합니다. \n"
+" PIP3 Pyserial 설치로 설치할 수 있습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cryptography module could not be found"
+msgstr "암호화 모듈을 찾을 수 없었습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs the cryptography module to work.\n"
+"You can install it with: pip3 install cryptography"
+msgstr ""
+"RNODE Config 유틸리티에는 암호화 모듈이 필요합니다. \n"
+" PIP3 Cryptography 설치로 설치할 수 있습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Downloading latest frimware from GitHub"
+msgstr "Github에서 최신 펌웨어 다운로드"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware download completed"
+msgstr "펌웨어 다운로드가 완료되었습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware extracted"
+msgstr "펌웨어 추출"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not extract firmware from downloaded zip file"
+msgstr "다운로드 된 zip 파일에서 펌웨어를 추출 할 수 없습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing RNode firmware to device on"
+msgstr "Rnode 펌웨어를 장치로 플래시합니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Done flashing"
+msgstr "깜박임 완료"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Waiting for ESP32 reset"
+msgstr "ESP32 리셋을 기다리고 있습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while flashing"
+msgstr "깜박이는 동안 오류"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file not found"
+msgstr "펌웨어 파일을 찾을 수 없습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download firmware package"
+msgstr "펌웨어 패키지를 다운로드 할 수 없습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The contained exception was:"
+msgstr "포함 된 예외는 다음과 같습니다:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Skipping online check, using local firmware file:"
+msgstr "로컬 펌웨어 파일을 사용하여 온라인 수표 건너 뛰기 :"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load signing key"
+msgstr "서명 키를로드 할 수 없습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize signing key"
+msgstr "서명 키를 사로화 할 수 없었습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Generating a new signing key"
+msgstr "새로운 서명 키 생성"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Signing key already exists, not overwriting!\n"
+"Manually delete this key to create a new one."
+msgstr ""
+"서명 키는 이미 덮어 쓰지 않고 존재합니다! \n"
+" 이 키를 수동으로 삭제하여 새 키를 생성합니다."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The firmware directory does not exist, can't write key!"
+msgstr "펌웨어 디렉토리는 존재하지 않으며 키를 쓸 수 없습니다!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Extracting firmware"
+msgstr "펌웨어 추출"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Opening serial port"
+msgstr "직렬 포트 열기"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Serial port opened, but RNode did not respond. Is a valid firmware installed?"
+msgstr ""
+"직렬 포트가 열렸지만 Rnode는 응답하지 않았습니다. 유효한 펌웨어가 설치되어 있"
+"습니까?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"WARNING: EEPROM is being wiped! Power down device NOW if you do not want "
+"this!"
+msgstr ""
+"경고 : EEPROM이 닦습니다! 당신이 이것을 원하지 않는다면 지금 전원 다운 장치!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Reading EEPROM"
+msgstr "eeprom을 읽습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "ERROR: No firmware found for this board. Cannot update."
+msgstr "오류 :이 보드에는 펌웨어가 없습니다. 업데이트 할 수 없습니다."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cannot update device firmware"
+msgstr "장치 펌웨어를 업데이트 할 수 없습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Updating RNode firmware for device on"
+msgstr "장치에 대한 RNODE 펌웨어 업데이트"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing new firmware completed"
+msgstr "새로운 펌웨어가 완료되었습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update completed successfully"
+msgstr "펌웨어 업데이트가 성공적으로 완료되었습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while flashing the new firmware, exiting now."
+msgstr "새 펌웨어를 플래시하는 동안 오류가 발생했습니다."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while updating firmware"
+msgstr "펌웨어를 업데이트하는 동안 오류"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update file not found"
+msgstr "펌웨어 업데이트 파일을 찾을 수 없습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM contents"
+msgstr "eeprom 내용"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM backup written to"
+msgstr "eeprom 백업이 작성되었습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"EEPROM was successfully downloaded from device,\n"
+"but file could not be written to disk."
+msgstr ""
+"EEPROM은 장치에서 성공적으로 다운로드되었습니다. \n"
+" 그러나 파일은 디스크에 기록 할 수 없습니다."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device info:"
+msgstr "기기 정보:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Product"
+msgstr "제품"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature"
+msgstr "장치 서명"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware version"
+msgstr "펌웨어 버전"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Hardware revision"
+msgstr "하드웨어 개정"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial number"
+msgstr "일련 번호"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency range"
+msgstr "주파수 범위"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Max TX power"
+msgstr "최대 TX 전원"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Manufactured"
+msgstr "제조"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device mode"
+msgstr "장치 모드"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency"
+msgstr "빈도"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth"
+msgstr "대역폭"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "TX power"
+msgstr "TX 전원"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor"
+msgstr "확산 계수"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate"
+msgstr "코딩 속도"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "On-air bitrate"
+msgstr "대공 비트 전송률"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM is invalid, no further information available"
+msgstr "EEPROM은 유효하지 않으며 추가 정보가 없습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM bootstrap was requested, but a valid EEPROM was already present."
+msgstr "EEPROM Bootstrap이 요청되었지만 유효한 EEPROM이 이미 존재했습니다."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No changes are being made."
+msgstr "변경되지 않습니다."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Clearing old EEPROM, this will take about 15 seconds"
+msgstr "오래된 eeprom을 지우면 약 15 초가 걸립니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not create device serial number, exiting"
+msgstr "장치 일련 번호를 생성 할 수 없습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Loading signing key"
+msgstr "서명 키로드"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while signing EEPROM"
+msgstr "EEPROM에 서명하는 동안 오류"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bootstrapping device EEPROM"
+msgstr "부트 스트래핑 장치 eeprom"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM written! Validating"
+msgstr "eeprom 작성! 검증"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM Bootstrapping successful!"
+msgstr "EEPROM 부트 스트랩 성공!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "RNode Firmware autoinstallation complete!"
+msgstr "RNODE 펌웨어 자동 설치 완료!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "To use your device with Reticulum, read the documetation at:"
+msgstr "Reticulum과 함께 장치를 사용하려면 다음의 설명서를 읽으십시오:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Thank you for using this utility! Please help the project by\n"
+"contributing code and reporting bugs, or by donating!"
+msgstr ""
+"이 유틸리티를 사용해 주셔서 감사합니다! 프로젝트를 도와주세요 \n"
+" 코드를 기여하고 버그를보고하거나 기부합니다!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Your contributions and donations directly further the realisation\n"
+"of truly open, free and resilient communications systems."
+msgstr ""
+"귀하의 기여와 기부는 실현을 직접 더욱 발전시킵니다 \n"
+" 진정으로 개방적이고 자유롭고 탄력적 인 통신 시스템."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "WARNING: Could not backup device EEPROM to disk"
+msgstr "경고 : 장치 eeprom을 디스크로 백업 할 수 없습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM was written, but validation failed. Check your settings."
+msgstr "EEPROM이 작성되었지만 검증이 실패했습니다. 설정을 확인하십시오."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while writing EEPROM. The contained exception was:"
+msgstr ""
+"EEPROM을 작성하는 동안 오류가 발생했습니다. 포함 된 예외는 다음과 같습니다:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid data specified, cancelling EEPROM write"
+msgstr "유효하지 않은 데이터가 지정되어 EEPROM 쓰기를 취소합니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to normal (host-controlled) operating mode"
+msgstr "장치가 정상 (호스트 제어) 작동 모드로 설정됩니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please input startup configuration:"
+msgstr "시작 구성을 입력하십시오 :"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency in Hz:"
+msgstr "HZ의 주파수 :"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth in Hz:"
+msgstr "HZ의 대역폭 :"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor:"
+msgstr "확산 계수 :"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate:"
+msgstr "코딩 속도 :"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to TNC operating mode"
+msgstr "장치가 TNC 작동 모드로 설정되었습니다"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device contains a valid firmware, but EEPROM is invalid.\n"
+"Probably the device has not been initialised, or the EEPROM has been "
+"erased.\n"
+"Please correctly initialise the device and try again!"
+msgstr ""
+"이 장치에는 유효한 펌웨어가 포함되어 있지만 EEPROM은 유효하지 않습니다. \n"
+" 아마도 장치가 초기화되지 않았거나 EEPROM이 지워 졌을 것입니다. \n"
+" 장치를 올바르게 초기화하고 다시 시도하십시오!"

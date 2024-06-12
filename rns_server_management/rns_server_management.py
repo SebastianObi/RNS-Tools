@@ -431,7 +431,7 @@ class ServerManagement:
                 RNS.log("Server - Destination length is invalid", RNS.LOG_ERROR)
                 return False
 
-            try:    
+            try:
                 destination = bytes.fromhex(destination)
             except Exception as e:
                 RNS.log("Server - Destination is invalid", RNS.LOG_ERROR)
@@ -2075,7 +2075,7 @@ def log(text, level=3, file=None):
                 file_handle = open(file, "a")
                 file_handle.write(text + "\n")
                 file_handle.close()
-                
+
                 if os.path.getsize(file) > LOG_MAXSIZE:
                     file_prev = file + ".1"
                     if os.path.isfile(file_prev):

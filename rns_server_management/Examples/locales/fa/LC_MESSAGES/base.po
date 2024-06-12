@@ -1,0 +1,2041 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-01 19:45+0100\n"
+"PO-Revision-Date: 2023-12-12 09:37\n"
+"Last-Translator: SebastianObi\n"
+"Language-Team: SebastianObi\n"
+"Language: fa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#: infos
+#, fuzzy
+msgid "Software - Python"
+msgstr "نرم افزار - پایتون"
+
+#: infos
+#, fuzzy
+msgid "Software - Reticulum"
+msgstr "نرم افزار - شبکهولول"
+
+#: infos
+#, fuzzy
+msgid "Software - System"
+msgstr "نرم افزار - سیستم"
+
+#: infos
+#, fuzzy
+msgid "System - Drives & data storage"
+msgstr "سیستم - درایوها و ذخیره داده ها"
+
+#: infos
+#, fuzzy
+msgid "System - General system information"
+msgstr "سیستم - اطلاعات عمومی سیستم"
+
+#: infos
+#, fuzzy
+msgid "System - Interfaces"
+msgstr "سیستم - رابط ها"
+
+#: infos
+#, fuzzy
+msgid "System - Network connections"
+msgstr "سیستم - اتصالات شبکه"
+
+#: infos
+#, fuzzy
+msgid "System time"
+msgstr "زمان سیستم"
+
+#: infos
+#, fuzzy
+msgid "Start time"
+msgstr "زمان شروع"
+
+#: infos
+#, fuzzy
+msgid "Runtime"
+msgstr "زمان اجرا"
+
+#: infos
+#, fuzzy
+msgid "Version"
+msgstr "نسخه"
+
+#: infos
+#, fuzzy
+msgid "Status:"
+msgstr "وضعیت:"
+
+#: infos
+#, fuzzy
+msgid "Clients:"
+msgstr "مشتری ها:"
+
+#: infos
+#, fuzzy
+msgid "Peers:"
+msgstr "همسالان:"
+
+#: infos
+#, fuzzy
+msgid "Mode:"
+msgstr "حالت:"
+
+#: infos
+#, fuzzy
+msgid "Speed:"
+msgstr "سرعت:"
+
+#: infos
+#, fuzzy
+msgid "Airtime:"
+msgstr "زمان پخش:"
+
+#: infos
+#, fuzzy
+msgid "Ch. Load:"
+msgstr "che بار:"
+
+#: infos
+#, fuzzy
+msgid "Queued:"
+msgstr "صف:"
+
+#: infos
+#, fuzzy
+msgid "announce"
+msgstr "اعلام"
+
+#: infos
+#, fuzzy
+msgid "announces"
+msgstr "اعلام کردن"
+
+#: infos
+#, fuzzy
+msgid "Held:"
+msgstr "برگزار شد:"
+
+#: infos
+#, fuzzy
+msgid "Announces:"
+msgstr "اعلام می کند:"
+
+#: infos
+#, fuzzy
+msgid "Transport Instance"
+msgstr "نمونه حمل و نقل"
+
+#: infos
+#, fuzzy
+msgid "Probe responder"
+msgstr "پاسخ دهنده"
+
+#: infos
+#, fuzzy
+msgid "Uptime"
+msgstr "به موقع"
+
+#: infos
+#, fuzzy
+msgid "[b]Size:[/b]"
+msgstr "[b] اندازه: [/b]"
+
+#: infos
+#, fuzzy
+msgid "[b]Free:[/b]"
+msgstr "[b] رایگان: [/b]"
+
+#: infos
+#, fuzzy
+msgid "[b]Type:[/b]"
+msgstr "[B] نوع: [/b]"
+
+#: infos
+#, fuzzy
+msgid "Platform"
+msgstr "سکو"
+
+#: infos
+#, fuzzy
+msgid "Release"
+msgstr "رهایی"
+
+#: infos
+#, fuzzy
+msgid "Release name"
+msgstr "نام"
+
+#: infos
+#, fuzzy
+msgid "Model"
+msgstr "مدل"
+
+#: infos
+#, fuzzy
+msgid "Hostname"
+msgstr "نام میزبان"
+
+#: infos
+#, fuzzy
+msgid "CPU load"
+msgstr "بار CPU"
+
+#: infos
+#, fuzzy
+msgid "CPU cores"
+msgstr "هسته های CPU"
+
+#: infos
+#, fuzzy
+msgid "System temperature"
+msgstr "دمای سیستم"
+
+#: infos
+#, fuzzy
+msgid "LAN"
+msgstr "شبکه"
+
+#: infos
+#, fuzzy
+msgid "WiFi"
+msgstr "وای فای"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks"
+msgstr "شبکه های WiFi"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks connected"
+msgstr "شبکه های WiFi متصل هستند"
+
+#: infos
+#, fuzzy
+msgid "USB"
+msgstr "یو اس بی"
+
+#: infos
+#, fuzzy
+msgid "Bluetooth"
+msgstr "بلوتوث"
+
+#: infos
+#, fuzzy
+msgid "Serial"
+msgstr "سریال"
+
+#: logs
+#, fuzzy
+msgid "FDN - Reticulum, Channel, Group, Shop"
+msgstr "FDN - شبکه ، کانال ، گروه ، فروشگاه"
+
+#: logs
+#, fuzzy
+msgid "Software"
+msgstr "نرم افزار"
+
+#: logs
+#, fuzzy
+msgid "Dhcpd - DHCP Server"
+msgstr "DHCPD - سرور DHCP"
+
+#: logs
+#, fuzzy
+msgid "Dnsmasq - DNS Server"
+msgstr "DNSMASQ - سرور DNS"
+
+#: logs
+#, fuzzy
+msgid "Hostapd - WiFi AP"
+msgstr "Hostapd - Wifi AP"
+
+#: logs
+#, fuzzy
+msgid "System"
+msgstr "سیستم"
+
+#: logs
+#, fuzzy
+msgid "Auth - Authentication"
+msgstr "auth - احراز هویت"
+
+#: logs
+#, fuzzy
+msgid "Daemon - System daemons"
+msgstr "Daemon - Daemons سیستم"
+
+#: logs
+#, fuzzy
+msgid "Fail - Failed login attempts"
+msgstr "Fail - تلاش های ورود به سیستم ناموفق است"
+
+#: logs
+#, fuzzy
+msgid "Kern - Kernel"
+msgstr "هسته - هسته"
+
+#: logs
+#, fuzzy
+msgid "Mail - Email-related events"
+msgstr "نامه - رویدادهای مرتبط با ایمیل"
+
+#: logs
+#, fuzzy
+msgid "Messages - General system events"
+msgstr "پیام ها - رویدادهای عمومی سیستم"
+
+#: logs
+#, fuzzy
+msgid "Syslog - System"
+msgstr "syslog - سیستم"
+
+#: logs
+#, fuzzy
+msgid "User - User activities"
+msgstr "کاربر - فعالیت های کاربر"
+
+#: scripts
+#, fuzzy
+msgid "Backup & Restore"
+msgstr "پشتیبان گیری بازیابی"
+
+#: scripts
+#, fuzzy
+msgid "Examples"
+msgstr "مثال ها"
+
+#: scripts
+#, fuzzy
+msgid "Examples 1"
+msgstr "مثال 1"
+
+#: scripts
+#, fuzzy
+msgid "Examples 2"
+msgstr "نمونه های 2"
+
+#: scripts
+msgid "Examples - Test Configurations"
+msgstr ""
+
+#: scripts
+#, fuzzy
+msgid "Examples - User interface test functions"
+msgstr "مثالها - توابع تست رابط کاربری"
+
+#: scripts
+#, fuzzy
+msgid "Reticulum - LoRadio & RNode"
+msgstr "شبکیه - Loradio & RNode"
+
+#: scripts
+#, fuzzy
+msgid "Software - Installation"
+msgstr "نصب نرم افزار"
+
+#: scripts
+#, fuzzy
+msgid "Software - Uninstallation"
+msgstr "نرم افزار - حذف نصب"
+
+#: scripts
+#, fuzzy
+msgid "Software - Update"
+msgstr "به روز رسانی نرم افزار"
+
+#: scripts
+#, fuzzy
+msgid "System - Configuration"
+msgstr "پیکربندی سیستم"
+
+#: scripts
+#, fuzzy
+msgid "System - Update"
+msgstr "به روزرسانی سیستم"
+
+#: scripts
+#, fuzzy
+msgid "Management - Restart"
+msgstr "مدیریت - راه اندازی مجدد"
+
+#: scripts
+#, fuzzy
+msgid "System - Reboot"
+msgstr "سیستم - راه اندازی مجدد"
+
+#: scripts
+#, fuzzy
+msgid "System - Shutdown"
+msgstr "سیستم - خاموش کردن"
+
+#: scripts
+#, fuzzy
+msgid "System Clone - Creates a direct copy of the system drive"
+msgstr "کلون سیستم - یک کپی مستقیم از درایو سیستم ایجاد می کند"
+
+#: scripts
+#, fuzzy
+msgid "System Image - Creates an image of the system drive"
+msgstr "تصویر سیستم - تصویری از درایو سیستم ایجاد می کند"
+
+#: scripts
+#, fuzzy
+msgid "Example - All input elements"
+msgstr "مثال - همه عناصر ورودی"
+
+#: scripts
+#, fuzzy
+msgid "Example - Exit codes"
+msgstr "مثال - کدهای خروج"
+
+#: scripts
+#, fuzzy
+msgid "Example - Waiting time"
+msgstr "مثال - زمان انتظار"
+
+#: scripts
+#, fuzzy
+msgid "Info - Read out information"
+msgstr "اطلاعات - اطلاعات را بخوانید"
+
+#: scripts
+#, fuzzy
+msgid "Install - Installing the firmware"
+msgstr "نصب - نصب سیستم عامل"
+
+#: scripts
+#, fuzzy
+msgid "Reset - Resetting the firmware"
+msgstr "تنظیم مجدد - تنظیم مجدد سیستم عامل"
+
+#: scripts
+#, fuzzy
+msgid "Update - Updating the firmware"
+msgstr "به روز رسانی - به روزرسانی سیستم عامل"
+
+#: scripts
+#, fuzzy
+msgid "Bridge Matrix - Message bridge"
+msgstr "ماتریس پل - پل پیام"
+
+#: scripts
+#, fuzzy
+msgid "Console tools - Recommended tools"
+msgstr "ابزارهای کنسول - ابزارهای پیشنهادی"
+
+#: scripts
+#, fuzzy
+msgid "Filesystem tools - Recommended tools"
+msgstr "ابزارهای سیستم فایل - ابزارهای پیشنهادی"
+
+#: scripts
+#, fuzzy
+msgid "Server Blockchain - Gateway for payment and other blockchain functions"
+msgstr "blockchain سرور - دروازه پرداخت و سایر توابع blockchain"
+
+#: scripts
+#, fuzzy
+msgid "Server Channel - Hosting the channel functionality"
+msgstr "کانال سرور - میزبانی عملکرد کانال"
+
+#: scripts
+#, fuzzy
+msgid "Server Group - Hosting the group functionality"
+msgstr "گروه سرور - میزبانی عملکرد گروه"
+
+#: scripts
+#, fuzzy
+msgid "Server Page - Hosting the page functionality"
+msgstr "صفحه سرور - میزبانی عملکرد صفحه"
+
+#: scripts
+#, fuzzy
+msgid "Server Propagation - Hosting the propagation node functionality"
+msgstr "انتشار سرور - میزبانی عملکرد گره انتشار"
+
+#: scripts
+#, fuzzy
+msgid "Server Shop - Hosting the shop functionality"
+msgstr "فروشگاه سرور - میزبانی عملکرد فروشگاه"
+
+#: scripts
+#, fuzzy
+msgid "Server - All hosting functions for channel, group, page, shop, etc."
+msgstr ""
+"سرور - کلیه عملکردهای میزبانی برای کانال ، گروه ، صفحه ، فروشگاه و غیره."
+
+#: scripts
+#, fuzzy
+msgid "File system - Extend file system (Raspberry Pi)"
+msgstr "سیستم فایل - گسترش سیستم پرونده (Raspberry PI)"
+
+#: scripts
+#, fuzzy
+msgid "Password - Change operating system password"
+msgstr "رمز عبور - تغییر رمز عبور سیستم عامل"
+
+#: scripts
+#, fuzzy
+msgid "Update check - Check for new versions"
+msgstr "بررسی به روزرسانی - نسخه های جدید را بررسی کنید"
+
+#: scripts
+#, fuzzy
+msgid "Update cleanup - Cleaning up unneeded packages"
+msgstr "پاکسازی را به روز کنید - تمیز کردن بسته های غیر ضروری"
+
+#: scripts
+#, fuzzy
+msgid "Update Update - Update the system"
+msgstr "بروزرسانی بروزرسانی - سیستم را به روز کنید"
+
+#: scripts
+#, fuzzy
+msgid "Update Upgrade - Distribution update of the system"
+msgstr "بروزرسانی به روزرسانی - به روزرسانی توزیع سیستم"
+
+#: scripts
+#, fuzzy
+msgid "Installing.."
+msgstr "نصب .."
+
+#: scripts
+#, fuzzy
+msgid "Uninstalling..."
+msgstr "حذف نصب ..."
+
+#: scripts
+#, fuzzy
+msgid "Updating..."
+msgstr "در حال بروز رسانی..."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The management server will restart. You must reconnect to re-establish a "
+"connection."
+msgstr ""
+"سرور مدیریت مجدداً راه اندازی می شود. برای برقراری مجدد اتصال باید دوباره به "
+"هم وصل شوید."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will reboot. You must reconnect to re-establish a connection."
+msgstr ""
+"سیستم راه اندازی مجدد خواهد شد. برای برقراری مجدد اتصال باید دوباره به هم "
+"وصل شوید."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will shut down. You must then start it manually to re-establish a "
+"connection."
+msgstr ""
+"سیستم خاموش خواهد شد. سپس باید آن را به صورت دستی شروع کنید تا دوباره یک "
+"اتصال برقرار کنید."
+
+#: scripts
+#, fuzzy
+msgid "No installed services found. Exiting."
+msgstr "هیچ سرویس نصب شده یافت نشده است. خروج."
+
+#: scripts
+#, fuzzy
+msgid "Select a service:"
+msgstr "یک سرویس را انتخاب کنید:"
+
+#: scripts
+#, fuzzy
+msgid "Enter the name for the service: (only a-z 0-9)"
+msgstr "نام سرویس را وارد کنید: (فقط A-Z 0-9)"
+
+#: scripts
+#, fuzzy
+msgid "Enter the display name for the application:"
+msgstr "نام نمایش را برای برنامه وارد کنید:"
+
+#: scripts
+#, fuzzy
+msgid "Invalid choice!"
+msgstr "انتخاب نامعتبر!"
+
+#: scripts
+#, fuzzy
+msgid "Update successfully completed!"
+msgstr "به روزرسانی با موفقیت به پایان رسید!"
+
+#: scripts
+#, fuzzy
+msgid "Uninstallation successfully completed!"
+msgstr "حذف نصب با موفقیت به پایان رسید!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a shop successfully completed!"
+msgstr "نصب یک فروشگاه با موفقیت تکمیل شد!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of an echo server successfully completed!"
+msgstr "نصب سرور اکو با موفقیت تکمیل شد!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a channel successfully completed!"
+msgstr "نصب یک کانال با موفقیت تکمیل شد!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a group successfully completed!"
+msgstr "نصب یک گروه با موفقیت تکمیل شد!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a propagation node successfully completed!"
+msgstr "نصب یک گره انتشار با موفقیت تکمیل شد!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a provisioning node successfully completed!"
+msgstr "نصب یک گره ارائه دهنده با موفقیت تکمیل شد!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a page successfully completed!"
+msgstr "نصب یک صفحه با موفقیت تکمیل شد!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a blockchain node successfully completed!"
+msgstr "نصب یک گره blockchain با موفقیت تکمیل شد!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a message bridge successfully completed!"
+msgstr "نصب یک پل پیام با موفقیت تکمیل شد!"
+
+#: scripts
+#, fuzzy
+msgid ""
+"No further configuration is necessary. Connect to the shop to make all the "
+"necessary settings in the shop app. You should find the new shop in the "
+"announcement list."
+msgstr ""
+"پیکربندی دیگری لازم نیست. برای ایجاد تمام تنظیمات لازم در برنامه فروشگاه به "
+"مغازه متصل شوید. شما باید فروشگاه جدید را در لیست اعلامیه پیدا کنید."
+
+#: scripts
+#, fuzzy
+msgid ""
+"To make further settings, please edit the corresponding configuration files "
+"in the following folder:"
+msgstr ""
+"برای ایجاد تنظیمات بیشتر ، لطفاً پرونده های پیکربندی مربوطه را در پوشه زیر "
+"ویرایش کنید:"
+
+#: scripts
+#, fuzzy
+msgid "Then you must restart the following service:"
+msgstr "سپس باید سرویس زیر را مجدداً راه اندازی کنید:"
+
+#: services
+#, fuzzy
+msgid "All"
+msgstr "همه"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Hit:"
+msgstr "اصابت:"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading package lists"
+msgstr "خواندن لیست های بسته بندی"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Building dependency tree"
+msgstr "درخت وابستگی ساختمان"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading state information"
+msgstr "خواندن اطلاعات حالت"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading database"
+msgstr "خواندن بانک اطلاعاتی"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Calculating upgrade"
+msgstr "محاسبه ارتقاء"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Waiting for headers"
+msgstr "منتظر هدر"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Working"
+msgstr "کار کردن"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "All packages are up to date"
+msgstr "همه بسته ها به روز هستند"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Done"
+msgstr "انجام شده"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"The following packages were automatically installed and are no longer "
+"required"
+msgstr "بسته های زیر به طور خودکار نصب شده و دیگر مورد نیاز نیست"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Use"
+msgstr "استفاده کنید"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove them"
+msgstr "برای حذف آنها"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "upgraded"
+msgstr "به روز شده"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "newly installed"
+msgstr "تازه نصب شده"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove and"
+msgstr "حذف و"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "not upgraded"
+msgstr "به روزرسانی نشده است"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Connected to"
+msgstr "مرتبط با"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be REMOVED"
+msgstr "بسته های زیر حذف می شود"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "After this operation"
+msgstr "بعد از این عمل"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "disk space will be freed"
+msgstr "فضای دیسک آزاد می شود"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Do you want to continue?"
+msgstr "می خواهید ادامه دهید؟?"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Progress"
+msgstr "پیش رفتن"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Removing"
+msgstr "حذف"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Processing triggers for"
+msgstr "پردازش محرک برای"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be upgraded"
+msgstr "بسته های زیر به روز می شود"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading changelogs"
+msgstr "خواندن changelogs"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preconfiguring packages"
+msgstr "بسته های پیش تنظیم"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preparing to unpack"
+msgstr "آماده شدن برای باز کردن"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "files and directories currently installed"
+msgstr "پرونده ها و دایرکتوری ها در حال حاضر نصب شده اند"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Unpacking"
+msgstr "باز"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Setting up"
+msgstr "راه اندازی"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "over"
+msgstr "بر فراز"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Installing new version of config file"
+msgstr "نصب نسخه جدید پرونده پیکربندی"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "A new version"
+msgstr "یک نسخه جدید"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "of configuration file"
+msgstr "پرونده پیکربندی"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"is available, but the version installed currently has been locally modified"
+msgstr "در دسترس است ، اما نسخه نصب شده در حال حاضر به صورت محلی اصلاح شده است"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error, exiting now."
+msgstr "خطا ، در حال حاضر خروج."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: You need to run this script as"
+msgstr "خطا: شما باید این اسکریپت را به عنوان اجرا کنید"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: This script can't be piped!"
+msgstr "خطا: این اسکریپت را نمی توان لوله کشی کرد!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "failed!"
+msgstr "ناموفق!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Finished!"
+msgstr "تمام شده!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating packet repository"
+msgstr "به روزرسانی مخزن بسته"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating system"
+msgstr "سیستم به روز کننده"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Cleanup system"
+msgstr "سیستم پاکسازی"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Installing"
+msgstr "نصب"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating"
+msgstr "در حال بروز رسانی"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Expanding Filesystem"
+msgstr "گسترش سیستم فایل"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Do you want to proceed?"
+msgstr "آیا شما می خواهید ادامه دهید؟?"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Ok, proceeding..."
+msgstr "خوب ، ادامه ..."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "No, exiting now."
+msgstr "نه ، اکنون خروج."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Please answer yes or no."
+msgstr "لطفا پاسخ بله یا خیر."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing path"
+msgstr "تغییر مسیر"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Downloading"
+msgstr "بارگیری"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/owner"
+msgstr "تغییر مجوزهای پرونده/مالک"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/right"
+msgstr "تغییر مجوزهای پرونده/درست"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "To activate the changes, the system must be rebooted."
+msgstr "برای فعال کردن تغییرات ، سیستم باید دوباره راه اندازی شود."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Could not find any user, exiting now."
+msgstr "اکنون نمی توان کاربر را پیدا کرد."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Which user would you like to edit?"
+msgstr "دوست دارید کدام کاربر را ویرایش کنید؟?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Define the password for user"
+msgstr "رمز عبور را برای کاربر تعریف کنید"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Do you want to edit another user?"
+msgstr "آیا می خواهید کاربر دیگری را ویرایش کنید؟?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "New password"
+msgstr "رمز عبور جدید"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Retype new password"
+msgstr "رمز ورود جدید را دوباره تایپ کنید"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "No password has been supplied."
+msgstr "هیچ رمز عبور تهیه نشده است."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Sorry, passwords do not match."
+msgstr "با عرض پوزش ، رمزهای عبور مطابقت ندارند."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Updating password"
+msgstr "به روزرسانی رمز عبور"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Authentication token manipulation error"
+msgstr "خطای دستکاری توکن تأیید هویت"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "password unchanged"
+msgstr "رمز عبور بدون تغییر"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "user"
+msgstr "کاربر"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "does not exist"
+msgstr "وجود ندارد"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Please connect the destination device you wish to use."
+msgstr "لطفاً دستگاه مقصد مورد نظر خود را وصل کنید."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Hit enter when it is connected."
+msgstr "هنگام اتصال ، وارد شوید."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find any devices, exiting now."
+msgstr "اکنون نمی توان هیچ دستگاهی پیدا کرد."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find specified device, exiting now."
+msgstr "اکنون نمی توان دستگاه مشخص شده را پیدا کرد."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "What is your destination device?"
+msgstr "دستگاه مقصد شما چیست؟?"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Ok, using device:"
+msgstr "خوب ، با استفاده از دستگاه:"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "target is busy"
+msgstr "هدف شلوغ است"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating image file"
+msgstr "ایجاد فایل تصویری"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image file"
+msgstr "کوچک کردن پرونده تصویری"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "copied"
+msgstr "کپی شده"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records in"
+msgstr "سوابق در"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records out"
+msgstr "سوابق"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Gathering data"
+msgstr "جمع آوری اطلاعات"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating new"
+msgstr "ایجاد جدید"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Checking filesystem"
+msgstr "بررسی سیستم فایل"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "non-contiguous"
+msgstr "غیر مبهم"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks"
+msgstr "بلوک"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking filesystem"
+msgstr "کوچک شدن سیستم فایل"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Resizing the filesystem on"
+msgstr "تغییر اندازه سیستم فایل در"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Begin pass"
+msgstr "شروع پاس"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Relocating blocks"
+msgstr "بلوک های جابجایی"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Scanning inode table"
+msgstr "جدول اینود اسکن"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Updating inode references"
+msgstr "به روزرسانی منابع inode"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "The filesystem on"
+msgstr "سیستم فایل در"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "is now"
+msgstr "اکنون است"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks long"
+msgstr "مسدود کردن طولانی"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image"
+msgstr "تصویر کوچک"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Using gzip on the shrunk image"
+msgstr "با استفاده از GZIP در تصویر کوچک"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrunk"
+msgstr "کوچک شدن"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "from"
+msgstr "از جانب"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "to"
+msgstr "به"
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid ""
+"Please connect the destination device (sd-card, usb-stick) you wish to use."
+msgstr ""
+"لطفاً دستگاه مقصد (SD-Card ، USB-Stick) را که می خواهید استفاده کنید وصل کنید."
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid "WARNING: All data on the destination device will be deleted!"
+msgstr "هشدار: تمام داده های موجود در دستگاه مقصد حذف می شوند!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting frequency is"
+msgstr "فرکانس گزارش رادیویی است"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting bandwidth is"
+msgstr "پهنای باند گزارش رادیویی است"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting TX power is"
+msgstr "گزارش رادیویی TX Power است"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting spreading factor is"
+msgstr "ضریب گسترش گزارش رادیویی است"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting coding rate is"
+msgstr "نرخ برنامه نویسی گزارش رادیویی است"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware initialisation error"
+msgstr "خطای اولیه سازی سخت افزار"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware TX error"
+msgstr "خطای سخت افزار TX"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware error"
+msgstr "خطای سخت افزاری"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "serial read timeout"
+msgstr "زمان خواندن سریال"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while detecting hardware for"
+msgstr "خطای IO هنگام تشخیص سخت افزار برای"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring frequency for"
+msgstr "خطای IO هنگام پیکربندی فرکانس برای"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring bandwidth for"
+msgstr "خطای IO هنگام پیکربندی پهنای باند برای"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring TX power for"
+msgstr "خطای IO هنگام پیکربندی TX Power برای"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring spreading factor for"
+msgstr "خطای IO هنگام پیکربندی ضریب گسترش برای"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring coding rate for"
+msgstr "خطای IO هنگام پیکربندی نرخ کدگذاری برای"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state for"
+msgstr "خطای IO هنگام پیکربندی حالت رادیو برای"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring device mode"
+msgstr "هنگام پیکربندی حالت دستگاه ، یک خطای IO رخ داده است"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while wiping EEPROM"
+msgstr "خطای IO هنگام پاک کردن EEPROM رخ داد"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while restarting device"
+msgstr "هنگام راه اندازی مجدد دستگاه ، خطای IO رخ داد"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while writing EEPROM"
+msgstr "خطای IO هنگام نوشتن EEPROM رخ داد"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state"
+msgstr "خطای IO هنگام پیکربندی حالت رادیو رخ داده است"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download EEPROM from device. Is a valid firmware installed?"
+msgstr ""
+"EEPROM را از دستگاه بارگیری نکرد. آیا یک سیستم عامل معتبر نصب شده است؟?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum mismatch"
+msgstr "عدم تطابق EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum correct"
+msgstr "Eeprom Checksum درست است"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load local signing key"
+msgstr "کلید امضای محلی را بارگیری نکرد"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize local signing key"
+msgstr "نمی توان کلید امضای محلی را رها کرد"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validated"
+msgstr "امضای دستگاه معتبر است"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validation failed"
+msgstr "اعتبار سنجی امضای دستگاه انجام نشد"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid EEPROM data, could not parse device EEPROM."
+msgstr "داده های EEPROM نامعتبر است ، نمی تواند دستگاه EEPROM را تجزیه کند."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Hello!\n"
+"\n"
+"This guide will help you install the RNode firmware on supported\n"
+"and homebrew devices. Please connect the device you wish to set\n"
+"up now."
+msgstr ""
+"سلام! \n"
+"\n"
+" این راهنما به شما در نصب سیستم عامل RNODE در پشتیبانی کمک می کند \n"
+" و دستگاه های Homebrew. لطفاً دستگاه مورد نظر برای تنظیم را وصل کنید \n"
+" حالا بالا."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please connect the device you wish to setup now."
+msgstr "لطفاً دستگاه مورد نظر خود را برای تنظیم وصل کنید."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find any port, exiting now."
+msgstr "اکنون هیچ بندری پیدا نکرد."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Detected serial ports:"
+msgstr "درگاه های سریال شناسایی شده:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What serial port is your device connected to?"
+msgstr "دستگاه شما به کدام پورت سریال متصل است؟?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That port does not exist, exiting now."
+msgstr "آن بندر وجود ندارد ، اکنون از آنجا خارج می شود."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not select port, exiting now."
+msgstr "اکنون نمی توان پورت را انتخاب کرد."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Ok, using device on"
+msgstr "خوب ، استفاده از دستگاه"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "using device on"
+msgstr "استفاده از دستگاه"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find specified port"
+msgstr "درگاه مشخصی پیدا نشد"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "exiting now"
+msgstr "در حال حاضر"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Probing device"
+msgstr "دستگاه کاوشگر"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not open the specified serial port. The contained exception was:"
+msgstr "نمی توان پورت سریال مشخص شده را باز کرد. استثناء موجود:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No answer from device"
+msgstr "بدون پاسخ از دستگاه"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Trying to read EEPROM"
+msgstr "تلاش برای خواندن eeprom"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device is already installed and provisioned. No further action will\n"
+"be taken. If you wish to completely reinstall this device, you must first\n"
+"wipe the current EEPROM. See the help for more info.\n"
+"\n"
+"Exiting now."
+msgstr ""
+"این دستگاه قبلاً نصب و تهیه شده است. هیچ اقدام دیگری انجام نخواهد شد \n"
+" گرفته شود اگر می خواهید این دستگاه را به طور کامل نصب کنید ، ابتدا باید \n"
+" EEPROM فعلی را پاک کنید. برای اطلاعات بیشتر به راهنما مراجعه کنید. \n"
+"\n"
+" اکنون در حال خروج است."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"The device seems to have an RNode firmware installed, but it was not\n"
+"provisioned correctly, or it is corrupt. We are going to reinstall the\n"
+"correct firmware and provision it."
+msgstr ""
+"به نظر می رسد این دستگاه یک سیستم عامل RNODE نصب کرده است ، اما اینطور "
+"نبود \n"
+" به درستی تهیه شده ، یا فاسد است. ما قصد داریم دوباره نصب کنیم \n"
+" درست سیستم عامل و تهیه آن."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "It looks like this is a fresh device with no RNode firmware."
+msgstr "به نظر می رسد این یک دستگاه تازه و بدون سیستم عامل RNODE است."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of device is this?"
+msgstr "این چه نوع دستگاهی است؟?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Important! Using RNode firmware on"
+msgstr "مهم! با استفاده از سیستم عامل RNODE روشن"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"should currently be\n"
+"considered experimental. It is not intended for production or critical use.\n"
+"The currently supplied firmware is provided AS-IS as a courtesey to those\n"
+"who would like to experiment with it. Hit enter to continue."
+msgstr ""
+"در حال حاضر باید باشد \n"
+" تجربی در نظر گرفته شده است. این برای تولید یا استفاده مهم در نظر گرفته نشده "
+"است. \n"
+" سیستم عامل ارائه شده در حال حاضر به عنوان یک مودبانه برای آنها ارائه می "
+"شود \n"
+" چه کسی دوست دارد با آن آزمایش کند. ضربه را وارد کنید تا ادامه یابد."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That device type does not exist, exiting now."
+msgstr "این نوع دستگاه وجود ندارد ، اکنون از آنجا خارج می شود."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of microcontroller is your board based on?"
+msgstr "هیئت مدیره شما بر اساس چه نوع میکروکنترلر است؟?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That MCU type does not exist, exiting now."
+msgstr "این نوع MCU وجود ندارد ، اکنون از آنجا خارج می شود."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What transceiver module does your board use?"
+msgstr "هیئت مدیره شما از چه ماژول فرستنده استفاده می کند؟?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That transceiver type does not exist, exiting now."
+msgstr "این نوع فرستنده وجود ندارد ، اکنون از آنجا خارج می شود."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What model is this RNode?"
+msgstr "این RNODE کدام مدل است؟?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That model does not exist, exiting now."
+msgstr "این مدل وجود ندارد ، اکنون از آنجا خارج می شود."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this T-Beam for?"
+msgstr "این پرتو T برای چه گروهی است؟?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That band does not exist, exiting now."
+msgstr "آن گروه وجود ندارد ، اکنون از آنجا خارج می شود."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this LoRa32 for?"
+msgstr "این LORA32 برای چه گروهی است؟?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this Heltec LoRa32 for?"
+msgstr "این Heltec Lora32 برای کدام گروهی است؟?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of ESP32 board is this?"
+msgstr "این چه نوع هیئت ESP32 است؟?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That ESP32 board does not exist, exiting now."
+msgstr "این هیئت ESP32 وجود ندارد ، اکنون از آنجا خارج می شود."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Sorry, no firmware for your board currently exists.\n"
+"Help making it a reality by contributing code or by\n"
+"donating to the project."
+msgstr ""
+"با عرض پوزش ، در حال حاضر هیچ سیستم عامل برای هیئت مدیره شما وجود ندارد. \n"
+" با کمک به کد یا توسط آن به واقعیت کمک کنید \n"
+" اهدا به پروژه."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Ok, that should be all the information we need. Please confirm the "
+"following\n"
+"summary before proceeding. In the next step, the device will be flashed and\n"
+"provisioned, so make that you are satisfied with your choices."
+msgstr ""
+"خوب ، این باید تمام اطلاعات مورد نیاز ما باشد. لطفاً موارد زیر را تأیید "
+"کنید \n"
+" خلاصه قبل از ادامه در مرحله بعدی دستگاه چشمک می زند و \n"
+" تهیه شده ، بنابراین این را انجام دهید که از انتخاب خود راضی هستید."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial port"
+msgstr "درگاه سریال"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device type"
+msgstr "نوع وسیله"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device MCU"
+msgstr "دستگاه MCU"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file"
+msgstr "پرونده سیستم عامل"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Is the above correct?"
+msgstr "آیا موارد فوق صحیح است؟?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "OK, aborting now."
+msgstr "خوب ، اکنون سقط جنین."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device connected"
+msgstr "دستگاه متصل"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Current firmware version:"
+msgstr "نسخه فعلی سیستم عامل:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Got invalid response while detecting device"
+msgstr "هنگام تشخیص دستگاه ، پاسخ نامعتبر دریافت کرد"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download required firmware file. The contained exception was:"
+msgstr "پرونده سیستم عامل مورد نیاز را بارگیری نکرد. استثناء موجود:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial module could not be found"
+msgstr "ماژول سریال یافت نشد"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs pyserial to work.\n"
+"You can install it with: pip3 install pyserial"
+msgstr ""
+"ابزار پیکربندی RNODE برای کار به pyserial نیاز دارد. \n"
+" می توانید آن را با: PIP3 نصب Pyserial نصب کنید"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cryptography module could not be found"
+msgstr "ماژول رمزنگاری یافت نشد"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs the cryptography module to work.\n"
+"You can install it with: pip3 install cryptography"
+msgstr ""
+"ابزار پیکربندی RNODE برای کار به ماژول رمزنگاری نیاز دارد. \n"
+" می توانید آن را با: PIP3 نصب رمزنگاری کنید"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Downloading latest frimware from GitHub"
+msgstr "بارگیری آخرین سیستم عامل از GitHub"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware download completed"
+msgstr "بارگیری سیستم عامل تکمیل شد"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware extracted"
+msgstr "سیستم عامل استخراج شده"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not extract firmware from downloaded zip file"
+msgstr "نتوانست سیستم عامل را از پرونده ZIP بارگیری شده استخراج کند"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing RNode firmware to device on"
+msgstr "سیستم عامل RNODE چشمک زن به دستگاه در"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Done flashing"
+msgstr "چشمک زن انجام شد"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Waiting for ESP32 reset"
+msgstr "منتظر تنظیم مجدد ESP32"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while flashing"
+msgstr "خطا هنگام چشمک زدن"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file not found"
+msgstr "پرونده سیستم عامل یافت نشد"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download firmware package"
+msgstr "بسته بندی سیستم عامل را بارگیری نکرد"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The contained exception was:"
+msgstr "استثناء موجود:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Skipping online check, using local firmware file:"
+msgstr "پرش از بررسی آنلاین ، با استفاده از پرونده سیستم عامل محلی:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load signing key"
+msgstr "کلید امضاء را بارگیری نکرد"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize signing key"
+msgstr "نمی توان کلید امضا را رها کرد"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Generating a new signing key"
+msgstr "ایجاد یک کلید امضای جدید"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Signing key already exists, not overwriting!\n"
+"Manually delete this key to create a new one."
+msgstr ""
+"امضای کلید در حال حاضر وجود دارد ، نه رونویسی! \n"
+" این کلید را به صورت دستی حذف کنید تا یک مورد جدید ایجاد شود."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The firmware directory does not exist, can't write key!"
+msgstr "فهرست سیستم عامل وجود ندارد ، نمی تواند کلید بنویسد!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Extracting firmware"
+msgstr "استخراج سیستم عامل"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Opening serial port"
+msgstr "درگاه سریال افتتاحیه"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Serial port opened, but RNode did not respond. Is a valid firmware installed?"
+msgstr ""
+"پورت سریال باز شد ، اما RNODE پاسخ نداد. آیا یک سیستم عامل معتبر نصب شده "
+"است؟?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"WARNING: EEPROM is being wiped! Power down device NOW if you do not want "
+"this!"
+msgstr ""
+"هشدار: EEPROM در حال پاک شدن است! اگر این را نمی خواهید اکنون دستگاه را "
+"پایین بیاورید!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Reading EEPROM"
+msgstr "خواندن eeprom"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "ERROR: No firmware found for this board. Cannot update."
+msgstr "خطا: هیچ سیستم عامل برای این صفحه پیدا نشده است. به روزرسانی نمی شود."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cannot update device firmware"
+msgstr "نمی تواند سیستم عامل دستگاه را به روز کند"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Updating RNode firmware for device on"
+msgstr "به روزرسانی سیستم عامل RNODE برای دستگاه"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing new firmware completed"
+msgstr "چشمک زدن سیستم عامل جدید تکمیل شد"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update completed successfully"
+msgstr "به روزرسانی سیستم عامل با موفقیت انجام شد"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while flashing the new firmware, exiting now."
+msgstr ""
+"هنگام چشمک زدن به سیستم عامل جدید ، خطایی روی داد و اکنون از آن خارج شد."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while updating firmware"
+msgstr "خطا هنگام به روزرسانی سیستم عامل"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update file not found"
+msgstr "پرونده به روزرسانی سیستم عامل یافت نشد"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM contents"
+msgstr "محتوای EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM backup written to"
+msgstr "نسخه پشتیبان تهیه شده به"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"EEPROM was successfully downloaded from device,\n"
+"but file could not be written to disk."
+msgstr ""
+"EEPROM با موفقیت از دستگاه بارگیری شد ، \n"
+" اما پرونده را نمی توان برای دیسک نوشت."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device info:"
+msgstr "اطلاعات دستگاه:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Product"
+msgstr "تولید - محصول"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature"
+msgstr "امضای دستگاه"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware version"
+msgstr "نسخه سیستم عامل"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Hardware revision"
+msgstr "تجدید نظر"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial number"
+msgstr "شماره سریال"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency range"
+msgstr "محدوده فرکانس"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Max TX power"
+msgstr "حداکثر TX Power"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Manufactured"
+msgstr "ساخته"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device mode"
+msgstr "حالت دستگاه"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency"
+msgstr "فرکانس"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth"
+msgstr "پهنای باند"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "TX power"
+msgstr "قدرت TX"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor"
+msgstr "عامل گسترش"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate"
+msgstr "میزان برنامه نویسی"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "On-air bitrate"
+msgstr "در هوا"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM is invalid, no further information available"
+msgstr "EEPROM نامعتبر است ، اطلاعات دیگری در دسترس نیست"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM bootstrap was requested, but a valid EEPROM was already present."
+msgstr ""
+"EEPROM BOOTSTRAP درخواست شد ، اما یک EEPROM معتبر در حال حاضر وجود داشت."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No changes are being made."
+msgstr "هیچ تغییری ایجاد نمی شود."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Clearing old EEPROM, this will take about 15 seconds"
+msgstr "پاکسازی EEPROM قدیمی ، این حدود 15 ثانیه طول می کشد"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not create device serial number, exiting"
+msgstr "نمی توان شماره سریال دستگاه را ایجاد کرد ، از آنجا خارج شد"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Loading signing key"
+msgstr "کلید در حال بارگیری"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while signing EEPROM"
+msgstr "خطا هنگام امضای EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bootstrapping device EEPROM"
+msgstr "دستگاه bootstrapping eeprom"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM written! Validating"
+msgstr "eeprom نوشته شده! معتبر"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM Bootstrapping successful!"
+msgstr "Eeprom Bootstrapping موفق!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "RNode Firmware autoinstallation complete!"
+msgstr "AutoinStallation Firmware RNODE کامل!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "To use your device with Reticulum, read the documetation at:"
+msgstr "برای استفاده از دستگاه خود با رتیکولوم ، مستندات را بخوانید:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Thank you for using this utility! Please help the project by\n"
+"contributing code and reporting bugs, or by donating!"
+msgstr ""
+"با تشکر از شما برای استفاده از این ابزار! لطفا به پروژه کمک کنید \n"
+" کمک به کد و گزارش اشکالات ، یا با اهدا!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Your contributions and donations directly further the realisation\n"
+"of truly open, free and resilient communications systems."
+msgstr ""
+"کمک ها و کمک های مالی شما مستقیماً تحقق را بیشتر می کند \n"
+" از سیستم های ارتباطی واقعاً آزاد ، رایگان و انعطاف پذیر."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "WARNING: Could not backup device EEPROM to disk"
+msgstr "هشدار: نمی توان از دستگاه EEPROM به دیسک پشتیبان تهیه کرد"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM was written, but validation failed. Check your settings."
+msgstr ""
+"EEPROM نوشته شده است ، اما اعتبارسنجی انجام نشد. تنظیمات خود را بررسی کنید."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while writing EEPROM. The contained exception was:"
+msgstr "هنگام نوشتن EEPROM خطایی رخ داد. استثناء موجود:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid data specified, cancelling EEPROM write"
+msgstr "داده های نامعتبر مشخص شده ، لغو EEPROM نوشتن"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to normal (host-controlled) operating mode"
+msgstr "دستگاه تنظیم شده روی حالت عادی (کنترل میزبان)"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please input startup configuration:"
+msgstr "لطفا پیکربندی راه اندازی را وارد کنید:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency in Hz:"
+msgstr "فرکانس در هرتز:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth in Hz:"
+msgstr "پهنای باند در هرتز:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor:"
+msgstr "عامل گسترش:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate:"
+msgstr "نرخ برنامه نویسی:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to TNC operating mode"
+msgstr "دستگاه تنظیم شده بر روی حالت عملیاتی TNC"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device contains a valid firmware, but EEPROM is invalid.\n"
+"Probably the device has not been initialised, or the EEPROM has been "
+"erased.\n"
+"Please correctly initialise the device and try again!"
+msgstr ""
+"این دستگاه حاوی یک سیستم عامل معتبر است ، اما EEPROM نامعتبر است. \n"
+" احتمالاً دستگاه اولیه نشده است ، یا EEPROM پاک شده است. \n"
+" لطفاً به درستی دستگاه را به درستی انجام دهید و دوباره امتحان کنید!"

@@ -1,0 +1,2060 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-01 19:45+0100\n"
+"PO-Revision-Date: 2023-12-12 09:40\n"
+"Last-Translator: SebastianObi\n"
+"Language-Team: SebastianObi\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#: infos
+#, fuzzy
+msgid "Software - Python"
+msgstr "Software - Python"
+
+#: infos
+#, fuzzy
+msgid "Software - Reticulum"
+msgstr "Software - Reticulum"
+
+#: infos
+#, fuzzy
+msgid "Software - System"
+msgstr "Software - Sistem"
+
+#: infos
+#, fuzzy
+msgid "System - Drives & data storage"
+msgstr "Sistem - unități și stocare de date"
+
+#: infos
+#, fuzzy
+msgid "System - General system information"
+msgstr "Sistem - Informații generale ale sistemului"
+
+#: infos
+#, fuzzy
+msgid "System - Interfaces"
+msgstr "Sistem - Interfețe"
+
+#: infos
+#, fuzzy
+msgid "System - Network connections"
+msgstr "Sistem - Conexiuni de rețea"
+
+#: infos
+#, fuzzy
+msgid "System time"
+msgstr "timpul sistemului"
+
+#: infos
+#, fuzzy
+msgid "Start time"
+msgstr "Timpul de începere"
+
+#: infos
+#, fuzzy
+msgid "Runtime"
+msgstr "Timp de rulare"
+
+#: infos
+#, fuzzy
+msgid "Version"
+msgstr "Versiune"
+
+#: infos
+#, fuzzy
+msgid "Status:"
+msgstr "Stare:"
+
+#: infos
+#, fuzzy
+msgid "Clients:"
+msgstr "Clienți:"
+
+#: infos
+#, fuzzy
+msgid "Peers:"
+msgstr "Colegi:"
+
+#: infos
+#, fuzzy
+msgid "Mode:"
+msgstr "Mod:"
+
+#: infos
+#, fuzzy
+msgid "Speed:"
+msgstr "Viteză:"
+
+#: infos
+#, fuzzy
+msgid "Airtime:"
+msgstr "Timp de aer:"
+
+#: infos
+#, fuzzy
+msgid "Ch. Load:"
+msgstr "CH. Sarcină:"
+
+#: infos
+#, fuzzy
+msgid "Queued:"
+msgstr "În așteptare:"
+
+#: infos
+#, fuzzy
+msgid "announce"
+msgstr "anunță"
+
+#: infos
+#, fuzzy
+msgid "announces"
+msgstr "Anunțuri"
+
+#: infos
+#, fuzzy
+msgid "Held:"
+msgstr "A ținut:"
+
+#: infos
+#, fuzzy
+msgid "Announces:"
+msgstr "Anunțuri:"
+
+#: infos
+#, fuzzy
+msgid "Transport Instance"
+msgstr "Instanță de transport"
+
+#: infos
+#, fuzzy
+msgid "Probe responder"
+msgstr "Responder de sondă"
+
+#: infos
+#, fuzzy
+msgid "Uptime"
+msgstr "Timp de funcționare"
+
+#: infos
+#, fuzzy
+msgid "[b]Size:[/b]"
+msgstr "[b] dimensiune: [/b]"
+
+#: infos
+#, fuzzy
+msgid "[b]Free:[/b]"
+msgstr "[b] gratuit: [/b]"
+
+#: infos
+#, fuzzy
+msgid "[b]Type:[/b]"
+msgstr "[b] tip: [/b]"
+
+#: infos
+#, fuzzy
+msgid "Platform"
+msgstr "Platformă"
+
+#: infos
+#, fuzzy
+msgid "Release"
+msgstr "Eliberare"
+
+#: infos
+#, fuzzy
+msgid "Release name"
+msgstr "Numele de eliberare"
+
+#: infos
+#, fuzzy
+msgid "Model"
+msgstr "Model"
+
+#: infos
+#, fuzzy
+msgid "Hostname"
+msgstr "Nume de gazdă"
+
+#: infos
+#, fuzzy
+msgid "CPU load"
+msgstr "Încărcare procesor"
+
+#: infos
+#, fuzzy
+msgid "CPU cores"
+msgstr "Nuclee CPU"
+
+#: infos
+#, fuzzy
+msgid "System temperature"
+msgstr "Temperatura sistemului"
+
+#: infos
+#, fuzzy
+msgid "LAN"
+msgstr "Lan"
+
+#: infos
+#, fuzzy
+msgid "WiFi"
+msgstr "Wifi"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks"
+msgstr "Rețele WiFi"
+
+#: infos
+#, fuzzy
+msgid "WiFi networks connected"
+msgstr "Rețele WiFi conectate"
+
+#: infos
+#, fuzzy
+msgid "USB"
+msgstr "USB"
+
+#: infos
+#, fuzzy
+msgid "Bluetooth"
+msgstr "Bluetooth"
+
+#: infos
+#, fuzzy
+msgid "Serial"
+msgstr "Serial"
+
+#: logs
+#, fuzzy
+msgid "FDN - Reticulum, Channel, Group, Shop"
+msgstr "FDN - Reticulum, canal, grup, magazin"
+
+#: logs
+#, fuzzy
+msgid "Software"
+msgstr "Software"
+
+#: logs
+#, fuzzy
+msgid "Dhcpd - DHCP Server"
+msgstr "DHCPD - DHCP Server"
+
+#: logs
+#, fuzzy
+msgid "Dnsmasq - DNS Server"
+msgstr "DNSMASQ - DNS Server"
+
+#: logs
+#, fuzzy
+msgid "Hostapd - WiFi AP"
+msgstr "HOSTAPD - WiFi AP"
+
+#: logs
+#, fuzzy
+msgid "System"
+msgstr "Sistem"
+
+#: logs
+#, fuzzy
+msgid "Auth - Authentication"
+msgstr "Auth - autentificare"
+
+#: logs
+#, fuzzy
+msgid "Daemon - System daemons"
+msgstr "Daemon - System Daemons"
+
+#: logs
+#, fuzzy
+msgid "Fail - Failed login attempts"
+msgstr "Eșec - încercări de conectare eșuate"
+
+#: logs
+#, fuzzy
+msgid "Kern - Kernel"
+msgstr "Kern - Kernel"
+
+#: logs
+#, fuzzy
+msgid "Mail - Email-related events"
+msgstr "Mail - Evenimente legate de e -mail"
+
+#: logs
+#, fuzzy
+msgid "Messages - General system events"
+msgstr "Mesaje - evenimente generale ale sistemului"
+
+#: logs
+#, fuzzy
+msgid "Syslog - System"
+msgstr "Syslog - sistem"
+
+#: logs
+#, fuzzy
+msgid "User - User activities"
+msgstr "Utilizator - Activități utilizator"
+
+#: scripts
+#, fuzzy
+msgid "Backup & Restore"
+msgstr "Backup și restaurare"
+
+#: scripts
+#, fuzzy
+msgid "Examples"
+msgstr "Exemple"
+
+#: scripts
+#, fuzzy
+msgid "Examples 1"
+msgstr "Exemple 1"
+
+#: scripts
+#, fuzzy
+msgid "Examples 2"
+msgstr "Exemple 2"
+
+#: scripts
+msgid "Examples - Test Configurations"
+msgstr ""
+
+#: scripts
+#, fuzzy
+msgid "Examples - User interface test functions"
+msgstr "Exemple - Funcții de testare a interfeței de utilizator"
+
+#: scripts
+#, fuzzy
+msgid "Reticulum - LoRadio & RNode"
+msgstr "Reticulum - Loradio & rNode"
+
+#: scripts
+#, fuzzy
+msgid "Software - Installation"
+msgstr "Instalarea software-ului"
+
+#: scripts
+#, fuzzy
+msgid "Software - Uninstallation"
+msgstr "Software - dezinstalare"
+
+#: scripts
+#, fuzzy
+msgid "Software - Update"
+msgstr "Actualizare de software"
+
+#: scripts
+#, fuzzy
+msgid "System - Configuration"
+msgstr "Configurarea sistemului"
+
+#: scripts
+#, fuzzy
+msgid "System - Update"
+msgstr "Actualizare de sistem"
+
+#: scripts
+#, fuzzy
+msgid "Management - Restart"
+msgstr "Management - Reporniți"
+
+#: scripts
+#, fuzzy
+msgid "System - Reboot"
+msgstr "Sistem - Reboot"
+
+#: scripts
+#, fuzzy
+msgid "System - Shutdown"
+msgstr "Sistem - Oprirea"
+
+#: scripts
+#, fuzzy
+msgid "System Clone - Creates a direct copy of the system drive"
+msgstr "Clona de sistem - Creează o copie directă a unității de sistem"
+
+#: scripts
+#, fuzzy
+msgid "System Image - Creates an image of the system drive"
+msgstr "Imaginea sistemului - creează o imagine a unității de sistem"
+
+#: scripts
+#, fuzzy
+msgid "Example - All input elements"
+msgstr "Exemplu - Toate elementele de intrare"
+
+#: scripts
+#, fuzzy
+msgid "Example - Exit codes"
+msgstr "Exemplu - Coduri de ieșire"
+
+#: scripts
+#, fuzzy
+msgid "Example - Waiting time"
+msgstr "Exemplu - Timp de așteptare"
+
+#: scripts
+#, fuzzy
+msgid "Info - Read out information"
+msgstr "Informații - citiți informațiile"
+
+#: scripts
+#, fuzzy
+msgid "Install - Installing the firmware"
+msgstr "Instalare - Instalarea firmware -ului"
+
+#: scripts
+#, fuzzy
+msgid "Reset - Resetting the firmware"
+msgstr "Resetare - Resetarea firmware -ului"
+
+#: scripts
+#, fuzzy
+msgid "Update - Updating the firmware"
+msgstr "Actualizare - Actualizarea firmware -ului"
+
+#: scripts
+#, fuzzy
+msgid "Bridge Matrix - Message bridge"
+msgstr "Bridge Matrix - Message Bridge"
+
+#: scripts
+#, fuzzy
+msgid "Console tools - Recommended tools"
+msgstr "Instrumente pentru consolă - Instrumente recomandate"
+
+#: scripts
+#, fuzzy
+msgid "Filesystem tools - Recommended tools"
+msgstr "Instrumente de sistem de fișiere - Instrumente recomandate"
+
+#: scripts
+#, fuzzy
+msgid "Server Blockchain - Gateway for payment and other blockchain functions"
+msgstr "Server Blockchain - Gateway pentru plată și alte funcții blockchain"
+
+#: scripts
+#, fuzzy
+msgid "Server Channel - Hosting the channel functionality"
+msgstr "Server Channel - Găzduirea funcționalității canalului"
+
+#: scripts
+#, fuzzy
+msgid "Server Group - Hosting the group functionality"
+msgstr "Grup de server - găzduirea funcționalității grupului"
+
+#: scripts
+#, fuzzy
+msgid "Server Page - Hosting the page functionality"
+msgstr "Pagina serverului - Găzduirea funcționalității paginii"
+
+#: scripts
+#, fuzzy
+msgid "Server Propagation - Hosting the propagation node functionality"
+msgstr ""
+"Propagarea serverului - găzduirea funcționalității nodului de propagare"
+
+#: scripts
+#, fuzzy
+msgid "Server Shop - Hosting the shop functionality"
+msgstr "Server Shop - Găzduirea funcționalității magazinului"
+
+#: scripts
+#, fuzzy
+msgid "Server - All hosting functions for channel, group, page, shop, etc."
+msgstr ""
+"Server - Toate funcțiile de găzduire pentru canal, grup, pagină, magazin etc."
+
+#: scripts
+#, fuzzy
+msgid "File system - Extend file system (Raspberry Pi)"
+msgstr "Sistem de fișiere - Extindeți sistemul de fișiere (Raspberry PI)"
+
+#: scripts
+#, fuzzy
+msgid "Password - Change operating system password"
+msgstr "Parolă - Schimbați parola sistemului de operare"
+
+#: scripts
+#, fuzzy
+msgid "Update check - Check for new versions"
+msgstr "Actualizare Verificare - Verificați pentru noi versiuni"
+
+#: scripts
+#, fuzzy
+msgid "Update cleanup - Cleaning up unneeded packages"
+msgstr "Actualizați curățarea - curățarea pachetelor inutile"
+
+#: scripts
+#, fuzzy
+msgid "Update Update - Update the system"
+msgstr "Actualizare actualizare - Actualizați sistemul"
+
+#: scripts
+#, fuzzy
+msgid "Update Upgrade - Distribution update of the system"
+msgstr "Actualizare actualizare - Actualizare distribuție a sistemului"
+
+#: scripts
+#, fuzzy
+msgid "Installing.."
+msgstr "Instalare .."
+
+#: scripts
+#, fuzzy
+msgid "Uninstalling..."
+msgstr "Dezinstalarea ..."
+
+#: scripts
+#, fuzzy
+msgid "Updating..."
+msgstr "Actualizare ..."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The management server will restart. You must reconnect to re-establish a "
+"connection."
+msgstr ""
+"Serverul de management va reporni. Trebuie să vă reconectați pentru a "
+"restabili o conexiune."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will reboot. You must reconnect to re-establish a connection."
+msgstr ""
+"Sistemul va reporni. Trebuie să vă reconectați pentru a restabili o "
+"conexiune."
+
+#: scripts
+#, fuzzy
+msgid ""
+"The system will shut down. You must then start it manually to re-establish a "
+"connection."
+msgstr ""
+"Sistemul se va opri. Apoi, trebuie să o porniți manual pentru a restabili o "
+"conexiune."
+
+#: scripts
+#, fuzzy
+msgid "No installed services found. Exiting."
+msgstr "Nu au fost găsite servicii instalate. Ieșire."
+
+#: scripts
+#, fuzzy
+msgid "Select a service:"
+msgstr "Selectați un serviciu:"
+
+#: scripts
+#, fuzzy
+msgid "Enter the name for the service: (only a-z 0-9)"
+msgstr "Introduceți numele pentru serviciu: (doar A-Z 0-9)"
+
+#: scripts
+#, fuzzy
+msgid "Enter the display name for the application:"
+msgstr "Introduceți numele afișajului pentru aplicație:"
+
+#: scripts
+#, fuzzy
+msgid "Invalid choice!"
+msgstr "Alegere nevalide!"
+
+#: scripts
+#, fuzzy
+msgid "Update successfully completed!"
+msgstr "Actualizare finalizată cu succes!"
+
+#: scripts
+#, fuzzy
+msgid "Uninstallation successfully completed!"
+msgstr "Dezinstalare finalizată cu succes!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a shop successfully completed!"
+msgstr "Instalarea unui magazin finalizat cu succes!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of an echo server successfully completed!"
+msgstr "Instalarea unui server Echo finalizat cu succes!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a channel successfully completed!"
+msgstr "Instalarea unui canal finalizat cu succes!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a group successfully completed!"
+msgstr "Instalarea unui grup finalizat cu succes!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a propagation node successfully completed!"
+msgstr "Instalarea unui nod de propagare finalizat cu succes!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a provisioning node successfully completed!"
+msgstr "Instalarea unui nod de aprovizionare finalizat cu succes!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a page successfully completed!"
+msgstr "Instalarea unei pagini finalizate cu succes!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a blockchain node successfully completed!"
+msgstr "Instalarea unui nod blockchain finalizat cu succes!"
+
+#: scripts
+#, fuzzy
+msgid "Installation of a message bridge successfully completed!"
+msgstr "Instalarea unui pod de mesaje finalizată cu succes!"
+
+#: scripts
+#, fuzzy
+msgid ""
+"No further configuration is necessary. Connect to the shop to make all the "
+"necessary settings in the shop app. You should find the new shop in the "
+"announcement list."
+msgstr ""
+"Nu este necesară o configurație suplimentară. Conectați -vă la magazin "
+"pentru a face toate setările necesare în aplicația magazinului. Ar trebui să "
+"găsiți noul magazin în lista de anunțuri."
+
+#: scripts
+#, fuzzy
+msgid ""
+"To make further settings, please edit the corresponding configuration files "
+"in the following folder:"
+msgstr ""
+"Pentru a face setări suplimentare, vă rugăm să editați fișierele de "
+"configurare corespunzătoare în următorul folder:"
+
+#: scripts
+#, fuzzy
+msgid "Then you must restart the following service:"
+msgstr "Atunci trebuie să reporniți următorul serviciu:"
+
+#: services
+#, fuzzy
+msgid "All"
+msgstr "Toate"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Hit:"
+msgstr "Lovit:"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading package lists"
+msgstr "Citirea listelor de pachete"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Building dependency tree"
+msgstr "Construirea arborelui de dependență"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading state information"
+msgstr "Citirea informațiilor statului"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading database"
+msgstr "Baza de date de citire"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Calculating upgrade"
+msgstr "Calcularea actualizării"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Waiting for headers"
+msgstr "Așteptând anteturi"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Working"
+msgstr "Lucru"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "All packages are up to date"
+msgstr "Toate pachetele sunt actualizate"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Done"
+msgstr "Terminat"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"The following packages were automatically installed and are no longer "
+"required"
+msgstr "Următoarele pachete au fost instalate automat și nu mai sunt necesare"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Use"
+msgstr "Utilizare"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove them"
+msgstr "pentru a le îndepărta"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "upgraded"
+msgstr "modernizat"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "newly installed"
+msgstr "nou instalat"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "to remove and"
+msgstr "pentru a elimina și"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "not upgraded"
+msgstr "Nu este modernizat"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Connected to"
+msgstr "Conectat la"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be REMOVED"
+msgstr "Următoarele pachete vor fi eliminate"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "After this operation"
+msgstr "După această operație"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "disk space will be freed"
+msgstr "Spațiul pe disc va fi eliberat"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Do you want to continue?"
+msgstr "Doriți să continuați?"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Progress"
+msgstr "Progres"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Removing"
+msgstr "Îndepărtând"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Processing triggers for"
+msgstr "Procesarea declanșatoare pentru"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "The following packages will be upgraded"
+msgstr "Următoarele pachete vor fi modernizate"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Reading changelogs"
+msgstr "Citirea schimbării"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preconfiguring packages"
+msgstr "Pachete de preconfigurare"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Preparing to unpack"
+msgstr "Pregătindu -se să despachetezi"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "files and directories currently installed"
+msgstr "fișiere și directoare instalate în prezent"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Unpacking"
+msgstr "Despachetare"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Setting up"
+msgstr "Configurare"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "over"
+msgstr "peste"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "Installing new version of config file"
+msgstr "Instalarea noului versiune de fișier de configurare"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "A new version"
+msgstr "O nouă versiune"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid "of configuration file"
+msgstr "de fișier de configurare"
+
+#: scripts_vendor_apt
+#, fuzzy
+msgid ""
+"is available, but the version installed currently has been locally modified"
+msgstr ""
+"este disponibilă, dar versiunea instalată în prezent a fost modificată local"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error, exiting now."
+msgstr "Eroare, ieșind acum."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: You need to run this script as"
+msgstr "Eroare: trebuie să rulați acest script ca"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Error: This script can't be piped!"
+msgstr "Eroare: Acest script nu poate fi conduct!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "failed!"
+msgstr "a eșuat!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Finished!"
+msgstr "Terminat!"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating packet repository"
+msgstr "Actualizarea depozitului de pachete"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating system"
+msgstr "Sistem de actualizare"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Cleanup system"
+msgstr "Sistem de curățare"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Installing"
+msgstr "Instalare"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Updating"
+msgstr "Actualizare"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Expanding Filesystem"
+msgstr "Extinderea sistemului de fișiere"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Do you want to proceed?"
+msgstr "Doriți să continuați?"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Ok, proceeding..."
+msgstr "Ok, procedând ..."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "No, exiting now."
+msgstr "Nu, ieșind acum."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Please answer yes or no."
+msgstr "Vă rugăm să răspundeți da sau nu."
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing path"
+msgstr "Schimbarea căii"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Downloading"
+msgstr "Descărcarea"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/owner"
+msgstr "Modificarea permisiunilor de fișier/proprietar"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "Changing file permissions/right"
+msgstr "Schimbarea permisiunilor de fișier/dreapta"
+
+#: scripts_vendor_own
+#, fuzzy
+msgid "To activate the changes, the system must be rebooted."
+msgstr "Pentru a activa modificările, sistemul trebuie repornit."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Could not find any user, exiting now."
+msgstr "Nu am putut găsi niciun utilizator, ieșind acum."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Which user would you like to edit?"
+msgstr "Ce utilizator ați dori să editați?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Define the password for user"
+msgstr "Definiți parola pentru utilizator"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Do you want to edit another user?"
+msgstr "Doriți să editați un alt utilizator?"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "New password"
+msgstr "Parolă Nouă"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Retype new password"
+msgstr "Recipează parola nouă"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "No password has been supplied."
+msgstr "Nu a fost furnizată nicio parolă."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Sorry, passwords do not match."
+msgstr "Ne pare rău, parolele nu se potrivesc."
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Updating password"
+msgstr "Actualizarea parolei"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "Authentication token manipulation error"
+msgstr "Eroare de manipulare a jetonului de autentificare"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "password unchanged"
+msgstr "Parolă neschimbată"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "user"
+msgstr "utilizator"
+
+#: scripts_vendor_passwd
+#, fuzzy
+msgid "does not exist"
+msgstr "nu exista"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Please connect the destination device you wish to use."
+msgstr ""
+"Vă rugăm să conectați dispozitivul de destinație pe care doriți să îl "
+"utilizați."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Hit enter when it is connected."
+msgstr "Apăsați ENTER când este conectat."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find any devices, exiting now."
+msgstr "Nu am putut găsi niciun dispozitiv, ieșind acum."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Could not find specified device, exiting now."
+msgstr "Nu s -a putut găsi un dispozitiv specificat, care iese acum."
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "What is your destination device?"
+msgstr "Care este dispozitivul dvs. de destinație?"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Ok, using device:"
+msgstr "Ok, folosind dispozitivul:"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "target is busy"
+msgstr "ținta este ocupată"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating image file"
+msgstr "Crearea fișierului de imagine"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image file"
+msgstr "Fișier de imagine micșor"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "copied"
+msgstr "copiat"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records in"
+msgstr "înregistrări în"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "records out"
+msgstr "înregistrări"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Gathering data"
+msgstr "Colectand date"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Creating new"
+msgstr "Creând nou"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Checking filesystem"
+msgstr "Verificarea sistemului de fișiere"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "non-contiguous"
+msgstr "non-continuu"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks"
+msgstr "blocuri"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking filesystem"
+msgstr "Micșorarea sistemului de fișiere"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Resizing the filesystem on"
+msgstr "Redimensionarea sistemului de fișiere pe"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Begin pass"
+msgstr "Începe trece"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Relocating blocks"
+msgstr "Relocarea blocurilor"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Scanning inode table"
+msgstr "Scanarea tabelului inode"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Updating inode references"
+msgstr "Actualizarea referințelor inode"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "The filesystem on"
+msgstr "Sistemul de fișiere pornit"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "is now"
+msgstr "este acum"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "blocks long"
+msgstr "blocuri lungi"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrinking image"
+msgstr "Imaginea micșoră"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Using gzip on the shrunk image"
+msgstr "Folosind Gzip pe imaginea zdrobită"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "Shrunk"
+msgstr "S -a micșorat"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "from"
+msgstr "din"
+
+#: scripts_vendor_pishrink
+#, fuzzy
+msgid "to"
+msgstr "la"
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid ""
+"Please connect the destination device (sd-card, usb-stick) you wish to use."
+msgstr ""
+"Vă rugăm să conectați dispozitivul de destinație (SD-card, USB-Stick) pe "
+"care doriți să îl utilizați."
+
+#: scripts_vendor_rpi-clone
+#, fuzzy
+msgid "WARNING: All data on the destination device will be deleted!"
+msgstr ""
+"Avertisment: Toate datele de pe dispozitivul de destinație vor fi șterse!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting frequency is"
+msgstr "Frecvența de raportare radio este"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting bandwidth is"
+msgstr "Lățimea de bandă a raportării radio este"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting TX power is"
+msgstr "Radio Raporting TX Power este"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting spreading factor is"
+msgstr "Factorul de răspândire a raportării radio este"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Radio reporting coding rate is"
+msgstr "Rata de codificare a raportării radio este"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware initialisation error"
+msgstr "Eroare de inițializare hardware"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware TX error"
+msgstr "Eroare hardware TX"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "hardware error"
+msgstr "Eroare hardware"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "serial read timeout"
+msgstr "Timeout de citire în serie"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while detecting hardware for"
+msgstr "A apărut o eroare IO în timpul detectării hardware -ului pentru"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring frequency for"
+msgstr "A apărut o eroare IO în timp ce configurați frecvența pentru"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring bandwidth for"
+msgstr "A apărut o eroare IO în timp ce configurați lățimea de bandă pentru"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring TX power for"
+msgstr "A apărut o eroare IO în timp ce configurați TX Power pentru"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring spreading factor for"
+msgstr ""
+"A apărut o eroare IO în timpul configurației factorului de răspândire pentru"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring coding rate for"
+msgstr "A apărut o eroare IO în timp ce configurați rata de codare pentru"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state for"
+msgstr "A apărut o eroare IO în timpul configurației stării radio pentru"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring device mode"
+msgstr "A apărut o eroare IO în timpul configurarii modului dispozitivului"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while wiping EEPROM"
+msgstr "A apărut o eroare IO în timpul ștergerii Eeprom"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while restarting device"
+msgstr "A apărut o eroare IO în timpul repornirii dispozitivului"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while writing EEPROM"
+msgstr "A apărut o eroare IO în timp ce scrieți eeprom"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An IO error occurred while configuring radio state"
+msgstr "A apărut o eroare IO în timp ce configurați starea radio"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download EEPROM from device. Is a valid firmware installed?"
+msgstr ""
+"Nu am putut descărca EEPROM de pe dispozitiv. Este instalat un firmware "
+"valid?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum mismatch"
+msgstr "Nepotrivire de verificare EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM checksum correct"
+msgstr "Corectul de verificare EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load local signing key"
+msgstr "Nu a putut încărca cheia de semnare locală"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize local signing key"
+msgstr "Nu a putut deserializa cheia de semnare locală"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validated"
+msgstr "Semnătura dispozitivului validat"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature validation failed"
+msgstr "Validarea semnăturii dispozitivului a eșuat"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid EEPROM data, could not parse device EEPROM."
+msgstr "Date EEPROM nevalide, nu au putut analiza dispozitivul EEPROM."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Hello!\n"
+"\n"
+"This guide will help you install the RNode firmware on supported\n"
+"and homebrew devices. Please connect the device you wish to set\n"
+"up now."
+msgstr ""
+"Buna ziua! \n"
+"\n"
+" Acest ghid vă va ajuta să instalați firmware -ul RNODE pe acceptat \n"
+" și dispozitive de casă. Vă rugăm să conectați dispozitivul pe care doriți "
+"să îl setați \n"
+" sus acum."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please connect the device you wish to setup now."
+msgstr ""
+"Vă rugăm să conectați dispozitivul pe care doriți să îl configurați acum."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find any port, exiting now."
+msgstr "Nu am putut găsi niciun port, ieșind acum."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Detected serial ports:"
+msgstr "Porturi seriale detectate:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What serial port is your device connected to?"
+msgstr "La ce port serial este conectat dispozitivul dvs.?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That port does not exist, exiting now."
+msgstr "Acest port nu există, ieșind acum."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not select port, exiting now."
+msgstr "Nu am putut selecta portul, ieșind acum."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Ok, using device on"
+msgstr "Ok, folosind dispozitivul pe"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "using device on"
+msgstr "folosind dispozitivul pornit"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not find specified port"
+msgstr "Nu a putut găsi un port specificat"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "exiting now"
+msgstr "ieșind acum"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Probing device"
+msgstr "Dispozitiv de sondare"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not open the specified serial port. The contained exception was:"
+msgstr ""
+"Nu a putut deschide portul serial specificat. Excepția conținută a fost:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No answer from device"
+msgstr "Fără răspuns de la dispozitiv"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Trying to read EEPROM"
+msgstr "Încercând să citesc Eeprom"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device is already installed and provisioned. No further action will\n"
+"be taken. If you wish to completely reinstall this device, you must first\n"
+"wipe the current EEPROM. See the help for more info.\n"
+"\n"
+"Exiting now."
+msgstr ""
+"Acest dispozitiv este deja instalat și prevăzut. Nu va mai acționa alte "
+"acțiuni \n"
+" a fi luat. Dacă doriți să reinstalați complet acest dispozitiv, trebuie mai "
+"întâi \n"
+" Ștergeți EEPROM -ul curent. Consultați ajutorul pentru mai multe "
+"informații. \n"
+"\n"
+" Ieșind acum."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"The device seems to have an RNode firmware installed, but it was not\n"
+"provisioned correctly, or it is corrupt. We are going to reinstall the\n"
+"correct firmware and provision it."
+msgstr ""
+"Dispozitivul pare să aibă instalat un firmware RNODE, dar nu a fost \n"
+" Provizat corect sau este corupt. Vom reinstala \n"
+" Corectați firmware -ul și furnizarea acestuia."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "It looks like this is a fresh device with no RNode firmware."
+msgstr "Se pare că acesta este un dispozitiv proaspăt fără firmware RNODE."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of device is this?"
+msgstr "Ce fel de dispozitiv este acesta?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Important! Using RNode firmware on"
+msgstr "Important! Utilizarea firmware -ului rNode pe"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"should currently be\n"
+"considered experimental. It is not intended for production or critical use.\n"
+"The currently supplied firmware is provided AS-IS as a courtesey to those\n"
+"who would like to experiment with it. Hit enter to continue."
+msgstr ""
+"ar trebui să fie în prezent \n"
+" considerat experimental. Nu este destinat producției sau utilizării "
+"critice. \n"
+" Firmware-ul furnizat în prezent este furnizat ca un curtesey pentru cei \n"
+" Cine ar dori să experimenteze cu asta. Hit Enter pentru a continua."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That device type does not exist, exiting now."
+msgstr "Acest tip de dispozitiv nu există, ieșind acum."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of microcontroller is your board based on?"
+msgstr "Pe ce fel de microcontroller se bazează pe placa dvs.?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That MCU type does not exist, exiting now."
+msgstr "Acest tip MCU nu există, ieșind acum."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What transceiver module does your board use?"
+msgstr "Ce modul Transceiver folosește placa dvs.?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That transceiver type does not exist, exiting now."
+msgstr "Acest tip de transceiver nu există, ieșind acum."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What model is this RNode?"
+msgstr "Ce model este acest rnode?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That model does not exist, exiting now."
+msgstr "Acest model nu există, ieșind acum."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this T-Beam for?"
+msgstr "Pentru ce trupă este această fascicul T?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That band does not exist, exiting now."
+msgstr "Acea trupă nu există, ieșind acum."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this LoRa32 for?"
+msgstr "Pentru ce trupă este acest lora32?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What band is this Heltec LoRa32 for?"
+msgstr "Pentru ce trupă este acest heltec lora32?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "What kind of ESP32 board is this?"
+msgstr "Ce fel de bord ESP32 este acesta?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "That ESP32 board does not exist, exiting now."
+msgstr "Acest consiliu ESP32 nu există, care iese acum."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Sorry, no firmware for your board currently exists.\n"
+"Help making it a reality by contributing code or by\n"
+"donating to the project."
+msgstr ""
+"Ne pare rău, nu există în prezent firmware pentru consiliul dvs. de "
+"administrație. \n"
+" Ajută la realizarea unei realitate prin contribuția la cod sau până la \n"
+" donarea proiectului."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Ok, that should be all the information we need. Please confirm the "
+"following\n"
+"summary before proceeding. In the next step, the device will be flashed and\n"
+"provisioned, so make that you are satisfied with your choices."
+msgstr ""
+"OK, asta ar trebui să fie toate informațiile de care avem nevoie. Vă rugăm "
+"să confirmați următoarele \n"
+" Rezumat înainte de a continua. În pasul următor, dispozitivul va fi aprins "
+"și \n"
+" Provizionat, așa că faceți -vă că sunteți mulțumit de alegerile voastre."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial port"
+msgstr "Port serial"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device type"
+msgstr "Tip de dispozitiv"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device MCU"
+msgstr "Dispozitiv MCU"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file"
+msgstr "Fișier de firmware"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Is the above correct?"
+msgstr "Este corect mai sus?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "OK, aborting now."
+msgstr "Ok, avortând acum."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device connected"
+msgstr "Dispozitiv conectat"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Current firmware version:"
+msgstr "Versiunea curentă a firmware -ului:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Got invalid response while detecting device"
+msgstr "A primit un răspuns nevalid în timp ce detectați dispozitivul"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download required firmware file. The contained exception was:"
+msgstr ""
+"Nu a putut descărca fișierul de firmware necesar. Excepția conținută a fost:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial module could not be found"
+msgstr "Modulul serial nu a putut fi găsit"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs pyserial to work.\n"
+"You can install it with: pip3 install pyserial"
+msgstr ""
+"Utilitatea de configurare rNode are nevoie de piserial pentru a funcționa. \n"
+" Îl puteți instala cu: PIP3 Instalați PySerial"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cryptography module could not be found"
+msgstr "Modulul de criptografie nu a putut fi găsit"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"RNode Config Utility needs the cryptography module to work.\n"
+"You can install it with: pip3 install cryptography"
+msgstr ""
+"Rnode Config Utility are nevoie de modul de criptografie pentru a "
+"funcționa. \n"
+" Îl puteți instala cu: PIP3 Instalați criptografie"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Downloading latest frimware from GitHub"
+msgstr "Descărcarea celor mai recente firmware de la github"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware download completed"
+msgstr "Descărcare de firmware finalizată"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware extracted"
+msgstr "Firmware extras"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not extract firmware from downloaded zip file"
+msgstr "Nu a putut extrage firmware din fișierul zip descărcat"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing RNode firmware to device on"
+msgstr "Firmware rNode intermitent pe dispozitiv pe dispozitiv"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Done flashing"
+msgstr "A terminat intermitent"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Waiting for ESP32 reset"
+msgstr "În așteptarea resetării ESP32"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while flashing"
+msgstr "Eroare în timpul intermiterii"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware file not found"
+msgstr "Fișier de firmware nu a fost găsit"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not download firmware package"
+msgstr "Nu am putut descărca pachetul de firmware"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The contained exception was:"
+msgstr "Excepția conținută a fost:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Skipping online check, using local firmware file:"
+msgstr "Sărituri de verificare online, folosind fișierul de firmware local:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not load signing key"
+msgstr "Nu a putut încărca cheia de semnare"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not deserialize signing key"
+msgstr "Nu a putut deserializa cheia de semnare"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Generating a new signing key"
+msgstr "Generarea unei noi chei de semnare"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Signing key already exists, not overwriting!\n"
+"Manually delete this key to create a new one."
+msgstr ""
+"Cheia de semnare există deja, nu suprascriere! \n"
+" Ștergeți manual această cheie pentru a crea una nouă."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "The firmware directory does not exist, can't write key!"
+msgstr "Directorul firmware nu există, nu poate scrie cheia!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Extracting firmware"
+msgstr "Extragerea firmware -ului"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Opening serial port"
+msgstr "Deschiderea portului serial"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Serial port opened, but RNode did not respond. Is a valid firmware installed?"
+msgstr ""
+"S -a deschis portul în serie, dar Rnode nu a răspuns. Este instalat un "
+"firmware valid?"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"WARNING: EEPROM is being wiped! Power down device NOW if you do not want "
+"this!"
+msgstr ""
+"Avertisment: Eeprom este șters! Dispozitiv de pornire acum dacă nu doriți "
+"acest lucru!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Reading EEPROM"
+msgstr "Citind eeprom"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "ERROR: No firmware found for this board. Cannot update."
+msgstr ""
+"Eroare: nu s -a găsit firmware pentru această placă. Nu se poate actualiza."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Cannot update device firmware"
+msgstr "Nu se poate actualiza firmware -ul dispozitivului"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Updating RNode firmware for device on"
+msgstr "Actualizarea firmware -ului RNODE pentru dispozitiv pe"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Flashing new firmware completed"
+msgstr "Clipirea noului firmware finalizat"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update completed successfully"
+msgstr "Actualizarea firmware -ului finalizată cu succes"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while flashing the new firmware, exiting now."
+msgstr "A apărut o eroare în timp ce clipește noul firmware, ieșind acum."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while updating firmware"
+msgstr "Eroare la actualizarea firmware -ului"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware update file not found"
+msgstr "Fișierul de actualizare a firmware -ului nu este găsit"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM contents"
+msgstr "Conținut EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM backup written to"
+msgstr "Backup eeprom scris la"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"EEPROM was successfully downloaded from device,\n"
+"but file could not be written to disk."
+msgstr ""
+"EEPROM a fost descărcat cu succes de pe dispozitiv, \n"
+" Dar fișierul nu a putut fi scris pe disc."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device info:"
+msgstr "Informații despre dispozitiv:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Product"
+msgstr "Produs"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device signature"
+msgstr "Semnătura dispozitivului"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Firmware version"
+msgstr "Versiunea softului"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Hardware revision"
+msgstr "Revizuire hardware"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Serial number"
+msgstr "Număr de serie"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency range"
+msgstr "Interval de frecvență"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Max TX power"
+msgstr "Putere maximă TX"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Manufactured"
+msgstr "Fabricat"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device mode"
+msgstr "Modul dispozitiv"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency"
+msgstr "Frecvență"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth"
+msgstr "Lățime de bandă"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "TX power"
+msgstr "Tx Power"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor"
+msgstr "Factor de răspândire"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate"
+msgstr "Rata de codare"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "On-air bitrate"
+msgstr "Bitrate în aer"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM is invalid, no further information available"
+msgstr "EEPROM este nevalid, nu există informații suplimentare disponibile"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM bootstrap was requested, but a valid EEPROM was already present."
+msgstr ""
+"EEPROM Bootstrap a fost solicitat, dar a fost deja prezent un EEPROM valid."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "No changes are being made."
+msgstr "Nu se fac modificări."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Clearing old EEPROM, this will take about 15 seconds"
+msgstr "Ștergerea eepromului vechi, aceasta va dura aproximativ 15 secunde"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Could not create device serial number, exiting"
+msgstr "Nu a putut crea un număr de serie al dispozitivului, ieșind"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Loading signing key"
+msgstr "Cheie de semnare încărcată"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Error while signing EEPROM"
+msgstr "Eroare la semnarea EEPROM"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bootstrapping device EEPROM"
+msgstr "Dispozitiv de bootstrapping eeprom"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM written! Validating"
+msgstr "Eeprom scris! Validare"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM Bootstrapping successful!"
+msgstr "Eeprom Bootstrapping de succes!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "RNode Firmware autoinstallation complete!"
+msgstr "RNODE Firmware Autoinstallation Complet!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "To use your device with Reticulum, read the documetation at:"
+msgstr "Pentru a utiliza dispozitivul cu Reticulum, citiți documentația la:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Thank you for using this utility! Please help the project by\n"
+"contributing code and reporting bugs, or by donating!"
+msgstr ""
+"Vă mulțumim că ați folosit această utilitate! Vă rugăm să ajutați proiectul "
+"până la \n"
+" Codul care contribuie la cod și bug -uri de raportare sau prin donarea!"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"Your contributions and donations directly further the realisation\n"
+"of truly open, free and resilient communications systems."
+msgstr ""
+"Contribuțiile și donațiile dvs. în continuare în continuare realizarea "
+"realizării \n"
+" a sistemelor de comunicare cu adevărat deschise, gratuite și rezistente."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "WARNING: Could not backup device EEPROM to disk"
+msgstr "AVERTIZARE: nu a putut face backup dispozitivul eeprom pe disc"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "EEPROM was written, but validation failed. Check your settings."
+msgstr "EEPROM a fost scris, dar validarea a eșuat. Verificați setările."
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "An error occurred while writing EEPROM. The contained exception was:"
+msgstr ""
+"A apărut o eroare în timpul scrierii EEPROM. Excepția conținută a fost:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Invalid data specified, cancelling EEPROM write"
+msgstr "Date nevalide specificate, anularea EEPROM WRITE"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to normal (host-controlled) operating mode"
+msgstr "Dispozitiv setat pe modul de operare normal (controlat de gazdă)"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Please input startup configuration:"
+msgstr "Vă rugăm să introduceți configurația de pornire:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Frequency in Hz:"
+msgstr "Frecvența în HZ:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Bandwidth in Hz:"
+msgstr "Lățime de bandă în HZ:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Spreading factor:"
+msgstr "Factor de răspândire:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Coding rate:"
+msgstr "Rata de codificare:"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid "Device set to TNC operating mode"
+msgstr "Dispozitiv setat pe modul de operare TNC"
+
+#: scripts_vendor_rnodeconf
+#, fuzzy
+msgid ""
+"This device contains a valid firmware, but EEPROM is invalid.\n"
+"Probably the device has not been initialised, or the EEPROM has been "
+"erased.\n"
+"Please correctly initialise the device and try again!"
+msgstr ""
+"Acest dispozitiv conține un firmware valabil, dar EEPROM este nevalid. \n"
+" Probabil că dispozitivul nu a fost inițializat sau EEPROM a fost șters. \n"
+" Vă rugăm să inițializați corect dispozitivul și încercați din nou!"
