@@ -10,7 +10,7 @@ SOFTWARE_PATH_SRC=$(dirname $(realpath $0))
 SOFTWARE_PATH_DST="/usr/local/bin"
 SOFTWARE_CONFIG_SRC="$SOFTWARE_PATH_SRC/Examples"
 SOFTWARE_CONFIG_DST="$HOME/.config/$SOFTWARE_NAME"
-RETICULUM_CONFIG_DST=("/home/nomad/.reticulum")
+RETICULUM_CONFIG_DST=("/home/nomad/.config/reticulum", "/home/nomad/.reticulum", "$HOME/.config/reticulum", "$HOME/.reticulum")
 
 
 ##############################################################################################################
@@ -179,6 +179,12 @@ _uninstall_footer() {
 }
 
 
+_update_software() {
+  cp -a "$SOFTWARE_PATH_SRC"/*.py "$SOFTWARE_PATH_DST"
+  chmod +x "$SOFTWARE_PATH_DST"/*.py
+}
+
+
 _update_footer() {
   _divider
   echo -e "You have successfully updated $SOFTWARE_NAME"
@@ -272,7 +278,7 @@ echo -e "The installation of the dependencies may not work on some systems. In t
         LOOP=0
         break;;
       "Update"*)
-        _install_software
+        _update_software
         _update_footer
         LOOP=0
         break;;

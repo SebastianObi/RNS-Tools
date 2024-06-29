@@ -66,7 +66,10 @@ import re
 
 #### Polib ####
 # Install: pip3 install polib
-import polib
+try:
+    import polib
+except ImportError:
+    pass
 
 #### Reticulum ####
 # Install: pip3 install rns
@@ -267,7 +270,7 @@ class ServerManagement:
     RESULT_BLOCKED     = 0xFF
 
 
-    def __init__(self, storage_path=None, identity_file="identity", identity=None, destination_name="nomadnetwork", destination_type="management", destination_conv_name="lxmf", destination_conv_type="delivery", destination_mode=True, announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False, allow=[], statistic=None, link_timeout=300, default_user=None, default_user_interfaces=None, default_user_hops=None, default_user_callback=None):
+    def __init__(self, storage_path=None, identity_file="identity", identity=None, destination_name="nomadnetwork", destination_type="management", destination_conv_name="lxmf", destination_conv_type="delivery", destination_mode=True, announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False, allow=[], statistic=None, link_timeout=300, default_user=None, default_user_interfaces=None, default_user_hops=None, default_user_callback=None, environment_variables=None):
         self.storage_path = storage_path
         self.configs_path = self.storage_path+"/configs"
         self.files_path = os.path.expanduser("~")
@@ -315,6 +318,10 @@ class ServerManagement:
         self.default_user_interfaces = default_user_interfaces
         self.default_user_hops = default_user_hops
         self.default_user_callback = default_user_callback
+
+        self.environment_variables = environment_variables
+        if self.environment_variables == None:
+            self.environment_variables = {}
 
         if self.storage_path:
             if not os.path.isdir(self.storage_path):
@@ -559,6 +566,8 @@ class ServerManagement:
                 if dest != None:
                     self.scripts_env["dest"] = RNS.hexrep(dest, delimit=False)
                     self.console_env["dest"] = RNS.hexrep(dest, delimit=False)
+                self.scripts_env.update(self.environment_variables)
+                self.console_env.update(self.environment_variables)
 
                 link.set_resource_strategy(RNS.Link.ACCEPT_APP)
                 link.set_resource_callback(self.files_upload_callback)
@@ -628,6 +637,7 @@ class ServerManagement:
                 env_map["remote_identity"] = RNS.hexrep(remote_identity.hash, delimit=False)
             if dest != None:
                 env_map["dest"] = RNS.hexrep(dest, delimit=False)
+            env_map.update(self.environment_variables)
 
             if "path" in data and data["path"] != "" and data["path"] != "/":
                 data_return["path"] = [data["path"], self.locales_text(data["path"], path=True)]
@@ -720,6 +730,7 @@ class ServerManagement:
                     env_map["remote_identity"] = RNS.hexrep(remote_identity.hash, delimit=False)
                 if dest != None:
                     env_map["dest"] = RNS.hexrep(dest, delimit=False)
+                env_map.update(self.environment_variables)
 
                 for file, values in data["data"].items():
                     if not os.path.isfile(file):
@@ -1108,6 +1119,7 @@ class ServerManagement:
                 env_map["remote_identity"] = RNS.hexrep(remote_identity.hash, delimit=False)
             if dest != None:
                 env_map["dest"] = RNS.hexrep(dest, delimit=False)
+            env_map.update(self.environment_variables)
 
             if "path" in data and data["path"] != "" and data["path"] != "/":
                 data_return["path"] = [data["path"], self.locales_text(data["path"], path=True)]
@@ -1303,6 +1315,7 @@ class ServerManagement:
                     env_map["remote_identity"] = RNS.hexrep(remote_identity.hash, delimit=False)
                 if dest != None:
                     env_map["dest"] = RNS.hexrep(dest, delimit=False)
+                env_map.update(self.environment_variables)
 
                 if os.access(file, os.X_OK):
                     result = subprocess.run([file], stdout=subprocess.PIPE, env=env_map)
@@ -1478,6 +1491,7 @@ class ServerManagement:
                 env_map["remote_identity"] = RNS.hexrep(remote_identity.hash, delimit=False)
             if dest != None:
                 env_map["dest"] = RNS.hexrep(dest, delimit=False)
+            env_map.update(self.environment_variables)
 
             if "path" in data and data["path"] != "" and data["path"] != "/":
                 data_return["path"] = [data["path"], self.locales_text(data["path"], path=True)]
@@ -2212,7 +2226,9 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
             except:
                 pass
         if len(fields) > 0:
-            announce_data = umsgpack.packb({ANNOUNCE_DATA_CONTENT: CONFIG["rns_server"]["display_name"].encode("utf-8"), ANNOUNCE_DATA_TITLE: None, ANNOUNCE_DATA_FIELDS: fields})
+            announce_data = {ANNOUNCE_DATA_CONTENT: CONFIG["rns_server"]["display_name"].encode("utf-8"), ANNOUNCE_DATA_TITLE: None, ANNOUNCE_DATA_FIELDS: fields}
+            log("RNS - Configured announce data: "+str(announce_data), LOG_DEBUG)
+            announce_data = umsgpack.packb(announce_data)
 
     allow = []
     if CONFIG.has_section("allowed"):
@@ -2223,6 +2239,11 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
                     allow.append(dest_hash)
             except:
                 pass
+
+    environment_variables = {}
+    if CONFIG.has_section("environment_variables"):
+        for (key, val) in CONFIG.items("environment_variables"):
+            environment_variables[key] = val
 
     RNS_SERVER_MANAGEMENT = ServerManagement(
         storage_path=path,
@@ -2242,7 +2263,8 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
         default_user=None,
         default_user_interfaces=CONFIG["rns_server"]["default_user_interfaces"].split(","),
         default_user_hops=int(CONFIG["rns_server"]["default_user_hops"]),
-        default_user_callback=setup_default_user
+        default_user_callback=setup_default_user,
+        environment_variables=environment_variables
     )
 
     log("RNS - Connected", LOG_DEBUG)
@@ -2330,6 +2352,10 @@ state_data = 0
 #### Right settings ####
 [allowed]
 #2858b7a096899116cd529559cc679ffe
+
+
+#### Environment settings ####
+[environment_variables]
 '''
 
 
@@ -2382,7 +2408,7 @@ announce_hidden = No
 link_timeout = 300 #Seconds
 
 # Create default admin user - Restriction to interfaces (,-separated list) (empty=any)
-default_user_interfaces = AutoInterface,KISSInterface,RNodeInterface,SerialInterface
+default_user_interfaces = AutoInterface,BZ1Interface,KISSInterface,RNodeInterface,SerialInterface
 
 # Create default admin user - Maximum number of hops (0=any)
 default_user_hops = 1
@@ -2402,6 +2428,10 @@ state_data = 0
 # Allow only specific source addresses/hashs.
 [allowed]
 #2858b7a096899116cd529559cc679ffe
+
+
+#### Environment settings ####
+[environment_variables]
 '''
 
 
