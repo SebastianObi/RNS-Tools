@@ -112,6 +112,80 @@ _install_config() {
   cp -r "$SOFTWARE_CONFIG_SRC"/* "$SOFTWARE_CONFIG_DST"
   find "$SOFTWARE_CONFIG_DST" -type f -name "*.sh" -exec chmod +x {} \;
   find "$SOFTWARE_CONFIG_DST" -type f -name "*.py" -exec chmod +x {} \;
+
+
+  read -p "Enter the display name for the application: " SETTINGS_DISPLAY_NAME_RAW
+  SETTINGS_DISPLAY_NAME="$SETTINGS_DISPLAY_NAME_RAW"
+
+  read -p "Enter the admin user address: " SETTINGS_ALLOWED_RAW
+  SETTINGS_ALLOWED="$SETTINGS_ALLOWED_RAW"
+
+
+  SETTINGS_USER_TARGET=""
+
+  USERS=()
+  USERS+=("root")
+  USERLIST=$(cut -d: -f1,3 /etc/passwd | egrep ':[0-9]{4}$' | cut -d: -f1)
+  for s in $USERLIST; do
+    USERS+=("$s")
+  done
+
+  if [ ${#USERS[@]} -ne 1 ]; then
+    echo -e "Do you want the installed services to run under a different user? If so, please select a user."
+    select USER in "${USERS[@]}"; do
+      REPLY=$REPLY-1
+      if [[ ${USERS[$REPLY]} ]]; then
+        if [ "${USERS[$REPLY]}" != "root" ]; then
+          SETTINGS_USER_TARGET="user_target = ${USERS[$REPLY]}"
+        fi
+      fi
+      break
+    done
+  fi
+
+
+  cat <<EOF | tee "$SOFTWARE_CONFIG_DST/config.cfg.owr" > /dev/null
+# This is the user configuration file to override the default configuration file.
+# All settings made here have precedence.
+# This file can be used to clearly summarize all settings that deviate from the default.
+# This also has the advantage that all changed settings can be kept when updating the program.
+
+
+#### Main program settings ####
+[main]
+fields_announce = False
+
+
+#### RNS server settings ####
+[rns_server]
+display_name = $SETTINGS_DISPLAY_NAME
+
+announce_startup = Yes
+announce_startup_delay = 0 #Seconds
+
+announce_periodic = Yes
+announce_periodic_interval = 120 #Minutes
+
+
+#### Telemetry settings ####
+[telemetry]
+location_enabled = False
+location_lat = 0
+location_lon = 0
+
+state_enabled = False
+state_data = 0
+
+
+#### Right settings ####
+[allowed]
+$SETTINGS_ALLOWED
+
+
+#### Environment settings ####
+[environment_variables]
+$SETTINGS_USER_TARGET
+EOF
 }
 
 
