@@ -45,7 +45,7 @@ import sqlite3
 
 #### Reticulum ####
 import RNS
-import RNS.vendor.umsgpack as umsgpack
+import RNS.vendor.umsgpack as msgpack
 
 
 ##############################################################################################################
@@ -248,7 +248,7 @@ try:
         print(os.environ)
 
     data = os.environ[KEY_DATA]
-    data = umsgpack.unpackb(base64.b64decode(data))
+    data = msgpack.unpackb(base64.b64decode(data))
 
     if DEBUG:
         print(data)
@@ -261,5 +261,5 @@ try:
 except Exception as e:
     data_return[KEY_RESULT] = RESULT_ERROR
 
-sys.stdout.buffer.write(umsgpack.packb(data_return))
+sys.stdout.buffer.write(msgpack.packb(data_return))
 sys.stdout.flush() 

@@ -51,7 +51,7 @@ import subprocess
 # Install: pip3 install rns
 # Source: https://markqvist.github.io
 import RNS
-import RNS.vendor.umsgpack as umsgpack
+import RNS.vendor.umsgpack as msgpack
 
 
 ##############################################################################################################
@@ -1299,7 +1299,7 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
         if len(fields) > 0:
             announce_data = {ANNOUNCE_DATA_CONTENT: CONFIG["rns_server"]["display_name"].encode("utf-8"), ANNOUNCE_DATA_TITLE: None, ANNOUNCE_DATA_FIELDS: fields}
             log("RNS - Configured announce data: "+str(announce_data), LOG_DEBUG)
-            announce_data = umsgpack.packb(announce_data)
+            announce_data = msgpack.packb(announce_data)
 
     RNS_SERVER_PAGE = ServerPage(
         storage_path=path,
