@@ -456,11 +456,44 @@ class ServerProvisioning:
         return query
 
 
+    def db_member_group(self, group):
+        if group == None:
+            return ""
+
+        querys = []
+
+        for key in group:
+            querys.append("members.member_"+self.db_sanitize(key))
+
+        if len(querys) > 0:
+            query = " GROUP BY "+", ".join(querys)
+        else:
+            query = ""
+
+        return query
+
+
     def db_member_order(self, order):
         if order == "A-ASC":
             query = " ORDER BY devices.device_display_name ASC"
         elif order == "A-DESC":
             query = " ORDER BY devices.device_display_name DESC"
+        elif order == "R-ASC":
+            query = " ORDER BY members.member_auth_role ASC, devices.device_display_name ASC"
+        elif order == "R-DESC":
+            query = " ORDER BY members.member_auth_role DESC, devices.device_display_name ASC"
+        elif order == "C-ASC":
+            query = " ORDER BY members.member_country ASC, devices.device_display_name ASC"
+        elif order == "C-DESC":
+            query = " ORDER BY members.member_country DESC, devices.device_display_name ASC"
+        elif order == "S-ASC":
+            query = " ORDER BY members.member_country ASC, members.member_state ASC, devices.device_display_name ASC"
+        elif order == "S-DESC":
+            query = " ORDER BY members.member_country DESC, members.member_state DESC, devices.device_display_name ASC"
+        elif order == "CITY-ASC":
+            query = " ORDER BY members.member_country ASC, members.member_city ASC, devices.device_display_name ASC"
+        elif order == "CITY-DESC":
+            query = " ORDER BY members.member_country DESC, members.member_city DESC, devices.device_display_name ASC"
         elif order == "ASC":
             query = " ORDER BY members.member_ts_add ASC, devices.device_display_name ASC"
         elif order == "DESC":
@@ -471,11 +504,13 @@ class ServerProvisioning:
         return query
 
 
-    def db_member_list(self, filter=None, search=None, order=None, limit=None, limit_start=None):
+    def db_member_list(self, filter=None, search=None, group=None, order=None, limit=None, limit_start=None):
         db = self.db_connect()
         dbc = db.cursor()
 
         query_filter = self.db_member_filter(filter)
+
+        query_group = self.db_member_group(group)
 
         query_order = self.db_member_order(order)
 
@@ -486,10 +521,10 @@ class ServerProvisioning:
 
         if search:
             search = "%"+search+"%"
-            query = "SELECT members.member_city, members.member_state, members.member_country, members.member_occupation, members.member_skills, members.member_tasks, members.member_wallet_address, members.member_auth_role, members.member_ts_add, members.member_ts_edit, devices.device_rns_id, devices.device_display_name FROM members LEFT JOIN devices ON devices.device_user_id = members.member_user_id WHERE members.member_user_id != '' AND (devices.device_display_name ILIKE %s OR members.member_city ILIKE %s OR members.member_occupation ILIKE %s OR members.member_skills ILIKE %s OR members.member_tasks ILIKE %s)"+query_filter+query_order+query_limit
+            query = "SELECT members.member_city, members.member_state, members.member_country, members.member_occupation, members.member_skills, members.member_tasks, members.member_wallet_address, members.member_auth_role, members.member_ts_add, members.member_ts_edit, devices.device_rns_id, devices.device_display_name FROM members LEFT JOIN devices ON devices.device_user_id = members.member_user_id WHERE members.member_user_id != '' AND (devices.device_display_name ILIKE %s OR members.member_city ILIKE %s OR members.member_occupation ILIKE %s OR members.member_skills ILIKE %s OR members.member_tasks ILIKE %s)"+query_filter+query_group+query_order+query_limit
             dbc.execute(query, (search, search, search, search, search))
         else:
-            query = "SELECT members.member_city, members.member_state, members.member_country, members.member_occupation, members.member_skills, members.member_tasks, members.member_wallet_address, members.member_auth_role, members.member_ts_add, members.member_ts_edit, devices.device_rns_id, devices.device_display_name FROM members LEFT JOIN devices ON devices.device_user_id = members.member_user_id WHERE members.member_user_id != ''"+query_filter+query_order+query_limit
+            query = "SELECT members.member_city, members.member_state, members.member_country, members.member_occupation, members.member_skills, members.member_tasks, members.member_wallet_address, members.member_auth_role, members.member_ts_add, members.member_ts_edit, devices.device_rns_id, devices.device_display_name FROM members LEFT JOIN devices ON devices.device_user_id = members.member_user_id WHERE members.member_user_id != ''"+query_filter+query_group+query_order+query_limit
             dbc.execute(query)
 
         result = dbc.fetchall()
@@ -514,22 +549,23 @@ class ServerProvisioning:
                         "dest": bytes.fromhex(entry[10].strip()),
                         "display_name": entry[11].strip()
                     })
-
             return data
 
 
-    def db_member_count(self, filter=None, search=None):
+    def db_member_count(self, filter=None, search=None, group=None):
         db = self.db_connect()
         dbc = db.cursor()
 
         query_filter = self.db_member_filter(filter)
 
+        query_group = self.db_member_group(group)
+
         if search:
             search = "%"+search+"%"
-            query = "SELECT COUNT(*) FROM members LEFT JOIN devices ON devices.device_user_id = members.member_user_id WHERE members.member_user_id != '' AND (devices.device_display_name ILIKE %s OR members.member_city ILIKE %s OR members.member_occupation ILIKE %s OR members.member_skills ILIKE %s OR members.member_tasks ILIKE %s)"+query_filter
+            query = "SELECT COUNT(*) FROM members LEFT JOIN devices ON devices.device_user_id = members.member_user_id WHERE members.member_user_id != '' AND (devices.device_display_name ILIKE %s OR members.member_city ILIKE %s OR members.member_occupation ILIKE %s OR members.member_skills ILIKE %s OR members.member_tasks ILIKE %s)"+query_filter+query_group
             dbc.execute(query, (search, search, search, search, search))
         else:
-            query = "SELECT COUNT(*) FROM members WHERE member_user_id != ''"+query_filter
+            query = "SELECT COUNT(*) FROM members WHERE member_user_id != ''"+query_filter+query_group
             dbc.execute(query)
 
         result = dbc.fetchall()
@@ -538,6 +574,49 @@ class ServerProvisioning:
             return 0
         else:
             return result[0][0]
+
+
+    def db_member_count_list(self, filter=None, search=None, group=None, order=None, limit=None, limit_start=None):
+        db = self.db_connect()
+        dbc = db.cursor()
+
+        query_filter = self.db_member_filter(filter)
+
+        query_group = self.db_member_group(group)
+
+        query_order = self.db_member_order(order)
+        query_order = query_order.replace(" ORDER BY devices.device_display_name ASC", "")
+        query_order = query_order.replace(" ORDER BY devices.device_display_name DESC", "")
+        query_order = query_order.replace(", devices.device_display_name ASC", "")
+
+        if limit == None or limit_start == None:
+            query_limit = ""
+        else:
+            query_limit = " LIMIT "+self.db_sanitize(limit)+" OFFSET "+self.db_sanitize(limit_start)
+
+        if search:
+            search = "%"+search+"%"
+            query = "SELECT COUNT(members.member_ts_add), MAX(members.member_country), MAX(members.member_state), MAX(members.member_city), MAX(members.member_auth_role) FROM members LEFT JOIN devices ON devices.device_user_id = members.member_user_id WHERE members.member_user_id != '' AND (devices.device_display_name ILIKE %s OR members.member_city ILIKE %s OR members.member_occupation ILIKE %s OR members.member_skills ILIKE %s OR members.member_tasks ILIKE %s)"+query_filter+query_group+query_order+query_limit
+            dbc.execute(query, (search, search, search, search, search))
+        else:
+            query = "SELECT COUNT(members.member_ts_add), MAX(members.member_country), MAX(members.member_state), MAX(members.member_city), MAX(members.member_auth_role) FROM members LEFT JOIN devices ON devices.device_user_id = members.member_user_id WHERE member_user_id != ''"+query_filter+query_group+query_order+query_limit
+            dbc.execute(query)
+
+        result = dbc.fetchall()
+
+        if len(result) < 1:
+            return []
+        else:
+            data = []
+            for entry in result:
+                data.append({
+                    "count": entry[0],
+                    "country": entry[1].strip(),
+                    "state": entry[2].strip(),
+                    "city": entry[3].strip(),
+                    "auth_role": int(entry[4].strip())
+                })
+            return data
 
 
     def db_member_get(self, dest):
@@ -644,11 +723,44 @@ class ServerProvisioning:
         return query
 
 
+    def db_service_group(self, group):
+        if group == None:
+            return ""
+
+        querys = []
+
+        for key in group:
+            querys.append("services.service_"+self.db_sanitize(key))
+
+        if len(querys) > 0:
+            query = " GROUP BY "+", ".join(querys)
+        else:
+            query = ""
+
+        return query
+
+
     def db_service_order(self, order):
         if order == "A-ASC":
             query = " ORDER BY services.service_display_name ASC"
         elif order == "A-DESC":
             query = " ORDER BY services.service_display_name DESC"
+        elif order == "R-ASC":
+            query = " ORDER BY services.service_auth_role ASC, services.service_display_name ASC"
+        elif order == "R-DESC":
+            query = " ORDER BY services.service_auth_role DESC, services.service_display_name ASC"
+        elif order == "C-ASC":
+            query = " ORDER BY services.service_country ASC, services.service_display_name ASC"
+        elif order == "C-DESC":
+            query = " ORDER BY services.service_country DESC, services.service_display_name ASC"
+        elif order == "S-ASC":
+            query = " ORDER BY services.service_country ASC, services.service_state ASC, services.service_display_name ASC"
+        elif order == "S-DESC":
+            query = " ORDER BY services.service_country DESC, services.service_state DESC, services.service_display_name ASC"
+        elif order == "CITY-ASC":
+            query = " ORDER BY services.service_country ASC, services.service_city ASC, services.service_display_name ASC"
+        elif order == "CITY-DESC":
+            query = " ORDER BY services.service_country DESC, services.service_city DESC, services.service_display_name ASC"
         elif order == "ASC":
             query = " ORDER BY services.service_ts_add ASC, services.service_display_name ASC"
         elif order == "DESC":
@@ -659,11 +771,13 @@ class ServerProvisioning:
         return query
 
 
-    def db_service_list(self, filter=None, search=None, order=None, limit=None, limit_start=None):
+    def db_service_list(self, filter=None, search=None, group=None, order=None, limit=None, limit_start=None):
         db = self.db_connect()
         dbc = db.cursor()
 
         query_filter = self.db_service_filter(filter)
+
+        query_group = self.db_service_group(group)
 
         query_order = self.db_service_order(order)
 
@@ -674,10 +788,10 @@ class ServerProvisioning:
 
         if search:
             search = "%"+search+"%"
-            query = "SELECT services.service_rns_id, services.service_display_name, services.service_country, services.service_state, services.service_city, services.service_type, services.service_auth_role, services.service_ts_add, services.service_ts_edit FROM services WHERE services.service_rns_id != '' AND (services.service_display_name ILIKE %s OR services.service_city ILIKE %s)"+query_filter+query_order+query_limit
+            query = "SELECT services.service_rns_id, services.service_display_name, services.service_country, services.service_state, services.service_city, services.service_type, services.service_auth_role, services.service_ts_add, services.service_ts_edit FROM services WHERE services.service_rns_id != '' AND (services.service_display_name ILIKE %s OR services.service_city ILIKE %s)"+query_filter+query_group+query_order+query_limit
             dbc.execute(query, (search, search))
         else:
-            query = "SELECT services.service_rns_id, services.service_display_name, services.service_country, services.service_state, services.service_city, services.service_type, services.service_auth_role, services.service_ts_add, services.service_ts_edit FROM services WHERE services.service_rns_id != ''"+query_filter+query_order+query_limit
+            query = "SELECT services.service_rns_id, services.service_display_name, services.service_country, services.service_state, services.service_city, services.service_type, services.service_auth_role, services.service_ts_add, services.service_ts_edit FROM services WHERE services.service_rns_id != ''"+query_filter+query_group+query_order+query_limit
             dbc.execute(query)
 
         result = dbc.fetchall()
@@ -702,18 +816,20 @@ class ServerProvisioning:
             return data
 
 
-    def db_service_count(self, filter=None, search=None):
+    def db_service_count(self, filter=None, search=None, group=None):
         db = self.db_connect()
         dbc = db.cursor()
 
         query_filter = self.db_service_filter(filter)
 
+        query_group = self.db_service_group(group)
+
         if search:
             search = "%"+search+"%"
-            query = "SELECT COUNT(*) FROM services WHERE services.service_rns_id != '' AND (services.service_display_name ILIKE %s OR services.service_city ILIKE %s)"+query_filter
+            query = "SELECT COUNT(*) FROM services WHERE services.service_rns_id != '' AND (services.service_display_name ILIKE %s OR services.service_city ILIKE %s)"+query_filter+query_group
             dbc.execute(query, (search, search))
         else:
-            query = "SELECT COUNT(*) FROM services WHERE services.service_rns_id != ''"+query_filter
+            query = "SELECT COUNT(*) FROM services WHERE services.service_rns_id != ''"+query_filter+query_group
             dbc.execute(query)
 
         result = dbc.fetchall()
@@ -722,6 +838,49 @@ class ServerProvisioning:
             return 0
         else:
             return result[0][0]
+
+
+    def db_service_count_list(self, filter=None, search=None, group=None, order=None, limit=None, limit_start=None):
+        db = self.db_connect()
+        dbc = db.cursor()
+
+        query_filter = self.db_service_filter(filter)
+
+        query_group = self.db_service_group(group)
+
+        query_order = self.db_service_order(order)
+        query_order = query_order.replace(" ORDER BY services.service_display_name ASC", "")
+        query_order = query_order.replace(" ORDER BY services.service_display_name DESC", "")
+        query_order = query_order.replace(", services.service_display_name ASC", "")
+
+        if limit == None or limit_start == None:
+            query_limit = ""
+        else:
+            query_limit = " LIMIT "+self.db_sanitize(limit)+" OFFSET "+self.db_sanitize(limit_start)
+
+        if search:
+            search = "%"+search+"%"
+            query = "SELECT COUNT(services.service_ts_add), MAX(services.service_country), MAX(services.service_state), MAX(services.service_city), MAX(services.service_auth_role) FROM services WHERE services.service_rns_id != '' AND (services.service_display_name ILIKE %s OR services.service_city ILIKE %s)"+query_filter+query_group+query_order+query_limit
+            dbc.execute(query, (search, search))
+        else:
+            query = "SELECT COUNT(services.service_ts_add), MAX(services.service_country), MAX(services.service_state), MAX(services.service_city), MAX(services.service_auth_role) FROM services WHERE services.service_rns_id != ''"+query_filter+query_group+query_order+query_limit
+            dbc.execute(query)
+
+        result = dbc.fetchall()
+
+        if len(result) < 1:
+            return []
+        else:
+            data = []
+            for entry in result:
+                data.append({
+                    "count": entry[0],
+                    "country": entry[1].strip(),
+                    "state": entry[2].strip(),
+                    "city": entry[3].strip(),
+                    "auth_role": int(entry[4].strip())
+                })
+            return data
 
 
     def db_service_get(self, dest):
@@ -963,11 +1122,14 @@ class ServerProvisioning:
                     return data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [entry]})
                 else:
                     return data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [{"dest": cmd[1], "ts_edit": 0}]})
+        elif "group" in data and data["group"] != None:
+            data_return["rx_group_entrys"] = self.db_member_count_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"])
+            data_return["rx_group_entrys_count"] = len(data_return["rx_group_entrys"])
         else:
             data_return["rx_entrys"] = []
-            data_return["rx_entrys_count"] = self.db_member_count(filter=data["filter"], search=data["search"])
+            data_return["rx_entrys_count"] = self.db_member_count(filter=data["filter"], search=data["search"], group=data["group"])
 
-            for entry in self.db_member_list(filter=data["filter"], search=data["search"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"]):
+            for entry in self.db_member_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"]):
                 if entry["dest"] in data["entrys"]:
                     if entry["ts_edit"] > data["entrys"][entry["dest"]]:
                         data_return["rx_entrys"].append(entry)
@@ -986,9 +1148,9 @@ class ServerProvisioning:
             if len(data_return["rx_entrys"]) == 0:
                 del data_return["rx_entrys"]
 
-            if hash_destination in self.admins:
-                data_return["cmd"] = []
-                data_return["cmd_entry"] = ["role_0", "role_1", "role_2", "role_3", "state_0", "state_1", "state_2", "delete"]
+        if hash_destination in self.admins:
+            data_return["cmd"] = []
+            data_return["cmd_entry"] = ["role_0", "role_1", "role_2", "role_3", "state_0", "state_1", "state_2", "delete"]
 
         # Temporary debug output
         print("Dict send: "+str(data_return))
@@ -1024,11 +1186,14 @@ class ServerProvisioning:
                     data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [entry]})
                 else:
                     data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [{"dest": cmd[1], "ts_edit": 0}]})
+        elif "group" in data and data["group"] != None:
+            data_return["rx_group_entrys"] = self.db_service_count_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"])
+            data_return["rx_group_entrys_count"] = len(data_return["rx_group_entrys"])
         else:
             data_return["rx_entrys"] = []
-            data_return["rx_entrys_count"] = self.db_service_count(filter=data["filter"], search=data["search"])
+            data_return["rx_entrys_count"] = self.db_service_count(filter=data["filter"], search=data["search"], group=data["group"])
 
-            for entry in self.db_service_list(filter=data["filter"], search=data["search"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"]):
+            for entry in self.db_service_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"]):
                 if entry["dest"] in data["entrys"]:
                     if entry["ts_edit"] > data["entrys"][entry["dest"]]:
                         data_return["rx_entrys"].append(entry)
@@ -1047,9 +1212,9 @@ class ServerProvisioning:
             if len(data_return["rx_entrys"]) == 0:
                 del data_return["rx_entrys"]
 
-            if hash_destination in self.admins:
-                data_return["cmd"] = []
-                data_return["cmd_entry"] = []
+        if hash_destination in self.admins:
+            data_return["cmd"] = []
+            data_return["cmd_entry"] = []
 
         # Temporary debug output
         print("Dict send: "+str(data_return))
