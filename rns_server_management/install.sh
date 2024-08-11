@@ -10,7 +10,7 @@ SOFTWARE_PATH_SRC=$(dirname $(realpath $0))
 SOFTWARE_PATH_DST="/usr/local/bin"
 SOFTWARE_CONFIG_SRC="$SOFTWARE_PATH_SRC/Examples"
 SOFTWARE_CONFIG_DST="$HOME/.config/$SOFTWARE_NAME"
-RETICULUM_CONFIG_DST=("/home/nomad/.config/reticulum", "/home/nomad/.reticulum", "$HOME/.config/reticulum", "$HOME/.reticulum")
+RETICULUM_CONFIG_DST=("$HOME/.config/reticulum" "$HOME/.reticulum")
 
 
 ##############################################################################################################
@@ -19,6 +19,35 @@ RETICULUM_CONFIG_DST=("/home/nomad/.config/reticulum", "/home/nomad/.reticulum",
 
 _divider() {
   echo -e "..............................................................................."
+}
+
+
+_settings_user() {
+  SETTINGS_USER=$USER
+  SETTINGS_USER_TARGET=""
+
+  USERS=()
+  USERS+=("root")
+  USERLIST=$(cut -d: -f1,3 /etc/passwd | egrep ':[0-9]{4}$' | cut -d: -f1)
+  for s in $USERLIST; do
+    USERS+=("$s")
+  done
+
+  if [ ${#USERS[@]} -ne 1 ]; then
+    echo -e "Do you want the installed services to run under a different user? If so, please select a user."
+    select OPTION in "${USERS[@]}"; do
+      REPLY=$REPLY-1
+      if [[ ${USERS[$REPLY]} ]]; then
+        if [ "${USERS[$REPLY]}" != "root" ]; then
+          SETTINGS_USER="${USERS[$REPLY]}"
+          SETTINGS_USER_TARGET="user_target = ${USERS[$REPLY]}"
+          RETICULUM_CONFIG_DST_TMP=("/home/${USERS[$REPLY]}/.config/reticulum" "/home/${USERS[$REPLY]}/.reticulum", "${RETICULUM_CONFIG_DST[@]}")
+          RETICULUM_CONFIG_DST=("${RETICULUM_CONFIG_DST_TMP[@]}")
+        fi
+      fi
+      break
+    done
+  fi
 }
 
 
@@ -36,9 +65,15 @@ _install_core_software() {
 
 
 _install_core_config() {
-  mkdir -p "$HOME/.reticulum"
+  if [ "$SETTINGS_USER" != "$USER" ]; then
+    CONFIG_FOLDER="/home/$SETTINGS_USER/.config/reticulum"
+  else
+    CONFIG_FOLDER="$HOME/.config/reticulum"
+  fi
 
-  cat <<EOF | tee "$HOME/.reticulum/config" > /dev/null
+  mkdir -p "$CONFIG_FOLDER"
+
+  cat <<EOF | tee "$CONFIG_FOLDER/config" > /dev/null
 [reticulum]
   enable_transport = True 
   share_instance = Yes
@@ -50,25 +85,28 @@ _install_core_config() {
   loglevel = 6
 
 [interfaces]
-  
-  [[Default Interface]]
-    type = AutoInterface
-    interface_enabled = True
 
- [[RNode LoRa Interface]]
-    type = RNodeInterface
-    interface_enabled = True 
-    outgoing = true
-    port = /dev/ttyACM0
-    frequency = 867200000
-    bandwidth = 125000
-    txpower = 7
-    spreadingfactor = 8
-    codingrate = 5
-    # id_callsign = MYCALL-0
-    # id_interval = 600
-    flow_control = False
+[[Default Interface]]
+type = AutoInterface
+enabled = True
+mode = gateway
+networkname = fdn
+passphrase = FreieDeutscheGesellschaft
+
+[[TCP FDN]]
+type = TCPClientInterface
+enabled = True
+outgoing = True
+mode = boundary
+target_host = fdn.freiedeutschegesellschaft.org
+target_port = 42043
+networkname = fdn
+passphrase = FreieDeutscheGesellschaft
 EOF
+
+  if [ "$SETTINGS_USER" != "$USER" ]; then
+    chown -R $SETTINGS_USER $CONFIG_FOLDER
+  fi
 }
 
 
@@ -83,7 +121,7 @@ After=multi-user.target
 Type=simple
 Restart=always
 RestartSec=3
-User=$USER
+User=$SETTINGS_USER
 ExecStart=rnsd --service
 
 [Install]
@@ -119,29 +157,6 @@ _install_config() {
 
   read -p "Enter the admin user address: " SETTINGS_ALLOWED_RAW
   SETTINGS_ALLOWED="$SETTINGS_ALLOWED_RAW"
-
-
-  SETTINGS_USER_TARGET=""
-
-  USERS=()
-  USERS+=("root")
-  USERLIST=$(cut -d: -f1,3 /etc/passwd | egrep ':[0-9]{4}$' | cut -d: -f1)
-  for s in $USERLIST; do
-    USERS+=("$s")
-  done
-
-  if [ ${#USERS[@]} -ne 1 ]; then
-    echo -e "Do you want the installed services to run under a different user? If so, please select a user."
-    select USER in "${USERS[@]}"; do
-      REPLY=$REPLY-1
-      if [[ ${USERS[$REPLY]} ]]; then
-        if [ "${USERS[$REPLY]}" != "root" ]; then
-          SETTINGS_USER_TARGET="user_target = ${USERS[$REPLY]}"
-        fi
-      fi
-      break
-    done
-  fi
 
 
   cat <<EOF | tee "$SOFTWARE_CONFIG_DST/config.cfg.owr" > /dev/null
@@ -325,6 +340,7 @@ echo -e "The installation of the dependencies may not work on some systems. In t
       case $opt in
       "Install Core+Software"*)
         echo -e ""
+        _settings_user
         _install_core_software
         _install_core_config
         _install_core_service
@@ -337,6 +353,7 @@ echo -e "The installation of the dependencies may not work on some systems. In t
         break;;
       "Install"*)
         echo -e ""
+        _settings_user
         _install_software
         _install_config
         _install_service
