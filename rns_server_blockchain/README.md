@@ -6,14 +6,15 @@ This program provides a gateway/bridge for payment/wallet of the "Communicator" 
 - Compatible with all Reticulum payment/wallet apps (Communicator which is another project that is not part of this github)
 
 
+### Supported coins/tokens
+- HYD/DHYD/THYD (Hydraledger Utility Coin) `https://www.hydraledger.tech/`
+- TEST (Test/Dummy Coin)
+
+
 ## Current Status
-It should currently be considered alpla and experimental demo software.
+It should currently be considered beta software and still work in progress.
 
-This does not include any blockchain and security functions!!!
-
-It only serves as a test endpoint to simulate a central wallet!!!
-
-The data is saved as plaintext in a file!!!
+All core features are implemented and functioning, but additions will probably occur as real-world use is explored.
 
 There may be errors or the compatibility after an update is no longer guaranteed.
 
@@ -35,7 +36,6 @@ The full documentation is not yet available. Due to lack of time I can also not 
   
   pip3 install rns
   pip3 install pyserial netifaces
-  
   ```
 - Change the Reticulum configuration to suit your needs and use-case.
   ```bash
@@ -48,6 +48,17 @@ The full documentation is not yet available. Due to lack of time I can also not 
 - Make it executable with the following command
   ```bash
   chmod +x rns_server_blockchain.py
+  ```
+- Install all coins/tokens prerequisites - Hydraledger.
+  ```bash
+  sudo apt install curl
+  sudo apt install pkg-config
+  sudo apt install libssl-dev
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+  . "$HOME/.cargo/env"
+  pip3 install maturin
+  pip3 install iop-python
+  pip3 install requests
   ```
 
 ### Start:

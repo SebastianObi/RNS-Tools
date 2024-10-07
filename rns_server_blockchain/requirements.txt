@@ -1,1 +1,4 @@
 rns
+maturin
+iop-python
+requests

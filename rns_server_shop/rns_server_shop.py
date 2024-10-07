@@ -120,6 +120,7 @@ class ServerShop:
     RESULT_NO_IDENTITY = 0x03
     RESULT_NO_USER     = 0x04
     RESULT_NO_RIGHT    = 0x05
+    RESULT_PARTIAL     = 0x06
     RESULT_DISABLED    = 0xFE
     RESULT_BLOCKED     = 0xFF
 

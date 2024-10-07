@@ -152,7 +152,9 @@ class ServerProvisioning:
     RESULT_OK          = 0x01
     RESULT_SYNCRONIZE  = 0x02
     RESULT_NO_IDENTITY = 0x03
-    RESULT_NO_RIGHT    = 0x04
+    RESULT_NO_USER     = 0x04
+    RESULT_NO_RIGHT    = 0x05
+    RESULT_PARTIAL     = 0x06
     RESULT_DISABLED    = 0xFE
     RESULT_BLOCKED     = 0xFF
 
@@ -955,9 +957,6 @@ class ServerProvisioning:
                     data["hash_identity"] = hash_identity
                     data["timestamp_client"] = time.time()
                     data["timestamp_server"] = time.time()
-
-                    if "password" in data:
-                        data["password"] = str(base64.b32encode(data["password"]))
 
                     RNS.log("-> Execute", LOG_EXTREME)
                     RNS.log(data, LOG_EXTREME)

@@ -37,7 +37,6 @@ import os
 import time
 import datetime
 import argparse
-import random
 
 #### UID ####
 import uuid
@@ -56,6 +55,12 @@ import subprocess
 import RNS
 import RNS.vendor.umsgpack as msgpack
 
+#### UID ####
+import string, random
+
+#### Token ####
+import importlib
+
 
 ##############################################################################################################
 # Globals
@@ -64,7 +69,7 @@ import RNS.vendor.umsgpack as msgpack
 #### Global Variables - Configuration ####
 NAME = "RNS Server Blockchain"
 DESCRIPTION = "Gateway/Bridge for payment/wallet for RNS based apps"
-VERSION = "0.0.1 (2024-05-31)"
+VERSION = "0.0.1 (2024-10-07)"
 COPYRIGHT = "(c) 2024 Sebastian Obele  /  obele.eu"
 PATH = os.path.expanduser("~")+"/.config/"+os.path.splitext(os.path.basename(__file__))[0]
 PATH_RNS = None
@@ -81,13 +86,220 @@ RNS_SERVER_BLOCKCHAIN = None
 
 
 class ServerBlockchain:
+    ACCOUNT_STATE_FAILED      = 0x00 # Failed
+    ACCOUNT_STATE_SUCCESSFULL = 0x01 # Successfull
+    ACCOUNT_STATE_WAITING     = 0x02 # Waiting in local cache
+    ACCOUNT_STATE_SYNCING     = 0x03 # Syncing/Transfering to server
+    ACCOUNT_STATE_PROCESSING  = 0x04 # Processing/Execution on the blockchain
+
+    CONNECTION_TIMEOUT = 10 # Seconds
+
+    KEY_RESULT        = 0x0A # Result
+    KEY_RESULT_REASON = 0x0B # Result - Reason
+    KEY_A             = 0x0C # Account
+    KEY_API           = 0x0D # API
+    KEY_B             = 0x0E # Block
+    KEY_D             = 0x0F # Delegate
+    KEY_E             = 0x10 # Explorer
+    KEY_I             = 0x11 # Info
+    KEY_T             = 0x12 # Transaction
+
+    KEY_A_BALANCE      = 0x00
+    KEY_A_DATA         = 0x01
+    KEY_A_DELEGATE     = 0x02
+    KEY_A_ID           = 0x03
+    KEY_A_NAME         = 0x04
+    KEY_A_NONCE        = 0x05
+    KEY_A_STATE        = 0x06
+    KEY_A_STATE_REASON = 0x07
+    KEY_A_TOKEN        = 0x08
+    KEY_A_TS           = 0x09
+    KEY_A_VOTE         = 0x0A
+
+    KEY_A_MAPPING = {
+        "balance":      KEY_A_BALANCE,
+        "data":         KEY_A_DATA,
+        "delegate":     KEY_A_DELEGATE,
+        "id":           KEY_A_ID,
+        "name":         KEY_A_NAME,
+        "nonce":        KEY_A_NONCE,
+        "state":        KEY_A_STATE,
+        "state_reason": KEY_A_STATE_REASON,
+        "token":        KEY_A_TOKEN,
+        "ts":           KEY_A_TS,
+        "vote":         KEY_A_VOTE,
+    }
+
+    KEY_B_CONFIRMATIONS  = 0x00
+    KEY_B_DATA           = 0x01
+    KEY_B_FORGED_AMOUNT  = 0x02
+    KEY_B_FORGED_FEE     = 0x03
+    KEY_B_FORGED_REWARD  = 0x04
+    KEY_B_FORGED_TOTAL   = 0x05
+    KEY_B_GENERATOR_ID   = 0x06
+    KEY_B_GENERATOR_NAME = 0x07
+    KEY_B_HEIGHT         = 0x08
+    KEY_B_ID             = 0x09
+    KEY_B_TRANSACTIONS   = 0x0A
+    KEY_B_TS             = 0x0B
+
+    KEY_B_MAPPING = {
+        "confirmations":  KEY_B_CONFIRMATIONS,
+        "data":           KEY_B_DATA,
+        "forged_amount":  KEY_B_FORGED_AMOUNT,
+        "forged_fee":     KEY_B_FORGED_FEE,
+        "forged_reward":  KEY_B_FORGED_REWARD,
+        "forged_total":   KEY_B_FORGED_TOTAL,
+        "generator_id":   KEY_B_GENERATOR_ID,
+        "generator_name": KEY_B_GENERATOR_NAME,
+        "height":         KEY_B_HEIGHT,
+        "id":             KEY_B_ID,
+        "transactions":   KEY_B_TRANSACTIONS,
+        "ts":             KEY_B_TS,
+    }
+
+    KEY_D_DATA       = 0x00
+    KEY_D_DATA_HASH  = 0x01
+    KEY_D_ID         = 0x02
+    KEY_D_NAME       = 0x03
+    KEY_D_NAME_HASH  = 0x04
+    KEY_D_STATE      = 0x05
+    KEY_D_STATE_HASH = 0x06
+    KEY_D_VALUE      = 0x07
+    KEY_D_VALUE_HASH = 0x08
+
+    KEY_D_MAPPING = {
+        "data":       KEY_D_DATA,
+        "data_hash":  KEY_D_DATA_HASH,
+        "id":         KEY_D_ID,
+        "name":       KEY_D_NAME,
+        "name_hash":  KEY_D_NAME_HASH,
+        "state":      KEY_D_STATE,
+        "state_hash": KEY_D_STATE_HASH,
+        "value":      KEY_D_VALUE,
+        "value_hash": KEY_D_VALUE_HASH,
+    }
+
+    KEY_E_FILTER      = 0x00
+    KEY_E_LIMIT       = 0x01
+    KEY_E_LIMIT_START = 0x02
+    KEY_E_ORDER       = 0x03
+    KEY_E_SEARCH      = 0x04
+    KEY_E_TOKEN       = 0x05
+
+    KEY_E_MAPPING = {
+        "filter":      KEY_E_FILTER,
+        "limit":       KEY_E_LIMIT,
+        "limit_start": KEY_E_LIMIT_START,
+        "order":       KEY_E_ORDER,
+        "search":      KEY_E_SEARCH,
+        "token":       KEY_E_TOKEN,
+    }
+
+    KEY_E_ORDER_ASC  = 0x00
+    KEY_E_ORDER_DESC = 0x01
+
+    KEY_E_ORDER_MAPPING = {
+        "asc":  KEY_E_ORDER_ASC,
+        "desc": KEY_E_ORDER_DESC,
+    }
+
+    KEY_I_DATA         = 0x00
+    KEY_I_SUPPLY       = 0x01
+
+    KEY_I_MAPPING = {
+        "account":      KEY_A,
+        "block":        KEY_B,
+        "delegate":     KEY_D,
+        "transaction":  KEY_T,
+        "data":         KEY_I_DATA,
+        "supply":       KEY_I_SUPPLY,
+    }
+
+    KEY_T_AMOUNT        = 0x00
+    KEY_T_COMMENT       = 0x01
+    KEY_T_CONFIRMATIONS = 0x02
+    KEY_T_DATA          = 0x03
+    KEY_T_DEST          = 0x04
+    KEY_T_FEE           = 0x05
+    KEY_T_ID            = 0x06
+    KEY_T_INDEX         = 0x07
+    KEY_T_SOURCE        = 0x08
+    KEY_T_STATE         = 0x09
+    KEY_T_STATE_REASON  = 0x0A
+    KEY_T_TS            = 0x0B
+    KEY_T_TYPE          = 0x0C
+
+    KEY_T_MAPPING = {
+        "amount":        KEY_T_AMOUNT,
+        "comment":       KEY_T_COMMENT,
+        "confirmations": KEY_T_CONFIRMATIONS,
+        "data":          KEY_T_DATA,
+        "dest":          KEY_T_DEST,
+        "fee":           KEY_T_FEE,
+        "id":            KEY_T_ID,
+        "index":         KEY_T_INDEX,
+        "source":        KEY_T_SOURCE,
+        "state":         KEY_T_STATE,
+        "state_reason":  KEY_T_STATE_REASON,
+        "ts":            KEY_T_TS,
+        "type":          KEY_T_TYPE,
+    }
+
     RESULT_ERROR       = 0x00
     RESULT_OK          = 0x01
     RESULT_SYNCRONIZE  = 0x02
     RESULT_NO_IDENTITY = 0x03
-    RESULT_NO_RIGHT    = 0x04
+    RESULT_NO_USER     = 0x04
+    RESULT_NO_RIGHT    = 0x05
+    RESULT_PARTIAL     = 0x06
     RESULT_DISABLED    = 0xFE
     RESULT_BLOCKED     = 0xFF
+
+    STATE_NO_PATH            = 0x00
+    STATE_PATH_REQUESTED     = 0x01
+    STATE_ESTABLISHING_LINK  = 0x02
+    STATE_LINK_TIMEOUT       = 0x03
+    STATE_LINK_ESTABLISHED   = 0x04
+    STATE_REQUESTING         = 0x05
+    STATE_REQUEST_SENT       = 0x06
+    STATE_REQUEST_FAILED     = 0x07
+    STATE_REQUEST_TIMEOUT    = 0x08
+    STATE_RECEIVING_RESPONSE = 0x09
+    STATE_TRANSFERRING       = 0x0A
+    STATE_DISCONECTED        = 0xFD
+    STATE_DONE               = 0xFF
+
+    TRANSACTION_STATE_FAILED      = 0x00 # Failed
+    TRANSACTION_STATE_SUCCESSFULL = 0x01 # Successfull
+    TRANSACTION_STATE_WAITING     = 0x02 # Waiting in local cache
+    TRANSACTION_STATE_SYNCING     = 0x03 # Syncing/Transfering to server
+    TRANSACTION_STATE_PROCESSING  = 0x04 # Processing/Execution on the blockchain
+
+    TRANSACTION_TYPE_TRANSFER                 = 0x00
+    TRANSACTION_TYPE_SWAP                     = 0x01
+    TRANSACTION_TYPE_VOTE                     = 0x02
+    TRANSACTION_TYPE_UNVOTE                   = 0x03
+    TRANSACTION_TYPE_DELEGATE_REGISTRATION    = 0x04
+    TRANSACTION_TYPE_DELEGATE_RESIGNATION     = 0x05
+    TRANSACTION_TYPE_SECOND_SIGNATURE         = 0x06
+    TRANSACTION_TYPE_MULTI_SIGNATURE          = 0x07
+    TRANSACTION_TYPE_MULTI_PAYMENT            = 0x08
+    TRANSACTION_TYPE_IPFS                     = 0x09
+    TRANSACTION_TYPE_TIMELOCK_TRANSFER        = 0x0A
+    TRANSACTION_TYPE_TIMELOCK_CLAIM           = 0x0B
+    TRANSACTION_TYPE_TIMELOCK_REFUND          = 0x0C
+    TRANSACTION_TYPE_BUSINESS_REGISTRATION    = 0x0D
+    TRANSACTION_TYPE_BUSINESS_RESIGNATION     = 0x0E
+    TRANSACTION_TYPE_BUSINESS_UPDATE          = 0x0F
+    TRANSACTION_TYPE_BRIDGECHAIN_REGISTRATION = 0x10
+    TRANSACTION_TYPE_BRIDGECHAIN_RESIGNATION  = 0x11
+    TRANSACTION_TYPE_BRIDGECHAIN_UPDATE       = 0x12
+
+    TYPE_API      = 0x00
+    TYPE_EXPLORER = 0x01
+    TYPE_WALLET   = 0x02
+    TYPE_UNKNOWN  = 0xFF
 
 
     def __init__(self, storage_path=None, identity_file="identity", identity=None, destination_name="nomadnetwork", destination_type="bc", announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False, register_startup=True, register_startup_delay=0, register_periodic=True, register_periodic_interval=30):
@@ -102,8 +314,6 @@ class ServerBlockchain:
 
         self.announce_startup = announce_startup
         self.announce_startup_delay = int(announce_startup_delay)
-        if self.announce_startup_delay == 0:
-            self.announce_startup_delay = random.randint(5, 30)
 
         self.announce_periodic = announce_periodic
         self.announce_periodic_interval = int(announce_periodic_interval)
@@ -157,53 +367,7 @@ class ServerBlockchain:
 
         self.register()
 
-
-        #### Load dummy data ####
-        self.data_dummy_load()
-
-
-    def start(self):
-        pass
-
-
-    def stop(self):
-        pass
-
-
-    #### Dummy data functions ####
-    def data_dummy_load(self):
-        try:
-            file = self.storage_path + "/data_dummy"
-            if os.path.isfile(file):
-                fh = open(file, "rb")
-                self.data_dummy = msgpack.unpackb(fh.read())
-                fh.close()
-            else:
-                self.data_dummy_default()
-                fh = open(self.storage_path + "/data_dummy", "wb")
-                fh.write(msgpack.packb(self.data_dummy))
-                fh.close()
-        except:
-            self.data_dummy_default()
-
-
-    #### Dummy data functions ####
-    def data_dummy_save(self):
-        try:
-            file = self.storage_path + "/data_dummy"
-            fh = open(self.storage_path + "/data_dummy", "wb")
-            fh.write(msgpack.packb(self.data_dummy))
-            fh.close()
-        except:
-            pass
-
-
-    #### Dummy data functions ####
-    def data_dummy_default(self):
-        self.data_dummy = {}
-        self.data_dummy["accounts"] = {}
-        self.data_dummy["transactions"] = {}
-        self.data_dummy["uid"] = str(uuid.uuid4())
+        self.token_init()
 
 
     def register_announce_callback(self, handler_function):
@@ -228,7 +392,7 @@ class ServerBlockchain:
                 RNS.log("Server - Destination length is invalid", RNS.LOG_ERROR)
                 return False
 
-            try:
+            try:    
                 destination = bytes.fromhex(destination)
             except Exception as e:
                 RNS.log("Server - Destination is invalid", RNS.LOG_ERROR)
@@ -284,14 +448,14 @@ class ServerBlockchain:
         elif app_data != None:
             if isinstance(app_data, str):
                 self.destination.announce(app_data.encode("utf-8"), attached_interface=attached_interface)
-                RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()) +": " + app_data, RNS.LOG_DEBUG)
+                RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()) +":" + app_data, RNS.LOG_DEBUG)
             else:
                 self.destination.announce(app_data, attached_interface=attached_interface)
                 RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()), RNS.LOG_DEBUG)
         else:
             if isinstance(self.announce_data, str):
                 self.destination.announce(self.announce_data.encode("utf-8"), attached_interface=attached_interface)
-                RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()) +": " + self.announce_data, RNS.LOG_DEBUG)
+                RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()) +":" + self.announce_data, RNS.LOG_DEBUG)
             else:
                 self.destination.announce(self.announce_data, attached_interface=attached_interface)
                 RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()), RNS.LOG_DEBUG)
@@ -299,7 +463,9 @@ class ServerBlockchain:
 
     def register(self):
         RNS.log("Server - Register", RNS.LOG_DEBUG)
-        self.destination.register_request_handler("sync", response_generator=self.sync, allow=RNS.Destination.ALLOW_ALL)
+        self.destination.register_request_handler("api", response_generator=self.response_api, allow=RNS.Destination.ALLOW_ALL)
+        self.destination.register_request_handler("explorer", response_generator=self.response_explorer, allow=RNS.Destination.ALLOW_ALL)
+        self.destination.register_request_handler("wallet", response_generator=self.response_wallet, allow=RNS.Destination.ALLOW_ALL)
 
 
     def peer_connected(self, link):
@@ -318,101 +484,660 @@ class ServerBlockchain:
             link.teardown()
 
 
-    def sync(self, path, data, request_id, link_id, remote_identity, requested_at):
+    #################################################
+    # Config                                        #
+    #################################################
+
+
+    def config_load(self, file, default=""):
+        try:
+            file = self.storage_path+"/"+file
+
+            config = configparser.ConfigParser(allow_no_value=True, inline_comment_prefixes="#")
+            config.sections()
+
+            if os.path.isfile(file):
+                config.read(file, encoding="utf-8")
+                return config
+            else:
+                if not os.path.isdir(os.path.dirname(file)):
+                    os.makedirs(os.path.dirname(file))
+
+                fh = open(file, "w")
+                fh.write(default)
+                fh.close()
+
+                config.read(file, encoding="utf-8")
+                return config
+        except Exception as e:
+            return None
+
+
+    def config_save(self, file, config):  
+        try:
+            file = self.storage_path+"/"+file
+
+            if not os.path.isdir(os.path.dirname(file)):
+                os.makedirs(os.path.dirname(file))
+
+            fh = open(file, "w")
+            config.write(fh)
+            fh.close()
+            return True
+        except Exception as e:
+            return False
+
+
+    #################################################
+    # Log                                           #
+    #################################################
+
+
+    def log(self, text="", level=None):
+        if level == None:
+            level = RNS.LOG_ERROR
+
+        RNS.log(text, level)
+
+
+    def log_exception(self, e, text="", level=None):
+        import traceback
+
+        if level == None:
+            level = RNS.LOG_ERROR
+
+        RNS.log(text+" - An "+str(type(e))+" occurred: "+str(e), level)
+        RNS.log("".join(traceback.TracebackException.from_exception(e).format()), level)
+
+
+    #################################################
+    # Response                                      #
+    #################################################
+
+
+    def response_api(self, path, data, request_id, link_id, remote_identity, requested_at):
         if not data:
             return None
 
-        # Temporary debug output
-        print("---- sync ----")
-        print("Dict received: "+str(data))
-
-        data_dummy_save = False
+        RNS.log("Server - Response - API", RNS.LOG_DEBUG)
+        RNS.log(data, RNS.LOG_EXTREME)
 
         data_return = {}
 
-        # Processing dummy data - Performing new transactions
-        if "transactions" in data:
-            for transaction_id, transaction in data["transactions"].items():
-                # Check whether the transaction id does not yet exist
-                if transaction_id not in self.data_dummy["transactions"]:
-                    # Check whether source and destination account exist
-                    if transaction["dest"] in self.data_dummy["accounts"] and transaction["source"] in self.data_dummy["accounts"]:
-                        if self.data_dummy["accounts"][transaction["source"]]["balance"] >= transaction["value"]:
-                            state = 0x01
-                        else:
-                            state = 0x00
-                        # Add transaction
-                        self.data_dummy["transactions"][transaction_id] = {}
-                        self.data_dummy["transactions"][transaction_id]["dest"] = transaction["dest"]
-                        self.data_dummy["transactions"][transaction_id]["source"] = transaction["source"]
-                        self.data_dummy["transactions"][transaction_id]["value"] = transaction["value"]
-                        self.data_dummy["transactions"][transaction_id]["comment"] = transaction["comment"]
-                        self.data_dummy["transactions"][transaction_id]["fee"] = 0
-                        self.data_dummy["transactions"][transaction_id]["state"] = state
-                        self.data_dummy["transactions"][transaction_id]["ts"] = time.time()
-                        if state == 0x01:
-                            # Calculate new account balance
-                            self.data_dummy["accounts"][transaction["dest"]]["balance"] += transaction["value"]
-                            self.data_dummy["accounts"][transaction["source"]]["balance"] -= transaction["value"]
-                        # Saving dummy data
-                        data_dummy_save = True
+        data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_OK
 
-        # Processing of dummy data - Return of account data and transactions of these accounts
-        if "accounts" in data:
-            data_return["accounts"] = {}
+        if ServerBlockchain.KEY_API in data:
+            data_return[ServerBlockchain.KEY_API] = {}
+            for key, value in data[ServerBlockchain.KEY_API].items():
+                try:
+                    value_token = value["token"] if "token" in value else None
+                    value_url = value["url"] if "url" in value else None
+                    value_data = value["data"] if "data" in value else None
+                    value_json = value["json"] if "json" in value else None
+                    value_headers = value["headers"] if "headers" in value else None
+                    value_cookies = value["cookies"] if "cookies" in value else None
+                    value_auth = value["auth"] if "auth" in value else None
 
-            # Loop to process all requested accounts
-            for account_id, ts in data["accounts"].items():
-                # Check whether the account already exists
-                if account_id not in self.data_dummy["accounts"]:
-                    # Add initial transaction with dummy starting balance
-                    self.data_dummy["accounts"][account_id] = {}
-                    self.data_dummy["accounts"][account_id]["balance"] = 100
-                    self.data_dummy["accounts"][account_id]["currency"] = "FDM"
-                    uid = str(uuid.uuid4())
-                    self.data_dummy["transactions"][uid] = {}
-                    self.data_dummy["transactions"][uid]["dest"] = account_id
-                    self.data_dummy["transactions"][uid]["source"] = self.data_dummy["uid"]
-                    self.data_dummy["transactions"][uid]["value"] = 100
-                    self.data_dummy["transactions"][uid]["comment"] = ""
-                    self.data_dummy["transactions"][uid]["fee"] = 0
-                    self.data_dummy["transactions"][uid]["state"] = 0x01
-                    self.data_dummy["transactions"][uid]["ts"] = time.time()
-                    # Saving dummy data
-                    data_dummy_save = True
-
-                # Return general account data
-                data_return["accounts"][account_id] = {}
-                data_return["accounts"][account_id]["balance"] = self.data_dummy["accounts"][account_id]["balance"]
-                data_return["accounts"][account_id]["currency"] = self.data_dummy["accounts"][account_id]["currency"]
-
-                # Loop over all transactions
-                for transaction_id, transaction in self.data_dummy["transactions"].items():
-                    # Checking whether the account is included in a transaction as a source or destination
-                    if (transaction["dest"] == account_id or transaction["source"] == account_id) and transaction["ts"] > ts:
-                        # Return transaction data
-                        data_return["accounts"][account_id]["transactions"] = {}
-                        data_return["accounts"][account_id]["transactions"][transaction_id] = {}
-                        data_return["accounts"][account_id]["transactions"][transaction_id]["dest"] = transaction["dest"]
-                        data_return["accounts"][account_id]["transactions"][transaction_id]["source"] = transaction["source"]
-                        data_return["accounts"][account_id]["transactions"][transaction_id]["value"] = transaction["value"]
-                        data_return["accounts"][account_id]["transactions"][transaction_id]["comment"] = transaction["comment"]
-                        data_return["accounts"][account_id]["transactions"][transaction_id]["fee"] = transaction["fee"]
-                        data_return["accounts"][account_id]["transactions"][transaction_id]["state"] = transaction["state"]
-                        data_return["accounts"][account_id]["transactions"][transaction_id]["ts"] = transaction["ts"]
-
-        # Saving dummy data
-        if data_dummy_save:
-            self.data_dummy_save()
-
-        data_return["result"] = ServerBlockchain.RESULT_OK
-
-        # Temporary debug output
-        print("Dict send: "+str(data_return))
+                    if "delete" in value:
+                        response = self.api_delete(token=value_token, url=value_url if value_url else value["delete"], data=value_data, json=value_json, headers=value_headers, cookies=value_cookies, auth=value_auth)
+                    elif "get" in value:
+                        response = self.api_get(token=value_token, url=value_url if value_url else value["get"], data=value_data, json=value_json, headers=value_headers, cookies=value_cookies, auth=value_auth)
+                    elif "patch" in value:
+                        response = self.api_patch(token=value_token, url=value_url if value_url else value["patch"], data=value_data, json=value_json, headers=value_headers, cookies=value_cookies, auth=value_auth)
+                    elif "post" in value:
+                        response = self.api_post(token=value_token, url=value_url if value_url else value["post"], data=value_data, json=value_json, headers=value_headers, cookies=value_cookies, auth=value_auth)
+                    elif "put" in value:
+                        response = self.api_put(token=value_token, url=value_url if value_url else value["put"], data=value_data, json=value_json, headers=value_headers, cookies=value_cookies, auth=value_auth)
+                    else:
+                        raise ValueError("Wrong api type")
+                    data_return[ServerBlockchain.KEY_API][key] = response
+                except Exception as e:
+                    self.log_exception(e, "Server - API")
+                    data_return[ServerBlockchain.KEY_API][key] = None
+                    data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
+            if len(data_return[ServerBlockchain.KEY_API]) == 0:
+                del data_return[ServerBlockchain.KEY_API]
 
         data_return = msgpack.packb(data_return)
 
         return data_return
+
+
+    def response_explorer(self, path, data, request_id, link_id, remote_identity, requested_at):
+        if not data:
+            return None
+
+        RNS.log("Server - Response - Explorer", RNS.LOG_DEBUG)
+        RNS.log(data, RNS.LOG_EXTREME)
+
+        data_return = {}
+
+        data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_OK
+
+        if ServerBlockchain.KEY_E in data:
+            # explorer
+            data_explorer = data[ServerBlockchain.KEY_E]
+            filter = data_explorer[ServerBlockchain.KEY_E_FILTER] if ServerBlockchain.KEY_E_FILTER in data_explorer else None
+            limit = data_explorer[ServerBlockchain.KEY_E_LIMIT] if ServerBlockchain.KEY_E_LIMIT in data_explorer else None
+            limit_start = data_explorer[ServerBlockchain.KEY_E_LIMIT_START] if ServerBlockchain.KEY_E_LIMIT_START in data_explorer else None
+            order = data_explorer[ServerBlockchain.KEY_E_ORDER] if ServerBlockchain.KEY_E_ORDER in data_explorer else None
+            search = data_explorer[ServerBlockchain.KEY_E_SEARCH] if ServerBlockchain.KEY_E_SEARCH in data_explorer else None
+            token = data_explorer[ServerBlockchain.KEY_E_TOKEN] if ServerBlockchain.KEY_E_TOKEN in data_explorer else None
+
+            # explorer - order
+            if order != None:
+                order_mapping = {v: k for k, v in ServerBlockchain.KEY_E_ORDER_MAPPING.items()}
+                order[1] = order_mapping[order[1]]
+
+                if ServerBlockchain.KEY_A in data:
+                    order_mapping = {v: k for k, v in ServerBlockchain.KEY_A_MAPPING.items()}
+                    if order[0] in order_mapping:
+                        order[0] = order_mapping[order[0]]
+                    else:
+                        order = None
+                elif ServerBlockchain.KEY_B in data:
+                    order_mapping = {v: k for k, v in ServerBlockchain.KEY_B_MAPPING.items()}
+                    if order[0] in order_mapping:
+                        order[0] = order_mapping[order[0]]
+                    else:
+                        order = None
+                elif ServerBlockchain.KEY_D in data:
+                    order_mapping = {v: k for k, v in ServerBlockchain.KEY_D_MAPPING.items()}
+                    if order[0] in order_mapping:
+                        order[0] = order_mapping[order[0]]
+                    else:
+                        order = None
+                elif ServerBlockchain.KEY_I in data:
+                    order_mapping = {v: k for k, v in ServerBlockchain.KEY_I_MAPPING.items()}
+                    if order[0] in order_mapping:
+                        order[0] = order_mapping[order[0]]
+                    else:
+                        order = None
+                elif ServerBlockchain.KEY_T in data:
+                    order_mapping = {v: k for k, v in ServerBlockchain.KEY_T_MAPPING.items()}
+                    if order[0] in order_mapping:
+                        order[0] = order_mapping[order[0]]
+                    else:
+                        order = None
+
+            # accounts
+            if ServerBlockchain.KEY_A in data:
+                try:
+                    count, entrys = self.accounts_list(token=token, filter=filter, search=search, order=order, limit=limit, limit_start=limit_start)
+                    accounts = {}
+                    for account_id, result in entrys.items():
+                        accounts[account_id] = {}
+                        for key, value in result.items():
+                            if key in ServerBlockchain.KEY_A_MAPPING:
+                                accounts[account_id][ServerBlockchain.KEY_A_MAPPING[key]] = value
+                    data_return[ServerBlockchain.KEY_A] = [count, accounts]
+                except Exception as e:
+                    self.log_exception(e, "Server - Explorer - Accounts")
+                    data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
+
+            # blocks
+            if ServerBlockchain.KEY_B in data:
+                try:
+                    count, entrys = self.blocks_list(token=token, filter=filter, search=search, order=order, limit=limit, limit_start=limit_start)
+                    blocks = {}
+                    for blocks_id, result in entrys.items():
+                        blocks[blocks_id] = {}
+                        for key, value in result.items():
+                            if key in ServerBlockchain.KEY_B_MAPPING:
+                                blocks[blocks_id][ServerBlockchain.KEY_B_MAPPING[key]] = value
+                    data_return[ServerBlockchain.KEY_B] = [count, blocks]
+                except Exception as e:
+                    self.log_exception(e, "Server - Explorer - Blocks")
+                    data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
+
+            # delegates
+            if ServerBlockchain.KEY_D in data:
+                try:
+                    count, entrys = self.delegates_list(token=token, filter=filter, search=search, order=order, limit=limit, limit_start=limit_start)
+                    delegates = {}
+                    for delegate_id, result in entrys.items():
+                        delegates[delegate_id] = {}
+                        for key, value in result.items():
+                            if key in ServerBlockchain.KEY_D_MAPPING:
+                                delegates[delegate_id][ServerBlockchain.KEY_D_MAPPING[key]] = value
+                    data_return[ServerBlockchain.KEY_D] = [count, delegates]
+                except Exception as e:
+                    self.log_exception(e, "Server - Explorer - Delegates")
+                    data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
+
+            # infos
+            if ServerBlockchain.KEY_I in data:
+                try:
+                    count, entrys = self.infos_list(token=token, filter=filter, search=search, order=order, limit=limit, limit_start=limit_start)
+                    infos = {}
+                    for info_id, result in entrys.items():
+                        infos[info_id] = {}
+                        for key, value in result.items():
+                            if key in ServerBlockchain.KEY_I_MAPPING:
+                                if ServerBlockchain.KEY_I_MAPPING[key] == ServerBlockchain.KEY_A:
+                                    infos[info_id][ServerBlockchain.KEY_I_MAPPING[key]] = {}
+                                    for value_key, value_value in value.items():
+                                        if value_key in ServerBlockchain.KEY_A_MAPPING:
+                                            infos[info_id][ServerBlockchain.KEY_I_MAPPING[key]][ServerBlockchain.KEY_A_MAPPING[value_key]] = value_value
+                                elif ServerBlockchain.KEY_I_MAPPING[key] == ServerBlockchain.KEY_B:
+                                    infos[info_id][ServerBlockchain.KEY_I_MAPPING[key]] = {}
+                                    for value_key, value_value in value.items():
+                                        if value_key in ServerBlockchain.KEY_B_MAPPING:
+                                            infos[info_id][ServerBlockchain.KEY_I_MAPPING[key]][ServerBlockchain.KEY_B_MAPPING[value_key]] = value_value
+                                elif ServerBlockchain.KEY_I_MAPPING[key] == ServerBlockchain.KEY_D:
+                                    infos[info_id][ServerBlockchain.KEY_I_MAPPING[key]] = {}
+                                    for value_key, value_value in value.items():
+                                        if value_key in ServerBlockchain.KEY_D_MAPPING:
+                                            infos[info_id][ServerBlockchain.KEY_I_MAPPING[key]][ServerBlockchain.KEY_D_MAPPING[value_key]] = value_value
+                                elif ServerBlockchain.KEY_I_MAPPING[key] == ServerBlockchain.KEY_T:
+                                    infos[info_id][ServerBlockchain.KEY_I_MAPPING[key]] = {}
+                                    for value_key, value_value in value.items():
+                                        if value_key in ServerBlockchain.KEY_T_MAPPING:
+                                            infos[info_id][ServerBlockchain.KEY_I_MAPPING[key]][ServerBlockchain.KEY_T_MAPPING[value_key]] = value_value
+                                else:
+                                    infos[info_id][ServerBlockchain.KEY_I_MAPPING[key]] = value
+                    data_return[ServerBlockchain.KEY_I] = [count, infos]
+                except Exception as e:
+                    self.log_exception(e, "Server - Explorer - Infos")
+                    data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
+
+            # transactions
+            if ServerBlockchain.KEY_T in data:
+                try:
+                    count, entrys = self.transactions_list(token=token, filter=filter, search=search, order=order, limit=limit, limit_start=limit_start)
+                    transactions = {}
+                    for transaction_id, result in entrys.items():
+                        transactions[transaction_id] = {}
+                        for key, value in result.items():
+                            if key in ServerBlockchain.KEY_T_MAPPING:
+                                transactions[transaction_id][ServerBlockchain.KEY_T_MAPPING[key]] = value
+                    data_return[ServerBlockchain.KEY_T] = [count, transactions]
+                except Exception as e:
+                    self.log_exception(e, "Server - Explorer - Transactions")
+                    data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
+
+        data_return = msgpack.packb(data_return)
+
+        return data_return
+
+
+    def response_wallet(self, path, data, request_id, link_id, remote_identity, requested_at):
+        if not data:
+            return None
+
+        RNS.log("Server - Response - Wallet", RNS.LOG_DEBUG)
+        RNS.log(data, RNS.LOG_EXTREME)
+
+        def token_connection_response_start(token_connection, token):
+            if token not in token_connection:
+                token_connection.append(token)
+                self.connection_response_start(token=token)
+            return token_connection
+
+        def token_connection_response_stop(token_connection):
+            for token in token_connection:
+                self.connection_response_stop(token=token)
+            return token_connection
+
+        token_connection = []
+
+        data_return = {}
+
+        data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_OK
+
+        # accounts
+        if ServerBlockchain.KEY_A in data:
+            data_return[ServerBlockchain.KEY_A] = {}
+
+            for account_id, account in data[ServerBlockchain.KEY_A].items():
+                token = account[ServerBlockchain.KEY_A_TOKEN]
+                token_connection = token_connection_response_start(token_connection=token_connection, token=token)
+
+                # accounts_add - New account
+                if ServerBlockchain.KEY_A_STATE in account:
+                    try:
+                        result = self.accounts_add(
+                            token=token,
+                            data=account[ServerBlockchain.KEY_A_DATA] if ServerBlockchain.KEY_A_DATA in account else None
+                        )
+                        account_id_new = result["account_id"] if "account_id" in result else account_id
+                        data_return[ServerBlockchain.KEY_A][account_id_new] = {
+                            ServerBlockchain.KEY_A_STATE: result["state"] if "state" in result else ServerBlockchain.ACCOUNT_STATE_SUCCESSFULL
+                        }
+                        if account_id_new != account_id:
+                            data_return[ServerBlockchain.KEY_A][account_id_new][ServerBlockchain.KEY_A_ID] = account_id
+                        if "data" in result and result["data"] != None and len(result["data"]) > 0:
+                            data_return[ServerBlockchain.KEY_A][account_id_new][ServerBlockchain.KEY_A_DATA] = result["data"]
+                        account_id = account_id_new
+                    except Exception as e:
+                        self.log_exception(e, "Server - Wallet - New account")
+                        data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
+
+                # accounts_get - Existing account
+                else:
+                    data_return[ServerBlockchain.KEY_A][account_id] = {}
+
+                transactions = {}
+
+                # transactions_get - Existing transaction
+                try:
+                    ts = account[ServerBlockchain.KEY_A_TS] if ServerBlockchain.KEY_A_TS in account else 0
+                    for transaction_id, result in self.transactions_get(token=token, account_id=account_id, ts=ts).items():
+                        transactions[transaction_id] = {
+                            ServerBlockchain.KEY_T_AMOUNT: result["amount"],
+                            ServerBlockchain.KEY_T_TS: result["ts"],
+                        }
+                        if result["source"] != account_id:
+                            transactions[transaction_id][ServerBlockchain.KEY_T_SOURCE] = result["source"]
+                        if result["dest"] != account_id:
+                            transactions[transaction_id][ServerBlockchain.KEY_T_DEST] = result["dest"]
+                        if "fee" in result and result["fee"] != None and result["fee"] > 0:
+                            transactions[transaction_id][ServerBlockchain.KEY_T_FEE] = result["fee"]
+                        if "comment" in result and result["comment"] != None and result["comment"] != "":
+                            transactions[transaction_id][ServerBlockchain.KEY_T_COMMENT] = result["comment"]
+                        if "type" in result and result["type"] != None:
+                            transactions[transaction_id][ServerBlockchain.KEY_T_TYPE] = result["type"]
+                except Exception as e:
+                    self.log_exception(e, "Server - Wallet - Existing transaction")
+                    data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
+
+                # transactions_add - New transaction
+                if ServerBlockchain.KEY_T in account:
+                    transaction_list = dict(sorted(account[ServerBlockchain.KEY_T].items(), key=lambda item: item[1][ServerBlockchain.KEY_T_INDEX]))
+                    for transaction_id, transaction in transaction_list.items():
+                        try:
+                            result = self.transactions_add(
+                                token=token,
+                                account_id=account_id,
+                                account_data=account[ServerBlockchain.KEY_A_DATA] if ServerBlockchain.KEY_A_DATA in account else None,
+                                transaction_data=transaction[ServerBlockchain.KEY_T_DATA]
+                            )
+                            transaction_id_new = result["transaction_id"] if "transaction_id" in result else transaction_id
+                            transactions[transaction_id_new] = {
+                                ServerBlockchain.KEY_T_STATE: result["state"] if "state" in result else ServerBlockchain.TRANSACTION_STATE_PROCESSING
+                            }
+                            if "data" in result and result["data"] != None and len(result["data"]) > 0:
+                                transactions[transaction_id_new][ServerBlockchain.KEY_T_DATA] = result["data"]
+                            if transaction_id_new != transaction_id:
+                                transactions[transaction_id_new][ServerBlockchain.KEY_T_ID] = transaction_id
+                        except Exception as e:
+                            self.log_exception(e, "Server - Wallet - New transaction")
+                            data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
+
+                if len(transactions) > 0:
+                    data_return[ServerBlockchain.KEY_A][account_id][ServerBlockchain.KEY_T] = transactions
+
+                # accounts_get - Existing account
+                try:
+                    result = self.accounts_get(token=token, account_id=account_id)
+                    if "balance" in result:
+                        data_return[ServerBlockchain.KEY_A][account_id][ServerBlockchain.KEY_A_BALANCE] = result["balance"]
+                    if "nonce" in result:
+                        data_return[ServerBlockchain.KEY_A][account_id][ServerBlockchain.KEY_A_NONCE] = result["nonce"]
+                    if "delegate" in result:
+                        data_return[ServerBlockchain.KEY_A][account_id][ServerBlockchain.KEY_A_DELEGATE] = result["delegate"]
+                    if "vote" in result:
+                        data_return[ServerBlockchain.KEY_A][account_id][ServerBlockchain.KEY_A_VOTE] = result["vote"]
+                except Exception as e:
+                    self.log_exception(e, "Server - Wallet - Existing account")
+                    data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
+
+            if len(data_return[ServerBlockchain.KEY_A]) == 0:
+                del data_return[ServerBlockchain.KEY_A]
+
+        # delegates
+        if ServerBlockchain.KEY_D in data:
+            data_return[ServerBlockchain.KEY_D] = {}
+
+            for delegate_token, delegate in data[ServerBlockchain.KEY_D].items():
+                token_connection = token_connection_response_start(token_connection=token_connection, token=delegate_token)
+
+                # delegates_get - Existing delegate
+                try:
+                    delegates = {}
+                    delegates_name = {}
+                    delegates_value = {}
+
+                    for delegate_id, result in self.delegates_get(token=delegate_token).items():
+                        delegates[delegate_id] = {}
+                        delegates_name[delegate_id] = {}
+                        delegates_value[delegate_id] = {}
+                        if "name" in result and result["name"] != None and result["name"] != "":
+                            delegates[delegate_id][ServerBlockchain.KEY_D_NAME] = result["name"]
+                            delegates_name[delegate_id][ServerBlockchain.KEY_D_NAME] = result["name"]
+                        if "value" in result and result["value"] != None and result["value"] != 0:
+                            delegates[delegate_id][ServerBlockchain.KEY_D_VALUE] = result["value"]
+                            delegates_value[delegate_id][ServerBlockchain.KEY_D_VALUE] = result["value"]
+                        if "data" in result and result["data"] != None and len(result["data"]) > 0:
+                            delegates[delegate_id][ServerBlockchain.KEY_D_DATA] = result["data"]
+                        if "state" in result and result["state"] != None:
+                            delegates[delegate_id][ServerBlockchain.KEY_D_STATE] = result["state"]
+                            delegates_value[delegate_id][ServerBlockchain.KEY_D_STATE] = result["state"]
+
+                    delegates_name_hash = RNS.Identity.full_hash(msgpack.packb(sorted(delegates_name.items())))
+                    delegates_value_hash = RNS.Identity.full_hash(msgpack.packb(sorted(delegates_value.items())))
+                    if delegate[ServerBlockchain.KEY_D_NAME_HASH] != delegates_name_hash and delegate[ServerBlockchain.KEY_D_VALUE_HASH] != delegates_value_hash:
+                        pass
+                    elif delegate[ServerBlockchain.KEY_D_NAME_HASH] != delegates_name_hash:
+                        delegates = delegates_name
+                    elif delegate[ServerBlockchain.KEY_D_VALUE_HASH] != delegates_value_hash:
+                        delegates = delegates_value
+                    else:
+                        delegates = {}
+
+                    if len(delegates) > 0:
+                        data_return[ServerBlockchain.KEY_D][delegate_token] = delegates
+                except Exception as e:
+                    self.log_exception(e, "Server - Wallet - Existing delegate")
+                    data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
+
+            if len(data_return[ServerBlockchain.KEY_D]) == 0:
+                del data_return[ServerBlockchain.KEY_D]
+
+        token_connection_response_stop(token_connection=token_connection)
+
+        data_return = msgpack.packb(data_return)
+
+        return data_return
+
+
+    #################################################
+    # Accounts                                      #
+    #################################################
+
+
+    def accounts_add(self, token, data):
+        RNS.log("Server - Accounts - Add: "+str(token), RNS.LOG_DEBUG)
+        return self.token[self.token_map[token]].accounts_add(token, data)
+
+
+    def accounts_count(self, token, filter, search):
+        RNS.log("Server - Accounts - Count: "+str(token), RNS.LOG_DEBUG)
+        return self.token[self.token_map[token]].accounts_count(token, filter, search)
+
+
+    def accounts_get(self, token, account_id):
+        RNS.log("Server - Accounts - Get: "+str(token), RNS.LOG_DEBUG)
+        return self.token[self.token_map[token]].accounts_get(token, account_id)
+
+
+    def accounts_list(self, token, filter, search, order, limit, limit_start):
+        RNS.log("Server - Accounts - List: "+str(token), RNS.LOG_DEBUG)
+        return self.token[self.token_map[token]].accounts_list(token, filter, search, order, limit, limit_start)
+
+
+    #################################################
+    # API                                           #
+    #################################################
+
+
+    def api_delete(self, token, url, data, json, headers, cookies, auth):
+        RNS.log("Server - API - Delete: "+str(token), RNS.LOG_DEBUG)
+        return self.token[self.token_map[token]].api_delete(token, url, data, json, headers, cookies, auth)
+
+
+    def api_get(self, token, url, data, json, headers, cookies, auth):
+        RNS.log("Server - API - Get: "+str(token), RNS.LOG_DEBUG)
+        return self.token[self.token_map[token]].api_get(token, url, data, json, headers, cookies, auth)
+
+
+    def api_patch(self, token, url, data, json, headers, cookies, auth):
+        RNS.log("Server - API - Patch: "+str(token), RNS.LOG_DEBUG)
+        return self.token[self.token_map[token]].api_patch(token, url, data, json, headers, cookies, auth)
+
+
+    def api_post(self, token, url, data, json, headers, cookies, auth):
+        RNS.log("Server - API - Post: "+str(token), RNS.LOG_DEBUG)
+        return self.token[self.token_map[token]].api_post(token, url, data, json, headers, cookies, auth)
+
+
+    def api_put(self, token, url, data, json, headers, cookies, auth):
+        RNS.log("Server - API - Put: "+str(token), RNS.LOG_DEBUG)
+        return self.token[self.token_map[token]].api_put(token, url, data, json, headers, cookies, auth)
+
+
+    #################################################
+    # Blocks                                        #
+    #################################################
+
+
+    def blocks_count(self, token, filter, search):
+        RNS.log("Server - Blocks - Count: "+str(token), RNS.LOG_DEBUG)
+        return self.token[self.token_map[token]].blocks_count(token, filter, search)
+
+
+    def blocks_list(self, token, filter, search, order, limit, limit_start):
+        RNS.log("Server - Blocks - List: "+str(token), RNS.LOG_DEBUG)
+        return self.token[self.token_map[token]].blocks_list(token, filter, search, order, limit, limit_start)
+
+
+    #################################################
+    # Connection                                    #
+    #################################################
+
+
+    def connection_response_start(self, token):
+        RNS.log("Server - Connection - Start: "+str(token), RNS.LOG_EXTREME)
+        try:
+            self.token[self.token_map[token]].connection_response_start(token)
+        except Exception as e:
+            self.log_exception(e, "Server - Connection start")
+
+
+    def connection_response_stop(self, token):
+        RNS.log("Server - Connection - Stop: "+str(token), RNS.LOG_EXTREME)
+        try:
+            self.token[self.token_map[token]].connection_response_stop(token)
+        except Exception as e:
+            self.log_exception(e, "Server - Connection stop")
+
+
+    #################################################
+    # Delegates                                     #
+    #################################################
+
+
+    def delegates_count(self, token, filter, search):
+        RNS.log("Server - Delegates - Count: "+str(token), RNS.LOG_DEBUG)
+        return self.token[self.token_map[token]].delegates_count(token, filter, search)
+
+
+    def delegates_get(self, token):
+        RNS.log("Server - Delegates - Get: "+str(token), RNS.LOG_DEBUG)
+        return self.token[self.token_map[token]].delegates_get(token)
+
+
+    def delegates_list(self, token, filter, search, order, limit, limit_start):
+        RNS.log("Server - Delegates - List: "+str(token), RNS.LOG_DEBUG)
+        return self.token[self.token_map[token]].delegates_list(token, filter, search, order, limit, limit_start)
+
+
+    #################################################
+    # Infos                                         #
+    #################################################
+
+
+    def infos_count(self, token, filter, search):
+        RNS.log("Server - Infos - Count: "+str(token), RNS.LOG_DEBUG)
+        return self.token[self.token_map[token]].infos_count(token, filter, search)
+
+
+    def infos_list(self, token, filter, search, order, limit, limit_start):
+        RNS.log("Server - Infos - List: "+str(token), RNS.LOG_DEBUG)
+        return self.token[self.token_map[token]].infos_list(token, filter, search, order, limit, limit_start)
+
+
+    #################################################
+    # Token                                         #
+    #################################################
+
+
+    def token_init(self):
+        RNS.log("Server - Token - Init", RNS.LOG_DEBUG)
+
+        self.token = {}
+        self.token_map = {}
+
+        for file in os.listdir(os.path.abspath(os.path.dirname(__file__))+"/blockchaintoken"):
+            try:
+                if file.startswith("__init__"):
+                    continue
+                elif file.endswith(".py"):
+                    token_parent = file[:-3]
+                elif file.endswith(".pyc"):
+                    token_parent = file[:-4]
+                else:
+                    continue
+                module = importlib.import_module(f".{token_parent}", package="blockchaintoken")
+                for attribute_name in dir(module):
+                    attribute = getattr(module, attribute_name)
+                    if isinstance(attribute, type):
+                        self.token[token_parent] = attribute(self)
+                        for token_child in self.token[token_parent].token:
+                            self.token_map[token_child] = token_parent
+                        break
+            except Exception as e:
+                self.log_exception(e, "Server - Token - Init")
+
+        RNS.log("Server - Token - Init: "+str(self.token_map), RNS.LOG_DEBUG)
+
+
+    #################################################
+    # Transactions                                  #
+    #################################################
+
+
+    def transactions_add(self, token, account_id, account_data, transaction_data):
+        RNS.log("Server - Transactions - Add: "+str(token), RNS.LOG_DEBUG)
+        return self.token[self.token_map[token]].transactions_add(token, account_id, account_data, transaction_data)
+
+
+    def transactions_count(self, token, filter, search):
+        RNS.log("Server - Transactions - Count: "+str(token), RNS.LOG_DEBUG)
+        return self.token[self.token_map[token]].transactions_count(token, filter, search)
+
+
+    def transactions_get(self, token, account_id, ts):
+        RNS.log("Server - Transactions - Get: "+str(token), RNS.LOG_DEBUG)
+        return self.token[self.token_map[token]].transactions_get(token, account_id, ts)
+
+
+    def transactions_list(self, token, filter, search, order, limit, limit_start):
+        RNS.log("Server - Transactions - List: "+str(token), RNS.LOG_DEBUG)
+        return self.token[self.token_map[token]].transactions_list(token, filter, search, order, limit, limit_start)
+
+
+    #################################################
+    # Helpers                                       #
+    #################################################
+
+
+    def generate_id(self, length=32):
+        characters = string.ascii_letters + string.digits
+        result_str = "".join(random.choice(characters) for _ in range(length))
+        return result_str
+
+
 
 
 ##############################################################################################################
@@ -618,7 +1343,7 @@ def log(text, level=3, file=None):
                 file_handle = open(file, "a")
                 file_handle.write(text + "\n")
                 file_handle.close()
-
+                
                 if os.path.getsize(file) > LOG_MAXSIZE:
                     file_prev = file + ".1"
                     if os.path.isfile(file_prev):
@@ -704,6 +1429,7 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
     log("        Name: " + CONFIG["main"]["name"], LOG_INFO)
     log("Program File: " + __file__, LOG_INFO)
     log(" Config File: " + PATH + "/config", LOG_INFO)
+    log("   Data File: " + PATH + "/data.cfg", LOG_INFO)
     log("     Version: " + VERSION, LOG_INFO)
     log("   Copyright: " + COPYRIGHT, LOG_INFO)
     log("...............................................................................", LOG_INFO)
