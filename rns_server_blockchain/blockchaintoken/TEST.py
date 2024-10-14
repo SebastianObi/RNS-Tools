@@ -38,8 +38,9 @@ class BlockchainTokenTEST():
     FEE    = 0
     NONCE  = 0
 
-    def __init__(self, owner):
+    def __init__(self, owner, name):
         self.owner = owner
+        self.name = name
 
         self.token = {
             "TEST": {},
@@ -67,11 +68,11 @@ class BlockchainTokenTEST():
             }
 
             self.data["transactions"][self.owner.generate_id(64)] = {
-                "source":  self.data["uid"],
-                "dest":    account_id,
                 "amount":  BlockchainTokenTEST.AMOUNT,
                 "comment": "Initial test money",
+                "dest":    account_id,
                 "fee":     BlockchainTokenTEST.FEE,
+                "source":  self.data["uid"],
                 "ts":      int(time.time())
             }
 
@@ -117,23 +118,23 @@ class BlockchainTokenTEST():
     #################################################
 
 
-    def api_delete(self, token, url, data, json, headers, cookies, auth):
+    def api_delete(self, token, url, data, json, headers, cookies, auth, timeout):
         raise ValueError("Not implemented")
 
 
-    def api_get(self, token, url, data, json, headers, cookies, auth):
+    def api_get(self, token, url, data, json, headers, cookies, auth, timeout):
         raise ValueError("Not implemented")
 
 
-    def api_patch(self, token, url, data, json, headers, cookies, auth):
+    def api_patch(self, token, url, data, json, headers, cookies, auth, timeout):
         raise ValueError("Not implemented")
 
 
-    def api_post(self, token, url, data, json, headers, cookies, auth):
+    def api_post(self, token, url, data, json, headers, cookies, auth, timeout):
         raise ValueError("Not implemented")
 
 
-    def api_put(self, token, url, data, json, headers, cookies, auth):
+    def api_put(self, token, url, data, json, headers, cookies, auth, timeout):
         raise ValueError("Not implemented")
 
 
@@ -221,11 +222,11 @@ class BlockchainTokenTEST():
         transaction_id = self.owner.generate_id(64)
 
         self.data["transactions"][transaction_id] = {
-                "source":  account_id,
-                "dest":    transaction_data["dest"],
                 "amount":  transaction_data["amount"],
                 "comment": transaction_data["comment"],
+                "dest":    transaction_data["dest"],
                 "fee":     fee,
+                "source":  account_id,
                 "ts":      int(time.time())
         }
 
@@ -252,11 +253,11 @@ class BlockchainTokenTEST():
         for transaction_id, transaction in self.data["transactions"].items():
             if (transaction["source"] == account_id or transaction["dest"] == account_id) and transaction["ts"] > ts:
                 result[transaction_id] = {
-                    "source":  transaction["source"],
-                    "dest":    transaction["dest"],
                     "amount":  transaction["amount"],
                     "comment": transaction["comment"],
+                    "dest":    transaction["dest"],
                     "fee":     transaction["fee"],
+                    "source":  transaction["source"],
                     "ts":      transaction["ts"]
                 }
 
@@ -274,14 +275,14 @@ class BlockchainTokenTEST():
 
     def data_load(self):
         try:
-            file = self.owner.storage_path+"/TEST.data"
+            file = self.owner.storage_path+"/"+self.name+".data"
             if os.path.isfile(file):
                 fh = open(file, "rb")
                 self.data = msgpack.unpackb(fh.read())
                 fh.close()
             else:
                 self.data_default()
-                fh = open(self.owner.storage_path+"/TEST.data", "wb")
+                fh = open(self.owner.storage_path+"/"+self.name+".data", "wb")
                 fh.write(msgpack.packb(self.data))
                 fh.close()
         except:
@@ -290,8 +291,8 @@ class BlockchainTokenTEST():
 
     def data_save(self):
         try:
-            file = self.owner.storage_path+"/TEST.data"
-            fh = open(self.owner.storage_path+"/TEST.data", "wb")
+            file = self.owner.storage_path+"/"+self.name+".data"
+            fh = open(self.owner.storage_path+"/"+self.name+".data", "wb")
             fh.write(msgpack.packb(self.data))
             fh.close()
         except:

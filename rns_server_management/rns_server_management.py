@@ -146,6 +146,76 @@ MSG_FIELD_VOICE              = 0xBF
 
 
 ##############################################################################################################
+# RateLimiter Class
+
+
+class RateLimiter:
+    def __init__(self, calls, size, duration):
+        self.calls = calls
+        self.size = size
+        self.duration = duration
+        self.ts = time.time()
+        self.data_calls = {}
+        self.data_size = {}
+        self.lock = threading.Lock()
+        threading.Thread(target=self._jobs, daemon=True).start()
+
+
+    def handle(self, id):
+        if self.handle_call(id) and self.handle_size(id, 0):
+            return True
+        else:
+            return False
+
+
+    def handle_call(self, id):
+        with self.lock:
+            if self.calls == 0:
+                return True
+            if id not in self.data_calls:
+                self.data_calls[id] = []
+            self.data_calls[id] = [t for t in self.data_calls[id] if t > self.ts - self.duration]
+            if len(self.data_calls[id]) >= self.calls:
+                return False
+            else:
+                self.data_calls[id].append(self.ts)
+                return True
+
+
+    def handle_size(self, id, size):
+        with self.lock:
+            if self.size == 0:
+                return True
+            if id not in self.data_size:
+                self.data_size[id] = [0, self.ts]
+            if self.data_size[id][1] <= self.ts - self.duration:
+                self.data_size[id] = [0, self.ts]
+            if self.data_size[id][0] >= self.size:
+                return False
+            else:
+                self.data_size[id][0] += size
+                self.data_size[id][1] = self.ts
+                return True
+
+
+    def _jobs(self):
+        while True:
+            time.sleep(self.duration)
+            self.ts = time.time()
+            with self.lock:
+                if self.calls > 0:
+                    for id in list(self.data_calls.keys()):
+                        self.data_calls[id] = [t for t in self.data_calls[id] if t > self.ts - self.duration]
+                        if not self.data_calls[id]:
+                            del self.data_calls[id]
+
+                if self.size > 0:
+                    for id in list(self.data_size.keys()):
+                        if self.data_size[id][1] <= self.ts - self.duration:
+                            del self.data_size[id]
+
+
+##############################################################################################################
 # ServerManagementConsole Class
 
 
@@ -266,12 +336,15 @@ class ServerManagement:
     RESULT_NO_IDENTITY = 0x03
     RESULT_NO_USER     = 0x04
     RESULT_NO_RIGHT    = 0x05
-    RESULT_PARTIAL     = 0x06
+    RESULT_NO_DATA     = 0x06
+    RESULT_LIMIT_ALL   = 0x07
+    RESULT_LIMIT_PEER  = 0x08
+    RESULT_PARTIAL     = 0x09
     RESULT_DISABLED    = 0xFE
     RESULT_BLOCKED     = 0xFF
 
 
-    def __init__(self, storage_path=None, identity_file="identity", identity=None, destination_name="nomadnetwork", destination_type="management", destination_conv_name="lxmf", destination_conv_type="delivery", destination_mode=True, announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False, allow=[], statistic=None, link_timeout=300, default_user=None, default_user_interfaces=None, default_user_hops=None, default_user_callback=None, environment_variables=None):
+    def __init__(self, storage_path=None, identity_file="identity", identity=None, destination_name="nomadnetwork", destination_type="management", destination_conv_name="lxmf", destination_conv_type="delivery", destination_mode=True, announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False, allow=[], statistic=None, link_timeout=300, default_user=None, default_user_interfaces=None, default_user_hops=None, default_user_callback=None, environment_variables=None, limiter_server_enabled=False, limiter_server_calls=1000, limiter_server_size=0, limiter_server_duration=60, limiter_peer_enabled=True, limiter_peer_calls=0, limiter_peer_size=0, limiter_peer_duration=60):
         self.storage_path = storage_path
         self.configs_path = self.storage_path+"/configs"
         self.files_path = os.path.expanduser("~")
@@ -391,6 +464,16 @@ class ServerManagement:
         self.scripts_env = {}
         self.console = ServerManagementConsole()
         self.console_env = {}
+
+        if limiter_server_enabled:
+            self.limiter_server = RateLimiter(int(limiter_server_calls), int(limiter_server_size), int(limiter_server_duration))
+        else:
+            self.limiter_server = None
+
+        if limiter_peer_enabled:
+            self.limiter_peer = RateLimiter(int(limiter_peer_calls), int(limiter_peer_size), int(limiter_peer_duration))
+        else:
+            self.limiter_peer = None
 
 
     def start(self):
@@ -595,20 +678,25 @@ class ServerManagement:
 
 
     def configs_list(self, path, data, request_id, link_id, remote_identity, requested_at):
-        self.link_ts = time.time()
+        if not remote_identity:
+            return msgpack.packb({"result": ServerManagement.RESULT_NO_IDENTITY})
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return msgpack.packb({"result": ServerManagement.RESULT_LIMIT_SERVER})
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return msgpack.packb({"result": ServerManagement.RESULT_LIMIT_PEER})
 
         if not data:
-            return None
+            return msgpack.packb({"result": ServerManagement.RESULT_NO_DATA})
+
+        self.link_ts = time.time()
 
         data_return = {}
 
-        if remote_identity:
-            dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-            if dest not in self.allow:
-                data_return["result"] = ServerManagement.RESULT_NO_RIGHT
-                return msgpack.packb(data_return)
-        else:
-            data_return["result"] = ServerManagement.RESULT_NO_IDENTITY
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        if dest not in self.allow:
+            data_return["result"] = ServerManagement.RESULT_NO_RIGHT
             return msgpack.packb(data_return)
 
         if "locales" in data:
@@ -694,24 +782,35 @@ class ServerManagement:
 
         data_return = msgpack.packb(data_return)
 
+        if self.limiter_server:
+            self.limiter_server.handle_size("server", len(data_return))
+
+        if self.limiter_peer:
+             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
+
         return data_return
 
 
     def configs_cmd(self, path, data, request_id, link_id, remote_identity, requested_at):
-        self.link_ts = time.time()
+        if not remote_identity:
+            return msgpack.packb({"result": ServerManagement.RESULT_NO_IDENTITY})
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return msgpack.packb({"result": ServerManagement.RESULT_LIMIT_SERVER})
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return msgpack.packb({"result": ServerManagement.RESULT_LIMIT_PEER})
 
         if not data:
-            return None
+            return msgpack.packb({"result": ServerManagement.RESULT_NO_DATA})
+
+        self.link_ts = time.time()
 
         data_return = {}
 
-        if remote_identity:
-            dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-            if dest not in self.allow:
-                data_return["result"] = ServerManagement.RESULT_NO_RIGHT
-                return msgpack.packb(data_return)
-        else:
-            data_return["result"] = ServerManagement.RESULT_NO_IDENTITY
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        if dest not in self.allow:
+            data_return["result"] = ServerManagement.RESULT_NO_RIGHT
             return msgpack.packb(data_return)
 
         if "locales" in data:
@@ -750,6 +849,12 @@ class ServerManagement:
 
         data_return = msgpack.packb(data_return)
 
+        if self.limiter_server:
+            self.limiter_server.handle_size("server", len(data_return))
+
+        if self.limiter_peer:
+             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
+
         return data_return
 
 
@@ -759,20 +864,25 @@ class ServerManagement:
 
 
     def files_list(self, path, data, request_id, link_id, remote_identity, requested_at):
-        self.link_ts = time.time()
+        if not remote_identity:
+            return msgpack.packb({"result": ServerManagement.RESULT_NO_IDENTITY})
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return msgpack.packb({"result": ServerManagement.RESULT_LIMIT_SERVER})
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return msgpack.packb({"result": ServerManagement.RESULT_LIMIT_PEER})
 
         if not data:
-            return None
+            return msgpack.packb({"result": ServerManagement.RESULT_NO_DATA})
+
+        self.link_ts = time.time()
 
         data_return = {}
 
-        if remote_identity:
-            dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-            if dest not in self.allow:
-                data_return["result"] = ServerManagement.RESULT_NO_RIGHT
-                return msgpack.packb(data_return)
-        else:
-            data_return["result"] = ServerManagement.RESULT_NO_IDENTITY
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        if dest not in self.allow:
+            data_return["result"] = ServerManagement.RESULT_NO_RIGHT
             return msgpack.packb(data_return)
 
         if "locales" in data:
@@ -838,24 +948,35 @@ class ServerManagement:
 
         data_return = msgpack.packb(data_return)
 
+        if self.limiter_server:
+            self.limiter_server.handle_size("server", len(data_return))
+
+        if self.limiter_peer:
+             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
+
         return data_return
 
 
     def files_cmd(self, path, data, request_id, link_id, remote_identity, requested_at):
-        self.link_ts = time.time()
+        if not remote_identity:
+            return msgpack.packb({"result": ServerManagement.RESULT_NO_IDENTITY})
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return msgpack.packb({"result": ServerManagement.RESULT_LIMIT_SERVER})
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return msgpack.packb({"result": ServerManagement.RESULT_LIMIT_PEER})
 
         if not data:
-            return None
+            return msgpack.packb({"result": ServerManagement.RESULT_NO_DATA})
+
+        self.link_ts = time.time()
 
         data_return = {}
 
-        if remote_identity:
-            dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-            if dest not in self.allow:
-                data_return["result"] = ServerManagement.RESULT_NO_RIGHT
-                return msgpack.packb(data_return)
-        else:
-            data_return["result"] = ServerManagement.RESULT_NO_IDENTITY
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        if dest not in self.allow:
+            data_return["result"] = ServerManagement.RESULT_NO_RIGHT
             return msgpack.packb(data_return)
 
         if "locales" in data:
@@ -987,20 +1108,32 @@ class ServerManagement:
 
         data_return = msgpack.packb(data_return)
 
+        if self.limiter_server:
+            self.limiter_server.handle_size("server", len(data_return))
+
+        if self.limiter_peer:
+             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
+
         return data_return
 
 
     def files_download(self, path, data, request_id, remote_identity, requested_at):
-        self.link_ts = time.time()
+        if not remote_identity:
+            return None
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return None
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return None
 
         if not data:
             return None
 
-        if remote_identity:
-            dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-            if dest not in self.allow:
-                return None
-        else:
+        self.link_ts = time.time()
+
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        if dest not in self.allow:
             return None
 
         if not "file" in data:
@@ -1017,6 +1150,13 @@ class ServerManagement:
             fh = open(data["file"], "rb")
             file_data = fh.read()
             fh.close()
+
+            if self.limiter_server:
+                self.limiter_server.handle_size("server", len(file_data))
+
+            if self.limiter_peer:
+                self.limiter_peer.handle_size(str(remote_identity), len(file_data))
+
             return [data["file"], file_data]
 
         except Exception as e:
@@ -1027,12 +1167,20 @@ class ServerManagement:
     def files_upload_callback(self, resource):
         remote_identity = resource.link.get_remote_identity()
 
-        if remote_identity != None:
-            dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-            if dest in self.allow:
-                return True
+        if not remote_identity:
+            return False
 
-        return False
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return False
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return False
+
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        if dest not in self.allow:
+            return False
+
+        return True
 
 
     def files_upload_started(self, resource):
@@ -1077,20 +1225,25 @@ class ServerManagement:
 
 
     def infos_list(self, path, data, request_id, link_id, remote_identity, requested_at):
-        self.link_ts = time.time()
+        if not remote_identity:
+            return msgpack.packb({"result": ServerManagement.RESULT_NO_IDENTITY})
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return msgpack.packb({"result": ServerManagement.RESULT_LIMIT_SERVER})
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return msgpack.packb({"result": ServerManagement.RESULT_LIMIT_PEER})
 
         if not data:
-            return None
+            return msgpack.packb({"result": ServerManagement.RESULT_NO_DATA})
+
+        self.link_ts = time.time()
 
         data_return = {}
 
-        if remote_identity:
-            dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-            if dest not in self.allow:
-                data_return["result"] = ServerManagement.RESULT_NO_RIGHT
-                return msgpack.packb(data_return)
-        else:
-            data_return["result"] = ServerManagement.RESULT_NO_IDENTITY
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        if dest not in self.allow:
+            data_return["result"] = ServerManagement.RESULT_NO_RIGHT
             return msgpack.packb(data_return)
 
         if "locales" in data:
@@ -1184,6 +1337,12 @@ class ServerManagement:
 
         data_return = msgpack.packb(data_return)
 
+        if self.limiter_server:
+            self.limiter_server.handle_size("server", len(data_return))
+
+        if self.limiter_peer:
+             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
+
         return data_return
 
 
@@ -1193,20 +1352,25 @@ class ServerManagement:
 
 
     def logs_list(self, path, data, request_id, link_id, remote_identity, requested_at):
-        self.link_ts = time.time()
+        if not remote_identity:
+            return msgpack.packb({"result": ServerManagement.RESULT_NO_IDENTITY})
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return msgpack.packb({"result": ServerManagement.RESULT_LIMIT_SERVER})
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return msgpack.packb({"result": ServerManagement.RESULT_LIMIT_PEER})
 
         if not data:
-            return None
+            return msgpack.packb({"result": ServerManagement.RESULT_NO_DATA})
+
+        self.link_ts = time.time()
 
         data_return = {}
 
-        if remote_identity:
-            dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-            if dest not in self.allow:
-                data_return["result"] = ServerManagement.RESULT_NO_RIGHT
-                return msgpack.packb(data_return)
-        else:
-            data_return["result"] = ServerManagement.RESULT_NO_IDENTITY
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        if dest not in self.allow:
+            data_return["result"] = ServerManagement.RESULT_NO_RIGHT
             return msgpack.packb(data_return)
 
         if "locales" in data:
@@ -1273,24 +1437,35 @@ class ServerManagement:
 
         data_return = msgpack.packb(data_return)
 
+        if self.limiter_server:
+            self.limiter_server.handle_size("server", len(data_return))
+
+        if self.limiter_peer:
+             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
+
         return data_return
 
 
     def logs_cmd(self, path, data, request_id, link_id, remote_identity, requested_at):
-        self.link_ts = time.time()
+        if not remote_identity:
+            return msgpack.packb({"result": ServerManagement.RESULT_NO_IDENTITY})
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return msgpack.packb({"result": ServerManagement.RESULT_LIMIT_SERVER})
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return msgpack.packb({"result": ServerManagement.RESULT_LIMIT_PEER})
 
         if not data:
-            return None
+            return msgpack.packb({"result": ServerManagement.RESULT_NO_DATA})
+
+        self.link_ts = time.time()
 
         data_return = {}
 
-        if remote_identity:
-            dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-            if dest not in self.allow:
-                data_return["result"] = ServerManagement.RESULT_NO_RIGHT
-                return msgpack.packb(data_return)
-        else:
-            data_return["result"] = ServerManagement.RESULT_NO_IDENTITY
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        if dest not in self.allow:
+            data_return["result"] = ServerManagement.RESULT_NO_RIGHT
             return msgpack.packb(data_return)
 
         if "locales" in data:
@@ -1351,6 +1526,12 @@ class ServerManagement:
 
         data_return = msgpack.packb(data_return)
 
+        if self.limiter_server:
+            self.limiter_server.handle_size("server", len(data_return))
+
+        if self.limiter_peer:
+             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
+
         return data_return
 
 
@@ -1360,20 +1541,25 @@ class ServerManagement:
 
 
     def scripts_list(self, path, data, request_id, link_id, remote_identity, requested_at):
-        self.link_ts = time.time()
+        if not remote_identity:
+            return msgpack.packb({"result": ServerManagement.RESULT_NO_IDENTITY})
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return msgpack.packb({"result": ServerManagement.RESULT_LIMIT_SERVER})
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return msgpack.packb({"result": ServerManagement.RESULT_LIMIT_PEER})
 
         if not data:
-            return None
+            return msgpack.packb({"result": ServerManagement.RESULT_NO_DATA})
+
+        self.link_ts = time.time()
 
         data_return = {}
 
-        if remote_identity:
-            dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-            if dest not in self.allow:
-                data_return["result"] = ServerManagement.RESULT_NO_RIGHT
-                return msgpack.packb(data_return)
-        else:
-            data_return["result"] = ServerManagement.RESULT_NO_IDENTITY
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        if dest not in self.allow:
+            data_return["result"] = ServerManagement.RESULT_NO_RIGHT
             return msgpack.packb(data_return)
 
         if "locales" in data:
@@ -1440,6 +1626,12 @@ class ServerManagement:
 
         data_return = msgpack.packb(data_return)
 
+        if self.limiter_server:
+            self.limiter_server.handle_size("server", len(data_return))
+
+        if self.limiter_peer:
+             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
+
         return data_return
 
 
@@ -1449,20 +1641,25 @@ class ServerManagement:
 
 
     def services_list(self, path, data, request_id, link_id, remote_identity, requested_at):
-        self.link_ts = time.time()
+        if not remote_identity:
+            return msgpack.packb({"result": ServerManagement.RESULT_NO_IDENTITY})
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return msgpack.packb({"result": ServerManagement.RESULT_LIMIT_SERVER})
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return msgpack.packb({"result": ServerManagement.RESULT_LIMIT_PEER})
 
         if not data:
-            return None
+            return msgpack.packb({"result": ServerManagement.RESULT_NO_DATA})
+
+        self.link_ts = time.time()
 
         data_return = {}
 
-        if remote_identity:
-            dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-            if dest not in self.allow:
-                data_return["result"] = ServerManagement.RESULT_NO_RIGHT
-                return msgpack.packb(data_return)
-        else:
-            data_return["result"] = ServerManagement.RESULT_NO_IDENTITY
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        if dest not in self.allow:
+            data_return["result"] = ServerManagement.RESULT_NO_RIGHT
             return msgpack.packb(data_return)
 
         if "locales" in data:
@@ -1558,24 +1755,35 @@ class ServerManagement:
 
         data_return = msgpack.packb(data_return)
 
+        if self.limiter_server:
+            self.limiter_server.handle_size("server", len(data_return))
+
+        if self.limiter_peer:
+             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
+
         return data_return
 
 
     def services_cmd(self, path, data, request_id, link_id, remote_identity, requested_at):
-        self.link_ts = time.time()
+        if not remote_identity:
+            return msgpack.packb({"result": ServerManagement.RESULT_NO_IDENTITY})
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return msgpack.packb({"result": ServerManagement.RESULT_LIMIT_SERVER})
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return msgpack.packb({"result": ServerManagement.RESULT_LIMIT_PEER})
 
         if not data:
-            return None
+            return msgpack.packb({"result": ServerManagement.RESULT_NO_DATA})
+
+        self.link_ts = time.time()
 
         data_return = {}
 
-        if remote_identity:
-            dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-            if dest not in self.allow:
-                data_return["result"] = ServerManagement.RESULT_NO_RIGHT
-                return msgpack.packb(data_return)
-        else:
-            data_return["result"] = ServerManagement.RESULT_NO_IDENTITY
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        if dest not in self.allow:
+            data_return["result"] = ServerManagement.RESULT_NO_RIGHT
             return msgpack.packb(data_return)
 
         if "locales" in data:
@@ -1711,6 +1919,12 @@ class ServerManagement:
             data_return["result"] = ServerManagement.RESULT_ERROR
 
         data_return = msgpack.packb(data_return)
+
+        if self.limiter_server:
+            self.limiter_server.handle_size("server", len(data_return))
+
+        if self.limiter_peer:
+             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
 
         return data_return
 
@@ -2223,7 +2437,7 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
                 pass
         if CONFIG["telemetry"].getboolean("state_enabled"):
             try:
-               fields[MSG_FIELD_STATE] = CONFIG["telemetry"].getint("state_data")
+               fields[MSG_FIELD_STATE] = [CONFIG["telemetry"].getint("state_data"), int(time.time())]
             except:
                 pass
         if len(fields) > 0:
@@ -2265,7 +2479,15 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
         default_user_interfaces=CONFIG["rns_server"]["default_user_interfaces"].split(","),
         default_user_hops=int(CONFIG["rns_server"]["default_user_hops"]),
         default_user_callback=setup_default_user,
-        environment_variables=environment_variables
+        environment_variables=environment_variables,
+        limiter_server_enabled=CONFIG["rns_server"].getboolean("limiter_server_enabled"),
+        limiter_server_calls=CONFIG["rns_server"]["limiter_server_calls"],
+        limiter_server_size=CONFIG["rns_server"]["limiter_server_size"],
+        limiter_server_duration=CONFIG["rns_server"]["limiter_server_duration"],
+        limiter_peer_enabled=CONFIG["rns_server"].getboolean("limiter_peer_enabled"),
+        limiter_peer_calls=CONFIG["rns_server"]["limiter_peer_calls"],
+        limiter_peer_size=CONFIG["rns_server"]["limiter_peer_size"],
+        limiter_peer_duration=CONFIG["rns_server"]["limiter_peer_duration"],
     )
 
     log("RNS - Connected", LOG_DEBUG)
@@ -2324,12 +2546,10 @@ DEFAULT_CONFIG_OVERRIDE = '''# This is the user configuration file to override t
 # This also has the advantage that all changed settings can be kept when updating the program.
 
 
-#### Main program settings ####
 [main]
 fields_announce = False
 
 
-#### RNS server settings ####
 [rns_server]
 display_name = Server
 
@@ -2340,7 +2560,6 @@ announce_periodic = Yes
 announce_periodic_interval = 120 #Minutes
 
 
-#### Telemetry settings ####
 [telemetry]
 location_enabled = False
 location_lat = 0
@@ -2350,12 +2569,10 @@ state_enabled = False
 state_data = 0
 
 
-#### Right settings ####
 [allowed]
 #2858b7a096899116cd529559cc679ffe
 
 
-#### Environment settings ####
 [environment_variables]
 '''
 
@@ -2404,6 +2621,18 @@ announce_periodic_interval = 120 #Minutes
 # The announce is hidden for client applications
 # but is still used for the routing tables.
 announce_hidden = No
+
+# Limits the number of simultaneous requests/calls per server.
+limiter_server_enabled = No
+limiter_server_calls = 1000 # Number of calls per duration. 0=Any
+limiter_server_size = 0 # Data transfer size in bytes per duration. 0=Any
+limiter_server_duration = 60 # Seconds
+
+# Limits the number of simultaneous requests/calls per peer.
+limiter_peer_enabled = Yes
+limiter_peer_calls = 0 # Number of calls per duration. 0=Any
+limiter_peer_size = 0 # Data transfer size in bytes per duration. 0=Any
+limiter_peer_duration = 60 # Seconds
 
 # Timout after a link is disconnected after inactivity.
 link_timeout = 300 #Seconds

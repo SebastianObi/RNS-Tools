@@ -144,6 +144,76 @@ MSG_FIELD_VOICE              = 0xBF
 
 
 ##############################################################################################################
+# RateLimiter Class
+
+
+class RateLimiter:
+    def __init__(self, calls, size, duration):
+        self.calls = calls
+        self.size = size
+        self.duration = duration
+        self.ts = time.time()
+        self.data_calls = {}
+        self.data_size = {}
+        self.lock = threading.Lock()
+        threading.Thread(target=self._jobs, daemon=True).start()
+
+
+    def handle(self, id):
+        if self.handle_call(id) and self.handle_size(id, 0):
+            return True
+        else:
+            return False
+
+
+    def handle_call(self, id):
+        with self.lock:
+            if self.calls == 0:
+                return True
+            if id not in self.data_calls:
+                self.data_calls[id] = []
+            self.data_calls[id] = [t for t in self.data_calls[id] if t > self.ts - self.duration]
+            if len(self.data_calls[id]) >= self.calls:
+                return False
+            else:
+                self.data_calls[id].append(self.ts)
+                return True
+
+
+    def handle_size(self, id, size):
+        with self.lock:
+            if self.size == 0:
+                return True
+            if id not in self.data_size:
+                self.data_size[id] = [0, self.ts]
+            if self.data_size[id][1] <= self.ts - self.duration:
+                self.data_size[id] = [0, self.ts]
+            if self.data_size[id][0] >= self.size:
+                return False
+            else:
+                self.data_size[id][0] += size
+                self.data_size[id][1] = self.ts
+                return True
+
+
+    def _jobs(self):
+        while True:
+            time.sleep(self.duration)
+            self.ts = time.time()
+            with self.lock:
+                if self.calls > 0:
+                    for id in list(self.data_calls.keys()):
+                        self.data_calls[id] = [t for t in self.data_calls[id] if t > self.ts - self.duration]
+                        if not self.data_calls[id]:
+                            del self.data_calls[id]
+
+                if self.size > 0:
+                    for id in list(self.data_size.keys()):
+                        if self.data_size[id][1] <= self.ts - self.duration:
+                            del self.data_size[id]
+
+
+##############################################################################################################
 # ServerProvisioning Class
 
 
@@ -154,12 +224,15 @@ class ServerProvisioning:
     RESULT_NO_IDENTITY = 0x03
     RESULT_NO_USER     = 0x04
     RESULT_NO_RIGHT    = 0x05
-    RESULT_PARTIAL     = 0x06
+    RESULT_NO_DATA     = 0x06
+    RESULT_LIMIT_ALL   = 0x07
+    RESULT_LIMIT_PEER  = 0x08
+    RESULT_PARTIAL     = 0x09
     RESULT_DISABLED    = 0xFE
     RESULT_BLOCKED     = 0xFF
 
 
-    def __init__(self, storage_path=None, identity_file="identity", identity=None, destination_name="nomadnetwork", destination_type="provisioning", destination_conv_name="lxmf", destination_conv_type="delivery", announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False, register_startup=True, register_startup_delay=0, register_periodic=True, register_periodic_interval=30, config=None, admins=[]):
+    def __init__(self, storage_path=None, identity_file="identity", identity=None, destination_name="nomadnetwork", destination_type="provisioning", destination_conv_name="lxmf", destination_conv_type="delivery", destination_mode=True, announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False, register_startup=True, register_startup_delay=0, register_periodic=True, register_periodic_interval=30, config=None, admins=[], limiter_server_enabled=False, limiter_server_calls=1000, limiter_server_size=0, limiter_server_duration=60, limiter_peer_enabled=True, limiter_peer_calls=30, limiter_peer_size=0, limiter_peer_duration=60):
         self.storage_path = storage_path
 
         self.identity_file = identity_file
@@ -171,6 +244,7 @@ class ServerProvisioning:
         self.destination_conv_name = destination_conv_name
         self.destination_conv_type = destination_conv_type
         self.aspect_filter_conv = self.destination_conv_name + "." + self.destination_conv_type
+        self.destination_mode = destination_mode
 
         self.announce_startup = announce_startup
         self.announce_startup_delay = int(announce_startup_delay)
@@ -182,6 +256,12 @@ class ServerProvisioning:
 
         self.announce_data = announce_data
         self.announce_hidden = announce_hidden
+
+        self.register_startup = register_startup
+        self.register_startup_delay = int(register_startup_delay)
+
+        self.register_periodic = register_periodic
+        self.register_periodic_interval = int(register_periodic_interval)
 
         self.config = config
 
@@ -228,16 +308,45 @@ class ServerProvisioning:
 
         self.destination.set_link_established_callback(self.peer_connected)
 
-        if self.announce_startup or self.announce_periodic:
-            self.announce(initial=True)
-
-        self.register()
-
         self.db = None
+
+        if limiter_server_enabled:
+            self.limiter_server = RateLimiter(int(limiter_server_calls), int(limiter_server_size), int(limiter_server_duration))
+        else:
+            self.limiter_server = None
+
+        if limiter_peer_enabled:
+            self.limiter_peer = RateLimiter(int(limiter_peer_calls), int(limiter_peer_size), int(limiter_peer_duration))
+        else:
+            self.limiter_peer = None
+
+
+    def files_config(self, enabled=True, path="files", ext_allow=[], ext_deny=[], allow_all=True, allow=[], deny=[]):
+        self.files = []
+        self.files_enabled = enabled
+        self.files_path = path
+        self.files_ext_allow = ext_allow
+        self.files_ext_deny = ext_deny
+        self.files_ext_deny.append("allowed")
+        self.files_allow_all = allow_all
+        self.files_allow = allow
+        self.files_deny = deny
 
 
     def start(self):
-        pass
+        if self.announce_startup or self.announce_periodic:
+            self.announce(initial=True)
+
+        if self.files_enabled:
+            if not self.files_path.startswith("/") and self.storage_path:
+                self.files_path = self.storage_path + "/" + self.files_path
+            if not os.path.isdir(self.files_path):
+                os.makedirs(selffiles_path)
+                RNS.log("Server - Files: Path was created", RNS.LOG_NOTICE)
+            RNS.log("Server - Files: Path: " + self.files_path, RNS.LOG_INFO)
+
+        if self.register_startup or self.register_periodic:
+            self.register(True)
 
 
     def stop(self):
@@ -335,11 +444,35 @@ class ServerProvisioning:
                 RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()), RNS.LOG_DEBUG)
 
 
-    def register(self):
+    def register(self, initial=False):
+        if self.register_periodic and self.register_periodic_interval > 0:
+            register_timer = threading.Timer(self.register_periodic_interval*60, self.register)
+            register_timer.daemon = True
+            register_timer.start()
+
+        if initial:
+            if self.register_startup:
+                if self.register_startup_delay > 0:
+                    register_timer.cancel()
+                    register_timer = threading.Timer(self.register_startup_delay, self.register)
+                    register_timer.daemon = True
+                    register_timer.start()
+                else:
+                    self.register_now()
+            return
+
+        self.register_now()
+
+
+    def register_now(self):
         RNS.log("Server - Register", RNS.LOG_DEBUG)
+
         self.destination.register_request_handler("execute", response_generator=self.execute, allow=RNS.Destination.ALLOW_ALL)
         self.destination.register_request_handler("directory_member", response_generator=self.directory_member, allow=RNS.Destination.ALLOW_ALL)
         self.destination.register_request_handler("directory_service", response_generator=self.directory_service, allow=RNS.Destination.ALLOW_ALL)
+
+        if self.files_enabled:
+            self.files_register()
 
 
     def peer_connected(self, link):
@@ -356,6 +489,156 @@ class ServerProvisioning:
     def peer_identified(self, link, identity):
         if not identity:
             link.teardown()
+
+
+    def files_register(self):
+        array = self.files.copy()
+
+        self.files = []
+        self.files_scan(self.files_path)
+        self.files.sort()
+
+        for file in array:
+            if file not in self.files:
+                self.destination.deregister_request_handler(file)
+
+        for file in self.files:
+            if file not in array:
+                self.destination.register_request_handler(file, response_generator=self.files_download, allow=RNS.Destination.ALLOW_ALL)
+
+
+    def files_scan(self, base_path):
+        files = [file for file in os.listdir(base_path) if os.path.isfile(os.path.join(base_path, file)) and file[:1] != "."]
+        directories = [file for file in os.listdir(base_path) if os.path.isdir(os.path.join(base_path, file)) and file[:1] != "."]
+
+        for file in files:
+            ext = os.path.splitext(file)[1][1:]
+            if ext in self.files_ext_allow or ext not in self.files_ext_deny:
+                file = base_path+"/"+file
+                self.files.append(file.replace(self.files_path, "").lstrip('/'))
+
+        for directory in directories:
+            self.files_scan(base_path+"/"+directory)
+
+
+    def files_download(self, path, data, request_id, link_id, remote_identity, requested_at):
+        if not remote_identity:
+            return None
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return None
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return None
+
+        if request_id:
+            RNS.log("Server - Files: Request "+RNS.prettyhexrep(request_id)+" for: "+str(path), RNS.LOG_VERBOSE)
+        else:
+            RNS.log("Server - Files: Request <local> for: "+str(path), RNS.LOG_VERBOSE)
+
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+
+        if data:
+            RNS.log("Server - Files: Data: "+str(data), RNS.LOG_DEBUG)
+
+        file_path = self.files_path+"/"+path
+
+        allowed_path = file_path+".allowed"
+        allowed = False
+
+        if os.path.isfile(allowed_path):
+            allowed_list = []
+
+            try:
+                if os.access(allowed_path, os.X_OK):
+                    allowed_result = subprocess.run([allowed_path], stdout=subprocess.PIPE)
+                    allowed_input = allowed_result.stdout
+                else:
+                    fh = open(allowed_path, "rb")
+                    allowed_input = fh.read()
+                    fh.close()
+
+                allowed_hash_strs = allowed_input.splitlines()
+
+                for hash_str in allowed_hash_strs:
+                    if len(hash_str) == RNS.Identity.TRUNCATED_HASHLENGTH//8*2:
+                        try:
+                            allowed_hash = bytes.fromhex(hash_str.decode("utf-8"))
+                            allowed_list.append(allowed_hash)
+                        except Exception as e:
+                            RNS.log("Server - Files: Could not decode RNS Identity hash from: "+str(hash_str), RNS.LOG_DEBUG)
+                            RNS.log("Server - Files: The contained exception was: "+str(e), RNS.LOG_DEBUG)
+
+            except Exception as e:
+                RNS.log("Server - Files: Error while fetching list of allowed identities for request: "+str(e), RNS.LOG_ERROR)
+
+            if hasattr(remote_identity, "hash"):
+                if self.destination_mode == False and remote_identity.hash in allowed_list:
+                    allowed = True
+                elif self.destination_mode == True and dest in allowed_list:
+                    allowed = True
+
+        elif self.files_allow_all:
+            allowed = True
+
+        elif hasattr(remote_identity, "hash"):
+            if self.destination_mode == False and remote_identity.hash in self.files_allow:
+                allowed = True
+            elif self.destination_mode == True and dest in self.files_allow:
+                allowed = True
+
+        if hasattr(remote_identity, "hash"):
+            if self.destination_mode == False and remote_identity.hash in self.files_deny:
+                allowed = False
+            elif self.destination_mode == True and dest in self.files_deny:
+                allowed = False
+
+        if request_id == None:
+            allowed = True
+
+        try:
+            if allowed:
+                RNS.log("Server - Files: Serving "+file_path, RNS.LOG_VERBOSE)
+                if os.access(file_path, os.X_OK):
+                    env_map = {}
+                    if "PATH" in os.environ:
+                        env_map["PATH"] = os.environ["PATH"]
+                    if link_id != None:
+                        env_map["link_id"] = RNS.hexrep(link_id, delimit=False)
+                    if remote_identity != None:
+                        env_map["remote_identity"] = RNS.hexrep(remote_identity.hash, delimit=False)
+                    if dest != None:
+                        env_map["dest"] = RNS.hexrep(dest, delimit=False)
+
+                    if data != None and isinstance(data, dict):
+                        for e in data:
+                            if isinstance(e, str) and (e.startswith("field_") or e.startswith("var_")):
+                                env_map[e] = data[e]
+
+                    generated = subprocess.run([file_path], stdout=subprocess.PIPE, env=env_map)
+                    generated = generated.stdout
+                    if self.limiter_server:
+                        self.limiter_server.handle_size("server", len(generated))
+                    if self.limiter_peer:
+                        self.limiter_peer.handle_size(str(remote_identity), len(generated))
+                    return generated
+                else:
+                    fh = open(file_path, "rb")
+                    response_data = fh.read()
+                    fh.close()
+                    if self.limiter_server:
+                        self.limiter_server.handle_size("server", len(response_data))
+                    if self.limiter_peer:
+                        self.limiter_peer.handle_size(str(remote_identity), len(response_data))
+                    return response_data
+            else:
+                RNS.log("Server - Files: Request denied", RNS.LOG_VERBOSE)
+                return None
+
+        except Exception as e:
+            RNS.log("Server - Files: Error occurred while handling request for: "+str(path), RNS.LOG_ERROR)
+            RNS.log("Server - Files: The contained exception was: "+str(e), RNS.LOG_ERROR)
+            return None
 
 
     def db_connect(self):
@@ -922,6 +1205,15 @@ class ServerProvisioning:
 
 
     def execute(self, path, data, request_id, link_id, remote_identity, requested_at):
+        if not remote_identity:
+            return None
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return None
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return None
+
         if not data:
             return None
 
@@ -1078,10 +1370,25 @@ class ServerProvisioning:
 
         data_return = msgpack.packb(data_return)
 
+        if self.limiter_server:
+            self.limiter_server.handle_size("server", len(data_return))
+
+        if self.limiter_peer:
+             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
+
         return data_return
 
 
     def directory_member(self, path, data, request_id, link_id, remote_identity, requested_at):
+        if not remote_identity:
+            return None
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return None
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return None
+
         if not data:
             return None
 
@@ -1091,12 +1398,8 @@ class ServerProvisioning:
 
         data_return = {}
 
-        if remote_identity:
-            hash_destination = RNS.hexrep(RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity), delimit=False)
-            hash_identity = ""
-        else:
-            data_return["result"] = Provisioning.RESULT_NO_IDENTITY
-            return msgpack.packb(data_return)
+        hash_destination = RNS.hexrep(RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity), delimit=False)
+        hash_identity = ""
 
         if "cmd" in data:
             if hash_destination in self.admins:
@@ -1156,10 +1459,25 @@ class ServerProvisioning:
 
         data_return = msgpack.packb(data_return)
 
+        if self.limiter_server:
+            self.limiter_server.handle_size("server", len(data_return))
+
+        if self.limiter_peer:
+             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
+
         return data_return
 
 
     def directory_service(self, path, data, request_id, link_id, remote_identity, requested_at):
+        if not remote_identity:
+            return None
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return None
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return None
+
         if not data:
             return None
 
@@ -1169,12 +1487,8 @@ class ServerProvisioning:
 
         data_return = {}
 
-        if remote_identity:
-            hash_destination = RNS.hexrep(RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity), delimit=False)
-            hash_identity = ""
-        else:
-            data_return["result"] = Provisioning.RESULT_NO_IDENTITY
-            return msgpack.packb(data_return)
+        hash_destination = RNS.hexrep(RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity), delimit=False)
+        hash_identity = ""
 
         if "cmd" in data:
             if hash_destination in self.admins:
@@ -1219,6 +1533,12 @@ class ServerProvisioning:
         print("Dict send: "+str(data_return))
 
         data_return = msgpack.packb(data_return)
+
+        if self.limiter_server:
+            self.limiter_server.handle_size("server", len(data_return))
+
+        if self.limiter_peer:
+             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
 
         return data_return
 
@@ -1521,36 +1841,49 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
     if path is None:
         path = PATH
 
-    display_name = CONFIG["rns_server"]["display_name"]
-    announce_data = None
-    if CONFIG["features"].getboolean("announce_data"):
-        section = "data"
-        if CONFIG.has_section(section):
-            type_fields = {}
-            for (key, val) in CONFIG.items(section):
-                if key == "config_lxm":
-                    try:
-                        if val != "":
-                            val = base64.urlsafe_b64decode(val.replace("lxm://", "").replace("/", "")+"==")
-                            val = msgpack.unpackb(val)
-                            if val and "data" in val:
-                                type_fields["config"] = val["data"]["data"]
-                    except:
-                        pass
-                else:
-                    if "=" in val or ";" in val:
-                        type_fields[key] = {}
-                        keys = val.split(";")
-                        for val in keys:
-                            val = val.split("=")
-                            if len(val) == 2:
-                                type_fields[key][val[0]] = val_to_val(val[1])
+    announce_data = CONFIG["rns_server"]["display_name"]
+    if CONFIG["main"].getboolean("fields_announce"):
+        fields = {}
+        if CONFIG["telemetry"].getboolean("location_enabled"):
+            try:
+               fields[MSG_FIELD_LOCATION] = [CONFIG["telemetry"].getfloat("location_lat"), CONFIG["telemetry"].getfloat("location_lon")]
+            except:
+                pass
+        if CONFIG["telemetry"].getboolean("state_enabled"):
+            try:
+               fields[MSG_FIELD_STATE] = [CONFIG["telemetry"].getint("state_data"), int(time.time())]
+            except:
+                pass
+        if CONFIG["features"].getboolean("announce_data"):
+            section = "data"
+            if CONFIG.has_section(section):
+                type_fields = {}
+                for (key, val) in CONFIG.items(section):
+                    if key == "config_lxm":
+                        try:
+                            if val != "":
+                                val = base64.urlsafe_b64decode(val.replace("lxm://", "").replace("/", "")+"==")
+                                val = msgpack.unpackb(val)
+                                if val and "data" in val:
+                                    type_fields["config"] = val["data"]["data"]
+                        except:
+                            pass
                     else:
-                        type_fields[key] = val
-            if len(type_fields) > 0:
-                announce_data = {ANNOUNCE_DATA_CONTENT: CONFIG["rns_server"]["display_name"].encode("utf-8"), ANNOUNCE_DATA_TITLE: None, ANNOUNCE_DATA_FIELDS: {MSG_FIELD_TYPE_FIELDS: type_fields}}
-                log("RNS - Configured announce data: "+str(announce_data), LOG_DEBUG)
-                announce_data = msgpack.packb(announce_data)
+                        if "=" in val or ";" in val:
+                            type_fields[key] = {}
+                            keys = val.split(";")
+                            for val in keys:
+                                val = val.split("=")
+                                if len(val) == 2:
+                                    type_fields[key][val[0]] = val_to_val(val[1])
+                        else:
+                            type_fields[key] = val
+                if len(type_fields) > 0:
+                    fields[MSG_FIELD_TYPE_FIELDS] = type_fields
+        if len(fields) > 0:
+            announce_data = {ANNOUNCE_DATA_CONTENT: CONFIG["rns_server"]["display_name"].encode("utf-8"), ANNOUNCE_DATA_TITLE: None, ANNOUNCE_DATA_FIELDS: fields}
+            log("RNS - Configured announce data: "+str(announce_data), LOG_DEBUG)
+            announce_data = msgpack.packb(announce_data)
 
     admins = []
     section = "admins"
@@ -1570,9 +1903,30 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
         announce_periodic_interval=CONFIG["rns_server"]["announce_periodic_interval"],
         announce_data=announce_data,
         announce_hidden=CONFIG["rns_server"].getboolean("announce_hidden"),
+        register_startup=True,
+        register_startup_delay=0,
+        register_periodic=CONFIG["rns_server"].getboolean("register_periodic"),
+        register_periodic_interval=CONFIG["rns_server"]["register_periodic_interval"],
         config=CONFIG,
-        admins=admins
+        admins=admins,
+        limiter_server_enabled=CONFIG["rns_server"].getboolean("limiter_server_enabled"),
+        limiter_server_calls=CONFIG["rns_server"]["limiter_server_calls"],
+        limiter_server_size=CONFIG["rns_server"]["limiter_server_size"],
+        limiter_server_duration=CONFIG["rns_server"]["limiter_server_duration"],
+        limiter_peer_enabled=CONFIG["rns_server"].getboolean("limiter_peer_enabled"),
+        limiter_peer_calls=CONFIG["rns_server"]["limiter_peer_calls"],
+        limiter_peer_size=CONFIG["rns_server"]["limiter_peer_size"],
+        limiter_peer_duration=CONFIG["rns_server"]["limiter_peer_duration"],
     )
+
+    RNS_SERVER_PROVISIONING.files_config(
+        enabled=CONFIG["rns_server"].getboolean("files_enabled"),
+        path=CONFIG["rns_server"]["files_path"],
+        ext_allow=CONFIG["rns_server"]["files_ext_allow"].split(","),
+        ext_deny=CONFIG["rns_server"]["files_ext_deny"].split(",")
+    )
+
+    RNS_SERVER_PROVISIONING.start()
 
     log("RNS - Connected", LOG_DEBUG)
 
@@ -1629,6 +1983,7 @@ DEFAULT_CONFIG_OVERRIDE = '''# This is the user configuration file to override t
 # This file can be used to clearly summarize all settings that deviate from the default.
 # This also has the advantage that all changed settings can be kept when updating the program.
 
+
 [rns_server]
 display_name = Server
 
@@ -1681,6 +2036,15 @@ i_s = #Info Software
 cmd = #CMD
 config = #Config
 config_lxm = #Config as lxm string
+
+
+[telemetry]
+location_enabled = False
+location_lat = 0
+location_lon = 0
+
+state_enabled = False
+state_data = 0
 '''
 
 
@@ -1697,6 +2061,10 @@ enabled = True
 
 # Name of the program. Only for display in the log or program startup.
 name = RNS Server Provisioning
+
+# Transport extended data in the announce.
+# This is needed for the integration of advanced client apps.
+fields_announce = True
 
 
 #### RNS server settings ####
@@ -1724,6 +2092,29 @@ announce_periodic_interval = 120 #Minutes
 # The announce is hidden for client applications
 # but is still used for the routing tables.
 announce_hidden = No
+
+# Register files/destinations periodically
+register_periodic = Yes
+register_periodic_interval = 30 #Minutes
+
+# Limits the number of simultaneous requests/calls per server.
+limiter_server_enabled = No
+limiter_server_calls = 1000 # Number of calls per duration. 0=Any
+limiter_server_size = 0 # Data transfer size in bytes per duration. 0=Any
+limiter_server_duration = 60 # Seconds
+
+# Limits the number of simultaneous requests/calls per peer.
+limiter_peer_enabled = Yes
+limiter_peer_calls = 30 # Number of calls per duration. 0=Any
+limiter_peer_size = 0 # Data transfer size in bytes per duration. 0=Any
+limiter_peer_duration = 60 # Seconds
+
+
+# Files
+files_enabled = True
+files_path = files
+files_ext_allow = #,-separated list
+files_ext_deny = py,sh #,-separated list
 
 
 #### Database connection settings ####
@@ -1777,6 +2168,16 @@ i_s = #Info Software
 cmd = #CMD
 config = #Config
 config_lxm = #Config as lxm string
+
+
+#### Telemetry settings ####
+[telemetry]
+location_enabled = False
+location_lat = 0
+location_lon = 0
+
+state_enabled = False
+state_data = 0
 '''
 
 

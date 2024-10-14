@@ -122,11 +122,81 @@ MSG_FIELD_VOICE              = 0xBF
 
 
 ##############################################################################################################
+# RateLimiter Class
+
+
+class RateLimiter:
+    def __init__(self, calls, size, duration):
+        self.calls = calls
+        self.size = size
+        self.duration = duration
+        self.ts = time.time()
+        self.data_calls = {}
+        self.data_size = {}
+        self.lock = threading.Lock()
+        threading.Thread(target=self._jobs, daemon=True).start()
+
+
+    def handle(self, id):
+        if self.handle_call(id) and self.handle_size(id, 0):
+            return True
+        else:
+            return False
+
+
+    def handle_call(self, id):
+        with self.lock:
+            if self.calls == 0:
+                return True
+            if id not in self.data_calls:
+                self.data_calls[id] = []
+            self.data_calls[id] = [t for t in self.data_calls[id] if t > self.ts - self.duration]
+            if len(self.data_calls[id]) >= self.calls:
+                return False
+            else:
+                self.data_calls[id].append(self.ts)
+                return True
+
+
+    def handle_size(self, id, size):
+        with self.lock:
+            if self.size == 0:
+                return True
+            if id not in self.data_size:
+                self.data_size[id] = [0, self.ts]
+            if self.data_size[id][1] <= self.ts - self.duration:
+                self.data_size[id] = [0, self.ts]
+            if self.data_size[id][0] >= self.size:
+                return False
+            else:
+                self.data_size[id][0] += size
+                self.data_size[id][1] = self.ts
+                return True
+
+
+    def _jobs(self):
+        while True:
+            time.sleep(self.duration)
+            self.ts = time.time()
+            with self.lock:
+                if self.calls > 0:
+                    for id in list(self.data_calls.keys()):
+                        self.data_calls[id] = [t for t in self.data_calls[id] if t > self.ts - self.duration]
+                        if not self.data_calls[id]:
+                            del self.data_calls[id]
+
+                if self.size > 0:
+                    for id in list(self.data_size.keys()):
+                        if self.data_size[id][1] <= self.ts - self.duration:
+                            del self.data_size[id]
+
+
+##############################################################################################################
 # ServerPage Class
 
 
 class ServerPage:
-    def __init__(self, storage_path=None, identity_file="identity", identity=None, destination_name="nomadnetwork", destination_type="node", destination_conv_name="lxmf", destination_conv_type="delivery", destination_mode=True, announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False, register_startup=True, register_startup_delay=0, register_periodic=True, register_periodic_interval=30, statistic=None):
+    def __init__(self, storage_path=None, identity_file="identity", identity=None, destination_name="nomadnetwork", destination_type="node", destination_conv_name="lxmf", destination_conv_type="delivery", destination_mode=True, announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False, register_startup=True, register_startup_delay=0, register_periodic=True, register_periodic_interval=30, statistic=None, limiter_server_enabled=False, limiter_server_calls=1000, limiter_server_size=0, limiter_server_duration=60, limiter_peer_enabled=True, limiter_peer_calls=30, limiter_peer_size=0, limiter_peer_duration=60):
         self.storage_path = storage_path
 
         self.identity_file = identity_file
@@ -206,6 +276,16 @@ class ServerPage:
         self.pages_enabled = False
         self.files_enabled = False
         self.upload_enabled = False
+
+        if limiter_server_enabled:
+            self.limiter_server = RateLimiter(int(limiter_server_calls), int(limiter_server_size), int(limiter_server_duration))
+        else:
+            self.limiter_server = None
+
+        if limiter_peer_enabled:
+            self.limiter_peer = RateLimiter(int(limiter_peer_calls), int(limiter_peer_size), int(limiter_peer_duration))
+        else:
+            self.limiter_peer = None
 
 
     def pages_config(self, enabled=True, path="pages", ext_allow=[], ext_deny=[], allow_all=True, allow=[], deny=[], index="", pages_index_depth=255, files_index_depth=255, content_index_header="", content_index_footer="", content_index_pages_header=">>Index - Pages!n!!n!", content_index_pages_entry="`[{name}`:{url}]`!n!!n!", content_index_files_header=">>Index - Files!n!!n!", content_index_files_entry="`[{name}`:{url}]`!n!!n!", content_index="Default Home Page\n\nThis server is serving pages, but the home page file (index.mu) was not found in the page storage directory.", content_auth="Request not allowed!\n\nYou are not authorised to carry out the request."):
@@ -526,6 +606,12 @@ class ServerPage:
 
 
     def pages_download(self, path, data, request_id, link_id, remote_identity, requested_at):
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return None
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return None
+
         if request_id:
             RNS.log("Server - Pages: Request "+RNS.prettyhexrep(request_id)+" for: "+str(path), RNS.LOG_VERBOSE)
         else:
@@ -620,11 +706,20 @@ class ServerPage:
                                 env_map[e] = data[e]
 
                     generated = subprocess.run([file_path], stdout=subprocess.PIPE, env=env_map)
-                    return generated.stdout
+                    generated = generated.stdout
+                    if self.limiter_server:
+                        self.limiter_server.handle_size("server", len(generated))
+                    if self.limiter_peer:
+                        self.limiter_peer.handle_size(str(remote_identity), len(generated))
+                    return generated
                 else:
                     fh = open(file_path, "rb")
                     response_data = fh.read()
                     fh.close()
+                    if self.limiter_server:
+                        self.limiter_server.handle_size("server", len(response_data))
+                    if self.limiter_peer:
+                        self.limiter_peer.handle_size(str(remote_identity), len(response_data))
                     return response_data
             else:
                 RNS.log("Server - Pages: Request denied", RNS.LOG_VERBOSE)
@@ -637,6 +732,12 @@ class ServerPage:
 
 
     def pages_download_index(self, path, data, request_id, link_id, remote_identity, requested_at):
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return None
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return None
+
         if request_id:
             RNS.log("Server - Pages: Serving index for request "+RNS.prettyhexrep(request_id)+" for: "+str(path), RNS.LOG_VERBOSE)
         else:
@@ -759,7 +860,15 @@ class ServerPage:
             RNS.log("RNS - Pages: Request denied", RNS.LOG_VERBOSE)
             return self.content_auth.encode("utf-8")
 
-        return content.encode("utf-8")
+        content = content.encode("utf-8")
+
+        if self.limiter_server:
+            self.limiter_server.handle_size("server", len(content))
+
+        if self.limiter_peer:
+            self.limiter_peer.handle_size(str(remote_identity), len(content))
+
+        return content
 
 
     def files_register(self):
@@ -817,6 +926,12 @@ class ServerPage:
 
 
     def files_download(self, path, data, request_id, remote_identity, requested_at):
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return None
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return None
+
         if request_id:
             RNS.log("Server - Files: Request "+RNS.prettyhexrep(request_id)+" for: "+str(path), RNS.LOG_VERBOSE)
         else:
@@ -856,7 +971,6 @@ class ServerPage:
                         try:
                             allowed_hash = bytes.fromhex(hash_str.decode("utf-8"))
                             allowed_list.append(allowed_hash)
-
                         except Exception as e:
                             RNS.log("Server - Files: Could not decode RNS Identity hash from: "+str(hash_str), RNS.LOG_DEBUG)
                             RNS.log("Server - Files: The contained exception was: "+str(e), RNS.LOG_DEBUG)
@@ -894,6 +1008,10 @@ class ServerPage:
                 fh = open(file_path, "rb")
                 file_data = fh.read()
                 fh.close()
+                if self.limiter_server:
+                    self.limiter_server.handle_size("server", len(file_data))
+                if self.limiter_peer:
+                    self.limiter_peer.handle_size(str(remote_identity), len(file_data))
                 return [path.replace("/file/", "", 1), file_data]
             else:
                 RNS.log("Server - Files: Request denied", RNS.LOG_VERBOSE)
@@ -917,17 +1035,23 @@ class ServerPage:
 
 
     def upload_resource_callback(self, resource):
+        remote_identity = resource.link.get_remote_identity()
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return False
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return False
+
         if self.upload_allow_all:
             return True
 
-        sender_identity = resource.link.get_remote_identity()
-
-        if sender_identity != None:
-            dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, sender_identity)
+        if remote_identity != None:
+            dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
         else:
             dest = None
 
-        if self.destination_mode == False and sender_identity.hash in self.upload_allow:
+        if self.destination_mode == False and remote_identity.hash in self.upload_allow:
             return True
         elif self.destination_mode == True and dest in self.upload_allow:
             return True
@@ -1293,7 +1417,7 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
                 pass
         if CONFIG["telemetry"].getboolean("state_enabled"):
             try:
-               fields[MSG_FIELD_STATE] = CONFIG["telemetry"].getint("state_data")
+               fields[MSG_FIELD_STATE] = [CONFIG["telemetry"].getint("state_data"), int(time.time())]
             except:
                 pass
         if len(fields) > 0:
@@ -1317,7 +1441,15 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
         register_startup_delay=0,
         register_periodic=CONFIG["rns_server"].getboolean("register_periodic"),
         register_periodic_interval=CONFIG["rns_server"]["register_periodic_interval"],
-        statistic=None
+        statistic=None,
+        limiter_server_enabled=CONFIG["rns_server"].getboolean("limiter_server_enabled"),
+        limiter_server_calls=CONFIG["rns_server"]["limiter_server_calls"],
+        limiter_server_size=CONFIG["rns_server"]["limiter_server_size"],
+        limiter_server_duration=CONFIG["rns_server"]["limiter_server_duration"],
+        limiter_peer_enabled=CONFIG["rns_server"].getboolean("limiter_peer_enabled"),
+        limiter_peer_calls=CONFIG["rns_server"]["limiter_peer_calls"],
+        limiter_peer_size=CONFIG["rns_server"]["limiter_peer_size"],
+        limiter_peer_duration=CONFIG["rns_server"]["limiter_peer_duration"]
     )
 
     RNS_SERVER_PAGE.pages_config(
@@ -1412,12 +1544,10 @@ DEFAULT_CONFIG_OVERRIDE = '''# This is the user configuration file to override t
 # This also has the advantage that all changed settings can be kept when updating the program.
 
 
-#### Main program settings ####
 [main]
 fields_announce = False
 
 
-#### RNS server settings ####
 [rns_server]
 display_name = Server
 
@@ -1428,7 +1558,6 @@ announce_periodic = Yes
 announce_periodic_interval = 120 #Minutes
 
 
-#### Telemetry settings ####
 [telemetry]
 location_enabled = False
 location_lat = 0
@@ -1484,10 +1613,21 @@ announce_periodic_interval = 120 #Minutes
 # but is still used for the routing tables.
 announce_hidden = No
 
-
 # Register files/destinations periodically
 register_periodic = Yes
 register_periodic_interval = 30 #Minutes
+
+# Limits the number of simultaneous requests/calls per server.
+limiter_server_enabled = No
+limiter_server_calls = 1000 # Number of calls per duration. 0=Any
+limiter_server_size = 0 # Data transfer size in bytes per duration. 0=Any
+limiter_server_duration = 60 # Seconds
+
+# Limits the number of simultaneous requests/calls per peer.
+limiter_peer_enabled = Yes
+limiter_peer_calls = 30 # Number of calls per duration. 0=Any
+limiter_peer_size = 0 # Data transfer size in bytes per duration. 0=Any
+limiter_peer_duration = 60 # Seconds
 
 
 # Pages

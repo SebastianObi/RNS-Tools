@@ -28,8 +28,9 @@
 
 class BlockchainTokenFWD():
 
-    def __init__(self, owner):
+    def __init__(self, owner, name):
         self.owner = owner
+        self.name = name
 
         self.token = {
             "FWD": {},
@@ -62,23 +63,23 @@ class BlockchainTokenFWD():
     #################################################
 
 
-    def api_delete(self, token, url, data, json, headers, cookies, auth):
+    def api_delete(self, token, url, data, json, headers, cookies, auth, timeout):
         raise ValueError("Not implemented")
 
 
-    def api_get(self, token, url, data, json, headers, cookies, auth):
+    def api_get(self, token, url, data, json, headers, cookies, auth, timeout):
         raise ValueError("Not implemented")
 
 
-    def api_patch(self, token, url, data, json, headers, cookies, auth):
+    def api_patch(self, token, url, data, json, headers, cookies, auth, timeout):
         raise ValueError("Not implemented")
 
 
-    def api_post(self, token, url, data, json, headers, cookies, auth):
+    def api_post(self, token, url, data, json, headers, cookies, auth, timeout):
         raise ValueError("Not implemented")
 
 
-    def api_put(self, token, url, data, json, headers, cookies, auth):
+    def api_put(self, token, url, data, json, headers, cookies, auth, timeout):
         raise ValueError("Not implemented")
 
 

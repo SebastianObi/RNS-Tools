@@ -80,6 +80,124 @@ CONFIG = None
 RNS_CONNECTION = None
 RNS_SERVER_BLOCKCHAIN = None
 
+ANNOUNCE_DATA_CONTENT = 0x00
+ANNOUNCE_DATA_FIELDS  = 0x01
+ANNOUNCE_DATA_TITLE   = 0x02
+
+MSG_FIELD_EMBEDDED_LXMS    = 0x01
+MSG_FIELD_TELEMETRY        = 0x02
+MSG_FIELD_TELEMETRY_STREAM = 0x03
+MSG_FIELD_ICON             = 0x04
+MSG_FIELD_FILE_ATTACHMENTS = 0x05
+MSG_FIELD_IMAGE            = 0x06
+MSG_FIELD_AUDIO            = 0x07
+MSG_FIELD_THREAD           = 0x08
+MSG_FIELD_COMMANDS         = 0x09
+MSG_FIELD_RESULTS          = 0x0A
+
+MSG_FIELD_ANSWER             = 0xA0
+MSG_FIELD_ATTACHMENT         = 0xA1
+MSG_FIELD_COMMANDS_EXECUTE   = 0xA2
+MSG_FIELD_COMMANDS_RESULT    = 0xA3
+MSG_FIELD_CONTACT            = 0xA4
+MSG_FIELD_DATA               = 0xA5
+MSG_FIELD_DELETE             = 0xA6
+MSG_FIELD_EDIT               = 0xA7
+MSG_FIELD_GROUP              = 0xA8
+MSG_FIELD_HASH               = 0xA9
+MSG_FIELD_ICON_MENU          = 0xAA
+MSG_FIELD_ICON_SRC           = 0xAB
+MSG_FIELD_KEYBOARD           = 0xAC
+MSG_FIELD_KEYBOARD_INLINE    = 0xAD
+MSG_FIELD_LOCATION           = 0xAE
+MSG_FIELD_POLL               = 0xAF
+MSG_FIELD_POLL_ANSWER        = 0xB0
+MSG_FIELD_REACTION           = 0xB1
+MSG_FIELD_RECEIPT            = 0xB2
+MSG_FIELD_SCHEDULED          = 0xB3
+MSG_FIELD_SILENT             = 0xB4
+MSG_FIELD_SRC                = 0xB5
+MSG_FIELD_STATE              = 0xB6
+MSG_FIELD_STICKER            = 0xB7
+MSG_FIELD_TELEMETRY_DB       = 0xB8
+MSG_FIELD_TELEMETRY_PEER     = 0xB9
+MSG_FIELD_TELEMETRY_COMMANDS = 0xBA
+MSG_FIELD_TEMPLATE           = 0xBB
+MSG_FIELD_TOPIC              = 0xBC
+MSG_FIELD_TYPE               = 0xBD
+MSG_FIELD_TYPE_FIELDS        = 0xBE
+MSG_FIELD_VOICE              = 0xBF
+
+
+##############################################################################################################
+# RateLimiter Class
+
+
+class RateLimiter:
+    def __init__(self, calls, size, duration):
+        self.calls = calls
+        self.size = size
+        self.duration = duration
+        self.ts = time.time()
+        self.data_calls = {}
+        self.data_size = {}
+        self.lock = threading.Lock()
+        threading.Thread(target=self._jobs, daemon=True).start()
+
+
+    def handle(self, id):
+        if self.handle_call(id) and self.handle_size(id, 0):
+            return True
+        else:
+            return False
+
+
+    def handle_call(self, id):
+        with self.lock:
+            if self.calls == 0:
+                return True
+            if id not in self.data_calls:
+                self.data_calls[id] = []
+            self.data_calls[id] = [t for t in self.data_calls[id] if t > self.ts - self.duration]
+            if len(self.data_calls[id]) >= self.calls:
+                return False
+            else:
+                self.data_calls[id].append(self.ts)
+                return True
+
+
+    def handle_size(self, id, size):
+        with self.lock:
+            if self.size == 0:
+                return True
+            if id not in self.data_size:
+                self.data_size[id] = [0, self.ts]
+            if self.data_size[id][1] <= self.ts - self.duration:
+                self.data_size[id] = [0, self.ts]
+            if self.data_size[id][0] >= self.size:
+                return False
+            else:
+                self.data_size[id][0] += size
+                self.data_size[id][1] = self.ts
+                return True
+
+
+    def _jobs(self):
+        while True:
+            time.sleep(self.duration)
+            self.ts = time.time()
+            with self.lock:
+                if self.calls > 0:
+                    for id in list(self.data_calls.keys()):
+                        self.data_calls[id] = [t for t in self.data_calls[id] if t > self.ts - self.duration]
+                        if not self.data_calls[id]:
+                            del self.data_calls[id]
+
+                if self.size > 0:
+                    for id in list(self.data_size.keys()):
+                        if self.data_size[id][1] <= self.ts - self.duration:
+                            del self.data_size[id]
+
 
 ##############################################################################################################
 # ServerBlockchain Class
@@ -91,8 +209,13 @@ class ServerBlockchain:
     ACCOUNT_STATE_WAITING     = 0x02 # Waiting in local cache
     ACCOUNT_STATE_SYNCING     = 0x03 # Syncing/Transfering to server
     ACCOUNT_STATE_PROCESSING  = 0x04 # Processing/Execution on the blockchain
+    ACCOUNT_STATE_FAILED_TMP  = 0x05 # Temporary failed
 
     CONNECTION_TIMEOUT = 10 # Seconds
+
+    DELEGATE_STATE_RESIGNED = 0x00
+    DELEGATE_STATE_ACTIVE   = 0x01
+    DELEGATE_STATE_STANDBY  = 0x02
 
     KEY_RESULT        = 0x0A # Result
     KEY_RESULT_REASON = 0x0B # Result - Reason
@@ -108,19 +231,21 @@ class ServerBlockchain:
     KEY_A_DATA         = 0x01
     KEY_A_DELEGATE     = 0x02
     KEY_A_ID           = 0x03
-    KEY_A_NAME         = 0x04
-    KEY_A_NONCE        = 0x05
-    KEY_A_STATE        = 0x06
-    KEY_A_STATE_REASON = 0x07
-    KEY_A_TOKEN        = 0x08
-    KEY_A_TS           = 0x09
-    KEY_A_VOTE         = 0x0A
+    KEY_A_KEY          = 0x04
+    KEY_A_NAME         = 0x05
+    KEY_A_NONCE        = 0x06
+    KEY_A_STATE        = 0x07
+    KEY_A_STATE_REASON = 0x08
+    KEY_A_TOKEN        = 0x09
+    KEY_A_TS           = 0x0A
+    KEY_A_VOTE         = 0x0B
 
     KEY_A_MAPPING = {
         "balance":      KEY_A_BALANCE,
         "data":         KEY_A_DATA,
         "delegate":     KEY_A_DELEGATE,
         "id":           KEY_A_ID,
+        "key":          KEY_A_KEY,
         "name":         KEY_A_NAME,
         "nonce":        KEY_A_NONCE,
         "state":        KEY_A_STATE,
@@ -129,6 +254,10 @@ class ServerBlockchain:
         "ts":           KEY_A_TS,
         "vote":         KEY_A_VOTE,
     }
+
+    KEY_A_STATE_REASON_None                              = 0x00
+    KEY_A_STATE_REASON_WalletIndexAlreadyRegisteredError = 0x01
+    KEY_A_STATE_REASON_WalletIndexNotFoundError          = 0x02
 
     KEY_B_CONFIRMATIONS  = 0x00
     KEY_B_DATA           = 0x01
@@ -158,37 +287,57 @@ class ServerBlockchain:
         "ts":             KEY_B_TS,
     }
 
-    KEY_D_DATA       = 0x00
-    KEY_D_DATA_HASH  = 0x01
-    KEY_D_ID         = 0x02
-    KEY_D_NAME       = 0x03
-    KEY_D_NAME_HASH  = 0x04
-    KEY_D_STATE      = 0x05
-    KEY_D_STATE_HASH = 0x06
-    KEY_D_VALUE      = 0x07
-    KEY_D_VALUE_HASH = 0x08
+    KEY_D_BLOCK_ID      = 0x00
+    KEY_D_BLOCK_TS      = 0x01
+    KEY_D_DATA          = 0x02
+    KEY_D_DATA_HASH     = 0x03
+    KEY_D_FORGED_AMOUNT = 0x04
+    KEY_D_FORGED_BLOCKS = 0x05
+    KEY_D_FORGED_FEE    = 0x06
+    KEY_D_FORGED_REWARD = 0x07
+    KEY_D_FORGED_TOTAL  = 0x08
+    KEY_D_ID            = 0x09
+    KEY_D_NAME          = 0x0A
+    KEY_D_NAME_HASH     = 0x0B
+    KEY_D_STATE         = 0x0C
+    KEY_D_STATE_HASH    = 0x0D
+    KEY_D_VALUE         = 0x0E
+    KEY_D_VALUE_HASH    = 0x0F
+    KEY_D_VOTES         = 0x10
+    KEY_D_VOTES_PERCENT = 0x11
 
     KEY_D_MAPPING = {
-        "data":       KEY_D_DATA,
-        "data_hash":  KEY_D_DATA_HASH,
-        "id":         KEY_D_ID,
-        "name":       KEY_D_NAME,
-        "name_hash":  KEY_D_NAME_HASH,
-        "state":      KEY_D_STATE,
-        "state_hash": KEY_D_STATE_HASH,
-        "value":      KEY_D_VALUE,
-        "value_hash": KEY_D_VALUE_HASH,
+        "block_id":      KEY_D_BLOCK_ID,
+        "block_ts":      KEY_D_BLOCK_TS,
+        "data":          KEY_D_DATA,
+        "data_hash":     KEY_D_DATA_HASH,
+        "forged_amount": KEY_D_FORGED_AMOUNT,
+        "forged_blocks": KEY_D_FORGED_BLOCKS,
+        "forged_fee":    KEY_D_FORGED_FEE,
+        "forged_reward": KEY_D_FORGED_REWARD,
+        "forged_total":  KEY_D_FORGED_TOTAL,
+        "id":            KEY_D_ID,
+        "name":          KEY_D_NAME,
+        "name_hash":     KEY_D_NAME_HASH,
+        "state":         KEY_D_STATE,
+        "state_hash":    KEY_D_STATE_HASH,
+        "value":         KEY_D_VALUE,
+        "value_hash":    KEY_D_VALUE_HASH,
+        "votes":         KEY_D_VOTES,
+        "votes_percent": KEY_D_VOTES_PERCENT,
     }
 
     KEY_E_FILTER      = 0x00
-    KEY_E_LIMIT       = 0x01
-    KEY_E_LIMIT_START = 0x02
-    KEY_E_ORDER       = 0x03
-    KEY_E_SEARCH      = 0x04
-    KEY_E_TOKEN       = 0x05
+    KEY_E_HASH        = 0x01
+    KEY_E_LIMIT       = 0x02
+    KEY_E_LIMIT_START = 0x03
+    KEY_E_ORDER       = 0x04
+    KEY_E_SEARCH      = 0x05
+    KEY_E_TOKEN       = 0x06
 
     KEY_E_MAPPING = {
         "filter":      KEY_E_FILTER,
+        "hash":        KEY_E_HASH,
         "limit":       KEY_E_LIMIT,
         "limit_start": KEY_E_LIMIT_START,
         "order":       KEY_E_ORDER,
@@ -217,28 +366,34 @@ class ServerBlockchain:
     }
 
     KEY_T_AMOUNT        = 0x00
-    KEY_T_COMMENT       = 0x01
-    KEY_T_CONFIRMATIONS = 0x02
-    KEY_T_DATA          = 0x03
-    KEY_T_DEST          = 0x04
-    KEY_T_FEE           = 0x05
-    KEY_T_ID            = 0x06
-    KEY_T_INDEX         = 0x07
-    KEY_T_SOURCE        = 0x08
-    KEY_T_STATE         = 0x09
-    KEY_T_STATE_REASON  = 0x0A
-    KEY_T_TS            = 0x0B
-    KEY_T_TYPE          = 0x0C
+    KEY_T_BLOCK_ID      = 0x01
+    KEY_T_COMMENT       = 0x02
+    KEY_T_CONFIRMATIONS = 0x03
+    KEY_T_DATA          = 0x04
+    KEY_T_DEST          = 0x05
+    KEY_T_DIRECTION     = 0x06
+    KEY_T_FEE           = 0x07
+    KEY_T_ID            = 0x08
+    KEY_T_INDEX         = 0x09
+    KEY_T_NONCE         = 0x0A
+    KEY_T_SOURCE        = 0x0B
+    KEY_T_STATE         = 0x0C
+    KEY_T_STATE_REASON  = 0x0D
+    KEY_T_TS            = 0x0E
+    KEY_T_TYPE          = 0x0F
 
     KEY_T_MAPPING = {
         "amount":        KEY_T_AMOUNT,
+        "block_id":      KEY_T_BLOCK_ID,
         "comment":       KEY_T_COMMENT,
         "confirmations": KEY_T_CONFIRMATIONS,
         "data":          KEY_T_DATA,
         "dest":          KEY_T_DEST,
+        "direction":     KEY_T_DIRECTION,
         "fee":           KEY_T_FEE,
         "id":            KEY_T_ID,
         "index":         KEY_T_INDEX,
+        "nonce":         KEY_T_NONCE,
         "source":        KEY_T_SOURCE,
         "state":         KEY_T_STATE,
         "state_reason":  KEY_T_STATE_REASON,
@@ -246,13 +401,54 @@ class ServerBlockchain:
         "type":          KEY_T_TYPE,
     }
 
+    KEY_T_STATE_REASON_None                                      = 0x00
+    KEY_T_STATE_REASON_AlreadyVotedError                         = 0x01
+    KEY_T_STATE_REASON_ColdWalletError                           = 0x02
+    KEY_T_STATE_REASON_DeactivatedTransactionHandlerError        = 0x03
+    KEY_T_STATE_REASON_HtlcLockExpiredError                      = 0x04
+    KEY_T_STATE_REASON_HtlcLockNotExpiredError                   = 0x05
+    KEY_T_STATE_REASON_HtlcLockTransactionNotFoundError          = 0x06
+    KEY_T_STATE_REASON_HtlcSecretHashMismatchError               = 0x07
+    KEY_T_STATE_REASON_InsufficientBalanceError                  = 0x08
+    KEY_T_STATE_REASON_InvalidMultiSignatureError                = 0x09
+    KEY_T_STATE_REASON_InvalidMultiSignaturesError               = 0x0A
+    KEY_T_STATE_REASON_InvalidSecondSignatureError               = 0x0B
+    KEY_T_STATE_REASON_InvalidTransactionTypeError               = 0x0C
+    KEY_T_STATE_REASON_IpfsHashAlreadyExists                     = 0x0D
+    KEY_T_STATE_REASON_LegacyMultiSignatureError                 = 0x0E
+    KEY_T_STATE_REASON_LegacyMultiSignatureRegistrationError     = 0x0F
+    KEY_T_STATE_REASON_MissingMultiSignatureOnSenderError        = 0x10
+    KEY_T_STATE_REASON_MultiSignatureAlreadyRegisteredError      = 0x11
+    KEY_T_STATE_REASON_MultiSignatureKeyCountMismatchError       = 0x12
+    KEY_T_STATE_REASON_MultiSignatureMinimumKeysError            = 0x13
+    KEY_T_STATE_REASON_NotEnoughDelegatesError                   = 0x14
+    KEY_T_STATE_REASON_NotImplementedError                       = 0x15
+    KEY_T_STATE_REASON_NotSupportedForMultiSignatureWalletError  = 0x16
+    KEY_T_STATE_REASON_NoVoteError                               = 0x17
+    KEY_T_STATE_REASON_SecondSignatureAlreadyRegisteredError     = 0x18
+    KEY_T_STATE_REASON_SenderWalletMismatchError                 = 0x19
+    KEY_T_STATE_REASON_UnexpectedNonceError                      = 0x1A
+    KEY_T_STATE_REASON_UnexpectedSecondSignatureError            = 0x1B
+    KEY_T_STATE_REASON_UnsupportedMultiSignatureTransactionError = 0x1C
+    KEY_T_STATE_REASON_UnvoteMismatchError                       = 0x1D
+    KEY_T_STATE_REASON_VotedForNonDelegateError                  = 0x1E
+    KEY_T_STATE_REASON_VotedForResignedDelegateError             = 0x1F
+    KEY_T_STATE_REASON_WalletAlreadyResignedError                = 0x20
+    KEY_T_STATE_REASON_WalletIsAlreadyDelegateError              = 0x21
+    KEY_T_STATE_REASON_WalletNotADelegateError                   = 0x22
+    KEY_T_STATE_REASON_WalletNoUsernameError                     = 0x23
+    KEY_T_STATE_REASON_WalletUsernameAlreadyRegisteredError      = 0x24
+
     RESULT_ERROR       = 0x00
     RESULT_OK          = 0x01
     RESULT_SYNCRONIZE  = 0x02
     RESULT_NO_IDENTITY = 0x03
     RESULT_NO_USER     = 0x04
     RESULT_NO_RIGHT    = 0x05
-    RESULT_PARTIAL     = 0x06
+    RESULT_NO_DATA     = 0x06
+    RESULT_LIMIT_ALL   = 0x07
+    RESULT_LIMIT_PEER  = 0x08
+    RESULT_PARTIAL     = 0x09
     RESULT_DISABLED    = 0xFE
     RESULT_BLOCKED     = 0xFF
 
@@ -275,6 +471,7 @@ class ServerBlockchain:
     TRANSACTION_STATE_WAITING     = 0x02 # Waiting in local cache
     TRANSACTION_STATE_SYNCING     = 0x03 # Syncing/Transfering to server
     TRANSACTION_STATE_PROCESSING  = 0x04 # Processing/Execution on the blockchain
+    TRANSACTION_STATE_FAILED_TMP  = 0x05 # Temporary failed
 
     TRANSACTION_TYPE_TRANSFER                 = 0x00
     TRANSACTION_TYPE_SWAP                     = 0x01
@@ -295,6 +492,8 @@ class ServerBlockchain:
     TRANSACTION_TYPE_BRIDGECHAIN_REGISTRATION = 0x10
     TRANSACTION_TYPE_BRIDGECHAIN_RESIGNATION  = 0x11
     TRANSACTION_TYPE_BRIDGECHAIN_UPDATE       = 0x12
+    TRANSACTION_TYPE_SSI_TRANSACTION          = 0x13
+    TRANSACTION_TYPE_DNS_TRANSACTION          = 0x14
 
     TYPE_API      = 0x00
     TYPE_EXPLORER = 0x01
@@ -302,7 +501,7 @@ class ServerBlockchain:
     TYPE_UNKNOWN  = 0xFF
 
 
-    def __init__(self, storage_path=None, identity_file="identity", identity=None, destination_name="nomadnetwork", destination_type="bc", announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False, register_startup=True, register_startup_delay=0, register_periodic=True, register_periodic_interval=30):
+    def __init__(self, storage_path=None, identity_file="identity", identity=None, destination_name="nomadnetwork", destination_type="bc", announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False, register_startup=True, register_startup_delay=0, register_periodic=True, register_periodic_interval=30, limiter_server_enabled=False, limiter_server_calls=1000, limiter_server_size=0, limiter_server_duration=60, limiter_peer_enabled=True, limiter_peer_calls=15, limiter_peer_size=500*1024, limiter_peer_duration=60):
         self.storage_path = storage_path
 
         self.identity_file = identity_file
@@ -368,6 +567,16 @@ class ServerBlockchain:
         self.register()
 
         self.token_init()
+
+        if limiter_server_enabled:
+            self.limiter_server = RateLimiter(int(limiter_server_calls), int(limiter_server_size), int(limiter_server_duration))
+        else:
+            self.limiter_server = None
+
+        if limiter_peer_enabled:
+            self.limiter_peer = RateLimiter(int(limiter_peer_calls), int(limiter_peer_size), int(limiter_peer_duration))
+        else:
+            self.limiter_peer = None
 
 
     def register_announce_callback(self, handler_function):
@@ -556,8 +765,17 @@ class ServerBlockchain:
 
 
     def response_api(self, path, data, request_id, link_id, remote_identity, requested_at):
+        if not remote_identity:
+            return msgpack.packb({ServerBlockchain.KEY_RESULT: ServerBlockchain.RESULT_NO_IDENTITY})
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return msgpack.packb({ServerBlockchain.KEY_RESULT: ServerBlockchain.RESULT_LIMIT_SERVER})
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return msgpack.packb({ServerBlockchain.KEY_RESULT: ServerBlockchain.RESULT_LIMIT_PEER})
+
         if not data:
-            return None
+            return msgpack.packb({ServerBlockchain.KEY_RESULT: ServerBlockchain.RESULT_NO_DATA})
 
         RNS.log("Server - Response - API", RNS.LOG_DEBUG)
         RNS.log(data, RNS.LOG_EXTREME)
@@ -577,17 +795,18 @@ class ServerBlockchain:
                     value_headers = value["headers"] if "headers" in value else None
                     value_cookies = value["cookies"] if "cookies" in value else None
                     value_auth = value["auth"] if "auth" in value else None
+                    value_timeout = value["timeout"] if "timeout" in value else None
 
                     if "delete" in value:
-                        response = self.api_delete(token=value_token, url=value_url if value_url else value["delete"], data=value_data, json=value_json, headers=value_headers, cookies=value_cookies, auth=value_auth)
+                        response = self.api_delete(token=value_token, url=value_url if value_url else value["delete"], data=value_data, json=value_json, headers=value_headers, cookies=value_cookies, auth=value_auth, timeout=value_timeout)
                     elif "get" in value:
-                        response = self.api_get(token=value_token, url=value_url if value_url else value["get"], data=value_data, json=value_json, headers=value_headers, cookies=value_cookies, auth=value_auth)
+                        response = self.api_get(token=value_token, url=value_url if value_url else value["get"], data=value_data, json=value_json, headers=value_headers, cookies=value_cookies, auth=value_auth, timeout=value_timeout)
                     elif "patch" in value:
-                        response = self.api_patch(token=value_token, url=value_url if value_url else value["patch"], data=value_data, json=value_json, headers=value_headers, cookies=value_cookies, auth=value_auth)
+                        response = self.api_patch(token=value_token, url=value_url if value_url else value["patch"], data=value_data, json=value_json, headers=value_headers, cookies=value_cookies, auth=value_auth, timeout=value_timeout)
                     elif "post" in value:
-                        response = self.api_post(token=value_token, url=value_url if value_url else value["post"], data=value_data, json=value_json, headers=value_headers, cookies=value_cookies, auth=value_auth)
+                        response = self.api_post(token=value_token, url=value_url if value_url else value["post"], data=value_data, json=value_json, headers=value_headers, cookies=value_cookies, auth=value_auth, timeout=value_timeout)
                     elif "put" in value:
-                        response = self.api_put(token=value_token, url=value_url if value_url else value["put"], data=value_data, json=value_json, headers=value_headers, cookies=value_cookies, auth=value_auth)
+                        response = self.api_put(token=value_token, url=value_url if value_url else value["put"], data=value_data, json=value_json, headers=value_headers, cookies=value_cookies, auth=value_auth, timeout=value_timeout)
                     else:
                         raise ValueError("Wrong api type")
                     data_return[ServerBlockchain.KEY_API][key] = response
@@ -600,12 +819,27 @@ class ServerBlockchain:
 
         data_return = msgpack.packb(data_return)
 
+        if self.limiter_server:
+            self.limiter_server.handle_size("server", len(data_return))
+
+        if self.limiter_peer:
+             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
+
         return data_return
 
 
     def response_explorer(self, path, data, request_id, link_id, remote_identity, requested_at):
+        if not remote_identity:
+            return msgpack.packb({ServerBlockchain.KEY_RESULT: ServerBlockchain.RESULT_NO_IDENTITY})
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return msgpack.packb({ServerBlockchain.KEY_RESULT: ServerBlockchain.RESULT_LIMIT_SERVER})
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return msgpack.packb({ServerBlockchain.KEY_RESULT: ServerBlockchain.RESULT_LIMIT_PEER})
+
         if not data:
-            return None
+            return msgpack.packb({ServerBlockchain.KEY_RESULT: ServerBlockchain.RESULT_NO_DATA})
 
         RNS.log("Server - Response - Explorer", RNS.LOG_DEBUG)
         RNS.log(data, RNS.LOG_EXTREME)
@@ -618,47 +852,45 @@ class ServerBlockchain:
             # explorer
             data_explorer = data[ServerBlockchain.KEY_E]
             filter = data_explorer[ServerBlockchain.KEY_E_FILTER] if ServerBlockchain.KEY_E_FILTER in data_explorer else None
+            hash = data_explorer[ServerBlockchain.KEY_E_HASH] if ServerBlockchain.KEY_E_HASH in data_explorer else None
             limit = data_explorer[ServerBlockchain.KEY_E_LIMIT] if ServerBlockchain.KEY_E_LIMIT in data_explorer else None
             limit_start = data_explorer[ServerBlockchain.KEY_E_LIMIT_START] if ServerBlockchain.KEY_E_LIMIT_START in data_explorer else None
             order = data_explorer[ServerBlockchain.KEY_E_ORDER] if ServerBlockchain.KEY_E_ORDER in data_explorer else None
             search = data_explorer[ServerBlockchain.KEY_E_SEARCH] if ServerBlockchain.KEY_E_SEARCH in data_explorer else None
             token = data_explorer[ServerBlockchain.KEY_E_TOKEN] if ServerBlockchain.KEY_E_TOKEN in data_explorer else None
 
+            if ServerBlockchain.KEY_A in data:
+                mapping = {v: k for k, v in ServerBlockchain.KEY_A_MAPPING.items()}
+            elif ServerBlockchain.KEY_B in data:
+                mapping = {v: k for k, v in ServerBlockchain.KEY_B_MAPPING.items()}
+            elif ServerBlockchain.KEY_D in data:
+                mapping = {v: k for k, v in ServerBlockchain.KEY_D_MAPPING.items()}
+            elif ServerBlockchain.KEY_I in data:
+                mapping = {v: k for k, v in ServerBlockchain.KEY_I_MAPPING.items()}
+            elif ServerBlockchain.KEY_T in data:
+                mapping = {v: k for k, v in ServerBlockchain.KEY_T_MAPPING.items()}
+            else:
+                mapping = {}
+
+            # explorer - filter
+            if filter != None and len(filter) > 0:
+                filter_result = {}
+                for filter_key, filter_value in filter.items():
+                    if filter_key in mapping:
+                        filter_result[mapping[filter_key]] = filter_value
+                if len(filter_result) > 0:
+                    filter = filter_result
+                else:
+                    filter = None
+
             # explorer - order
             if order != None:
                 order_mapping = {v: k for k, v in ServerBlockchain.KEY_E_ORDER_MAPPING.items()}
                 order[1] = order_mapping[order[1]]
-
-                if ServerBlockchain.KEY_A in data:
-                    order_mapping = {v: k for k, v in ServerBlockchain.KEY_A_MAPPING.items()}
-                    if order[0] in order_mapping:
-                        order[0] = order_mapping[order[0]]
-                    else:
-                        order = None
-                elif ServerBlockchain.KEY_B in data:
-                    order_mapping = {v: k for k, v in ServerBlockchain.KEY_B_MAPPING.items()}
-                    if order[0] in order_mapping:
-                        order[0] = order_mapping[order[0]]
-                    else:
-                        order = None
-                elif ServerBlockchain.KEY_D in data:
-                    order_mapping = {v: k for k, v in ServerBlockchain.KEY_D_MAPPING.items()}
-                    if order[0] in order_mapping:
-                        order[0] = order_mapping[order[0]]
-                    else:
-                        order = None
-                elif ServerBlockchain.KEY_I in data:
-                    order_mapping = {v: k for k, v in ServerBlockchain.KEY_I_MAPPING.items()}
-                    if order[0] in order_mapping:
-                        order[0] = order_mapping[order[0]]
-                    else:
-                        order = None
-                elif ServerBlockchain.KEY_T in data:
-                    order_mapping = {v: k for k, v in ServerBlockchain.KEY_T_MAPPING.items()}
-                    if order[0] in order_mapping:
-                        order[0] = order_mapping[order[0]]
-                    else:
-                        order = None
+                if order[0] in mapping:
+                    order[0] = mapping[order[0]]
+                else:
+                    order = None
 
             # accounts
             if ServerBlockchain.KEY_A in data:
@@ -670,7 +902,10 @@ class ServerBlockchain:
                         for key, value in result.items():
                             if key in ServerBlockchain.KEY_A_MAPPING:
                                 accounts[account_id][ServerBlockchain.KEY_A_MAPPING[key]] = value
-                    data_return[ServerBlockchain.KEY_A] = [count, accounts]
+                    hash_new = RNS.Identity.full_hash(msgpack.packb(accounts))
+                    if hash != hash_new:
+                        data_return[ServerBlockchain.KEY_A] = [count, accounts]
+                        data_return[ServerBlockchain.KEY_E] = {ServerBlockchain.KEY_E_HASH: hash_new}
                 except Exception as e:
                     self.log_exception(e, "Server - Explorer - Accounts")
                     data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
@@ -685,7 +920,10 @@ class ServerBlockchain:
                         for key, value in result.items():
                             if key in ServerBlockchain.KEY_B_MAPPING:
                                 blocks[blocks_id][ServerBlockchain.KEY_B_MAPPING[key]] = value
-                    data_return[ServerBlockchain.KEY_B] = [count, blocks]
+                    hash_new = RNS.Identity.full_hash(msgpack.packb(blocks))
+                    if hash != hash_new:
+                        data_return[ServerBlockchain.KEY_B] = [count, blocks]
+                        data_return[ServerBlockchain.KEY_E] = {ServerBlockchain.KEY_E_HASH: hash_new}
                 except Exception as e:
                     self.log_exception(e, "Server - Explorer - Blocks")
                     data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
@@ -700,7 +938,10 @@ class ServerBlockchain:
                         for key, value in result.items():
                             if key in ServerBlockchain.KEY_D_MAPPING:
                                 delegates[delegate_id][ServerBlockchain.KEY_D_MAPPING[key]] = value
-                    data_return[ServerBlockchain.KEY_D] = [count, delegates]
+                    hash_new = RNS.Identity.full_hash(msgpack.packb(delegates))
+                    if hash != hash_new:
+                        data_return[ServerBlockchain.KEY_D] = [count, delegates]
+                        data_return[ServerBlockchain.KEY_E] = {ServerBlockchain.KEY_E_HASH: hash_new}
                 except Exception as e:
                     self.log_exception(e, "Server - Explorer - Delegates")
                     data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
@@ -736,7 +977,10 @@ class ServerBlockchain:
                                             infos[info_id][ServerBlockchain.KEY_I_MAPPING[key]][ServerBlockchain.KEY_T_MAPPING[value_key]] = value_value
                                 else:
                                     infos[info_id][ServerBlockchain.KEY_I_MAPPING[key]] = value
-                    data_return[ServerBlockchain.KEY_I] = [count, infos]
+                    hash_new = RNS.Identity.full_hash(msgpack.packb(infos))
+                    if hash != hash_new:
+                        data_return[ServerBlockchain.KEY_I] = [count, infos]
+                        data_return[ServerBlockchain.KEY_E] = {ServerBlockchain.KEY_E_HASH: hash_new}
                 except Exception as e:
                     self.log_exception(e, "Server - Explorer - Infos")
                     data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
@@ -751,19 +995,37 @@ class ServerBlockchain:
                         for key, value in result.items():
                             if key in ServerBlockchain.KEY_T_MAPPING:
                                 transactions[transaction_id][ServerBlockchain.KEY_T_MAPPING[key]] = value
-                    data_return[ServerBlockchain.KEY_T] = [count, transactions]
+                    hash_new = RNS.Identity.full_hash(msgpack.packb(transactions))
+                    if hash != hash_new:
+                        data_return[ServerBlockchain.KEY_T] = [count, transactions]
+                        data_return[ServerBlockchain.KEY_E] = {ServerBlockchain.KEY_E_HASH: hash_new}
                 except Exception as e:
                     self.log_exception(e, "Server - Explorer - Transactions")
                     data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
 
         data_return = msgpack.packb(data_return)
 
+        if self.limiter_server:
+            self.limiter_server.handle_size("server", len(data_return))
+
+        if self.limiter_peer:
+             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
+
         return data_return
 
 
     def response_wallet(self, path, data, request_id, link_id, remote_identity, requested_at):
+        if not remote_identity:
+            return msgpack.packb({ServerBlockchain.KEY_RESULT: ServerBlockchain.RESULT_NO_IDENTITY})
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return msgpack.packb({ServerBlockchain.KEY_RESULT: ServerBlockchain.RESULT_LIMIT_SERVER})
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return msgpack.packb({ServerBlockchain.KEY_RESULT: ServerBlockchain.RESULT_LIMIT_PEER})
+
         if not data:
-            return None
+            return msgpack.packb({ServerBlockchain.KEY_RESULT: ServerBlockchain.RESULT_NO_DATA})
 
         RNS.log("Server - Response - Wallet", RNS.LOG_DEBUG)
         RNS.log(data, RNS.LOG_EXTREME)
@@ -808,9 +1070,14 @@ class ServerBlockchain:
                             data_return[ServerBlockchain.KEY_A][account_id_new][ServerBlockchain.KEY_A_ID] = account_id
                         if "data" in result and result["data"] != None and len(result["data"]) > 0:
                             data_return[ServerBlockchain.KEY_A][account_id_new][ServerBlockchain.KEY_A_DATA] = result["data"]
+                        if "state_reason" in result:
+                            data_return[ServerBlockchain.KEY_A][account_id_new][ServerBlockchain.KEY_A_STATE_REASON] = result["state_reason"]
                         account_id = account_id_new
                     except Exception as e:
                         self.log_exception(e, "Server - Wallet - New account")
+                        data_return[ServerBlockchain.KEY_A][account_id] = {
+                            ServerBlockchain.KEY_A_STATE: ServerBlockchain.ACCOUNT_STATE_FAILED_TMP
+                        }
                         data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
 
                 # accounts_get - Existing account
@@ -856,12 +1123,17 @@ class ServerBlockchain:
                             transactions[transaction_id_new] = {
                                 ServerBlockchain.KEY_T_STATE: result["state"] if "state" in result else ServerBlockchain.TRANSACTION_STATE_PROCESSING
                             }
-                            if "data" in result and result["data"] != None and len(result["data"]) > 0:
-                                transactions[transaction_id_new][ServerBlockchain.KEY_T_DATA] = result["data"]
                             if transaction_id_new != transaction_id:
                                 transactions[transaction_id_new][ServerBlockchain.KEY_T_ID] = transaction_id
+                            if "data" in result and result["data"] != None and len(result["data"]) > 0:
+                                transactions[transaction_id_new][ServerBlockchain.KEY_T_DATA] = result["data"]
+                            if "state_reason" in result:
+                                transactions[transaction_id_new][ServerBlockchain.KEY_T_STATE_REASON] = result["state_reason"]
                         except Exception as e:
                             self.log_exception(e, "Server - Wallet - New transaction")
+                            transactions[transaction_id] = {
+                                ServerBlockchain.KEY_T_STATE: ServerBlockchain.TRANSACTION_STATE_FAILED_TMP
+                            }
                             data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
 
                 if len(transactions) > 0:
@@ -938,6 +1210,12 @@ class ServerBlockchain:
 
         data_return = msgpack.packb(data_return)
 
+        if self.limiter_server:
+            self.limiter_server.handle_size("server", len(data_return))
+
+        if self.limiter_peer:
+             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
+
         return data_return
 
 
@@ -971,29 +1249,29 @@ class ServerBlockchain:
     #################################################
 
 
-    def api_delete(self, token, url, data, json, headers, cookies, auth):
+    def api_delete(self, token, url, data, json, headers, cookies, auth, timeout):
         RNS.log("Server - API - Delete: "+str(token), RNS.LOG_DEBUG)
-        return self.token[self.token_map[token]].api_delete(token, url, data, json, headers, cookies, auth)
+        return self.token[self.token_map[token]].api_delete(token, url, data, json, headers, cookies, auth, timeout)
 
 
-    def api_get(self, token, url, data, json, headers, cookies, auth):
+    def api_get(self, token, url, data, json, headers, cookies, auth, timeout):
         RNS.log("Server - API - Get: "+str(token), RNS.LOG_DEBUG)
-        return self.token[self.token_map[token]].api_get(token, url, data, json, headers, cookies, auth)
+        return self.token[self.token_map[token]].api_get(token, url, data, json, headers, cookies, auth, timeout)
 
 
-    def api_patch(self, token, url, data, json, headers, cookies, auth):
+    def api_patch(self, token, url, data, json, headers, cookies, auth, timeout):
         RNS.log("Server - API - Patch: "+str(token), RNS.LOG_DEBUG)
-        return self.token[self.token_map[token]].api_patch(token, url, data, json, headers, cookies, auth)
+        return self.token[self.token_map[token]].api_patch(token, url, data, json, headers, cookies, auth, timeout)
 
 
-    def api_post(self, token, url, data, json, headers, cookies, auth):
+    def api_post(self, token, url, data, json, headers, cookies, auth, timeout):
         RNS.log("Server - API - Post: "+str(token), RNS.LOG_DEBUG)
-        return self.token[self.token_map[token]].api_post(token, url, data, json, headers, cookies, auth)
+        return self.token[self.token_map[token]].api_post(token, url, data, json, headers, cookies, auth, timeout)
 
 
-    def api_put(self, token, url, data, json, headers, cookies, auth):
+    def api_put(self, token, url, data, json, headers, cookies, auth, timeout):
         RNS.log("Server - API - Put: "+str(token), RNS.LOG_DEBUG)
-        return self.token[self.token_map[token]].api_put(token, url, data, json, headers, cookies, auth)
+        return self.token[self.token_map[token]].api_put(token, url, data, json, headers, cookies, auth, timeout)
 
 
     #################################################
@@ -1092,7 +1370,7 @@ class ServerBlockchain:
                 for attribute_name in dir(module):
                     attribute = getattr(module, attribute_name)
                     if isinstance(attribute, type):
-                        self.token[token_parent] = attribute(self)
+                        self.token[token_parent] = attribute(self, token_parent)
                         for token_child in self.token[token_parent].token:
                             self.token_map[token_child] = token_parent
                         break
@@ -1439,6 +1717,24 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
     if path is None:
         path = PATH
 
+    announce_data = CONFIG["rns_server"]["display_name"]
+    if CONFIG["main"].getboolean("fields_announce"):
+        fields = {}
+        if CONFIG["telemetry"].getboolean("location_enabled"):
+            try:
+               fields[MSG_FIELD_LOCATION] = [CONFIG["telemetry"].getfloat("location_lat"), CONFIG["telemetry"].getfloat("location_lon")]
+            except:
+                pass
+        if CONFIG["telemetry"].getboolean("state_enabled"):
+            try:
+               fields[MSG_FIELD_STATE] = [CONFIG["telemetry"].getint("state_data"), int(time.time())]
+            except:
+                pass
+        if len(fields) > 0:
+            announce_data = {ANNOUNCE_DATA_CONTENT: CONFIG["rns_server"]["display_name"].encode("utf-8"), ANNOUNCE_DATA_TITLE: None, ANNOUNCE_DATA_FIELDS: fields}
+            log("RNS - Configured announce data: "+str(announce_data), LOG_DEBUG)
+            announce_data = msgpack.packb(announce_data)
+
     RNS_SERVER_BLOCKCHAIN = ServerBlockchain(
         storage_path=path,
         identity_file="identity",
@@ -1449,8 +1745,16 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
         announce_startup_delay=CONFIG["rns_server"]["announce_startup_delay"],
         announce_periodic=CONFIG["rns_server"].getboolean("announce_periodic"),
         announce_periodic_interval=CONFIG["rns_server"]["announce_periodic_interval"],
-        announce_data=CONFIG["rns_server"]["display_name"],
-        announce_hidden=CONFIG["rns_server"].getboolean("announce_hidden")
+        announce_data=announce_data,
+        announce_hidden=CONFIG["rns_server"].getboolean("announce_hidden"),
+        limiter_server_enabled=CONFIG["rns_server"].getboolean("limiter_server_enabled"),
+        limiter_server_calls=CONFIG["rns_server"]["limiter_server_calls"],
+        limiter_server_size=CONFIG["rns_server"]["limiter_server_size"],
+        limiter_server_duration=CONFIG["rns_server"]["limiter_server_duration"],
+        limiter_peer_enabled=CONFIG["rns_server"].getboolean("limiter_peer_enabled"),
+        limiter_peer_calls=CONFIG["rns_server"]["limiter_peer_calls"],
+        limiter_peer_size=CONFIG["rns_server"]["limiter_peer_size"],
+        limiter_peer_duration=CONFIG["rns_server"]["limiter_peer_duration"],
     )
 
     log("RNS - Connected", LOG_DEBUG)
@@ -1508,7 +1812,7 @@ DEFAULT_CONFIG_OVERRIDE = '''# This is the user configuration file to override t
 # This file can be used to clearly summarize all settings that deviate from the default.
 # This also has the advantage that all changed settings can be kept when updating the program.
 
-#### RNS server settings ####
+
 [rns_server]
 display_name = Server
 
@@ -1518,6 +1822,14 @@ announce_startup_delay = 0 #Seconds
 announce_periodic = Yes
 announce_periodic_interval = 120 #Minutes
 
+
+[telemetry]
+location_enabled = False
+location_lat = 0
+location_lon = 0
+
+state_enabled = False
+state_data = 0
 '''
 
 
@@ -1534,6 +1846,10 @@ enabled = True
 
 # Name of the program. Only for display in the log or program startup.
 name = RNS Server Blockchain
+
+# Transport extended data in the announce.
+# This is needed for the integration of advanced client apps.
+fields_announce = True
 
 
 #### RNS server settings ####
@@ -1561,6 +1877,28 @@ announce_periodic_interval = 120 #Minutes
 # The announce is hidden for client applications
 # but is still used for the routing tables.
 announce_hidden = No
+
+# Limits the number of simultaneous requests/calls per server.
+limiter_server_enabled = No
+limiter_server_calls = 1000 # Number of calls per duration. 0=Any
+limiter_server_size = 0 # Data transfer size in bytes per duration. 0=Any
+limiter_server_duration = 60 # Seconds
+
+# Limits the number of simultaneous requests/calls per peer.
+limiter_peer_enabled = Yes
+limiter_peer_calls = 30 # Number of calls per duration. 0=Any
+limiter_peer_size = 0 # Data transfer size in bytes per duration. 0=Any
+limiter_peer_duration = 60 # Seconds
+
+
+#### Telemetry settings ####
+[telemetry]
+location_enabled = False
+location_lat = 0
+location_lon = 0
+
+state_enabled = False
+state_data = 0
 '''
 
 

@@ -90,7 +90,15 @@ DEFAULT_CONFIG = {
     "telemetry_location_lon": 0,
     "telemetry_state_enabled": False,
     "telemetry_state_data": 0,
-    "state_first_run": True
+    "state_first_run": True,
+    "limiter_server_enabled": False,
+    "limiter_server_calls": 1000,
+    "limiter_server_size": 0,
+    "limiter_server_duration": 60,
+    "limiter_peer_enabled": True,
+    "limiter_peer_calls": 30,
+    "limiter_peer_size": 0,
+    "limiter_peer_duration": 60,
 }
 DEFAULT_TITLE = None
 DEFAULT_CATEGORYS = {0: [0, "Test Category 1"], 1: [0, "Test Category 2"], 2: [4, "Test Subcategory 1"], 3: [4, "Test Subcategory 2"]}
@@ -110,6 +118,76 @@ RNS_SERVER_SHOP = None
 
 
 ##############################################################################################################
+# RateLimiter Class
+
+
+class RateLimiter:
+    def __init__(self, calls, size, duration):
+        self.calls = calls
+        self.size = size
+        self.duration = duration
+        self.ts = time.time()
+        self.data_calls = {}
+        self.data_size = {}
+        self.lock = threading.Lock()
+        threading.Thread(target=self._jobs, daemon=True).start()
+
+
+    def handle(self, id):
+        if self.handle_call(id) and self.handle_size(id, 0):
+            return True
+        else:
+            return False
+
+
+    def handle_call(self, id):
+        with self.lock:
+            if self.calls == 0:
+                return True
+            if id not in self.data_calls:
+                self.data_calls[id] = []
+            self.data_calls[id] = [t for t in self.data_calls[id] if t > self.ts - self.duration]
+            if len(self.data_calls[id]) >= self.calls:
+                return False
+            else:
+                self.data_calls[id].append(self.ts)
+                return True
+
+
+    def handle_size(self, id, size):
+        with self.lock:
+            if self.size == 0:
+                return True
+            if id not in self.data_size:
+                self.data_size[id] = [0, self.ts]
+            if self.data_size[id][1] <= self.ts - self.duration:
+                self.data_size[id] = [0, self.ts]
+            if self.data_size[id][0] >= self.size:
+                return False
+            else:
+                self.data_size[id][0] += size
+                self.data_size[id][1] = self.ts
+                return True
+
+
+    def _jobs(self):
+        while True:
+            time.sleep(self.duration)
+            self.ts = time.time()
+            with self.lock:
+                if self.calls > 0:
+                    for id in list(self.data_calls.keys()):
+                        self.data_calls[id] = [t for t in self.data_calls[id] if t > self.ts - self.duration]
+                        if not self.data_calls[id]:
+                            del self.data_calls[id]
+
+                if self.size > 0:
+                    for id in list(self.data_size.keys()):
+                        if self.data_size[id][1] <= self.ts - self.duration:
+                            del self.data_size[id]
+
+
+##############################################################################################################
 # ServerShop Class
 
 
@@ -120,7 +198,10 @@ class ServerShop:
     RESULT_NO_IDENTITY = 0x03
     RESULT_NO_USER     = 0x04
     RESULT_NO_RIGHT    = 0x05
-    RESULT_PARTIAL     = 0x06
+    RESULT_NO_DATA     = 0x06
+    RESULT_LIMIT_ALL   = 0x07
+    RESULT_LIMIT_PEER  = 0x08
+    RESULT_PARTIAL     = 0x09
     RESULT_DISABLED    = 0xFE
     RESULT_BLOCKED     = 0xFF
 
@@ -230,6 +311,16 @@ class ServerShop:
         self.register()
 
         self.core.db_shops_update_categorys_count(self.destination_hash())
+
+        if config and config["limiter_server_enabled"]:
+            self.limiter_server = RateLimiter(config["limiter_server_calls"], config["limiter_server_size"], config["limiter_server_duration"])
+        else:
+            self.limiter_server = None
+
+        if config and config["limiter_peer_enabled"]:
+            self.limiter_peer = RateLimiter(config["limiter_peer_calls"], config["limiter_peer_size"], config["limiter_peer_duration"])
+        else:
+            self.limiter_peer = None
 
 
     def start(self):
@@ -352,7 +443,7 @@ class ServerShop:
             if config["telemetry_location_enabled"]:
                 fields[self.core.MSG_FIELD_LOCATION] = [config["telemetry_location_lat"], config["telemetry_location_lon"]]
             if config["telemetry_state_enabled"]:
-                fields[self.core.MSG_FIELD_STATE] = config["telemetry_state_data"]
+                fields[self.core.MSG_FIELD_STATE] = [config["telemetry_state_data"], int(time.time())]
             if len(fields) > 0:
                 self.destination.announce(msgpack.packb({self.core.ANNOUNCE_DATA_CONTENT: config["title"].encode("utf-8"), self.core.ANNOUNCE_DATA_TITLE: None, self.core.ANNOUNCE_DATA_FIELDS: fields}), attached_interface=attached_interface)
             else:
@@ -628,18 +719,23 @@ class ServerShop:
 
 
     def sync_rx(self, path, data, request_id, link_id, remote_identity, requested_at):
+        if not remote_identity:
+            return msgpack.packb({"result": ServerShop.RESULT_NO_IDENTITY})
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return msgpack.packb({"result": ServerShop.RESULT_LIMIT_SERVER})
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return msgpack.packb({"result": ServerShop.RESULT_LIMIT_PEER})
+
         if not data:
-            return None
+            return msgpack.packb({"result": ServerShop.RESULT_NO_DATA})
 
         now = time.time()
 
         data_return = {}
 
-        if remote_identity:
-            vendor_id = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-        else:
-            data_return["result"] = ServerShop.RESULT_NO_IDENTITY
-            return msgpack.packb(data_return)
+        vendor_id = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
 
         if not self.right(vendor_id, [0, 1, 2, 255]):
             data_return["result"] = ServerShop.RESULT_NO_USER
@@ -757,6 +853,12 @@ class ServerShop:
 
         self.log_request(request_id=request_id, path=path, size_rx=sys.getsizeof(data), size_tx=sys.getsizeof(data_return))
 
+        if self.limiter_server:
+            self.limiter_server.handle_size("server", len(data_return))
+
+        if self.limiter_peer:
+             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
+
         return data_return
 
 
@@ -766,18 +868,23 @@ class ServerShop:
 
 
     def sync_tx(self, path, data, request_id, link_id, remote_identity, requested_at):
+        if not remote_identity:
+            return msgpack.packb({"result": ServerShop.RESULT_NO_IDENTITY})
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return msgpack.packb({"result": ServerShop.RESULT_LIMIT_SERVER})
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return msgpack.packb({"result": ServerShop.RESULT_LIMIT_PEER})
+
         if not data:
-            return None
+            return msgpack.packb({"result": ServerShop.RESULT_NO_DATA})
 
         now = time.time()
 
         data_return = {}
 
-        if remote_identity:
-            vendor_id = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-        else:
-            data_return["result"] = ServerShop.RESULT_NO_IDENTITY
-            return msgpack.packb(data_return)
+        vendor_id = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
 
         if not self.right(vendor_id, [0, 1, 2, 255]):
             data_return["result"] = ServerShop.RESULT_NO_USER
@@ -896,6 +1003,12 @@ class ServerShop:
         data_return = msgpack.packb(data_return)
 
         self.log_request(request_id=request_id, path=path, size_rx=sys.getsizeof(data), size_tx=sys.getsizeof(data_return))
+
+        if self.limiter_server:
+            self.limiter_server.handle_size("server", len(data_return))
+
+        if self.limiter_peer:
+             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
 
         return data_return
 
