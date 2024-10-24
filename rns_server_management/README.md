@@ -235,6 +235,17 @@ JSON output:
 {"Example": ["Test data", "", "text", 0]}
 ```
 
+The following hex/integer status values can be used:
+```
+0x00: None/Empty
+0x01: OK
+0x01: Info
+0x03: Warning
+0x04: Error
+0x05: Critical
+0xFF: Unknown
+```
+
 - locales
 This folder contains the gettext translations for all functions of the server. If a match is found, the text/menu is translated automatically. New text blocks must be added to the "base.pot" file and then defined for the respective languages.
 
@@ -257,6 +268,26 @@ JSON output:
 ```
 {"<service name>": ["<enabled status>", "<running status>"]}
 {"Example": ["disabled", "inactive"]}
+```
+
+The following hex/integer enabled status values can be used:
+```
+0x00: Disabled
+0x01: Enabled
+0x02: Manual
+0x03: Permanently disabled
+0x04: Alias
+0xFF: Unknown
+```
+
+The following hex/integer running status values can be used:
+```
+0x00: Inactive
+0x01: Active
+0x02: Activating
+0x03: Deactivating
+0x04: Failed
+0xFF: Unknown
 ```
 
 

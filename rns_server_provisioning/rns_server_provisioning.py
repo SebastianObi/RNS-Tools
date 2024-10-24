@@ -218,6 +218,39 @@ class RateLimiter:
 
 
 class ServerProvisioning:
+    CONNECTION_TIMEOUT = 10 # Seconds
+
+    JOBS_PERIODIC_DELAY    = 10 # Seconds
+    JOBS_PERIODIC_INTERVAL = 60 # Seconds
+
+    KEY_RESULT        = 0x0A # Result
+    KEY_RESULT_REASON = 0x0B # Result - Reason
+    KEY_A             = 0x0C # Account
+    KEY_D             = 0x0D # Device
+    KEY_T             = 0x0E # Transaction
+
+    KEY_A_DATA         = 0x00
+
+    KEY_A_MAPPING = {
+        "data": KEY_A_DATA,
+    }
+
+    KEY_T_DATA         = 0x00
+    KEY_T_ID           = 0x01
+    KEY_T_STATE        = 0x02
+    KEY_T_STATE_REASON = 0x03
+    KEY_T_TS           = 0x04
+    KEY_T_TYPE         = 0x05
+
+    KEY_T_MAPPING = {
+        "data":         KEY_T_DATA,
+        "id":           KEY_T_ID,
+        "state":        KEY_T_STATE,
+        "state_reason": KEY_T_STATE_REASON,
+        "ts":           KEY_T_TS,
+        "type":         KEY_T_TYPE,
+    }
+
     RESULT_ERROR       = 0x00
     RESULT_OK          = 0x01
     RESULT_SYNCRONIZE  = 0x02
@@ -230,6 +263,38 @@ class ServerProvisioning:
     RESULT_PARTIAL     = 0x09
     RESULT_DISABLED    = 0xFE
     RESULT_BLOCKED     = 0xFF
+
+    STATE_NO_PATH            = 0x00
+    STATE_PATH_REQUESTED     = 0x01
+    STATE_ESTABLISHING_LINK  = 0x02
+    STATE_LINK_TIMEOUT       = 0x03
+    STATE_LINK_ESTABLISHED   = 0x04
+    STATE_REQUESTING         = 0x05
+    STATE_REQUEST_SENT       = 0x06
+    STATE_REQUEST_FAILED     = 0x07
+    STATE_REQUEST_TIMEOUT    = 0x08
+    STATE_RECEIVING_RESPONSE = 0x09
+    STATE_TRANSFERRING       = 0x0A
+    STATE_DISCONECTED        = 0xFD
+    STATE_DONE               = 0xFF
+
+    TRANSACTION_STATE_FAILED      = 0x00 # Failed
+    TRANSACTION_STATE_SUCCESSFULL = 0x01 # Successfull
+    TRANSACTION_STATE_WAITING     = 0x02 # Waiting in local cache
+    TRANSACTION_STATE_SYNCING     = 0x03 # Syncing/Transfering to server
+    TRANSACTION_STATE_PROCESSING  = 0x04 # Processing/Execution on the server
+    TRANSACTION_STATE_FAILED_TMP  = 0x05 # Temporary failed
+
+    TRANSACTION_TYPE_ACCOUNT_CREATE  = 0x00
+    TRANSACTION_TYPE_ACCOUNT_EDIT    = 0x01
+    TRANSACTION_TYPE_ACCOUNT_PROVE   = 0x02
+    TRANSACTION_TYPE_ACCOUNT_RESTORE = 0x03
+
+    TYPE_DIRECTORY_ANNOUNCE = 0x00
+    TYPE_DIRECTORY_MEMBER   = 0x01
+    TYPE_DIRECTORY_SERVICE  = 0x02
+    TYPE_SYNC               = 0x03
+    TYPE_UNKNOWN            = 0xFF
 
 
     def __init__(self, storage_path=None, identity_file="identity", identity=None, destination_name="nomadnetwork", destination_type="provisioning", destination_conv_name="lxmf", destination_conv_type="delivery", destination_mode=True, announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False, register_startup=True, register_startup_delay=0, register_periodic=True, register_periodic_interval=30, config=None, admins=[], limiter_server_enabled=False, limiter_server_calls=1000, limiter_server_size=0, limiter_server_duration=60, limiter_peer_enabled=True, limiter_peer_calls=30, limiter_peer_size=0, limiter_peer_duration=60):
@@ -467,9 +532,9 @@ class ServerProvisioning:
     def register_now(self):
         RNS.log("Server - Register", RNS.LOG_DEBUG)
 
-        self.destination.register_request_handler("execute", response_generator=self.execute, allow=RNS.Destination.ALLOW_ALL)
-        self.destination.register_request_handler("directory_member", response_generator=self.directory_member, allow=RNS.Destination.ALLOW_ALL)
-        self.destination.register_request_handler("directory_service", response_generator=self.directory_service, allow=RNS.Destination.ALLOW_ALL)
+        self.destination.register_request_handler("directory_member", response_generator=self.response_directory_member, allow=RNS.Destination.ALLOW_ALL)
+        self.destination.register_request_handler("directory_service", response_generator=self.response_directory_service, allow=RNS.Destination.ALLOW_ALL)
+        self.destination.register_request_handler("sync", response_generator=self.response_sync, allow=RNS.Destination.ALLOW_ALL)
 
         if self.files_enabled:
             self.files_register()
@@ -491,154 +556,9 @@ class ServerProvisioning:
             link.teardown()
 
 
-    def files_register(self):
-        array = self.files.copy()
-
-        self.files = []
-        self.files_scan(self.files_path)
-        self.files.sort()
-
-        for file in array:
-            if file not in self.files:
-                self.destination.deregister_request_handler(file)
-
-        for file in self.files:
-            if file not in array:
-                self.destination.register_request_handler(file, response_generator=self.files_download, allow=RNS.Destination.ALLOW_ALL)
-
-
-    def files_scan(self, base_path):
-        files = [file for file in os.listdir(base_path) if os.path.isfile(os.path.join(base_path, file)) and file[:1] != "."]
-        directories = [file for file in os.listdir(base_path) if os.path.isdir(os.path.join(base_path, file)) and file[:1] != "."]
-
-        for file in files:
-            ext = os.path.splitext(file)[1][1:]
-            if ext in self.files_ext_allow or ext not in self.files_ext_deny:
-                file = base_path+"/"+file
-                self.files.append(file.replace(self.files_path, "").lstrip('/'))
-
-        for directory in directories:
-            self.files_scan(base_path+"/"+directory)
-
-
-    def files_download(self, path, data, request_id, link_id, remote_identity, requested_at):
-        if not remote_identity:
-            return None
-
-        if self.limiter_server and not self.limiter_server.handle("server"):
-            return None
-
-        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
-            return None
-
-        if request_id:
-            RNS.log("Server - Files: Request "+RNS.prettyhexrep(request_id)+" for: "+str(path), RNS.LOG_VERBOSE)
-        else:
-            RNS.log("Server - Files: Request <local> for: "+str(path), RNS.LOG_VERBOSE)
-
-        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-
-        if data:
-            RNS.log("Server - Files: Data: "+str(data), RNS.LOG_DEBUG)
-
-        file_path = self.files_path+"/"+path
-
-        allowed_path = file_path+".allowed"
-        allowed = False
-
-        if os.path.isfile(allowed_path):
-            allowed_list = []
-
-            try:
-                if os.access(allowed_path, os.X_OK):
-                    allowed_result = subprocess.run([allowed_path], stdout=subprocess.PIPE)
-                    allowed_input = allowed_result.stdout
-                else:
-                    fh = open(allowed_path, "rb")
-                    allowed_input = fh.read()
-                    fh.close()
-
-                allowed_hash_strs = allowed_input.splitlines()
-
-                for hash_str in allowed_hash_strs:
-                    if len(hash_str) == RNS.Identity.TRUNCATED_HASHLENGTH//8*2:
-                        try:
-                            allowed_hash = bytes.fromhex(hash_str.decode("utf-8"))
-                            allowed_list.append(allowed_hash)
-                        except Exception as e:
-                            RNS.log("Server - Files: Could not decode RNS Identity hash from: "+str(hash_str), RNS.LOG_DEBUG)
-                            RNS.log("Server - Files: The contained exception was: "+str(e), RNS.LOG_DEBUG)
-
-            except Exception as e:
-                RNS.log("Server - Files: Error while fetching list of allowed identities for request: "+str(e), RNS.LOG_ERROR)
-
-            if hasattr(remote_identity, "hash"):
-                if self.destination_mode == False and remote_identity.hash in allowed_list:
-                    allowed = True
-                elif self.destination_mode == True and dest in allowed_list:
-                    allowed = True
-
-        elif self.files_allow_all:
-            allowed = True
-
-        elif hasattr(remote_identity, "hash"):
-            if self.destination_mode == False and remote_identity.hash in self.files_allow:
-                allowed = True
-            elif self.destination_mode == True and dest in self.files_allow:
-                allowed = True
-
-        if hasattr(remote_identity, "hash"):
-            if self.destination_mode == False and remote_identity.hash in self.files_deny:
-                allowed = False
-            elif self.destination_mode == True and dest in self.files_deny:
-                allowed = False
-
-        if request_id == None:
-            allowed = True
-
-        try:
-            if allowed:
-                RNS.log("Server - Files: Serving "+file_path, RNS.LOG_VERBOSE)
-                if os.access(file_path, os.X_OK):
-                    env_map = {}
-                    if "PATH" in os.environ:
-                        env_map["PATH"] = os.environ["PATH"]
-                    if link_id != None:
-                        env_map["link_id"] = RNS.hexrep(link_id, delimit=False)
-                    if remote_identity != None:
-                        env_map["remote_identity"] = RNS.hexrep(remote_identity.hash, delimit=False)
-                    if dest != None:
-                        env_map["dest"] = RNS.hexrep(dest, delimit=False)
-
-                    if data != None and isinstance(data, dict):
-                        for e in data:
-                            if isinstance(e, str) and (e.startswith("field_") or e.startswith("var_")):
-                                env_map[e] = data[e]
-
-                    generated = subprocess.run([file_path], stdout=subprocess.PIPE, env=env_map)
-                    generated = generated.stdout
-                    if self.limiter_server:
-                        self.limiter_server.handle_size("server", len(generated))
-                    if self.limiter_peer:
-                        self.limiter_peer.handle_size(str(remote_identity), len(generated))
-                    return generated
-                else:
-                    fh = open(file_path, "rb")
-                    response_data = fh.read()
-                    fh.close()
-                    if self.limiter_server:
-                        self.limiter_server.handle_size("server", len(response_data))
-                    if self.limiter_peer:
-                        self.limiter_peer.handle_size(str(remote_identity), len(response_data))
-                    return response_data
-            else:
-                RNS.log("Server - Files: Request denied", RNS.LOG_VERBOSE)
-                return None
-
-        except Exception as e:
-            RNS.log("Server - Files: Error occurred while handling request for: "+str(path), RNS.LOG_ERROR)
-            RNS.log("Server - Files: The contained exception was: "+str(e), RNS.LOG_ERROR)
-            return None
+    #################################################
+    # Database                                      #
+    #################################################
 
 
     def db_connect(self):
@@ -1204,7 +1124,207 @@ class ServerProvisioning:
         self.db_commit()
 
 
-    def execute(self, path, data, request_id, link_id, remote_identity, requested_at):
+    #################################################
+    # Directory                                     #
+    #################################################
+
+
+    def response_directory_member(self, path, data, request_id, link_id, remote_identity, requested_at):
+        if not remote_identity:
+            return msgpack.packb({ServerProvisioning.KEY_RESULT: ServerProvisioning.RESULT_NO_IDENTITY})
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return msgpack.packb({ServerProvisioning.KEY_RESULT: ServerProvisioning.RESULT_LIMIT_SERVER})
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return msgpack.packb({ServerProvisioning.KEY_RESULT: ServerProvisioning.RESULT_LIMIT_PEER})
+
+        if not data:
+            return msgpack.packb({ServerProvisioning.KEY_RESULT: ServerProvisioning.RESULT_NO_DATA})
+
+        RNS.log("Server - Response - Directory member", RNS.LOG_DEBUG)
+        RNS.log(data, RNS.LOG_EXTREME)
+
+        data_return = {}
+
+        data_return[ServerProvisioning.KEY_RESULT] = ServerProvisioning.RESULT_OK
+
+        hash_destination = RNS.hexrep(RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity), delimit=False)
+        hash_identity = ""
+
+        if "cmd" in data:
+            if hash_destination in self.admins:
+                if cmd[0] == "role_0":
+                    self.db_member_set(cmd[1], role=0)
+                if cmd[0] == "role_1":
+                    self.db_member_set(cmd[1], role=1)
+                if cmd[0] == "role_2":
+                    self.db_member_set(cmd[1], role=2)
+                if cmd[0] == "role_3":
+                    self.db_member_set(cmd[1], role=3)
+                if cmd[0] == "state_0":
+                    self.db_member_set(cmd[1], state=0)
+                if cmd[0] == "state_1":
+                    self.db_member_set(cmd[1], state=1)
+                if cmd[0] == "state_2":
+                    self.db_member_set(cmd[1], state=2)
+                if cmd[0] == "delete":
+                    self.db_member_delete(cmd[1])
+                entry = self.db_member_get(cmd[1])
+                if entry:
+                    return data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [entry]})
+                else:
+                    return data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [{"dest": cmd[1], "ts_edit": 0}]})
+        elif "group" in data and data["group"] != None:
+            data_return["rx_group_entrys"] = self.db_member_count_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"])
+            data_return["rx_group_entrys_count"] = len(data_return["rx_group_entrys"])
+        else:
+            data_return["rx_entrys"] = []
+            data_return["rx_entrys_count"] = self.db_member_count(filter=data["filter"], search=data["search"], group=data["group"])
+
+            for entry in self.db_member_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"]):
+                if entry["dest"] in data["entrys"]:
+                    if entry["ts_edit"] > data["entrys"][entry["dest"]]:
+                        data_return["rx_entrys"].append(entry)
+                    del data["entrys"][entry["dest"]]
+                else:
+                   data_return["rx_entrys"].append(entry)
+
+            for dest in data["entrys"]:
+                entry = self.db_member_get(dest=dest)
+                if entry:
+                    if entry["ts_edit"] > data["entrys"][dest]:
+                        data_return["rx_entrys"].append(entry)
+                else:
+                    data_return["rx_entrys"].append({"dest": dest, "ts_edit": 0})
+
+            if len(data_return["rx_entrys"]) == 0:
+                del data_return["rx_entrys"]
+
+        if hash_destination in self.admins:
+            data_return["cmd"] = []
+            data_return["cmd_entry"] = ["role_0", "role_1", "role_2", "role_3", "state_0", "state_1", "state_2", "delete"]
+
+        data_return = msgpack.packb(data_return)
+
+        if self.limiter_server:
+            self.limiter_server.handle_size("server", len(data_return))
+
+        if self.limiter_peer:
+             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
+
+        return data_return
+
+
+    def response_directory_service(self, path, data, request_id, link_id, remote_identity, requested_at):
+        if not remote_identity:
+            return msgpack.packb({ServerProvisioning.KEY_RESULT: ServerProvisioning.RESULT_NO_IDENTITY})
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return msgpack.packb({ServerProvisioning.KEY_RESULT: ServerProvisioning.RESULT_LIMIT_SERVER})
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return msgpack.packb({ServerProvisioning.KEY_RESULT: ServerProvisioning.RESULT_LIMIT_PEER})
+
+        if not data:
+            return msgpack.packb({ServerProvisioning.KEY_RESULT: ServerProvisioning.RESULT_NO_DATA})
+
+        RNS.log("Server - Response - Directory service", RNS.LOG_DEBUG)
+        RNS.log(data, RNS.LOG_EXTREME)
+
+        data_return = {}
+
+        data_return[ServerProvisioning.KEY_RESULT] = ServerProvisioning.RESULT_OK
+
+        hash_destination = RNS.hexrep(RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity), delimit=False)
+        hash_identity = ""
+
+        if "cmd" in data:
+            if hash_destination in self.admins:
+                if cmd[0] == "delete":
+                    self.db_service_delete(cmd[1])
+                entry = self.db_service_get(cmd[1])
+                if entry:
+                    data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [entry]})
+                else:
+                    data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [{"dest": cmd[1], "ts_edit": 0}]})
+        elif "group" in data and data["group"] != None:
+            data_return["rx_group_entrys"] = self.db_service_count_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"])
+            data_return["rx_group_entrys_count"] = len(data_return["rx_group_entrys"])
+        else:
+            data_return["rx_entrys"] = []
+            data_return["rx_entrys_count"] = self.db_service_count(filter=data["filter"], search=data["search"], group=data["group"])
+
+            for entry in self.db_service_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"]):
+                if entry["dest"] in data["entrys"]:
+                    if entry["ts_edit"] > data["entrys"][entry["dest"]]:
+                        data_return["rx_entrys"].append(entry)
+                    del data["entrys"][entry["dest"]]
+                else:
+                   data_return["rx_entrys"].append(entry)
+
+            for dest in data["entrys"]:
+                entry = self.db_service_get(dest=dest)
+                if entry:
+                    if entry["ts_edit"] > data["entrys"][dest]:
+                        data_return["rx_entrys"].append(entry)
+                else:
+                    data_return["rx_entrys"].append({"dest": dest, "ts_edit": 0})
+
+            if len(data_return["rx_entrys"]) == 0:
+                del data_return["rx_entrys"]
+
+        if hash_destination in self.admins:
+            data_return["cmd"] = []
+            data_return["cmd_entry"] = []
+
+        data_return = msgpack.packb(data_return)
+
+        if self.limiter_server:
+            self.limiter_server.handle_size("server", len(data_return))
+
+        if self.limiter_peer:
+             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
+
+        return data_return
+
+
+    #################################################
+    # Files                                         #
+    #################################################
+
+
+    def files_register(self):
+        array = self.files.copy()
+
+        self.files = []
+        self.files_scan(self.files_path)
+        self.files.sort()
+
+        for file in array:
+            if file not in self.files:
+                self.destination.deregister_request_handler(file)
+
+        for file in self.files:
+            if file not in array:
+                self.destination.register_request_handler(file, response_generator=self.files_download, allow=RNS.Destination.ALLOW_ALL)
+
+
+    def files_scan(self, base_path):
+        files = [file for file in os.listdir(base_path) if os.path.isfile(os.path.join(base_path, file)) and file[:1] != "."]
+        directories = [file for file in os.listdir(base_path) if os.path.isdir(os.path.join(base_path, file)) and file[:1] != "."]
+
+        for file in files:
+            ext = os.path.splitext(file)[1][1:]
+            if ext in self.files_ext_allow or ext not in self.files_ext_deny:
+                file = base_path+"/"+file
+                self.files.append(file.replace(self.files_path, "").lstrip('/'))
+
+        for directory in directories:
+            self.files_scan(base_path+"/"+directory)
+
+
+    def files_download(self, path, data, request_id, link_id, remote_identity, requested_at):
         if not remote_identity:
             return None
 
@@ -1214,12 +1334,136 @@ class ServerProvisioning:
         if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
             return None
 
-        if not data:
+        if request_id:
+            RNS.log("Server - Files: Request "+RNS.prettyhexrep(request_id)+" for: "+str(path), RNS.LOG_VERBOSE)
+        else:
+            RNS.log("Server - Files: Request <local> for: "+str(path), RNS.LOG_VERBOSE)
+
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+
+        if data:
+            RNS.log("Server - Files: Data: "+str(data), RNS.LOG_DEBUG)
+
+        file_path = self.files_path+"/"+path
+
+        allowed_path = file_path+".allowed"
+        allowed = False
+
+        if os.path.isfile(allowed_path):
+            allowed_list = []
+
+            try:
+                if os.access(allowed_path, os.X_OK):
+                    allowed_result = subprocess.run([allowed_path], stdout=subprocess.PIPE)
+                    allowed_input = allowed_result.stdout
+                else:
+                    fh = open(allowed_path, "rb")
+                    allowed_input = fh.read()
+                    fh.close()
+
+                allowed_hash_strs = allowed_input.splitlines()
+
+                for hash_str in allowed_hash_strs:
+                    if len(hash_str) == RNS.Identity.TRUNCATED_HASHLENGTH//8*2:
+                        try:
+                            allowed_hash = bytes.fromhex(hash_str.decode("utf-8"))
+                            allowed_list.append(allowed_hash)
+                        except Exception as e:
+                            RNS.log("Server - Files: Could not decode RNS Identity hash from: "+str(hash_str), RNS.LOG_DEBUG)
+                            RNS.log("Server - Files: The contained exception was: "+str(e), RNS.LOG_DEBUG)
+
+            except Exception as e:
+                RNS.log("Server - Files: Error while fetching list of allowed identities for request: "+str(e), RNS.LOG_ERROR)
+
+            if hasattr(remote_identity, "hash"):
+                if self.destination_mode == False and remote_identity.hash in allowed_list:
+                    allowed = True
+                elif self.destination_mode == True and dest in allowed_list:
+                    allowed = True
+
+        elif self.files_allow_all:
+            allowed = True
+
+        elif hasattr(remote_identity, "hash"):
+            if self.destination_mode == False and remote_identity.hash in self.files_allow:
+                allowed = True
+            elif self.destination_mode == True and dest in self.files_allow:
+                allowed = True
+
+        if hasattr(remote_identity, "hash"):
+            if self.destination_mode == False and remote_identity.hash in self.files_deny:
+                allowed = False
+            elif self.destination_mode == True and dest in self.files_deny:
+                allowed = False
+
+        if request_id == None:
+            allowed = True
+
+        try:
+            if allowed:
+                RNS.log("Server - Files: Serving "+file_path, RNS.LOG_VERBOSE)
+                if os.access(file_path, os.X_OK):
+                    env_map = {}
+                    if "PATH" in os.environ:
+                        env_map["PATH"] = os.environ["PATH"]
+                    if link_id != None:
+                        env_map["link_id"] = RNS.hexrep(link_id, delimit=False)
+                    if remote_identity != None:
+                        env_map["remote_identity"] = RNS.hexrep(remote_identity.hash, delimit=False)
+                    if dest != None:
+                        env_map["dest"] = RNS.hexrep(dest, delimit=False)
+
+                    if data != None and isinstance(data, dict):
+                        for e in data:
+                            if isinstance(e, str) and (e.startswith("field_") or e.startswith("var_")):
+                                env_map[e] = data[e]
+
+                    generated = subprocess.run([file_path], stdout=subprocess.PIPE, env=env_map)
+                    generated = generated.stdout
+                    if self.limiter_server:
+                        self.limiter_server.handle_size("server", len(generated))
+                    if self.limiter_peer:
+                        self.limiter_peer.handle_size(str(remote_identity), len(generated))
+                    return generated
+                else:
+                    fh = open(file_path, "rb")
+                    response_data = fh.read()
+                    fh.close()
+                    if self.limiter_server:
+                        self.limiter_server.handle_size("server", len(response_data))
+                    if self.limiter_peer:
+                        self.limiter_peer.handle_size(str(remote_identity), len(response_data))
+                    return response_data
+            else:
+                RNS.log("Server - Files: Request denied", RNS.LOG_VERBOSE)
+                return None
+
+        except Exception as e:
+            RNS.log("Server - Files: Error occurred while handling request for: "+str(path), RNS.LOG_ERROR)
+            RNS.log("Server - Files: The contained exception was: "+str(e), RNS.LOG_ERROR)
             return None
 
-        # Temporary debug output
-        print("---- execute ----")
-        print("Dict received: "+str(data))
+
+    #################################################
+    # Sync                                          #
+    #################################################
+
+
+    def response_sync(self, path, data, request_id, link_id, remote_identity, requested_at):
+        if not remote_identity:
+            return msgpack.packb({ServerProvisioning.KEY_RESULT: ServerProvisioning.RESULT_NO_IDENTITY})
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return msgpack.packb({ServerProvisioning.KEY_RESULT: ServerProvisioning.RESULT_LIMIT_SERVER})
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return msgpack.packb({ServerProvisioning.KEY_RESULT: ServerProvisioning.RESULT_LIMIT_PEER})
+
+        if not data:
+            return msgpack.packb({ServerProvisioning.KEY_RESULT: ServerProvisioning.RESULT_NO_DATA})
+
+        RNS.log("Server - Response - Sync", RNS.LOG_DEBUG)
+        RNS.log(data, RNS.LOG_EXTREME)
 
         data_return = {}
 
@@ -1227,7 +1471,7 @@ class ServerProvisioning:
             hash_destination = RNS.hexrep(RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity), delimit=False)
             hash_identity = ""
         else:
-            data_return["result"] = Provisioning.RESULT_NO_IDENTITY
+            data_return[ServerProvisioning.KEY_RESULT] = Provisioning.RESULT_NO_IDENTITY
             return msgpack.packb(data_return)
 
         db = None
@@ -1235,7 +1479,7 @@ class ServerProvisioning:
             db = psycopg2.connect(user=self.config["database"]["user"], password=self.config["database"]["password"], host=self.config["database"]["host"], port=self.config["database"]["port"], database=self.config["database"]["database"], client_encoding=self.config["database"]["encoding"])
             dbc = db.cursor()
 
-            data_return["result"] = ServerProvisioning.RESULT_OK
+            data_return[ServerProvisioning.KEY_RESULT] = ServerProvisioning.RESULT_OK
             data_return["result_uids"] = []
 
             for data_uid, data in data.items():
@@ -1353,184 +1597,17 @@ class ServerProvisioning:
                 except psycopg2.DatabaseError as e:
                     RNS.log("Loop - DB - Error: "+str(e), LOG_ERROR)
                     db.rollback()
-                    data_return["result"] = ServerProvisioning.RESULT_ERROR
+                    data_return[ServerProvisioning.KEY_RESULT] = ServerProvisioning.RESULT_ERROR
 
         except psycopg2.DatabaseError as e:
             RNS.log("DB - Error: "+str(e), LOG_ERROR)
             db.rollback()
-            data_return["result"] = ServerProvisioning.RESULT_ERROR
+            data_return[ServerProvisioning.KEY_RESULT] = ServerProvisioning.RESULT_ERROR
 
         if db:
             dbc.close()
             db.close()
             db = None
-
-        # Temporary debug output
-        print("Dict send: "+str(data_return))
-
-        data_return = msgpack.packb(data_return)
-
-        if self.limiter_server:
-            self.limiter_server.handle_size("server", len(data_return))
-
-        if self.limiter_peer:
-             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
-
-        return data_return
-
-
-    def directory_member(self, path, data, request_id, link_id, remote_identity, requested_at):
-        if not remote_identity:
-            return None
-
-        if self.limiter_server and not self.limiter_server.handle("server"):
-            return None
-
-        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
-            return None
-
-        if not data:
-            return None
-
-        # Temporary debug output
-        print("---- directory_member ----")
-        print("Dict received: "+str(data))
-
-        data_return = {}
-
-        hash_destination = RNS.hexrep(RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity), delimit=False)
-        hash_identity = ""
-
-        if "cmd" in data:
-            if hash_destination in self.admins:
-                if cmd[0] == "role_0":
-                    self.db_member_set(cmd[1], role=0)
-                if cmd[0] == "role_1":
-                    self.db_member_set(cmd[1], role=1)
-                if cmd[0] == "role_2":
-                    self.db_member_set(cmd[1], role=2)
-                if cmd[0] == "role_3":
-                    self.db_member_set(cmd[1], role=3)
-                if cmd[0] == "state_0":
-                    self.db_member_set(cmd[1], state=0)
-                if cmd[0] == "state_1":
-                    self.db_member_set(cmd[1], state=1)
-                if cmd[0] == "state_2":
-                    self.db_member_set(cmd[1], state=2)
-                if cmd[0] == "delete":
-                    self.db_member_delete(cmd[1])
-                entry = self.db_member_get(cmd[1])
-                if entry:
-                    return data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [entry]})
-                else:
-                    return data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [{"dest": cmd[1], "ts_edit": 0}]})
-        elif "group" in data and data["group"] != None:
-            data_return["rx_group_entrys"] = self.db_member_count_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"])
-            data_return["rx_group_entrys_count"] = len(data_return["rx_group_entrys"])
-        else:
-            data_return["rx_entrys"] = []
-            data_return["rx_entrys_count"] = self.db_member_count(filter=data["filter"], search=data["search"], group=data["group"])
-
-            for entry in self.db_member_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"]):
-                if entry["dest"] in data["entrys"]:
-                    if entry["ts_edit"] > data["entrys"][entry["dest"]]:
-                        data_return["rx_entrys"].append(entry)
-                    del data["entrys"][entry["dest"]]
-                else:
-                   data_return["rx_entrys"].append(entry)
-
-            for dest in data["entrys"]:
-                entry = self.db_member_get(dest=dest)
-                if entry:
-                    if entry["ts_edit"] > data["entrys"][dest]:
-                        data_return["rx_entrys"].append(entry)
-                else:
-                    data_return["rx_entrys"].append({"dest": dest, "ts_edit": 0})
-
-            if len(data_return["rx_entrys"]) == 0:
-                del data_return["rx_entrys"]
-
-        if hash_destination in self.admins:
-            data_return["cmd"] = []
-            data_return["cmd_entry"] = ["role_0", "role_1", "role_2", "role_3", "state_0", "state_1", "state_2", "delete"]
-
-        # Temporary debug output
-        print("Dict send: "+str(data_return))
-
-        data_return = msgpack.packb(data_return)
-
-        if self.limiter_server:
-            self.limiter_server.handle_size("server", len(data_return))
-
-        if self.limiter_peer:
-             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
-
-        return data_return
-
-
-    def directory_service(self, path, data, request_id, link_id, remote_identity, requested_at):
-        if not remote_identity:
-            return None
-
-        if self.limiter_server and not self.limiter_server.handle("server"):
-            return None
-
-        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
-            return None
-
-        if not data:
-            return None
-
-        # Temporary debug output
-        print("---- directory_service ----")
-        print("Dict received: "+str(data))
-
-        data_return = {}
-
-        hash_destination = RNS.hexrep(RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity), delimit=False)
-        hash_identity = ""
-
-        if "cmd" in data:
-            if hash_destination in self.admins:
-                if cmd[0] == "delete":
-                    self.db_service_delete(cmd[1])
-                entry = self.db_service_get(cmd[1])
-                if entry:
-                    data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [entry]})
-                else:
-                    data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [{"dest": cmd[1], "ts_edit": 0}]})
-        elif "group" in data and data["group"] != None:
-            data_return["rx_group_entrys"] = self.db_service_count_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"])
-            data_return["rx_group_entrys_count"] = len(data_return["rx_group_entrys"])
-        else:
-            data_return["rx_entrys"] = []
-            data_return["rx_entrys_count"] = self.db_service_count(filter=data["filter"], search=data["search"], group=data["group"])
-
-            for entry in self.db_service_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"]):
-                if entry["dest"] in data["entrys"]:
-                    if entry["ts_edit"] > data["entrys"][entry["dest"]]:
-                        data_return["rx_entrys"].append(entry)
-                    del data["entrys"][entry["dest"]]
-                else:
-                   data_return["rx_entrys"].append(entry)
-
-            for dest in data["entrys"]:
-                entry = self.db_service_get(dest=dest)
-                if entry:
-                    if entry["ts_edit"] > data["entrys"][dest]:
-                        data_return["rx_entrys"].append(entry)
-                else:
-                    data_return["rx_entrys"].append({"dest": dest, "ts_edit": 0})
-
-            if len(data_return["rx_entrys"]) == 0:
-                del data_return["rx_entrys"]
-
-        if hash_destination in self.admins:
-            data_return["cmd"] = []
-            data_return["cmd_entry"] = []
-
-        # Temporary debug output
-        print("Dict send: "+str(data_return))
 
         data_return = msgpack.packb(data_return)
 
@@ -1754,6 +1831,13 @@ def log(text, level=3, file=None):
                     os.rename(file, file_prev)
             except:
                 return
+
+
+def log_exception(e, text="", level=1):
+    import traceback
+
+    log(text+" - An "+str(type(e))+" occurred: "+str(e), level)
+    log("".join(traceback.TracebackException.from_exception(e).format()), level)
 
 
 ##############################################################################################################

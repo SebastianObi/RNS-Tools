@@ -41,14 +41,20 @@ import random
 #### Config ####
 import configparser
 
-#### Database ####
-import sqlite3
-
 #### Reticulum ####
 # Install: pip3 install rns
 # Source: https://markqvist.github.io
 import RNS
 import RNS.vendor.umsgpack as msgpack
+
+#### Database - SQLite ####
+import sqlite3
+
+#### Database - PostgreSQL ####
+# Install: pip3 install psycopg2
+# Install: pip3 install psycopg2-binary
+# Source: https://pypi.org/project/psycopg2/
+import psycopg2
 
 
 ##############################################################################################################
@@ -151,6 +157,10 @@ class AnnounceHandler:
                 return
 
         dest_type = [self.dest_type]
+        location_lat = 0
+        location_lon = 0
+        state = 0
+        state_ts = 0
 
         if self.recall_app_data and self.recall_app_data != "":
             try:
@@ -175,6 +185,17 @@ class AnnounceHandler:
                         dest_type = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_TYPE]
                         if not isinstance(dest_type, list):
                             dest_type = [dest_type]
+                    if ANNOUNCE_DATA_FIELDS in app_data_dict and MSG_FIELD_LOCATION in app_data_dict[ANNOUNCE_DATA_FIELDS]:
+                        location_lat = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_LOCATION][0]
+                        location_lon = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_LOCATION][1]
+                    if ANNOUNCE_DATA_FIELDS in app_data_dict and MSG_FIELD_STATE in app_data_dict[ANNOUNCE_DATA_FIELDS]:
+                        d_state = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_STATE]
+                        if isinstance(d_state, list):
+                            state = d_state[0]
+                            state_ts = d_state[1]
+                        else:
+                            state = d_state
+                            state_ts = 0
             except:
                 pass
 
@@ -204,7 +225,11 @@ class AnnounceHandler:
                 self.callback(
                     dest=destination_hash,
                     dest_type=key,
-                    app_data=app_data,
+                    data=app_data,
+                    location_lat=location_lat,
+                    location_lon=location_lon,
+                    state=state,
+                    state_ts=state_ts,
                     hop_count=hop_count,
                     hop_interface=hop_interface,
                     hop_dest=None,
@@ -222,8 +247,14 @@ class AnnounceHandler:
 def db_connect():
     global DB
 
-    if DB == None:
-        DB = sqlite3.connect(PATH+"/database.db", isolation_level=None, check_same_thread=False)
+    try:
+        if DB == None:
+            if CONFIG["database"]["type"] == "postgresql":
+                DB = psycopg2.connect(user=CONFIG["database"]["user"], password=CONFIG["database"]["password"], host=CONFIG["database"]["host"], port=CONFIG["database"]["port"], database=CONFIG["database"]["database"], client_encoding=CONFIG["database"]["encoding"])
+            else:
+                DB = sqlite3.connect(PATH+"/database.db", isolation_level=None, check_same_thread=False)
+    except:
+        DB = None
 
     return DB
 
@@ -235,16 +266,22 @@ def db_commit():
         try:
             DB.commit()
         except:
-            pass
+            if CONFIG["database"]["type"] == "postgresql":
+                DB.rollback()
 
 
 def db_init(init=True):
     db = db_connect()
     dbc = db.cursor()
 
-    if init:
-        dbc.execute("DROP TABLE IF EXISTS announce")
-    dbc.execute("CREATE TABLE IF NOT EXISTS announce (dest BLOB, type INTEGER DEFAULT 0, ts INTEGER DEFAULT 0, data TEXT DEFAULT '', hop_count INTEGER DEFAULT 0, hop_interface TEXT DEFAULT '', hop_dest BLOB, PRIMARY KEY(dest, type))")
+    if CONFIG["database"]["type"] == "postgresql":
+        if init:
+            dbc.execute("DROP TABLE IF EXISTS public.announce")
+        dbc.execute("CREATE TABLE IF NOT EXISTS public.announce (dest BYTEA, type INTEGER DEFAULT 0, ts INTEGER DEFAULT 0, data TEXT DEFAULT '', location_lat DOUBLE PRECISION DEFAULT 0, location_lon DOUBLE PRECISION DEFAULT 0, state INTEGER DEFAULT 0, state_ts INTEGER DEFAULT 0, hop_count INTEGER DEFAULT 0, hop_interface TEXT DEFAULT '', hop_dest BYTEA, PRIMARY KEY (dest, type))")
+    else:
+        if init:
+            dbc.execute("DROP TABLE IF EXISTS announce")
+        dbc.execute("CREATE TABLE IF NOT EXISTS announce (dest BLOB, type INTEGER DEFAULT 0, ts INTEGER DEFAULT 0, data TEXT DEFAULT '', location_lat REAL DEFAULT 0, location_lon REAL DEFAULT 0, state INTEGER DEFAULT 0, state_ts INTEGER DEFAULT 0, hop_count INTEGER DEFAULT 0, hop_interface TEXT DEFAULT '', hop_dest BLOB, PRIMARY KEY(dest, type))")
 
     db_commit()
 
@@ -265,30 +302,55 @@ def db_indices():
 
 
 def db_load():
-    if not os.path.isfile(PATH+"/database.db"):
-        db_init()
+    if CONFIG["database"]["type"] == "postgresql":
+        db = db_connect()
+        dbc = db.cursor()
+        dbc.execute("SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'public.announce')")
+        if not dbc.fetchone()[0]:
+            db_init()
+        else:
+            db_migrate()
+            db_indices()
     else:
-        db_migrate()
-        db_indices()
+        if not os.path.isfile(PATH+"/database.db"):
+            db_init()
+        else:
+            db_migrate()
+            db_indices()
 
 
-def db_announce_add(dest, dest_type=0x01, app_data="", hop_count=0, hop_interface="", hop_dest=None, aspect_filter=""):
+def db_announce_add(dest, dest_type=0x01, data="", location_lat=0, location_lon=0, state=0, state_ts=0, hop_count=0, hop_interface="", hop_dest=None, aspect_filter=""):
     db = db_connect()
     dbc = db.cursor()
 
-    if app_data == "":
-        query = "SELECT dest FROM announce WHERE dest = ? AND type = ?"
-        dbc.execute(query, (dest, dest_type))
-        result = dbc.fetchall()
-        if len(result) > 0:
-            query = "UPDATE announce SET ts = ?, hop_count = ?, hop_interface = ?, hop_dest = ? WHERE dest = ? AND type = ?"
-            dbc.execute(query, (time.time(), hop_count, hop_interface, hop_dest, dest, dest_type))
+    if CONFIG["database"]["type"] == "postgresql":
+        if data == "":
+            query = "SELECT dest FROM announce WHERE dest = %s AND type = %s"
+            dbc.execute(query, (dest, dest_type))
+            result = dbc.fetchall()
+            if len(result) > 0:
+                query = "UPDATE announce SET ts = %s, hop_count = %s, hop_interface = %s, hop_dest = %s WHERE dest = %s AND type = %s"
+                dbc.execute(query, (time.time(), hop_count, hop_interface, hop_dest, dest, dest_type))
+            else:
+                query = "INSERT INTO announce (dest, type, ts, data, location_lat, location_lon, state, state_ts, hop_count, hop_interface, hop_dest) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) ON CONFLICT (dest, type) DO UPDATE SET ts = EXCLUDED.ts, data = EXCLUDED.data, location_lat = EXCLUDED.location_lat, location_lon = EXCLUDED.location_lon, state = EXCLUDED.state, state_ts = EXCLUDED.state_ts, hop_count = EXCLUDED.hop_count, hop_interface = EXCLUDED.hop_interface, hop_dest = EXCLUDED.hop_dest"
+                dbc.execute(query, (dest, dest_type, time.time(), data, location_lat, location_lon, state, state_ts, hop_count, hop_interface, hop_dest))
         else:
-            query = "INSERT OR REPLACE INTO announce (dest, type, ts, data, hop_count, hop_interface, hop_dest) values (?, ?, ?, ?, ?, ?, ?)"
-            dbc.execute(query, (dest, dest_type, time.time(), app_data, hop_count, hop_interface, hop_dest))
+            query = "INSERT INTO announce (dest, type, ts, data, location_lat, location_lon, state, state_ts, hop_count, hop_interface, hop_dest) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) ON CONFLICT (dest, type) DO UPDATE SET ts = EXCLUDED.ts, data = EXCLUDED.data, location_lat = EXCLUDED.location_lat, location_lon = EXCLUDED.location_lon, state = EXCLUDED.state, state_ts = EXCLUDED.state_ts, hop_count = EXCLUDED.hop_count, hop_interface = EXCLUDED.hop_interface, hop_dest = EXCLUDED.hop_dest"
+            dbc.execute(query, (dest, dest_type, time.time(), data, location_lat, location_lon, state, state_ts, hop_count, hop_interface, hop_dest))
     else:
-        query = "INSERT OR REPLACE INTO announce (dest, type, ts, data, hop_count, hop_interface, hop_dest) values (?, ?, ?, ?, ?, ?, ?)"
-        dbc.execute(query, (dest, dest_type, time.time(), app_data, hop_count, hop_interface, hop_dest))
+        if data == "":
+            query = "SELECT dest FROM announce WHERE dest = ? AND type = ?"
+            dbc.execute(query, (dest, dest_type))
+            result = dbc.fetchall()
+            if len(result) > 0:
+                query = "UPDATE announce SET ts = ?, hop_count = ?, hop_interface = ?, hop_dest = ? WHERE dest = ? AND type = ?"
+                dbc.execute(query, (time.time(), hop_count, hop_interface, hop_dest, dest, dest_type))
+            else:
+                query = "INSERT OR REPLACE INTO announce (dest, type, ts, data, location_lat, location_lon, state, state_ts, hop_count, hop_interface, hop_dest) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                dbc.execute(query, (dest, dest_type, time.time(), data, location_lat, location_lon, state, state_ts, hop_count, hop_interface, hop_dest))
+        else:
+            query = "INSERT OR REPLACE INTO announce (dest, type, ts, data, location_lat, location_lon, state, state_ts, hop_count, hop_interface, hop_dest) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            dbc.execute(query, (dest, dest_type, time.time(), data, location_lat, location_lon, state, state_ts, hop_count, hop_interface, hop_dest))
 
     db_commit()
 
@@ -453,8 +515,12 @@ def cmd(path=None):
     print("---- Database interface ----")
     print("")
 
-    print("File: "+PATH+"/database.db")
-    print("")
+    if CONFIG["database"]["type"] == "postgresql":
+        print("Database: "+CONFIG["database"]["host"]+":"+CONFIG["database"]["port"]+"/"+CONFIG["database"]["database"])
+        print("")
+    else:
+        print("File: "+PATH+"/database.db")
+        print("")
 
     db = db_connect()
 
@@ -502,13 +568,20 @@ def cmd_status(path=None):
     print("---- Database status ----")
     print("")
 
-    print("File: "+PATH+"/database.db")
-    print("Size: "+cmd_size_str(os.path.getsize(PATH+"/database.db")))
+    if CONFIG["database"]["type"] == "postgresql":
+        print("Database: "+CONFIG["database"]["host"]+":"+CONFIG["database"]["port"]+"/"+CONFIG["database"]["database"])
+        print("")
+    else:
+        print("File: "+PATH+"/database.db")
+        print("Size: "+cmd_size_str(os.path.getsize(PATH+"/database.db")))
 
     db = db_connect()
     dbc = db.cursor()
 
-    query = "SELECT name FROM sqlite_master WHERE type = 'table'"
+    if CONFIG["database"]["type"] == "postgresql":
+        query = "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'"
+    else:
+        query = "SELECT name FROM sqlite_master WHERE type = 'table'"
     dbc.execute(query)
     result = dbc.fetchall()
     if len(result) < 1:
@@ -621,6 +694,13 @@ def log(text, level=3, file=None):
                 return
 
 
+def log_exception(e, text="", level=1):
+    import traceback
+
+    log(text+" - An "+str(type(e))+" occurred: "+str(e), level)
+    log("".join(traceback.TracebackException.from_exception(e).format()), level)
+
+
 ##############################################################################################################
 # System
 
@@ -640,7 +720,7 @@ def exit():
 
 
 #### Setup #####
-def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False):
+def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False, cmd=None):
     global PATH
     global PATH_RNS
     global LOG_LEVEL
@@ -690,6 +770,9 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
     if not CONFIG["main"].getboolean("enabled"):
         print("Disabled in config file. Exit!")
         exit()
+
+    if cmd:
+        return
 
     RNS_CONNECTION = RNS.Reticulum(configdir=PATH_RNS, loglevel=rns_loglevel)
 
@@ -800,6 +883,8 @@ def main():
             print(DEFAULT_CONFIG_OVERRIDE)
             exit()
 
+        setup(path=params.path, path_rns=params.path_rns, path_log=params.path_log, loglevel=params.loglevel, service=params.service, cmd=True if params.cmd or params.cmd_status else False)
+
         if params.cmd:
             cmd(path=params.path)
             exit()
@@ -807,8 +892,6 @@ def main():
         if params.cmd_status:
             cmd_status(path=params.path)
             exit()
-
-        setup(path=params.path, path_rns=params.path_rns, path_log=params.path_log, loglevel=params.loglevel, service=params.service)
 
     except KeyboardInterrupt:
         print("Terminated by CTRL-C")
@@ -826,7 +909,14 @@ DEFAULT_CONFIG_OVERRIDE = '''# This is the user configuration file to override t
 # This also has the advantage that all changed settings can be kept when updating the program.
 
 
-#### All announce aspects and settings ####
+[database]
+type = sqlite #postgresql/sqlite
+host = 127.0.0.1
+port = 5432
+user = postgres
+password = password
+database = database
+encoding = utf8
 
 
 [lxmf.delivery]
@@ -866,6 +956,17 @@ DEFAULT_CONFIG = '''# This is the default config file.
 
 # Enable/Disable this functionality.
 enabled = True
+
+
+#### Database connection settings ####
+[database]
+type = sqlite #postgresql/sqlite
+host = 127.0.0.1
+port = 5432
+user = postgres
+password = password
+database = database
+encoding = utf8
 
 
 #### Deny certain addresses/destinations ####

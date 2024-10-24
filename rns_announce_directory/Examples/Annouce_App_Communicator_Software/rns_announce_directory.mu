@@ -251,7 +251,11 @@ def db_list(filter=None, search=None, group=None, order=None, limit=None, limit_
                 "type": entry[1],
                 "ts": entry[2],
                 "data": entry[3],
-                "hop_count": entry[4]
+                "location_lat": entry[4],
+                "location_lon": entry[5],
+                "state": entry[6],
+                "state_ts": entry[7],
+                "hop_count": entry[8]
             })
 
         return data
@@ -299,7 +303,11 @@ def db_get(dest):
             "type": entry[1],
             "ts": entry[2],
             "data": entry[3],
-            "hop_count": entry[4]
+            "location_lat": entry[4],
+            "location_lon": entry[5],
+            "state": entry[6],
+            "state_ts": entry[7],
+            "hop_count": entry[8]
         }
         return data
 
@@ -329,7 +337,7 @@ def cmd(cmd):
     if entry:
         return {KEY_CMD_RESULT: RESULT_OK, KEY_ENTRYS: [entry]}
     else:
-        return {KEY_CMD_RESULT: RESULT_OK, KEY_ENTRYS: [{"dest": cmd[1], "type": 0, "ts": 0, "data": ""}]}
+        return {KEY_CMD_RESULT: RESULT_OK, KEY_ENTRYS: [{"dest": cmd[1], "type": 0, "ts": 0, "data": "", "location_lat": 0, "location_lon": 0, "state": 0, "state_ts": 0, "hop_count": 0}]}
 
 
 ##############################################################################################################

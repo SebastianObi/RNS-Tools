@@ -344,7 +344,7 @@ class ServerManagement:
     RESULT_BLOCKED     = 0xFF
 
 
-    def __init__(self, storage_path=None, identity_file="identity", identity=None, destination_name="nomadnetwork", destination_type="management", destination_conv_name="lxmf", destination_conv_type="delivery", destination_mode=True, announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False, allow=[], statistic=None, link_timeout=300, default_user=None, default_user_interfaces=None, default_user_hops=None, default_user_callback=None, environment_variables=None, limiter_server_enabled=False, limiter_server_calls=1000, limiter_server_size=0, limiter_server_duration=60, limiter_peer_enabled=True, limiter_peer_calls=0, limiter_peer_size=0, limiter_peer_duration=60):
+    def __init__(self, storage_path=None, identity_file="identity", identity=None, destination_name="nomadnetwork", destination_type="management", destination_conv_name="lxmf", destination_conv_type="delivery", destination_mode=True, announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False, allow=[], statistic=None, link_timeout=300, default_user=None, default_user_interfaces=None, default_user_hops=None, default_user_callback=None, configs_cmd=None, environment_variables=None, services_system_path="/etc/systemd/system", services_system_extension=".service", limiter_server_enabled=False, limiter_server_calls=1000, limiter_server_size=0, limiter_server_duration=60, limiter_peer_enabled=True, limiter_peer_calls=0, limiter_peer_size=0, limiter_peer_duration=60):
         self.storage_path = storage_path
         self.configs_path = self.storage_path+"/configs"
         self.files_path = os.path.expanduser("~")
@@ -353,9 +353,6 @@ class ServerManagement:
         self.logs_path = self.storage_path+"/logs"
         self.scripts_path = self.storage_path+"/scripts"
         self.services_path = self.storage_path+"/services"
-
-        self.services_system_path = "/etc/systemd/system"
-        self.services_system_extension = ".service"
 
         self.identity_file = identity_file
         self.identity = identity
@@ -393,9 +390,16 @@ class ServerManagement:
         self.default_user_hops = default_user_hops
         self.default_user_callback = default_user_callback
 
+        self.configs_cmd_mapping = configs_cmd
+        if self.configs_cmd_mapping == None:
+            self.configs_cmd_mapping = {}
+
         self.environment_variables = environment_variables
         if self.environment_variables == None:
             self.environment_variables = {}
+
+        self.services_system_path = services_system_path
+        self.services_system_extension = services_system_extension
 
         if self.storage_path:
             if not os.path.isdir(self.storage_path):
@@ -464,6 +468,8 @@ class ServerManagement:
         self.scripts_env = {}
         self.console = ServerManagementConsole()
         self.console_env = {}
+        self.configs_reboot = False
+
 
         if limiter_server_enabled:
             self.limiter_server = RateLimiter(int(limiter_server_calls), int(limiter_server_size), int(limiter_server_duration))
@@ -673,6 +679,28 @@ class ServerManagement:
 
 
     #################################################
+    # Log                                           #
+    #################################################
+
+
+    def log(self, text="", level=None):
+        if level == None:
+            level = RNS.LOG_ERROR
+
+        RNS.log(text, level)
+
+
+    def log_exception(self, e, text="", level=None):
+        import traceback
+
+        if level == None:
+            level = RNS.LOG_ERROR
+
+        RNS.log(text+" - An "+str(type(e))+" occurred: "+str(e), level)
+        RNS.log("".join(traceback.TracebackException.from_exception(e).format()), level)
+
+
+    #################################################
     # Configs                                       #
     #################################################
 
@@ -774,11 +802,14 @@ class ServerManagement:
                             for key, value in data_dict.items():
                                 data_return["configs"][file][key] = value
                 except Exception as e:
-                    RNS.log("Server - configs - List '"+file+"': "+str(e), RNS.LOG_ERROR)
+                    self.log_exception(e, "Server - configs - List '"+file+"'")
 
         except Exception as e:
-            RNS.log("Server - Configs - List: "+str(e), RNS.LOG_ERROR)
+            self.log_exception(e, "Server - configs - List")
             data_return["result"] = ServerManagement.RESULT_ERROR
+
+        if self.configs_reboot:
+            data_return["configs_reboot"] = self.configs_reboot
 
         data_return = msgpack.packb(data_return)
 
@@ -817,10 +848,10 @@ class ServerManagement:
             self.locales_init(data["locales"])
 
         data_return["result"] = ServerManagement.RESULT_OK
-        data_return["configs_apply"] = []
 
         if "cmd" in data and data["cmd"] == "apply" and "data" in data:
             try:
+                data_return["configs_apply"] = []
                 env_map = {}
                 if "PATH" in os.environ:
                     env_map["PATH"] = os.environ["PATH"]
@@ -840,12 +871,33 @@ class ServerManagement:
                         result = subprocess.run([file], stdout=subprocess.PIPE, env=env_map)
                         if result.returncode == 0:
                             data_return["configs_apply"].append(file)
+                            try:
+                                result_dict = json.loads(result.stdout)
+                                if "configs_reboot" in result_dict:
+                                    self.configs_reboot = True
+                            except:
+                                pass
             except Exception as e:
-                RNS.log("Server - Configs - CMD: "+str(e), RNS.LOG_ERROR)
+                self.log_exception(e, "Server - Configs - CMD")
+                data_return["result"] = ServerManagement.RESULT_ERROR
+
+        elif "cmd" in data and data["cmd"] in self.configs_cmd_mapping:
+            try:
+                result = subprocess.run([self.configs_cmd_mapping[data["cmd"]]], capture_output=True, text=True)
+                if result.returncode == 0:
+                    if data["cmd"] == "reboot":
+                        self.configs_reboot = False
+                else:
+                    raise ValueError(result.returncode)
+            except Exception as e:
+                self.log_exception(e, "Server - Configs - CMD")
                 data_return["result"] = ServerManagement.RESULT_ERROR
 
         else:
             data_return["result"] = ServerManagement.RESULT_ERROR
+
+        if self.configs_reboot:
+            data_return["configs_reboot"] = self.configs_reboot
 
         data_return = msgpack.packb(data_return)
 
@@ -943,7 +995,7 @@ class ServerManagement:
                 file_stat = os.stat(full_path)
                 data_return["files"][file] = [os.path.getsize(full_path), file_stat.st_mode, file_stat.st_uid, file_stat.st_gid]
         except Exception as e:
-            RNS.log("Server - Files - List: "+str(e), RNS.LOG_ERROR)
+            self.log_exception(e, "Server - Files - List")
             data_return["result"] = ServerManagement.RESULT_ERROR
 
         data_return = msgpack.packb(data_return)
@@ -1006,7 +1058,7 @@ class ServerManagement:
                 else:
                     raise ValueError(file_src+" does not exist.")
             except Exception as e:
-                RNS.log("Server - Files - CMD: "+str(e), RNS.LOG_ERROR)
+                self.log_exception(e, "Server - Files - CMD")
                 data_return["result"] = ServerManagement.RESULT_ERROR
 
         elif "cmd" in data and (data["cmd"] == "copy" or data["cmd"] == "cp" or data["cmd"] == "clone") and "file_src" in data and "file_dst" in data:
@@ -1031,7 +1083,7 @@ class ServerManagement:
                 else:
                     raise ValueError(file_src+" does not exist.")
             except Exception as e:
-                RNS.log("Server - Files - CMD: "+str(e), RNS.LOG_ERROR)
+                self.log_exception(e, "Server - Files - CMD")
                 data_return["result"] = ServerManagement.RESULT_ERROR
 
         elif "cmd" in data and (data["cmd"] == "del" or data["cmd"] == "rm") and "file" in data:
@@ -1046,7 +1098,7 @@ class ServerManagement:
                 data_return["files_del"] = {}
                 data_return["files_del"][os.path.basename(file)] = True
             except Exception as e:
-                RNS.log("Server - Files - CMD: "+str(e), RNS.LOG_ERROR)
+                self.log_exception(e, "Server - Files - CMD")
                 data_return["result"] = ServerManagement.RESULT_ERROR
 
         elif "cmd" in data and data["cmd"] == "rename" and "file" in data and "name" in data:
@@ -1069,7 +1121,7 @@ class ServerManagement:
                 else:
                     data_return["files_update"][os.path.basename(file_dst)] = []
             except Exception as e:
-                RNS.log("Server - Files - CMD: "+str(e), RNS.LOG_ERROR)
+                self.log_exception(e, "Server - Files - CMD")
                 data_return["result"] = ServerManagement.RESULT_ERROR
 
         elif "cmd" in data and (data["cmd"] == "new" or data["cmd"] == "create") and ("file" in data or "folder" in data):
@@ -1089,7 +1141,7 @@ class ServerManagement:
                     data_return["files_update"] = {}
                     data_return["files_update"][os.path.basename(data["folder"])] = []
             except Exception as e:
-                RNS.log("Server - Files - CMD: "+str(e), RNS.LOG_ERROR)
+                self.log_exception(e, "Server - Files - CMD")
                 data_return["result"] = ServerManagement.RESULT_ERROR
 
         elif "cmd" in data and data["cmd"] == "properties" and "file" in data:
@@ -1100,7 +1152,7 @@ class ServerManagement:
                 file_stat = os.stat(file)
                 data_return["files_properties"] = [file, file_stat.st_mode, file_stat.st_uid, file_stat.st_gid]
             except Exception as e:
-                RNS.log("Server - Files - CMD: "+str(e), RNS.LOG_ERROR)
+                self.log_exception(e, "Server - Files - CMD")
                 data_return["result"] = ServerManagement.RESULT_ERROR
 
         else:
@@ -1160,7 +1212,7 @@ class ServerManagement:
             return [data["file"], file_data]
 
         except Exception as e:
-            RNS.log("Server - Files - Download: Error: "+str(e), RNS.LOG_ERROR)
+            self.log_exception(e, "Server - Files - Download")
             return None
 
 
@@ -1210,7 +1262,7 @@ class ServerManagement:
                     file.close()
 
                 except Exception as e:
-                    RNS.log("Server - Files - Upload: Resource failed: "+str(e), RNS.LOG_ERROR)
+                    self.log_exception(e, "Server - Files - Upload: Resource failed")
 
             else:
                 RNS.log("Server - Files - Upload: Invalid data received, ignoring resource", RNS.LOG_DEBUG)
@@ -1319,20 +1371,20 @@ class ServerManagement:
                             data_dict = json.load(fh)
                             infos.update(data_dict)
                 except Exception as e:
-                    RNS.log("Server - Infos - List '"+file+"': "+str(e), RNS.LOG_ERROR)
+                    self.log_exception(e, "Server - Infos - List '"+file+"'")
 
             for key, value in infos.items():
-                if filter and "state" in filter and value[3] not in filter["state"]:
+                if filter and "state" in filter and len(value) >= 4 and value[3] not in filter["state"]:
                     continue
                 key = self.locales_text(key)
                 value[0] = self.locales_text(value[0])
                 value[1] = self.locales_text(value[1])
                 if search and search.lower() not in key.lower() and search.lower() not in value[0].lower() and search.lower() not in value[1].lower():
                     continue
-                data_return["infos"][key] = [value[0], value[1], value[2], value[3]]
+                data_return["infos"][key] = value
 
         except Exception as e:
-            RNS.log("Server - Infos - List: "+str(e), RNS.LOG_ERROR)
+            self.log_exception(e, "Server - Infos - List")
             data_return["result"] = ServerManagement.RESULT_ERROR
 
         data_return = msgpack.packb(data_return)
@@ -1432,7 +1484,7 @@ class ServerManagement:
                     continue
                 data_return["logs"][file] = [name, True]
         except Exception as e:
-            RNS.log("Server - Logs - List: "+str(e), RNS.LOG_ERROR)
+            self.log_exception(e, "Server - Logs - List")
             data_return["result"] = ServerManagement.RESULT_ERROR
 
         data_return = msgpack.packb(data_return)
@@ -1518,7 +1570,7 @@ class ServerManagement:
                                 data_return["logs_o"] = lines
                             break
             except Exception as e:
-                RNS.log("Server - Logs - CMD: "+str(e), RNS.LOG_ERROR)
+                self.log_exception(e, "Server - Logs - CMD")
                 data_return["result"] = ServerManagement.RESULT_ERROR
 
         else:
@@ -1621,7 +1673,7 @@ class ServerManagement:
                     continue
                 data_return["scripts"][file] = [name, True]
         except Exception as e:
-            RNS.log("Server - Scripts - List: "+str(e), RNS.LOG_ERROR)
+            self.log_exception(e, "Server - Scripts - List")
             data_return["result"] = ServerManagement.RESULT_ERROR
 
         data_return = msgpack.packb(data_return)
@@ -1735,7 +1787,7 @@ class ServerManagement:
                             data_dict = json.load(fh)
                             services.update(data_dict)
                 except Exception as e:
-                    RNS.log("Server - Services - List '"+file+"': "+str(e), RNS.LOG_ERROR)
+                    self.log_exception(e, "Server - Services - List '"+file+"'")
 
             for key, value in services.items():
                 if key == "":
@@ -1750,7 +1802,7 @@ class ServerManagement:
                 data_return["services"][key] = [enabled, state]
 
         except Exception as e:
-            RNS.log("Server - Services - List: "+str(e), RNS.LOG_ERROR)
+            self.log_exception(e, "Server - Services - List")
             data_return["result"] = ServerManagement.RESULT_ERROR
 
         data_return = msgpack.packb(data_return)
@@ -1810,7 +1862,7 @@ class ServerManagement:
                 data_return["services_update"] = {}
                 data_return["services_update"][data["name"]] = self.services_state(data["name"])
             except Exception as e:
-                RNS.log("Server - Services - CMD: "+str(e), RNS.LOG_ERROR)
+                self.log_exception(e, "Server - Services - CMD")
                 data_return["result"] = ServerManagement.RESULT_ERROR
 
         elif "cmd" in data and data["cmd"] == "clone" and "service" in data and data["service"] != "" and "name" in data and data["name"] != "":
@@ -1844,7 +1896,7 @@ class ServerManagement:
                 data_return["services_update"] = {}
                 data_return["services_update"][data["name"]] = self.services_state(data["name"])
             except Exception as e:
-                RNS.log("Server - Services - CMD: "+str(e), RNS.LOG_ERROR)
+                self.log_exception(e, "Server - Services - CMD")
                 data_return["result"] = ServerManagement.RESULT_ERROR
 
         elif "cmd" in data and data["cmd"] == "edit" and "service" in data and data["service"] != "" and "content" not in data:
@@ -1856,7 +1908,7 @@ class ServerManagement:
                     lines = fh.readlines()
                 data_return["services_edit"] = [data["service"], "".join(lines)]
             except Exception as e:
-                RNS.log("Server - Services - CMD: "+str(e), RNS.LOG_ERROR)
+                self.log_exception(e, "Server - Services - CMD")
                 data_return["result"] = ServerManagement.RESULT_ERROR
 
         elif "cmd" in data and data["cmd"] == "edit" and "service" in data and data["service"] != "" and "content" in data:
@@ -1870,7 +1922,7 @@ class ServerManagement:
                 if result.returncode != 0:
                     raise ValueError(result.returncode)
             except Exception as e:
-                RNS.log("Server - Services - CMD: "+str(e), RNS.LOG_ERROR)
+                self.log_exception(e, "Server - Services - CMD")
                 data_return["result"] = ServerManagement.RESULT_ERROR
 
         elif "cmd" in data and (data["cmd"] == "del" or data["cmd"] == "rm") and "service" in data and data["service"] != "":
@@ -1901,7 +1953,7 @@ class ServerManagement:
                 data_return["services_del"] = {}
                 data_return["services_del"][data["service"]] = True
             except Exception as e:
-                RNS.log("Server - Services - CMD: "+str(e), RNS.LOG_ERROR)
+                self.log_exception(e, "Server - Services - CMD")
                 data_return["result"] = ServerManagement.RESULT_ERROR
 
         elif "cmd" in data and data["cmd"] != "" and "service" in data and data["service"] != "":
@@ -1912,7 +1964,7 @@ class ServerManagement:
                 data_return["services_update"] = {}
                 data_return["services_update"][data["service"]] = self.services_state(data["service"])
             except Exception as e:
-                RNS.log("Server - Services - CMD: "+str(e), RNS.LOG_ERROR)
+                self.log_exception(e, "Server - Services - CMD")
                 data_return["result"] = ServerManagement.RESULT_ERROR
 
         else:
@@ -2007,7 +2059,7 @@ class ServerManagement:
                 self.scripts = None
 
         except Exception as e:
-            RNS.log("Server - Buffer - RX error: "+str(e), RNS.LOG_ERROR)
+            self.log_exception(e, "Server - Buffer - RX")
 
 
     def buffer_tx(self):
@@ -2046,7 +2098,7 @@ class ServerManagement:
                         self.buffer.flush()
 
             except Exception as e:
-                RNS.log("Server - Buffer - TX error: "+str(e), RNS.LOG_ERROR)
+                self.log_exception(e, "Server - Buffer - TX")
 
 
     #################################################
@@ -2314,6 +2366,13 @@ def log(text, level=3, file=None):
                 return
 
 
+def log_exception(e, text="", level=1):
+    import traceback
+
+    log(text+" - An "+str(type(e))+" occurred: "+str(e), level)
+    log("".join(traceback.TracebackException.from_exception(e).format()), level)
+
+
 ##############################################################################################################
 # System
 
@@ -2455,6 +2514,11 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
             except:
                 pass
 
+    configs_cmd = {}
+    if CONFIG.has_section("configs_cmd"):
+        for (key, val) in CONFIG.items("configs_cmd"):
+            configs_cmd[key] = val
+
     environment_variables = {}
     if CONFIG.has_section("environment_variables"):
         for (key, val) in CONFIG.items("environment_variables"):
@@ -2479,7 +2543,10 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
         default_user_interfaces=CONFIG["rns_server"]["default_user_interfaces"].split(","),
         default_user_hops=int(CONFIG["rns_server"]["default_user_hops"]),
         default_user_callback=setup_default_user,
+        configs_cmd=configs_cmd,
         environment_variables=environment_variables,
+        services_system_path=CONFIG["services"]["system_path"],
+        services_system_extension=CONFIG["services"]["system_extension"],
         limiter_server_enabled=CONFIG["rns_server"].getboolean("limiter_server_enabled"),
         limiter_server_calls=CONFIG["rns_server"]["limiter_server_calls"],
         limiter_server_size=CONFIG["rns_server"]["limiter_server_size"],
@@ -2660,8 +2727,20 @@ state_data = 0
 #2858b7a096899116cd529559cc679ffe
 
 
+#### configs_cmd settings ####
+[configs_cmd]
+reboot = reboot
+shutdown = shutdown
+
+
 #### Environment settings ####
 [environment_variables]
+
+
+#### services settings ####
+[services]
+system_path = /etc/systemd/system
+system_extension = .service
 '''
 
 

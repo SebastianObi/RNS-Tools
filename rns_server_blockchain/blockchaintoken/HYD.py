@@ -346,7 +346,7 @@ test.explorer.hydraledger.tech
             res = data["data"]
             result = {
                 "balance":  int(res["balance"]),
-                "delegate": "",
+                "delegate": res["username"] if "username" in res and "isDelegate" in res and "isResigned" in res and res["isDelegate"] == True and res["isResigned"] == False else "",
                 "name":     "",
                 "nonce":    int(res["nonce"]),
                 "vote":     res["attributes"]["vote"] if "attributes" in res and "vote" in res["attributes"] else ""
@@ -826,7 +826,7 @@ test.explorer.hydraledger.tech
 
     def transactions_add(self, token, account_id, account_data, transaction_data):
         if "data" in transaction_data:
-            response_transaction = json.loads(transaction_data["data"])
+            data = json.loads(transaction_data["data"])
         else:
             account = int(self.config[token]["account"])
             idx = int(self.config[token]["idx"])
@@ -847,19 +847,62 @@ test.explorer.hydraledger.tech
             if not password:
                 password = HMAC.new(phrase.encode("utf8")).hexdigest()
 
-            response_transaction = self.iop.sign_transaction(
-                self.iop.get_hyd_vault(phrase, password, network, account),
-                transaction_data["dest"],
-                int(transaction_data["amount"]),
-                transaction_data["nonce"] if "nonce" in transaction_data else self.get_nonce(token, account_id),
-                password,
-                account,
-                idx,
-                network,
-                transaction_data["comment"] if "comment" in transaction_data else None,
-                transaction_data["fee"] if "fee" in transaction_data else None
-            )
-            response_transaction = json.loads(response_transaction)
+            if transaction_data["type"] == self.owner.TRANSACTION_TYPE_TRANSFER:
+                data = self.iop.sign_transaction(
+                    self.iop.get_hyd_vault(phrase, password, network, account),
+                    transaction_data["dest"],
+                    int(transaction_data["amount"]),
+                    transaction_data["nonce"] if "nonce" in transaction_data else self.get_nonce(token, account_id),
+                    password,
+                    account,
+                    idx,
+                    network,
+                    transaction_data["comment"] if "comment" in transaction_data else None,
+                    transaction_data["fee"] if "fee" in transaction_data else None
+                )
+                data = json.loads(data)
+
+            elif transaction_data["type"] == self.owner.TRANSACTION_TYPE_VOTE:
+                data = self.iop.vote(
+                    self.iop.get_hyd_vault(phrase, password, network, account),
+                    transaction_data["nonce"] if "nonce" in transaction_data else self.get_nonce(token, account_id),
+                    password,
+                    account,
+                    idx,
+                    network,
+                    transaction_data["dest"]
+                )
+                data = json.loads(data)
+
+            elif transaction_data["type"] == self.owner.TRANSACTION_TYPE_UNVOTE:
+                data = self.iop.unvote(
+                    self.iop.get_hyd_vault(phrase, password, network, account),
+                    transaction_data["nonce"] if "nonce" in transaction_data else self.get_nonce(token, account_id),
+                    password,
+                    account,
+                    idx,
+                    network,
+                    transaction_data["dest"]
+                )
+                data = json.loads(data)
+
+            elif transaction_data["type"] == self.owner.TRANSACTION_TYPE_DELEGATE_REGISTRATION:
+                data = self.iop.register_delegate(
+                    self.iop.get_hyd_vault(phrase, password, network, account),
+                    transaction_data["nonce"] if "nonce" in transaction_data else self.get_nonce(token, account_id),
+                    password,
+                    account,
+                    idx,
+                    network,
+                    transaction_data["comment"] if "comment" in transaction_data else None
+                )
+                data = json.loads(data)
+
+            elif transaction_data["type"] == self.owner.TRANSACTION_TYPE_DELEGATE_RESIGNATION:
+                raise ValueError("Not implemented")
+
+            else:
+                raise ValueError("Not implemented")
 
         server = self.server(token)
         if not server:
@@ -867,9 +910,9 @@ test.explorer.hydraledger.tech
         url = f"http://{server}:4703/api/v2/transactions"
         timeout = int(self.config["main"]["server_timeout"])
 
-        response = requests.post(url, timeout=timeout, json=response_transaction)
+        response = requests.post(url, timeout=timeout, json=data)
 
-        #print(response_transaction)
+        #print(data)
         #print(response.json())
 
         if response.status_code == 200:

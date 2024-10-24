@@ -11,6 +11,7 @@ try:
 
 except FileNotFoundError:
     data = {}
+
     data["t0"] = ["text", "Text 1.1", "Text input 1", "t", "Some text", ""]
     data["t1"] = ["text", "Text 1.2", "Text input 2", "t", "Some other text", ""]
 
@@ -21,7 +22,7 @@ except FileNotFoundError:
 if "data" in os.environ:
     data_dict = json.loads(os.environ["data"])
     for key, value in data_dict.items():
-        if key in data:
+        if key in data and data[key][3] != "u":
             data[key][4] = value
     with open("/tmp/example2.1.json", 'w') as fh:
         json.dump(data, fh, indent=2)
