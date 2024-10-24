@@ -69,7 +69,7 @@ import subprocess
 import RNS
 import RNS.vendor.umsgpack as msgpack
 
-#### PostgreSQL ####
+#### Database - PostgreSQL ####
 # Install: pip3 install psycopg2
 # Install: pip3 install psycopg2-binary
 # Source: https://pypi.org/project/psycopg2/
@@ -532,6 +532,7 @@ class ServerProvisioning:
     def register_now(self):
         RNS.log("Server - Register", RNS.LOG_DEBUG)
 
+        self.destination.register_request_handler("directory_announce", response_generator=self.response_directory_announce, allow=RNS.Destination.ALLOW_ALL)
         self.destination.register_request_handler("directory_member", response_generator=self.response_directory_member, allow=RNS.Destination.ALLOW_ALL)
         self.destination.register_request_handler("directory_service", response_generator=self.response_directory_service, allow=RNS.Destination.ALLOW_ALL)
         self.destination.register_request_handler("sync", response_generator=self.response_sync, allow=RNS.Destination.ALLOW_ALL)
@@ -605,6 +606,229 @@ class ServerProvisioning:
 
     def db_load(self,):
         pass
+
+
+    #################################################
+    # Database - Announce                           #
+    #################################################
+
+
+    def db_announce_filter(self, filter):
+        if filter == None:
+            return ""
+
+        querys = []
+
+        if "type" in filter and filter["type"] != None:
+            if isinstance(filter["type"], int):
+                querys.append("type = '"+self.db_sanitize(filter["type"])+"'")
+            else:
+                array = [self.db_sanitize(key) for key in filter["type"]]
+                querys.append("(type = '"+"' OR type = '".join(array)+"')")
+
+        if "ts_min" in filter and filter["ts_min"] != None:
+            querys.append("ts >= "+db_sanitize(filter["ts_min"]))
+
+        if "ts_max" in filter and filter["ts_max"] != None:
+            querys.append("ts <= "+db_sanitize(filter["ts_max"]))
+
+        if "hop_min" in filter and filter["hop_min"] != None:
+            querys.append("hop_count >= "+db_sanitize(filter["hop_min"]))
+
+        if "hop_max" in filter and filter["hop_max"] != None:
+            querys.append("hop_count <= "+db_sanitize(filter["hop_max"]))
+
+        if "interface" in filter and filter["interface"] != None:
+            if isinstance(filter["interface"], str):
+                querys.append("hop_interface ILIKE '%"+db_sanitize(filter["interface"])+"%'")
+            else:
+                querys.append("(hop_interface ILIKE '%"+"%' OR hop_interface ILIKE '%".join(filter["interface"])+"%')")
+
+        if "state" in filter:
+            querys.append("state = '"+db_sanitize(filter["state"])+"'")
+
+        if "state_ts_min" in filter and filter["state_ts_min"] != None:
+            querys.append("state_ts >= "+db_sanitize(filter["state_ts_min"]))
+
+        if "state_ts_max" in filter and filter["state_ts_max"] != None:
+            querys.append("state_ts <= "+db_sanitize(filter["state_ts_max"]))
+
+        if "pin" in filter:
+            if filter["pin"] == True:
+                querys.append("pin = '1'")
+            elif filter["pin"] == False:
+                querys.append("pin = '0'")
+
+        if "archiv" in filter:
+            if filter["archiv"] == True:
+                querys.append("archiv = '1'")
+            elif filter["archiv"] == False:
+                querys.append("archiv = '0'")
+
+        if len(querys) > 0:
+            query = " AND "+" AND ".join(querys)
+        else:
+            query = ""
+
+        return query
+
+
+    def db_announce_group(self, group):
+        if group == None:
+            return ""
+
+        querys = []
+
+        for key in group:
+            querys.append(self.db_sanitize(key))
+
+        if len(querys) > 0:
+            query = " GROUP BY "+", ".join(querys)
+        else:
+            query = ""
+
+        return query
+
+
+    def db_announce_order(self, order):
+        if order == "A-ASC":
+            query = " ORDER BY data ASC"
+        elif order == "A-DESC":
+            query = " ORDER BY data DESC"
+        elif order == "T-ASC":
+            query = " ORDER BY type ASC, ts ASC, data ASC"
+        elif order == "T-DESC":
+            query = " ORDER BY type DESC, ts ASC, data ASC"
+        elif order == "H-ASC":
+            query = " ORDER BY hop_count ASC, ts ASC, data ASC"
+        elif order == "H-DESC":
+            query = " ORDER BY hop_count DESC, ts ASC, data ASC"
+        elif order == "I-ASC":
+            query = " ORDER BY hop_interface ASC, ts ASC, data ASC"
+        elif order == "I-DESC":
+            query = " ORDER BY hop_interface DESC, ts ASC, data ASC"
+        elif order == "S-ASC":
+            query = " ORDER BY state_ts ASC, data ASC"
+        elif order == "S-DESC":
+            query = " ORDER BY state_ts DESC, data ASC"
+        elif order == "ASC":
+            query = " ORDER BY ts ASC, data ASC"
+        elif order == "DESC":
+            query = " ORDER BY ts DESC, data ASC"
+        else:
+            query = ""
+
+        return query
+
+
+    def db_announce_list(self, filter=None, search=None, group=None, order=None, limit=None, limit_start=None):
+        db = self.db_connect()
+        dbc = db.cursor()
+
+        query_filter = self.db_announce_filter(filter)
+
+        query_group = self.db_announce_group(group)
+
+        query_order = self.db_announce_order(order)
+
+        if limit == None or limit_start == None:
+            query_limit = ""
+        else:
+            query_limit = " LIMIT "+self.db_sanitize(limit)+" OFFSET "+self.db_sanitize(limit_start)
+
+        if search:
+            search = "%"+search+"%"
+            query = "SELECT * FROM announce WHERE ts > 0 AND data ILIKE %s"+query_filter+query_group+query_order+query_limit
+            dbc.execute(query, (search,))
+        else:
+            query = "SELECT * FROM announce WHERE ts > 0"+query_filter+query_group+query_order+query_limit
+            dbc.execute(query)
+
+        result = dbc.fetchall()
+
+        if len(result) < 1:
+            return []
+        else:
+            data = []
+            for entry in result:
+                data.append({
+                    "dest": bytes(entry[0]),
+                    "type": entry[1],
+                    "ts": entry[2],
+                    "data": entry[3],
+                    "location_lat": entry[4],
+                    "location_lon": entry[5],
+                    "state": entry[6],
+                    "state_ts": entry[7],
+                    "hop_count": entry[8]
+                })
+
+            return data
+
+
+    def db_announce_count(self, filter=None, search=None, group=None):
+        db = self.db_connect()
+        dbc = db.cursor()
+
+        query_filter = self.db_announce_filter(filter)
+
+        query_group = self.db_announce_group(group)
+
+        if search:
+            search = "%"+search+"%"
+            query = "SELECT COUNT(*) FROM announces WHERE ts > 0 AND data ILIKE %s"+query_filter+query_group
+            dbc.execute(query, (search,))
+        else:
+            query = "SELECT COUNT(*) FROM announce WHERE ts > 0"+query_filter+query_group
+            dbc.execute(query)
+
+        result = dbc.fetchall()
+
+        if len(result) < 1:
+            return 0
+        else:
+            return result[0][0]
+
+
+    def db_announce_get(self, dest):
+        db = self.db_connect()
+        dbc = db.cursor()
+
+        query = "SELECT * FROM announce WHERE dest = %s"
+        dbc.execute(query, (dest,))
+        result = dbc.fetchall()
+
+        if len(result) < 1:
+            return None
+        else:
+            entry = result[0]
+            data = {
+            "dest": bytes(entry[0]),
+            "type": entry[1],
+            "ts": entry[2],
+            "data": entry[3],
+            "location_lat": entry[4],
+            "location_lon": entry[5],
+            "state": entry[6],
+            "state_ts": entry[7],
+            "hop_count": entry[8]
+            }
+            return data
+
+
+    def db_announce_delete(self, dest):
+        db = self.db_connect()
+        dbc = db.cursor()
+
+        query = "DELETE FROM announce WHERE dest = %s"
+        dbc.execute(query, (dest,))
+
+        self.db_commit()
+
+
+    #################################################
+    # Database - Member                             #
+    #################################################
 
 
     def db_member_filter(self, filter):
@@ -886,6 +1110,11 @@ class ServerProvisioning:
         self.db_commit()
 
 
+    #################################################
+    # Database - Service                            #
+    #################################################
+
+
     def db_service_filter(self, filter):
         if filter == None:
             return ""
@@ -1129,6 +1358,64 @@ class ServerProvisioning:
     #################################################
 
 
+    def response_directory_announce(self, path, data, request_id, link_id, remote_identity, requested_at):
+        if not remote_identity:
+            return msgpack.packb({ServerProvisioning.KEY_RESULT: ServerProvisioning.RESULT_NO_IDENTITY})
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return msgpack.packb({ServerProvisioning.KEY_RESULT: ServerProvisioning.RESULT_LIMIT_SERVER})
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return msgpack.packb({ServerProvisioning.KEY_RESULT: ServerProvisioning.RESULT_LIMIT_PEER})
+
+        if not data:
+            return msgpack.packb({ServerProvisioning.KEY_RESULT: ServerProvisioning.RESULT_NO_DATA})
+
+        RNS.log("Server - Response - Directory announce", RNS.LOG_DEBUG)
+        RNS.log(data, RNS.LOG_EXTREME)
+
+        data_return = {}
+
+        data_return[ServerProvisioning.KEY_RESULT] = ServerProvisioning.RESULT_OK
+
+        try:
+            hash_destination = RNS.hexrep(RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity), delimit=False)
+            hash_identity = ""
+
+            if "cmd" in data:
+                if hash_destination in self.admins:
+                    cmd = data["cmd"]
+                    if cmd[0] == "delete":
+                        self.db_announce_delete(cmd[1])
+                    entry = self.db_announce_get(cmd[1])
+                    if entry:
+                        data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [entry]})
+                    else:
+                        data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [{"dest": cmd[1], "type": 0, "ts": 0, "data": "", "location_lat": 0, "location_lon": 0, "state": 0, "state_ts": 0, "hop_count": 0}]})
+            else:
+                data_return["rx_entrys"] = self.db_announce_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"])
+                data_return["rx_entrys_count"] = self.db_announce_count(filter=data["filter"], search=data["search"], group=data["group"])
+
+            if hash_destination in self.admins:
+                data_return["cmd"] = []
+                data_return["cmd_entry"] = ["delete"]
+
+        except Exception as e:
+            RNS.log("Server - Response - Directory announce", RNS.LOG_ERROR)
+            RNS.trace_exception(e)
+            data_return[ServerProvisioning.KEY_RESULT] = ServerProvisioning.RESULT_ERROR
+
+        data_return = msgpack.packb(data_return)
+
+        if self.limiter_server:
+            self.limiter_server.handle_size("server", len(data_return))
+
+        if self.limiter_peer:
+             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
+
+        return data_return
+
+
     def response_directory_member(self, path, data, request_id, link_id, remote_identity, requested_at):
         if not remote_identity:
             return msgpack.packb({ServerProvisioning.KEY_RESULT: ServerProvisioning.RESULT_NO_IDENTITY})
@@ -1149,61 +1436,68 @@ class ServerProvisioning:
 
         data_return[ServerProvisioning.KEY_RESULT] = ServerProvisioning.RESULT_OK
 
-        hash_destination = RNS.hexrep(RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity), delimit=False)
-        hash_identity = ""
+        try:
+            hash_destination = RNS.hexrep(RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity), delimit=False)
+            hash_identity = ""
 
-        if "cmd" in data:
+            if "cmd" in data:
+                if hash_destination in self.admins:
+                    cmd = data["cmd"]
+                    if cmd[0] == "role_0":
+                        self.db_member_set(cmd[1], role=0)
+                    if cmd[0] == "role_1":
+                        self.db_member_set(cmd[1], role=1)
+                    if cmd[0] == "role_2":
+                        self.db_member_set(cmd[1], role=2)
+                    if cmd[0] == "role_3":
+                        self.db_member_set(cmd[1], role=3)
+                    if cmd[0] == "state_0":
+                        self.db_member_set(cmd[1], state=0)
+                    if cmd[0] == "state_1":
+                        self.db_member_set(cmd[1], state=1)
+                    if cmd[0] == "state_2":
+                        self.db_member_set(cmd[1], state=2)
+                    if cmd[0] == "delete":
+                        self.db_member_delete(cmd[1])
+                    entry = self.db_member_get(cmd[1])
+                    if entry:
+                        data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [entry]})
+                    else:
+                        data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [{"dest": cmd[1], "ts_edit": 0}]})
+            elif "group" in data and data["group"] != None:
+                data_return["rx_group_entrys"] = self.db_member_count_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"])
+                data_return["rx_group_entrys_count"] = len(data_return["rx_group_entrys"])
+            else:
+                data_return["rx_entrys"] = []
+                data_return["rx_entrys_count"] = self.db_member_count(filter=data["filter"], search=data["search"], group=data["group"])
+
+                for entry in self.db_member_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"]):
+                    if entry["dest"] in data["entrys"]:
+                        if entry["ts_edit"] > data["entrys"][entry["dest"]]:
+                            data_return["rx_entrys"].append(entry)
+                        del data["entrys"][entry["dest"]]
+                    else:
+                        data_return["rx_entrys"].append(entry)
+
+                for dest in data["entrys"]:
+                    entry = self.db_member_get(dest=dest)
+                    if entry:
+                        if entry["ts_edit"] > data["entrys"][dest]:
+                            data_return["rx_entrys"].append(entry)
+                    else:
+                        data_return["rx_entrys"].append({"dest": dest, "ts_edit": 0})
+
+                if len(data_return["rx_entrys"]) == 0:
+                    del data_return["rx_entrys"]
+
             if hash_destination in self.admins:
-                if cmd[0] == "role_0":
-                    self.db_member_set(cmd[1], role=0)
-                if cmd[0] == "role_1":
-                    self.db_member_set(cmd[1], role=1)
-                if cmd[0] == "role_2":
-                    self.db_member_set(cmd[1], role=2)
-                if cmd[0] == "role_3":
-                    self.db_member_set(cmd[1], role=3)
-                if cmd[0] == "state_0":
-                    self.db_member_set(cmd[1], state=0)
-                if cmd[0] == "state_1":
-                    self.db_member_set(cmd[1], state=1)
-                if cmd[0] == "state_2":
-                    self.db_member_set(cmd[1], state=2)
-                if cmd[0] == "delete":
-                    self.db_member_delete(cmd[1])
-                entry = self.db_member_get(cmd[1])
-                if entry:
-                    return data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [entry]})
-                else:
-                    return data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [{"dest": cmd[1], "ts_edit": 0}]})
-        elif "group" in data and data["group"] != None:
-            data_return["rx_group_entrys"] = self.db_member_count_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"])
-            data_return["rx_group_entrys_count"] = len(data_return["rx_group_entrys"])
-        else:
-            data_return["rx_entrys"] = []
-            data_return["rx_entrys_count"] = self.db_member_count(filter=data["filter"], search=data["search"], group=data["group"])
+                data_return["cmd"] = []
+                data_return["cmd_entry"] = ["role_0", "role_1", "role_2", "role_3", "state_0", "state_1", "state_2", "delete"]
 
-            for entry in self.db_member_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"]):
-                if entry["dest"] in data["entrys"]:
-                    if entry["ts_edit"] > data["entrys"][entry["dest"]]:
-                        data_return["rx_entrys"].append(entry)
-                    del data["entrys"][entry["dest"]]
-                else:
-                   data_return["rx_entrys"].append(entry)
-
-            for dest in data["entrys"]:
-                entry = self.db_member_get(dest=dest)
-                if entry:
-                    if entry["ts_edit"] > data["entrys"][dest]:
-                        data_return["rx_entrys"].append(entry)
-                else:
-                    data_return["rx_entrys"].append({"dest": dest, "ts_edit": 0})
-
-            if len(data_return["rx_entrys"]) == 0:
-                del data_return["rx_entrys"]
-
-        if hash_destination in self.admins:
-            data_return["cmd"] = []
-            data_return["cmd_entry"] = ["role_0", "role_1", "role_2", "role_3", "state_0", "state_1", "state_2", "delete"]
+        except Exception as e:
+            RNS.log("Server - Response - Directory member", RNS.LOG_ERROR)
+            RNS.trace_exception(e)
+            data_return[ServerProvisioning.KEY_RESULT] = ServerProvisioning.RESULT_ERROR
 
         data_return = msgpack.packb(data_return)
 
@@ -1236,47 +1530,54 @@ class ServerProvisioning:
 
         data_return[ServerProvisioning.KEY_RESULT] = ServerProvisioning.RESULT_OK
 
-        hash_destination = RNS.hexrep(RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity), delimit=False)
-        hash_identity = ""
+        try:
+            hash_destination = RNS.hexrep(RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity), delimit=False)
+            hash_identity = ""
 
-        if "cmd" in data:
+            if "cmd" in data:
+                if hash_destination in self.admins:
+                    cmd = data["cmd"]
+                    if cmd[0] == "delete":
+                        self.db_service_delete(cmd[1])
+                    entry = self.db_service_get(cmd[1])
+                    if entry:
+                        data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [entry]})
+                    else:
+                        data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [{"dest": cmd[1], "ts_edit": 0}]})
+            elif "group" in data and data["group"] != None:
+                data_return["rx_group_entrys"] = self.db_service_count_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"])
+                data_return["rx_group_entrys_count"] = len(data_return["rx_group_entrys"])
+            else:
+                data_return["rx_entrys"] = []
+                data_return["rx_entrys_count"] = self.db_service_count(filter=data["filter"], search=data["search"], group=data["group"])
+
+                for entry in self.db_service_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"]):
+                    if entry["dest"] in data["entrys"]:
+                        if entry["ts_edit"] > data["entrys"][entry["dest"]]:
+                            data_return["rx_entrys"].append(entry)
+                        del data["entrys"][entry["dest"]]
+                    else:
+                        data_return["rx_entrys"].append(entry)
+
+                for dest in data["entrys"]:
+                    entry = self.db_service_get(dest=dest)
+                    if entry:
+                        if entry["ts_edit"] > data["entrys"][dest]:
+                            data_return["rx_entrys"].append(entry)
+                    else:
+                        data_return["rx_entrys"].append({"dest": dest, "ts_edit": 0})
+
+                if len(data_return["rx_entrys"]) == 0:
+                    del data_return["rx_entrys"]
+
             if hash_destination in self.admins:
-                if cmd[0] == "delete":
-                    self.db_service_delete(cmd[1])
-                entry = self.db_service_get(cmd[1])
-                if entry:
-                    data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [entry]})
-                else:
-                    data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [{"dest": cmd[1], "ts_edit": 0}]})
-        elif "group" in data and data["group"] != None:
-            data_return["rx_group_entrys"] = self.db_service_count_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"])
-            data_return["rx_group_entrys_count"] = len(data_return["rx_group_entrys"])
-        else:
-            data_return["rx_entrys"] = []
-            data_return["rx_entrys_count"] = self.db_service_count(filter=data["filter"], search=data["search"], group=data["group"])
+                data_return["cmd"] = []
+                data_return["cmd_entry"] = []
 
-            for entry in self.db_service_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"]):
-                if entry["dest"] in data["entrys"]:
-                    if entry["ts_edit"] > data["entrys"][entry["dest"]]:
-                        data_return["rx_entrys"].append(entry)
-                    del data["entrys"][entry["dest"]]
-                else:
-                   data_return["rx_entrys"].append(entry)
-
-            for dest in data["entrys"]:
-                entry = self.db_service_get(dest=dest)
-                if entry:
-                    if entry["ts_edit"] > data["entrys"][dest]:
-                        data_return["rx_entrys"].append(entry)
-                else:
-                    data_return["rx_entrys"].append({"dest": dest, "ts_edit": 0})
-
-            if len(data_return["rx_entrys"]) == 0:
-                del data_return["rx_entrys"]
-
-        if hash_destination in self.admins:
-            data_return["cmd"] = []
-            data_return["cmd_entry"] = []
+        except Exception as e:
+            RNS.log("Server - Response - Directory service", RNS.LOG_ERROR)
+            RNS.trace_exception(e)
+            data_return[ServerProvisioning.KEY_RESULT] = ServerProvisioning.RESULT_ERROR
 
         data_return = msgpack.packb(data_return)
 
@@ -2107,8 +2408,6 @@ account_prove_auth = True
 account_prove_auth_state = 1
 account_prove_auth_role = 3
 
-telemetry = False
-
 
 [admins]
 
@@ -2233,8 +2532,6 @@ account_prove = False
 account_prove_auth = False
 account_prove_auth_state = 1
 account_prove_auth_role = 3
-
-telemetry = False
 
 
 #### Admin users ####
