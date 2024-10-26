@@ -88,6 +88,8 @@ DEFAULT_CONFIG = {
     "telemetry_location_enabled": False,
     "telemetry_location_lat": 0,
     "telemetry_location_lon": 0,
+    "telemetry_owner_enabled": False,
+    "telemetry_owner_data": "",
     "telemetry_state_enabled": False,
     "telemetry_state_data": 0,
     "state_first_run": True,
@@ -442,6 +444,8 @@ class ServerShop:
             fields = {}
             if config["telemetry_location_enabled"]:
                 fields[self.core.MSG_FIELD_LOCATION] = [config["telemetry_location_lat"], config["telemetry_location_lon"]]
+            if config["telemetry_owner_enabled"]:
+                fields[self.core.MSG_FIELD_OWNER] = bytes.fromhex(config["telemetry_owner_data"])
             if config["telemetry_state_enabled"]:
                 fields[self.core.MSG_FIELD_STATE] = [config["telemetry_state_data"], int(time.time())]
             if len(fields) > 0:
@@ -1048,6 +1052,7 @@ class Core:
     MSG_FIELD_KEYBOARD           = 0xAC
     MSG_FIELD_KEYBOARD_INLINE    = 0xAD
     MSG_FIELD_LOCATION           = 0xAE
+    MSG_FIELD_OWNER              = 0xC0
     MSG_FIELD_POLL               = 0xAF
     MSG_FIELD_POLL_ANSWER        = 0xB0
     MSG_FIELD_REACTION           = 0xB1
@@ -2669,6 +2674,8 @@ def cmd(cmd):
                 value = val_int
             except:
                 pass
+        config[cmd[0]] = value
+        CORE.db_shops_set_config(shop_id, config, time.time())
 
     else:
         print("Error: Wrong/Unknown command")
@@ -2691,6 +2698,7 @@ def cmd_val_to_val(val):
         except:
             pass
     return val
+
 
 def cmd_db():
     try:

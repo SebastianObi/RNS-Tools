@@ -22,22 +22,23 @@ DEBUG = False #True/False
 # Alternative path
 PATH = None
 
-KEY_DATA = "var_data"
-KEY_ENTRYS = "rx_entrys"
-KEY_ENTRYS_COUNT = "rx_entrys_count"
-KEY_RESULT = "result"
-KEY_CMD = "cmd"
-KEY_CMD_ENTRY = "cmd_entry"
-KEY_CMD_RESULT = "cmd_result"
+KEY_RESULT        = 0x0A # Result
+KEY_RESULT_REASON = 0x0B # Result - Reason
+KEY_DATA          = "var_data"
+KEY_ENTRYS        = "rx_entrys"
+KEY_ENTRYS_COUNT  = "rx_entrys_count"
+KEY_CMD           = "cmd"
+KEY_CMD_ENTRY     = "cmd_entry"
+KEY_CMD_RESULT    = "cmd_result"
 
 RESULT_ERROR = 0x00
 RESULT_OK    = 0x01
 
 # Admin destinations (LXMF-Adresses)
-ADMINS = ["dece1ff47066e7e2ef55bf56e8b69aad"] #Array
+ADMINS = ["652cc196d9185407a09e7ff0386741e4"] #Array
 
 # Admin CMDs
-ADMINS_CMD = [] #Array
+ADMINS_CMD       = [] #Array
 ADMINS_CMD_ENTRY = ["delete"] #Array
 
 
@@ -55,7 +56,7 @@ import sqlite3
 
 #### Reticulum ####
 import RNS
-import RNS.vendor.umsgpack as umsgpack
+import RNS.vendor.umsgpack as msgpack
 
 
 ##############################################################################################################
@@ -152,6 +153,15 @@ def db_filter(filter):
         else:
             querys.append("(hop_interface LIKE '%"+"%' OR hop_interface LIKE '%".join(filter["interface"])+"%')")
 
+    if "state" in filter:
+        querys.append("state = '"+db_sanitize(filter["state"])+"'")
+
+    if "state_ts_min" in filter and filter["state_ts_min"] != None:
+        querys.append("state_ts >= "+db_sanitize(filter["state_ts_min"]))
+
+    if "state_ts_max" in filter and filter["state_ts_max"] != None:
+        querys.append("state_ts <= "+db_sanitize(filter["state_ts_max"]))
+
     if "pin" in filter:
         if filter["pin"] == True:
             querys.append("pin = '1'")
@@ -206,6 +216,10 @@ def db_order(order):
         query = " ORDER BY hop_interface ASC, ts ASC, data ASC"
     elif order == "I-DESC":
         query = " ORDER BY hop_interface DESC, ts ASC, data ASC"
+    elif order == "S-ASC":
+        query = " ORDER BY state_ts ASC, data ASC"
+    elif order == "S-DESC":
+        query = " ORDER BY state_ts DESC, data ASC"
     elif order == "ASC":
         query = " ORDER BY ts ASC, data ASC"
     elif order == "DESC":
@@ -253,9 +267,10 @@ def db_list(filter=None, search=None, group=None, order=None, limit=None, limit_
                 "data": entry[3],
                 "location_lat": entry[4],
                 "location_lon": entry[5],
-                "state": entry[6],
-                "state_ts": entry[7],
-                "hop_count": entry[8]
+                "owner": entry[6],
+                "state": entry[7],
+                "state_ts": entry[8],
+                "hop_count": entry[9]
             })
 
         return data
@@ -305,9 +320,10 @@ def db_get(dest):
             "data": entry[3],
             "location_lat": entry[4],
             "location_lon": entry[5],
-            "state": entry[6],
-            "state_ts": entry[7],
-            "hop_count": entry[8]
+            "owner": entry[6],
+            "state": entry[7],
+            "state_ts": entry[8],
+            "hop_count": entry[9]
         }
         return data
 
@@ -359,7 +375,7 @@ try:
             RIGHT = "admin"
 
     data = os.environ[KEY_DATA]
-    data = umsgpack.unpackb(base64.b64decode(data))
+    data = msgpack.unpackb(base64.b64decode(data))
 
     if DEBUG:
         print(data)
@@ -378,5 +394,5 @@ try:
 except Exception as e:
     data_return[KEY_RESULT] = RESULT_ERROR
 
-sys.stdout.buffer.write(umsgpack.packb(data_return))
+sys.stdout.buffer.write(msgpack.packb(data_return))
 sys.stdout.flush() 

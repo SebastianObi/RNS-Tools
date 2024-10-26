@@ -110,6 +110,7 @@ MSG_FIELD_ICON_SRC           = 0xAB
 MSG_FIELD_KEYBOARD           = 0xAC
 MSG_FIELD_KEYBOARD_INLINE    = 0xAD
 MSG_FIELD_LOCATION           = 0xAE
+MSG_FIELD_OWNER              = 0xC0
 MSG_FIELD_POLL               = 0xAF
 MSG_FIELD_POLL_ANSWER        = 0xB0
 MSG_FIELD_REACTION           = 0xB1
@@ -577,6 +578,13 @@ class ServerBlockchain:
             self.limiter_peer = RateLimiter(int(limiter_peer_calls), int(limiter_peer_size), int(limiter_peer_duration))
         else:
             self.limiter_peer = None
+
+
+    def start(self):
+        pass
+
+    def stop(self):
+        pass
 
 
     def register_announce_callback(self, handler_function):
@@ -1631,6 +1639,13 @@ def log(text, level=3, file=None):
                 return
 
 
+def log_exception(e, text="", level=1):
+    import traceback
+
+    log(text+" - An "+str(type(e))+" occurred: "+str(e), level)
+    log("".join(traceback.TracebackException.from_exception(e).format()), level)
+
+
 ##############################################################################################################
 # System
 
@@ -1723,6 +1738,11 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
         if CONFIG["telemetry"].getboolean("location_enabled"):
             try:
                fields[MSG_FIELD_LOCATION] = [CONFIG["telemetry"].getfloat("location_lat"), CONFIG["telemetry"].getfloat("location_lon")]
+            except:
+                pass
+        if CONFIG["telemetry"].getboolean("owner_enabled"):
+            try:
+               fields[MSG_FIELD_OWNER] = bytes.fromhex(CONFIG["telemetry"]["owner_data"])
             except:
                 pass
         if CONFIG["telemetry"].getboolean("state_enabled"):
@@ -1828,6 +1848,9 @@ location_enabled = False
 location_lat = 0
 location_lon = 0
 
+owner_enabled = False
+owner_data = 
+
 state_enabled = False
 state_data = 0
 '''
@@ -1896,6 +1919,9 @@ limiter_peer_duration = 60 # Seconds
 location_enabled = False
 location_lat = 0
 location_lon = 0
+
+owner_enabled = False
+owner_data = 
 
 state_enabled = False
 state_data = 0

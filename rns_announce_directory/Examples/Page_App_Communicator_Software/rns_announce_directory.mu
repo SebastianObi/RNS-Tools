@@ -64,7 +64,7 @@ import sqlite3
 
 #### Reticulum ####
 import RNS
-import RNS.vendor.umsgpack as umsgpack
+import RNS.vendor.umsgpack as msgpack
 
 
 ##############################################################################################################
@@ -231,8 +231,12 @@ def db_announce_list(filter=None, search=None, order=None, limit=None, limit_sta
                 "type": entry[1],
                 "ts": entry[2],
                 "data": entry[3],
-                "hop_count": entry[4],
-                "hop_interface": entry[5]
+                "location_lat": entry[4],
+                "location_lon": entry[5],
+                "owner": entry[6],
+                "state": entry[7],
+                "state_ts": entry[8],
+                "hop_count": entry[9]
             })
 
         return data

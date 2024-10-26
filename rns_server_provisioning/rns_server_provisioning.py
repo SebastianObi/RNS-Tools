@@ -35,7 +35,7 @@
 import sys
 import os
 import time
-from datetime import datetime, timezone
+import datetime
 import argparse
 import random
 
@@ -124,6 +124,7 @@ MSG_FIELD_ICON_SRC           = 0xAB
 MSG_FIELD_KEYBOARD           = 0xAC
 MSG_FIELD_KEYBOARD_INLINE    = 0xAD
 MSG_FIELD_LOCATION           = 0xAE
+MSG_FIELD_OWNER              = 0xC0
 MSG_FIELD_POLL               = 0xAF
 MSG_FIELD_POLL_ANSWER        = 0xB0
 MSG_FIELD_REACTION           = 0xB1
@@ -226,7 +227,7 @@ class ServerProvisioning:
     KEY_RESULT        = 0x0A # Result
     KEY_RESULT_REASON = 0x0B # Result - Reason
     KEY_A             = 0x0C # Account
-    KEY_D             = 0x0D # Device
+    KEY_D             = 0x0D # Directory
     KEY_T             = 0x0E # Transaction
 
     KEY_A_DATA         = 0x00
@@ -234,6 +235,21 @@ class ServerProvisioning:
     KEY_A_MAPPING = {
         "data": KEY_A_DATA,
     }
+
+    KEY_D_CMD                    = 0x00
+    KEY_D_CMD_ENTRY              = 0x01
+    KEY_D_CMD_RESULT             = 0x02
+    KEY_D_ENTRYS                 = 0x03
+    KEY_D_FILTER                 = 0x04
+    KEY_D_GROUP                  = 0x05
+    KEY_D_LIMIT                  = 0x06
+    KEY_D_LIMIT_START            = 0x07
+    KEY_D_ORDER                  = 0x08
+    KEY_D_RX_ENTRYS              = 0x09
+    KEY_D_RX_ENTRYS_COUNT        = 0x0A
+    KEY_D_RX_GROUP_ENTRYS        = 0x0B
+    KEY_D_RX_GROUP_ENTRYS_COUNT  = 0x0C
+    KEY_D_SEARCH                 = 0x0D
 
     KEY_T_DATA         = 0x00
     KEY_T_ID           = 0x01
@@ -374,6 +390,7 @@ class ServerProvisioning:
         self.destination.set_link_established_callback(self.peer_connected)
 
         self.db = None
+        self.db_load()
 
         if limiter_server_enabled:
             self.limiter_server = RateLimiter(int(limiter_server_calls), int(limiter_server_size), int(limiter_server_duration))
@@ -565,7 +582,7 @@ class ServerProvisioning:
     def db_connect(self):
         try:
             if self.db == None:
-                self.db = psycopg2.connect(user=self.config["database"]["user"], password=self.config["database"]["password"], host=self.config["database"]["host"], port=self.config["database"]["port"], database=self.config["database"]["database"], client_encoding=self.config["database"]["encoding"])
+                self.db = psycopg2.connect(user=self.config["database"]["user"], password=self.config["database"]["password"], host=self.config["database"]["host"], port=self.config["database"]["port"], database=self.config["database"]["database"], client_encoding=self.config["database"]["encoding"], connect_timeout=5)
         except:
             self.db = None
 
@@ -593,19 +610,49 @@ class ServerProvisioning:
 
 
     def db_init(self, init=True):
-       pass
+        db = self.db_connect()
+        dbc = db.cursor()
+
+        if init:
+            dbc.execute("DROP TABLE IF EXISTS public.announce")
+        dbc.execute("""CREATE TABLE IF NOT EXISTS public.announce(dest character(32) COLLATE pg_catalog."default" NOT NULL, type integer NOT NULL DEFAULT 0, ts timestamp with time zone, data text COLLATE pg_catalog."default" DEFAULT ''::text, location_lat double precision DEFAULT 0, location_lon double precision DEFAULT 0, owner character(32) COLLATE pg_catalog."default", state integer DEFAULT 0, state_ts timestamp with time zone, hop_count integer DEFAULT 0, hop_interface text COLLATE pg_catalog."default" DEFAULT ''::text, hop_dest character(32) COLLATE pg_catalog."default", CONSTRAINT announce_pkey PRIMARY KEY (dest, type))""")
+
+        if init:
+            dbc.execute("DROP TABLE IF EXISTS public.devices")
+        dbc.execute("""CREATE TABLE IF NOT EXISTS public.devices(device_id character(100) COLLATE pg_catalog."default" NOT NULL, device_user_id character(100) COLLATE pg_catalog."default", device_name character(256) COLLATE pg_catalog."default", device_display_name character(256) COLLATE pg_catalog."default", device_rns_id character(100) COLLATE pg_catalog."default", device_did_hash character(100) COLLATE pg_catalog."default", device_status character(1) COLLATE pg_catalog."default", CONSTRAINT devices_pkey PRIMARY KEY (device_id), CONSTRAINT devices_device_user_id_fkey FOREIGN KEY (device_user_id) REFERENCES public.members (member_user_id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION)""")
+
+        if init:
+            dbc.execute("DROP TABLE IF EXISTS public.members")
+        dbc.execute("""CREATE TABLE IF NOT EXISTS public.members(member_user_id character(100) COLLATE pg_catalog."default" NOT NULL, member_user_name character(100) COLLATE pg_catalog."default", member_first_name character(100) COLLATE pg_catalog."default", member_last_name character(100) COLLATE pg_catalog."default", member_address_1 character(100) COLLATE pg_catalog."default", member_address_2 character(100) COLLATE pg_catalog."default", member_city character(100) COLLATE pg_catalog."default", member_state character(5) COLLATE pg_catalog."default", member_zip_code character(10) COLLATE pg_catalog."default", member_country character(2) COLLATE pg_catalog."default", member_language character(2) COLLATE pg_catalog."default", member_locale character(2) COLLATE pg_catalog."default", member_email character(100) COLLATE pg_catalog."default", member_password character(100) COLLATE pg_catalog."default", member_display_name character(256) COLLATE pg_catalog."default", member_dob date, member_sex character(1) COLLATE pg_catalog."default", member_introduction text COLLATE pg_catalog."default", member_occupation text COLLATE pg_catalog."default", member_skills text COLLATE pg_catalog."default", member_tasks text COLLATE pg_catalog."default", member_wallet_address character(256) COLLATE pg_catalog."default", member_accept_rules boolean, member_ts_add timestamp with time zone, member_ts_edit timestamp with time zone, member_ts_acpt timestamp with time zone, member_did_hash character(100) COLLATE pg_catalog."default", member_auth_state character(1) COLLATE pg_catalog."default", member_auth_role character(1) COLLATE pg_catalog."default", member_update character(1) COLLATE pg_catalog."default", CONSTRAINT members_pkey PRIMARY KEY (member_user_id))""")
+
+        if init:
+            dbc.execute("DROP TABLE IF EXISTS public.proves")
+        dbc.execute("""CREATE TABLE IF NOT EXISTS public.proves(prove_source_user_id character(100) COLLATE pg_catalog."default" NOT NULL, prove_destination_user_id character(100) COLLATE pg_catalog."default" NOT NULL, prove_timestamp timestamp with time zone, prove_did_hash character(100) COLLATE pg_catalog."default", CONSTRAINT proves_pkey PRIMARY KEY (prove_source_user_id, prove_destination_user_id), CONSTRAINT proves_prove_destination_user_id_fkey FOREIGN KEY (prove_destination_user_id) REFERENCES public.members (member_user_id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION, CONSTRAINT proves_prove_source_user_id_fkey FOREIGN KEY (prove_source_user_id) REFERENCES public.members (member_user_id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION)""")
+
+        if init:
+            dbc.execute("DROP TABLE IF EXISTS public.services")
+        dbc.execute("""CREATE TABLE IF NOT EXISTS public.services(service_rns_id character(32) COLLATE pg_catalog."default" NOT NULL, service_display_name character(256) COLLATE pg_catalog."default", service_city character(100) COLLATE pg_catalog."default", service_state character(5) COLLATE pg_catalog."default", service_country character(2) COLLATE pg_catalog."default", service_type character(1) COLLATE pg_catalog."default", service_owner character(32) COLLATE pg_catalog."default", service_ts_add timestamp with time zone, service_ts_edit timestamp with time zone, service_auth_state character(1) COLLATE pg_catalog."default", service_auth_role character(1) COLLATE pg_catalog."default", CONSTRAINT services_pkey PRIMARY KEY (service_rns_id))""")
+
+        self.db_commit()
 
 
     def db_migrate(self):
-        pass
+        self.db_init(False)
+
+        db = self.db_connect()
+        dbc = db.cursor()
+
+        self.db_commit()
+
+        self.db_init(False)
 
 
     def db_indices(self):
         pass
 
 
-    def db_load(self,):
-        pass
+    def db_load(self):
+        self.db_init(False)
 
 
     #################################################
@@ -627,31 +674,34 @@ class ServerProvisioning:
                 querys.append("(type = '"+"' OR type = '".join(array)+"')")
 
         if "ts_min" in filter and filter["ts_min"] != None:
-            querys.append("ts >= "+db_sanitize(filter["ts_min"]))
+            querys.append("ts >= "+datetime.datetime.fromtimestamp(filter["ts_min"]).strftime("%Y-%m-%d %H:%M:%S"))
 
         if "ts_max" in filter and filter["ts_max"] != None:
-            querys.append("ts <= "+db_sanitize(filter["ts_max"]))
+            querys.append("ts <= "+datetime.datetime.fromtimestamp(filter["ts_max"]).strftime("%Y-%m-%d %H:%M:%S"))
 
         if "hop_min" in filter and filter["hop_min"] != None:
-            querys.append("hop_count >= "+db_sanitize(filter["hop_min"]))
+            querys.append("hop_count >= "+self.db_sanitize(filter["hop_min"]))
 
         if "hop_max" in filter and filter["hop_max"] != None:
-            querys.append("hop_count <= "+db_sanitize(filter["hop_max"]))
+            querys.append("hop_count <= "+self.db_sanitize(filter["hop_max"]))
 
         if "interface" in filter and filter["interface"] != None:
             if isinstance(filter["interface"], str):
-                querys.append("hop_interface ILIKE '%"+db_sanitize(filter["interface"])+"%'")
+                querys.append("hop_interface ILIKE '%"+self.db_sanitize(filter["interface"])+"%'")
             else:
                 querys.append("(hop_interface ILIKE '%"+"%' OR hop_interface ILIKE '%".join(filter["interface"])+"%')")
 
+        if "owner" in filter:
+            querys.append("owner = '"+self.db_sanitize(RNS.hexrep(filter["owner"], delimit=False))+"'")
+
         if "state" in filter:
-            querys.append("state = '"+db_sanitize(filter["state"])+"'")
+            querys.append("state = '"+self.db_sanitize(filter["state"])+"'")
 
         if "state_ts_min" in filter and filter["state_ts_min"] != None:
-            querys.append("state_ts >= "+db_sanitize(filter["state_ts_min"]))
+            querys.append("state_ts >= "+datetime.datetime.fromtimestamp(filter["state_ts_min"]).strftime("%Y-%m-%d %H:%M:%S"))
 
         if "state_ts_max" in filter and filter["state_ts_max"] != None:
-            querys.append("state_ts <= "+db_sanitize(filter["state_ts_max"]))
+            querys.append("state_ts <= "+datetime.datetime.fromtimestamp(filter["state_ts_max"]).strftime("%Y-%m-%d %H:%M:%S"))
 
         if "pin" in filter:
             if filter["pin"] == True:
@@ -738,10 +788,10 @@ class ServerProvisioning:
 
         if search:
             search = "%"+search+"%"
-            query = "SELECT * FROM announce WHERE ts > 0 AND data ILIKE %s"+query_filter+query_group+query_order+query_limit
+            query = "SELECT * FROM announce WHERE type >= 0 AND data ILIKE %s"+query_filter+query_group+query_order+query_limit
             dbc.execute(query, (search,))
         else:
-            query = "SELECT * FROM announce WHERE ts > 0"+query_filter+query_group+query_order+query_limit
+            query = "SELECT * FROM announce WHERE type >= 0"+query_filter+query_group+query_order+query_limit
             dbc.execute(query)
 
         result = dbc.fetchall()
@@ -751,16 +801,19 @@ class ServerProvisioning:
         else:
             data = []
             for entry in result:
+                owner = entry[6].strip()
+                owner = bytes.fromhex(owner) if owner else None
                 data.append({
-                    "dest": bytes(entry[0]),
+                    "dest": bytes.fromhex(entry[0].strip()),
                     "type": entry[1],
-                    "ts": entry[2],
-                    "data": entry[3],
+                    "ts": int(entry[2].timestamp()),
+                    "data": entry[3].strip(),
                     "location_lat": entry[4],
                     "location_lon": entry[5],
-                    "state": entry[6],
-                    "state_ts": entry[7],
-                    "hop_count": entry[8]
+                    "owner": owner,
+                    "state": entry[7],
+                    "state_ts": int(entry[8].timestamp()),
+                    "hop_count": entry[9],
                 })
 
             return data
@@ -776,10 +829,10 @@ class ServerProvisioning:
 
         if search:
             search = "%"+search+"%"
-            query = "SELECT COUNT(*) FROM announces WHERE ts > 0 AND data ILIKE %s"+query_filter+query_group
+            query = "SELECT COUNT(*) FROM announces WHERE type >= 0 AND data ILIKE %s"+query_filter+query_group
             dbc.execute(query, (search,))
         else:
-            query = "SELECT COUNT(*) FROM announce WHERE ts > 0"+query_filter+query_group
+            query = "SELECT COUNT(*) FROM announce WHERE type >= 0"+query_filter+query_group
             dbc.execute(query)
 
         result = dbc.fetchall()
@@ -795,23 +848,26 @@ class ServerProvisioning:
         dbc = db.cursor()
 
         query = "SELECT * FROM announce WHERE dest = %s"
-        dbc.execute(query, (dest,))
+        dbc.execute(query, (RNS.hexrep(dest, False),))
         result = dbc.fetchall()
 
         if len(result) < 1:
             return None
         else:
             entry = result[0]
+            owner = entry[6].strip()
+            owner = bytes.fromhex(owner) if owner else None
             data = {
-            "dest": bytes(entry[0]),
-            "type": entry[1],
-            "ts": entry[2],
-            "data": entry[3],
-            "location_lat": entry[4],
-            "location_lon": entry[5],
-            "state": entry[6],
-            "state_ts": entry[7],
-            "hop_count": entry[8]
+                "dest": bytes.fromhex(entry[0].strip()),
+                "type": entry[1],
+                "ts": int(entry[2].timestamp()),
+                "data": entry[3].strip(),
+                "location_lat": entry[4],
+                "location_lon": entry[5],
+                "owner": owner,
+                "state": entry[7],
+                "state_ts": int(entry[8].timestamp()),
+                "hop_count": entry[9],
             }
             return data
 
@@ -821,7 +877,7 @@ class ServerProvisioning:
         dbc = db.cursor()
 
         query = "DELETE FROM announce WHERE dest = %s"
-        dbc.execute(query, (dest,))
+        dbc.execute(query, (RNS.hexrep(dest, False),))
 
         self.db_commit()
 
@@ -872,10 +928,10 @@ class ServerProvisioning:
             querys.append("members.member_auth_role = '"+self.db_sanitize(filter["auth_role"])+"'")
 
         if "ts_min" in filter and filter["ts_min"] != None:
-            querys.append("members.member_ts_add >= "+datetime.datetime.fromtimestamp(filter["ts_min"]).strftime('%Y-%m-%d %H:%M:%S'))
+            querys.append("members.member_ts_add >= "+datetime.datetime.fromtimestamp(filter["ts_min"]).strftime("%Y-%m-%d %H:%M:%S"))
 
         if "ts_max" in filter and filter["ts_max"] != None:
-            querys.append("members.member_ts_add <= "+datetime.datetime.fromtimestamp(filter["ts_max"]).strftime('%Y-%m-%d %H:%M:%S'))
+            querys.append("members.member_ts_add <= "+datetime.datetime.fromtimestamp(filter["ts_max"]).strftime("%Y-%m-%d %H:%M:%S"))
 
         if len(querys) > 0:
             query = " AND "+" AND ".join(querys)
@@ -973,10 +1029,10 @@ class ServerProvisioning:
                         "tasks": entry[5].strip(),
                         "wallet_address": entry[6].strip(),
                         "auth_role": int(entry[7].strip()),
-                        "ts_add": entry[8].timestamp(),
-                        "ts_edit": entry[9].timestamp(),
+                        "ts_add": int(entry[8].timestamp()),
+                        "ts_edit": int(entry[9].timestamp()),
                         "dest": bytes.fromhex(entry[10].strip()),
-                        "display_name": entry[11].strip()
+                        "display_name": entry[11].strip(),
                     })
             return data
 
@@ -1069,10 +1125,10 @@ class ServerProvisioning:
                 "tasks": entry[5].strip(),
                 "wallet_address": entry[6].strip(),
                 "auth_role": int(entry[7].strip()),
-                "ts_add": entry[8].timestamp(),
-                "ts_edit": entry[9].timestamp(),
+                "ts_add": int(entry[8].timestamp()),
+                "ts_edit": int(entry[9].timestamp()),
                 "dest": bytes.fromhex(entry[10].strip()),
-                "display_name": entry[11].strip()
+                "display_name": entry[11].strip(),
             }
             return data
 
@@ -1140,14 +1196,17 @@ class ServerProvisioning:
                 array = [self.db_sanitize(key) for key in filter["type"]]
                 querys.append("(services.service_type = '"+"' OR services.service_type = '".join(array)+"')")
 
+        if "owner" in filter:
+            querys.append("services.service_owner = '"+self.db_sanitize(RNS.hexrep(filter["owner"], delimit=False))+"'")
+
         if "auth_role" in filter and filter["auth_role"] != None:
             querys.append("services.service_auth_role = '"+self.db_sanitize(filter["auth_role"])+"'")
 
         if "ts_min" in filter and filter["ts_min"] != None:
-            querys.append("services.service_ts_add >= "+datetime.datetime.fromtimestamp(filter["ts_min"]).strftime('%Y-%m-%d %H:%M:%S'))
+            querys.append("services.service_ts_add >= "+datetime.datetime.fromtimestamp(filter["ts_min"]).strftime("%Y-%m-%d %H:%M:%S"))
 
         if "ts_max" in filter and filter["ts_max"] != None:
-            querys.append("services.service_ts_add <= "+datetime.datetime.fromtimestamp(filter["ts_max"]).strftime('%Y-%m-%d %H:%M:%S'))
+            querys.append("services.service_ts_add <= "+datetime.datetime.fromtimestamp(filter["ts_max"]).strftime("%Y-%m-%d %H:%M:%S"))
 
         if len(querys) > 0:
             query = " AND "+" AND ".join(querys)
@@ -1222,10 +1281,10 @@ class ServerProvisioning:
 
         if search:
             search = "%"+search+"%"
-            query = "SELECT services.service_rns_id, services.service_display_name, services.service_country, services.service_state, services.service_city, services.service_type, services.service_auth_role, services.service_ts_add, services.service_ts_edit FROM services WHERE services.service_rns_id != '' AND (services.service_display_name ILIKE %s OR services.service_city ILIKE %s)"+query_filter+query_group+query_order+query_limit
+            query = "SELECT services.service_rns_id, services.service_display_name, services.service_country, services.service_state, services.service_city, services.service_type, services.service_owner, services.service_auth_role, services.service_ts_add, services.service_ts_edit FROM services WHERE services.service_rns_id != '' AND (services.service_display_name ILIKE %s OR services.service_city ILIKE %s)"+query_filter+query_group+query_order+query_limit
             dbc.execute(query, (search, search))
         else:
-            query = "SELECT services.service_rns_id, services.service_display_name, services.service_country, services.service_state, services.service_city, services.service_type, services.service_auth_role, services.service_ts_add, services.service_ts_edit FROM services WHERE services.service_rns_id != ''"+query_filter+query_group+query_order+query_limit
+            query = "SELECT services.service_rns_id, services.service_display_name, services.service_country, services.service_state, services.service_city, services.service_type, services.service_owner, services.service_auth_role, services.service_ts_add, services.service_ts_edit FROM services WHERE services.service_rns_id != ''"+query_filter+query_group+query_order+query_limit
             dbc.execute(query)
 
         result = dbc.fetchall()
@@ -1235,6 +1294,8 @@ class ServerProvisioning:
         else:
             data = []
             for entry in result:
+                owner = entry[6].strip()
+                owner = bytes.fromhex(owner) if owner else None
                 data.append({
                     "dest": bytes.fromhex(entry[0].strip()),
                     "display_name": entry[1].strip(),
@@ -1242,9 +1303,10 @@ class ServerProvisioning:
                     "state": entry[3].strip(),
                     "city": entry[4].strip(),
                     "type": entry[5].strip(),
-                    "auth_role": int(entry[6].strip()),
-                    "ts_add": entry[7].timestamp(),
-                    "ts_edit": entry[8].timestamp(),
+                    "owner": owner,
+                    "auth_role": int(entry[7].strip()),
+                    "ts_add": int(entry[8].timestamp()),
+                    "ts_edit": int(entry[9].timestamp()),
                 })
 
             return data
@@ -1321,7 +1383,7 @@ class ServerProvisioning:
         db = self.db_connect()
         dbc = db.cursor()
 
-        query = "SELECT services.service_rns_id, services.service_display_name, services.service_country, services.service_state, services.service_city, services.service_type, services.service_auth_role, services.service_ts_add, services.service_ts_edit FROM services WHERE services.service_rns_id = %s"
+        query = "SELECT services.service_rns_id, services.service_display_name, services.service_country, services.service_state, services.service_city, services.service_type, services.service_owner, services.service_auth_role, services.service_ts_add, services.service_ts_edit FROM services WHERE services.service_rns_id = %s"
         dbc.execute(query, (RNS.hexrep(dest, False),))
         result = dbc.fetchall()
 
@@ -1329,6 +1391,8 @@ class ServerProvisioning:
             return None
         else:
             entry = result[0]
+            owner = entry[6].strip()
+            owner = bytes.fromhex(owner) if owner else None
             data = {
                 "dest": bytes.fromhex(entry[0].strip()),
                 "display_name": entry[1].strip(),
@@ -1336,9 +1400,10 @@ class ServerProvisioning:
                 "state": entry[3].strip(),
                 "city": entry[4].strip(),
                 "type": entry[5].strip(),
-                "auth_role": int(entry[6].strip()),
-                "ts_add": entry[7].timestamp(),
-                "ts_edit": entry[8].timestamp(),
+                "owner": owner,
+                "auth_role": int(entry[7].strip()),
+                "ts_add": int(entry[8].timestamp()),
+                "ts_edit": int(entry[9].timestamp()),
             }
             return data
 
@@ -1379,26 +1444,30 @@ class ServerProvisioning:
         data_return[ServerProvisioning.KEY_RESULT] = ServerProvisioning.RESULT_OK
 
         try:
+            directory = {}
+
             hash_destination = RNS.hexrep(RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity), delimit=False)
             hash_identity = ""
 
-            if "cmd" in data:
+            if ServerProvisioning.KEY_D_CMD in data:
                 if hash_destination in self.admins:
-                    cmd = data["cmd"]
+                    cmd = data[ServerProvisioning.KEY_D_CMD]
                     if cmd[0] == "delete":
                         self.db_announce_delete(cmd[1])
                     entry = self.db_announce_get(cmd[1])
                     if entry:
-                        data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [entry]})
+                        directory.update({ServerProvisioning.KEY_D_CMD_RESULT: ServerProvisioning.RESULT_OK, ServerProvisioning.KEY_D_RX_ENTRYS: [entry]})
                     else:
-                        data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [{"dest": cmd[1], "type": 0, "ts": 0, "data": "", "location_lat": 0, "location_lon": 0, "state": 0, "state_ts": 0, "hop_count": 0}]})
+                        directory.update({ServerProvisioning.KEY_D_CMD_RESULT: ServerProvisioning.RESULT_OK, ServerProvisioning.KEY_D_RX_ENTRYS: [{"dest": cmd[1], "type": 0, "ts": 0, "data": "", "location_lat": 0, "location_lon": 0, "owner": None, "state": 0, "state_ts": 0, "hop_count": 0}]})
             else:
-                data_return["rx_entrys"] = self.db_announce_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"])
-                data_return["rx_entrys_count"] = self.db_announce_count(filter=data["filter"], search=data["search"], group=data["group"])
+                directory[ServerProvisioning.KEY_D_RX_ENTRYS] = self.db_announce_list(filter=data[ServerProvisioning.KEY_D_FILTER], search=data[ServerProvisioning.KEY_D_SEARCH], group=data[ServerProvisioning.KEY_D_GROUP], order=data[ServerProvisioning.KEY_D_ORDER], limit=data[ServerProvisioning.KEY_D_LIMIT], limit_start=data[ServerProvisioning.KEY_D_LIMIT_START])
+                directory[ServerProvisioning.KEY_D_RX_ENTRYS_COUNT] = self.db_announce_count(filter=data[ServerProvisioning.KEY_D_FILTER], search=data[ServerProvisioning.KEY_D_SEARCH], group=data[ServerProvisioning.KEY_D_GROUP])
 
             if hash_destination in self.admins:
-                data_return["cmd"] = []
-                data_return["cmd_entry"] = ["delete"]
+                directory[ServerProvisioning.KEY_D_CMD] = []
+                directory[ServerProvisioning.KEY_D_CMD_ENTRY] = ["delete"]
+
+            data_return[ServerProvisioning.KEY_D] = directory
 
         except Exception as e:
             RNS.log("Server - Response - Directory announce", RNS.LOG_ERROR)
@@ -1437,12 +1506,14 @@ class ServerProvisioning:
         data_return[ServerProvisioning.KEY_RESULT] = ServerProvisioning.RESULT_OK
 
         try:
+            directory = {}
+
             hash_destination = RNS.hexrep(RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity), delimit=False)
             hash_identity = ""
 
-            if "cmd" in data:
+            if ServerProvisioning.KEY_D_CMD in data:
                 if hash_destination in self.admins:
-                    cmd = data["cmd"]
+                    cmd = data[ServerProvisioning.KEY_D_CMD]
                     if cmd[0] == "role_0":
                         self.db_member_set(cmd[1], role=0)
                     if cmd[0] == "role_1":
@@ -1461,38 +1532,40 @@ class ServerProvisioning:
                         self.db_member_delete(cmd[1])
                     entry = self.db_member_get(cmd[1])
                     if entry:
-                        data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [entry]})
+                        directory.update({ServerProvisioning.KEY_D_CMD_RESULT: ServerProvisioning.RESULT_OK, ServerProvisioning.KEY_D_RX_ENTRYS: [entry]})
                     else:
-                        data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [{"dest": cmd[1], "ts_edit": 0}]})
-            elif "group" in data and data["group"] != None:
-                data_return["rx_group_entrys"] = self.db_member_count_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"])
-                data_return["rx_group_entrys_count"] = len(data_return["rx_group_entrys"])
+                        directory.update({ServerProvisioning.KEY_D_CMD_RESULT: ServerProvisioning.RESULT_OK, ServerProvisioning.KEY_D_RX_ENTRYS: [{"dest": cmd[1], "ts_edit": 0}]})
+            elif ServerProvisioning.KEY_D_GROUP in data and data[ServerProvisioning.KEY_D_GROUP] != None:
+                directory[ServerProvisioning.KEY_D_RX_GROUP_ENTRYS] = self.db_member_count_list(filter=data[ServerProvisioning.KEY_D_FILTER], search=data[ServerProvisioning.KEY_D_SEARCH], group=data[ServerProvisioning.KEY_D_GROUP], order=data[ServerProvisioning.KEY_D_ORDER], limit=data[ServerProvisioning.KEY_D_LIMIT], limit_start=data[ServerProvisioning.KEY_D_LIMIT_START])
+                directory[ServerProvisioning.KEY_D_RX_GROUP_ENTRYS_COUNT] = len(directory[ServerProvisioning.KEY_D_RX_GROUP_ENTRYS])
             else:
-                data_return["rx_entrys"] = []
-                data_return["rx_entrys_count"] = self.db_member_count(filter=data["filter"], search=data["search"], group=data["group"])
+                directory[ServerProvisioning.KEY_D_RX_ENTRYS] = []
+                directory[ServerProvisioning.KEY_D_RX_ENTRYS_COUNT] = self.db_member_count(filter=data[ServerProvisioning.KEY_D_FILTER], search=data[ServerProvisioning.KEY_D_SEARCH], group=data[ServerProvisioning.KEY_D_GROUP])
 
-                for entry in self.db_member_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"]):
-                    if entry["dest"] in data["entrys"]:
-                        if entry["ts_edit"] > data["entrys"][entry["dest"]]:
-                            data_return["rx_entrys"].append(entry)
-                        del data["entrys"][entry["dest"]]
+                for entry in self.db_member_list(filter=data[ServerProvisioning.KEY_D_FILTER], search=data[ServerProvisioning.KEY_D_SEARCH], group=data[ServerProvisioning.KEY_D_GROUP], order=data[ServerProvisioning.KEY_D_ORDER], limit=data[ServerProvisioning.KEY_D_LIMIT], limit_start=data[ServerProvisioning.KEY_D_LIMIT_START]):
+                    if entry["dest"] in data[ServerProvisioning.KEY_D_ENTRYS]:
+                        if entry["ts_edit"] > data[ServerProvisioning.KEY_D_ENTRYS][entry["dest"]]:
+                            directory[ServerProvisioning.KEY_D_RX_ENTRYS].append(entry)
+                        del data[ServerProvisioning.KEY_D_ENTRYS][entry["dest"]]
                     else:
-                        data_return["rx_entrys"].append(entry)
+                        directory[ServerProvisioning.KEY_D_RX_ENTRYS].append(entry)
 
-                for dest in data["entrys"]:
+                for dest in data[ServerProvisioning.KEY_D_ENTRYS]:
                     entry = self.db_member_get(dest=dest)
                     if entry:
-                        if entry["ts_edit"] > data["entrys"][dest]:
-                            data_return["rx_entrys"].append(entry)
+                        if entry["ts_edit"] > data[ServerProvisioning.KEY_D_ENTRYS][dest]:
+                            directory[ServerProvisioning.KEY_D_RX_ENTRYS].append(entry)
                     else:
-                        data_return["rx_entrys"].append({"dest": dest, "ts_edit": 0})
+                        directory[ServerProvisioning.KEY_D_RX_ENTRYS].append({"dest": dest, "ts_edit": 0})
 
-                if len(data_return["rx_entrys"]) == 0:
-                    del data_return["rx_entrys"]
+                if len(directory[ServerProvisioning.KEY_D_RX_ENTRYS]) == 0:
+                    del directory[ServerProvisioning.KEY_D_RX_ENTRYS]
 
             if hash_destination in self.admins:
-                data_return["cmd"] = []
-                data_return["cmd_entry"] = ["role_0", "role_1", "role_2", "role_3", "state_0", "state_1", "state_2", "delete"]
+                directory[ServerProvisioning.KEY_D_CMD] = []
+                directory[ServerProvisioning.KEY_D_CMD_ENTRY] = ["role_0", "role_1", "role_2", "role_3", "state_0", "state_1", "state_2", "delete"]
+
+            data_return[ServerProvisioning.KEY_D] = directory
 
         except Exception as e:
             RNS.log("Server - Response - Directory member", RNS.LOG_ERROR)
@@ -1531,48 +1604,52 @@ class ServerProvisioning:
         data_return[ServerProvisioning.KEY_RESULT] = ServerProvisioning.RESULT_OK
 
         try:
+            directory = {}
+
             hash_destination = RNS.hexrep(RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity), delimit=False)
             hash_identity = ""
 
-            if "cmd" in data:
+            if ServerProvisioning.KEY_D_CMD in data:
                 if hash_destination in self.admins:
-                    cmd = data["cmd"]
+                    cmd = data[ServerProvisioning.KEY_D_CMD]
                     if cmd[0] == "delete":
                         self.db_service_delete(cmd[1])
                     entry = self.db_service_get(cmd[1])
                     if entry:
-                        data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [entry]})
+                        directory.update({ServerProvisioning.KEY_D_CMD_RESULT: ServerProvisioning.RESULT_OK, ServerProvisioning.KEY_D_RX_ENTRYS: [entry]})
                     else:
-                        data_return.update({"cmd_result": ServerProvisioning.RESULT_OK, "rx_entrys": [{"dest": cmd[1], "ts_edit": 0}]})
-            elif "group" in data and data["group"] != None:
-                data_return["rx_group_entrys"] = self.db_service_count_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"])
-                data_return["rx_group_entrys_count"] = len(data_return["rx_group_entrys"])
+                        directory.update({ServerProvisioning.KEY_D_CMD_RESULT: ServerProvisioning.RESULT_OK, ServerProvisioning.KEY_D_RX_ENTRYS: [{"dest": cmd[1], "ts_edit": 0}]})
+            elif ServerProvisioning.KEY_D_GROUP in data and data[ServerProvisioning.KEY_D_GROUP] != None:
+                directory[ServerProvisioning.KEY_D_RX_GROUP_ENTRYS] = self.db_service_count_list(filter=data[ServerProvisioning.KEY_D_FILTER], search=data[ServerProvisioning.KEY_D_SEARCH], group=data[ServerProvisioning.KEY_D_GROUP], order=data[ServerProvisioning.KEY_D_ORDER], limit=data[ServerProvisioning.KEY_D_LIMIT], limit_start=data[ServerProvisioning.KEY_D_LIMIT_START])
+                directory[ServerProvisioning.KEY_D_RX_GROUP_ENTRYS_COUNT] = len(directory[ServerProvisioning.KEY_D_RX_GROUP_ENTRYS])
             else:
-                data_return["rx_entrys"] = []
-                data_return["rx_entrys_count"] = self.db_service_count(filter=data["filter"], search=data["search"], group=data["group"])
+                directory[ServerProvisioning.KEY_D_RX_ENTRYS] = []
+                directory[ServerProvisioning.KEY_D_RX_ENTRYS_COUNT] = self.db_service_count(filter=data[ServerProvisioning.KEY_D_FILTER], search=data[ServerProvisioning.KEY_D_SEARCH], group=data[ServerProvisioning.KEY_D_GROUP])
 
-                for entry in self.db_service_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"]):
-                    if entry["dest"] in data["entrys"]:
-                        if entry["ts_edit"] > data["entrys"][entry["dest"]]:
-                            data_return["rx_entrys"].append(entry)
-                        del data["entrys"][entry["dest"]]
+                for entry in self.db_service_list(filter=data[ServerProvisioning.KEY_D_FILTER], search=data[ServerProvisioning.KEY_D_SEARCH], group=data[ServerProvisioning.KEY_D_GROUP], order=data[ServerProvisioning.KEY_D_ORDER], limit=data[ServerProvisioning.KEY_D_LIMIT], limit_start=data[ServerProvisioning.KEY_D_LIMIT_START]):
+                    if entry["dest"] in data[ServerProvisioning.KEY_D_ENTRYS]:
+                        if entry["ts_edit"] > data[ServerProvisioning.KEY_D_ENTRYS][entry["dest"]]:
+                            directory[ServerProvisioning.KEY_D_RX_ENTRYS].append(entry)
+                        del data[ServerProvisioning.KEY_D_ENTRYS][entry["dest"]]
                     else:
-                        data_return["rx_entrys"].append(entry)
+                        directory[ServerProvisioning.KEY_D_RX_ENTRYS].append(entry)
 
-                for dest in data["entrys"]:
+                for dest in data[ServerProvisioning.KEY_D_ENTRYS]:
                     entry = self.db_service_get(dest=dest)
                     if entry:
-                        if entry["ts_edit"] > data["entrys"][dest]:
-                            data_return["rx_entrys"].append(entry)
+                        if entry["ts_edit"] > data[ServerProvisioning.KEY_D_ENTRYS][dest]:
+                            directory[ServerProvisioning.KEY_D_RX_ENTRYS].append(entry)
                     else:
-                        data_return["rx_entrys"].append({"dest": dest, "ts_edit": 0})
+                        directory[ServerProvisioning.KEY_D_RX_ENTRYS].append({"dest": dest, "ts_edit": 0})
 
-                if len(data_return["rx_entrys"]) == 0:
-                    del data_return["rx_entrys"]
+                if len(directory[ServerProvisioning.KEY_D_RX_ENTRYS]) == 0:
+                    del directory[ServerProvisioning.KEY_D_RX_ENTRYS]
 
             if hash_destination in self.admins:
-                data_return["cmd"] = []
-                data_return["cmd_entry"] = []
+                directory[ServerProvisioning.KEY_D_CMD] = []
+                directory[ServerProvisioning.KEY_D_CMD_ENTRY] = []
+
+            data_return[ServerProvisioning.KEY_D] = directory
 
         except Exception as e:
             RNS.log("Server - Response - Directory service", RNS.LOG_ERROR)
@@ -1777,7 +1854,7 @@ class ServerProvisioning:
 
         db = None
         try:
-            db = psycopg2.connect(user=self.config["database"]["user"], password=self.config["database"]["password"], host=self.config["database"]["host"], port=self.config["database"]["port"], database=self.config["database"]["database"], client_encoding=self.config["database"]["encoding"])
+            db = psycopg2.connect(user=self.config["database"]["user"], password=self.config["database"]["password"], host=self.config["database"]["host"], port=self.config["database"]["port"], database=self.config["database"]["database"], client_encoding=self.config["database"]["encoding"], connect_timeout=5)
             dbc = db.cursor()
 
             data_return[ServerProvisioning.KEY_RESULT] = ServerProvisioning.RESULT_OK
@@ -1823,8 +1900,8 @@ class ServerProvisioning:
                                 data["accept_rules"],
                                 data["language"],
                                 data["language"],
-                                datetime.now(timezone.utc),
-                                datetime.now(timezone.utc)
+                                datetime.datetime.now(datetime.timezone.utc),
+                                datetime.datetime.now(datetime.timezone.utc)
                                 )
                             )
                             if self.config["features"].getboolean("account_add_auth"):
@@ -1850,7 +1927,7 @@ class ServerProvisioning:
                                 data["accept_rules"],
                                 data["language"],
                                 data["language"],
-                                datetime.now(timezone.utc),
+                                datetime.datetime.now(datetime.timezone.utc),
                                 user_id
                                 )
                             )
@@ -2234,6 +2311,11 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
                fields[MSG_FIELD_LOCATION] = [CONFIG["telemetry"].getfloat("location_lat"), CONFIG["telemetry"].getfloat("location_lon")]
             except:
                 pass
+        if CONFIG["telemetry"].getboolean("owner_enabled"):
+            try:
+               fields[MSG_FIELD_OWNER] = bytes.fromhex(CONFIG["telemetry"]["owner_data"])
+            except:
+                pass
         if CONFIG["telemetry"].getboolean("state_enabled"):
             try:
                fields[MSG_FIELD_STATE] = [CONFIG["telemetry"].getint("state_data"), int(time.time())]
@@ -2426,6 +2508,9 @@ location_enabled = False
 location_lat = 0
 location_lon = 0
 
+owner_enabled = False
+owner_data = 
+
 state_enabled = False
 state_data = 0
 '''
@@ -2556,6 +2641,9 @@ config_lxm = #Config as lxm string
 location_enabled = False
 location_lat = 0
 location_lon = 0
+
+owner_enabled = False
+owner_data = 
 
 state_enabled = False
 state_data = 0

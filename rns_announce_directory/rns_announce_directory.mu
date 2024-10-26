@@ -22,13 +22,24 @@ DEBUG = False #True/False
 # Alternative path
 PATH = None
 
-KEY_DATA = "var_data"
-KEY_ENTRYS = "rx_entrys"
-KEY_ENTRYS_COUNT = "rx_entrys_count"
-KEY_RESULT = "result"
+KEY_RESULT        = 0x0A # Result
+KEY_RESULT_REASON = 0x0B # Result - Reason
+KEY_DATA          = "var_data"
+KEY_ENTRYS        = "rx_entrys"
+KEY_ENTRYS_COUNT  = "rx_entrys_count"
+KEY_CMD           = "cmd"
+KEY_CMD_ENTRY     = "cmd_entry"
+KEY_CMD_RESULT    = "cmd_result"
 
-RESULT_OK    = 0x01
 RESULT_ERROR = 0x00
+RESULT_OK    = 0x01
+
+# Admin destinations (LXMF-Adresses)
+ADMINS = ["652cc196d9185407a09e7ff0386741e4"] #Array
+
+# Admin CMDs
+ADMINS_CMD       = [] #Array
+ADMINS_CMD_ENTRY = ["delete"] #Array
 
 
 ##############################################################################################################
@@ -142,6 +153,15 @@ def db_filter(filter):
         else:
             querys.append("(hop_interface LIKE '%"+"%' OR hop_interface LIKE '%".join(filter["interface"])+"%')")
 
+    if "state" in filter:
+        querys.append("state = '"+db_sanitize(filter["state"])+"'")
+
+    if "state_ts_min" in filter and filter["state_ts_min"] != None:
+        querys.append("state_ts >= "+db_sanitize(filter["state_ts_min"]))
+
+    if "state_ts_max" in filter and filter["state_ts_max"] != None:
+        querys.append("state_ts <= "+db_sanitize(filter["state_ts_max"]))
+
     if "pin" in filter:
         if filter["pin"] == True:
             querys.append("pin = '1'")
@@ -162,11 +182,44 @@ def db_filter(filter):
     return query
 
 
+def db_group(group):
+    if group == None:
+        return ""
+
+    querys = []
+
+    for key in group:
+        querys.append(db_sanitize(key))
+
+    if len(querys) > 0:
+        query = " GROUP BY "+", ".join(querys)
+    else:
+        query = ""
+
+    return query
+
+
 def db_order(order):
     if order == "A-ASC":
         query = " ORDER BY data ASC"
     elif order == "A-DESC":
         query = " ORDER BY data DESC"
+    elif order == "T-ASC":
+        query = " ORDER BY type ASC, ts ASC, data ASC"
+    elif order == "T-DESC":
+        query = " ORDER BY type DESC, ts ASC, data ASC"
+    elif order == "H-ASC":
+        query = " ORDER BY hop_count ASC, ts ASC, data ASC"
+    elif order == "H-DESC":
+        query = " ORDER BY hop_count DESC, ts ASC, data ASC"
+    elif order == "I-ASC":
+        query = " ORDER BY hop_interface ASC, ts ASC, data ASC"
+    elif order == "I-DESC":
+        query = " ORDER BY hop_interface DESC, ts ASC, data ASC"
+    elif order == "S-ASC":
+        query = " ORDER BY state_ts ASC, data ASC"
+    elif order == "S-DESC":
+        query = " ORDER BY state_ts DESC, data ASC"
     elif order == "ASC":
         query = " ORDER BY ts ASC, data ASC"
     elif order == "DESC":
@@ -177,11 +230,13 @@ def db_order(order):
     return query
 
 
-def db_list(filter=None, search=None, order=None, limit=None, limit_start=None):
+def db_list(filter=None, search=None, group=None, order=None, limit=None, limit_start=None):
     db = db_connect()
     dbc = db.cursor()
 
     query_filter = db_filter(filter)
+
+    query_group = db_group(group)
 
     query_order = db_order(order)
 
@@ -192,10 +247,10 @@ def db_list(filter=None, search=None, order=None, limit=None, limit_start=None):
 
     if search:
         search = "%"+search+"%"
-        query = "SELECT * FROM announce WHERE ts > 0 AND data LIKE ? COLLATE NOCASE"+query_filter+query_order+query_limit
+        query = "SELECT * FROM announce WHERE ts > 0 AND data LIKE ? COLLATE NOCASE"+query_filter+query_group+query_order+query_limit
         dbc.execute(query, (search,))
     else:
-        query = "SELECT * FROM announce WHERE ts > 0"+query_filter+query_order+query_limit
+        query = "SELECT * FROM announce WHERE ts > 0"+query_filter+query_group+query_order+query_limit
         dbc.execute(query)
 
     result = dbc.fetchall()
@@ -210,23 +265,31 @@ def db_list(filter=None, search=None, order=None, limit=None, limit_start=None):
                 "type": entry[1],
                 "ts": entry[2],
                 "data": entry[3],
+                "location_lat": entry[4],
+                "location_lon": entry[5],
+                "owner": entry[6],
+                "state": entry[7],
+                "state_ts": entry[8],
+                "hop_count": entry[9]
             })
 
         return data
 
 
-def db_count(filter=None, search=None):
+def db_count(filter=None, search=None, group=None):
     db = db_connect()
     dbc = db.cursor()
 
     query_filter = db_filter(filter)
 
+    query_group = db_group(group)
+
     if search:
         search = "%"+search+"%"
-        query = "SELECT COUNT(*) FROM announce WHERE ts > 0 AND data LIKE ? COLLATE NOCASE"+query_filter
+        query = "SELECT COUNT(*) FROM announce WHERE ts > 0 AND data LIKE ? COLLATE NOCASE"+query_filter+query_group
         dbc.execute(query, (search,))
     else:
-        query = "SELECT COUNT(*) FROM announce WHERE ts > 0"+query_filter
+        query = "SELECT COUNT(*) FROM announce WHERE ts > 0"+query_filter+query_group
         dbc.execute(query)
 
     result = dbc.fetchall()
@@ -237,6 +300,62 @@ def db_count(filter=None, search=None):
         return result[0][0]
 
 
+def db_get(dest):
+    db = db_connect()
+    dbc = db.cursor()
+
+    query = "SELECT * FROM announce WHERE dest = ?"
+    dbc.execute(query, (dest,))
+
+    result = dbc.fetchall()
+
+    if len(result) < 1:
+        return None
+    else:
+        entry = result[0]
+        data = {
+            "dest": entry[0],
+            "type": entry[1],
+            "ts": entry[2],
+            "data": entry[3],
+            "location_lat": entry[4],
+            "location_lon": entry[5],
+            "owner": entry[6],
+            "state": entry[7],
+            "state_ts": entry[8],
+            "hop_count": entry[9]
+        }
+        return data
+
+
+def db_delete(dest=None, dest_not=None):
+    db = db_connect()
+    dbc = db.cursor()
+
+    if dest:
+        query = "DELETE FROM announce WHERE dest = ?"
+        dbc.execute(query, (dest,))
+    elif dest_not:
+        query = "DELETE FROM announce WHERE dest != ?"
+        dbc.execute(query, (dest_not,))
+
+    db_commit()
+
+
+##############################################################################################################
+# CMD
+
+def cmd(cmd):
+    if cmd[0] == "delete":
+        db_delete(cmd[1])
+
+    entry = db_get(cmd[1])
+    if entry:
+        return {KEY_CMD_RESULT: RESULT_OK, KEY_ENTRYS: [entry]}
+    else:
+        return {KEY_CMD_RESULT: RESULT_OK, KEY_ENTRYS: [{"dest": cmd[1], "type": 0, "ts": 0, "data": "", "location_lat": 0, "location_lon": 0, "state": 0, "state_ts": 0, "hop_count": 0}]}
+
+
 ##############################################################################################################
 # Program
 
@@ -244,8 +363,16 @@ def db_count(filter=None, search=None):
 data_return = {}
 
 try:
+    data_return[KEY_RESULT] = RESULT_OK
+
     if DEBUG:
         print(os.environ)
+
+    RIGHT = "user"
+    if "remote_identity" in os.environ:
+        dest = RNS.hexrep(RNS.Destination.hash_from_name_and_identity("lxmf.delivery", bytes.fromhex(os.environ["remote_identity"])), delimit=False)
+        if dest != "" and dest in ADMINS:
+            RIGHT = "admin"
 
     data = os.environ[KEY_DATA]
     data = msgpack.unpackb(base64.b64decode(data))
@@ -253,10 +380,16 @@ try:
     if DEBUG:
         print(data)
 
-    data_return[KEY_ENTRYS] = db_list(filter=data["filter"], search=data["search"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"])
-    data_return[KEY_ENTRYS_COUNT] = db_count(filter=data["filter"], search=data["search"])
+    if "cmd" in data:
+        if RIGHT == "admin":
+            data_return.update(cmd(data["cmd"]))
+    else:
+        data_return[KEY_ENTRYS] = db_list(filter=data["filter"], search=data["search"], group=data["group"], order=data["order"], limit=data["limit"], limit_start=data["limit_start"])
+        data_return[KEY_ENTRYS_COUNT] = db_count(filter=data["filter"], search=data["search"], group=data["group"])
 
-    data_return[KEY_RESULT] = RESULT_OK
+        if RIGHT == "admin":
+            data_return[KEY_CMD] = ADMINS_CMD
+            data_return[KEY_CMD_ENTRY] = ADMINS_CMD_ENTRY
 
 except Exception as e:
     data_return[KEY_RESULT] = RESULT_ERROR

@@ -168,7 +168,7 @@ _install_config() {
 
 #### Main program settings ####
 [main]
-fields_announce = False
+fields_announce = True
 
 
 #### RNS server settings ####
@@ -187,6 +187,9 @@ announce_periodic_interval = 120 #Minutes
 location_enabled = False
 location_lat = 0
 location_lon = 0
+
+owner_enabled = True
+owner_data = $SETTINGS_ALLOWED
 
 state_enabled = False
 state_data = 0
