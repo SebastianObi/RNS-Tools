@@ -71,6 +71,10 @@ Installation:
   pip3 install rns
   pip3 install pyserial netifaces
   ```
+- Install all required prerequisites.
+  ```bash
+  pip3 install polib
+  ```
 - Change the Reticulum configuration to suit your needs and use-case.
   ```bash
   nano /.reticulum/config

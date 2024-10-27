@@ -102,22 +102,24 @@ def db_commit():
             pass
 
 
-def db_init(init=True):
-    db = db_connect()
-    dbc = db.cursor()
+def db_sanitize(value):
+    value = str(value)
+    value = value.replace('\\', "")
+    value = value.replace("\0", "")
+    value = value.replace("\n", "")
+    value = value.replace("\r", "")
+    value = value.replace("'", "")
+    value = value.replace('"', "")
+    value = value.replace("\x1a", "")
+    return value
 
-    db_commit()
+
+def db_init(init=True):
+   pass
 
 
 def db_migrate():
-    db_init(False)
-
-    db = db_connect()
-    dbc = db.cursor()
-
-    db_commit()
-
-    db_init(False)
+    pass
 
 
 def db_indices():
@@ -125,14 +127,10 @@ def db_indices():
 
 
 def db_load():
-    if not os.path.isfile(PATH+"/database.db"):
-        db_init()
-    else:
-        db_migrate()
-        db_indices()
+    pass
 
 
-def db_announce_filter(filter):
+def db_filter(filter):
     if filter == None:
         return ""
 
@@ -140,28 +138,43 @@ def db_announce_filter(filter):
 
     if "type" in filter and filter["type"] != None:
         if isinstance(filter["type"], int):
-            querys.append("type = '"+str(filter["type"])+"'")
+            querys.append("type = '"+db_sanitize(filter["type"])+"'")
         else:
-            array = [str(key) for key in filter["type"]]
+            array = [db_sanitize(key) for key in filter["type"]]
             querys.append("(type = '"+"' OR type = '".join(array)+"')")
 
-    if "ts_min" in filter and filter["ts_min"] != None:
-        querys.append("ts >= "+str(filter["ts_min"]))
-
-    if "ts_max" in filter and filter["ts_max"] != None:
-        querys.append("ts <= "+str(filter["ts_max"]))
-
     if "hop_min" in filter and filter["hop_min"] != None:
-        querys.append("hop_count >= "+str(filter["hop_min"]))
+        querys.append("hop_count >= "+db_sanitize(filter["hop_min"]))
 
     if "hop_max" in filter and filter["hop_max"] != None:
-        querys.append("hop_count <= "+str(filter["hop_max"]))
+        querys.append("hop_count <= "+db_sanitize(filter["hop_max"]))
 
     if "interface" in filter and filter["interface"] != None:
         if isinstance(filter["interface"], str):
-            querys.append("hop_interface LIKE '%"+filter["interface"]+"%'")
+            querys.append("hop_interface LIKE '%"+db_sanitize(filter["interface"])+"%'")
         else:
             querys.append("(hop_interface LIKE '%"+"%' OR hop_interface LIKE '%".join(filter["interface"])+"%')")
+
+    if "state" in filter:
+        querys.append("state = '"+self.__db_sanitize(filter["state"])+"'")
+
+    if "state_ts_min" in filter and filter["state_ts_min"] != None:
+        querys.append("state_ts >= "+self.__db_sanitize(filter["state_ts_min"]))
+
+    if "state_ts_max" in filter and filter["state_ts_max"] != None:
+        querys.append("state_ts <= "+self.__db_sanitize(filter["state_ts_max"]))
+
+    if "ts_add_min" in filter and filter["ts_add_min"] != None:
+        querys.append("ts_add >= "+db_sanitize(filter["ts_add_min"]))
+
+    if "ts_add_max" in filter and filter["ts_add_max"] != None:
+        querys.append("ts_add <= "+db_sanitize(filter["ts_add_max"]))
+
+    if "ts_edit_min" in filter and filter["ts_edit_min"] != None:
+        querys.append("ts_edit >= "+db_sanitize(filter["ts_edit_min"]))
+
+    if "ts_edit_max" in filter and filter["ts_edit_max"] != None:
+        querys.append("ts_edit <= "+db_sanitize(filter["ts_edit_max"]))
 
     if "pin" in filter:
         if filter["pin"] == True:
@@ -183,40 +196,79 @@ def db_announce_filter(filter):
     return query
 
 
-def db_announce_order(order):
-    if order == "A-ASC":
-        query = " ORDER BY data ASC"
-    elif order == "A-DESC":
-        query = " ORDER BY data DESC"
-    elif order == "ASC":
-        query = " ORDER BY ts ASC, data ASC"
-    elif order == "DESC":
-        query = " ORDER BY ts DESC, data ASC"
+def db_group(group):
+    if group == None:
+        return ""
+
+    querys = []
+
+    for key in group:
+        querys.append(db_sanitize(key))
+
+    if len(querys) > 0:
+        query = " GROUP BY "+", ".join(querys)
     else:
         query = ""
 
     return query
 
 
-def db_announce_list(filter=None, search=None, order=None, limit=None, limit_start=None):
+def db_order(order):
+    if order == "A-ASC":
+        query = " ORDER BY data ASC"
+    elif order == "A-DESC":
+        query = " ORDER BY data DESC"
+    elif order == "T-ASC":
+        query = " ORDER BY type ASC, ts_edit ASC, data ASC"
+    elif order == "T-DESC":
+        query = " ORDER BY type DESC, ts_edit ASC, data ASC"
+    elif order == "H-ASC":
+        query = " ORDER BY hop_count ASC, ts_edit ASC, data ASC"
+    elif order == "H-DESC":
+        query = " ORDER BY hop_count DESC, ts_edit ASC, data ASC"
+    elif order == "I-ASC":
+        query = " ORDER BY hop_interface ASC, ts_edit ASC, data ASC"
+    elif order == "I-DESC":
+        query = " ORDER BY hop_interface DESC, ts_edit ASC, data ASC"
+    elif order == "S-ASC":
+        query = " ORDER BY state_ts ASC, data ASC"
+    elif order == "S-DESC":
+        query = " ORDER BY state_ts DESC, data ASC"
+    elif order == "TSA-ASC":
+        query = " ORDER BY ts_add ASC, data ASC"
+    elif order == "TSA-DESC":
+        query = " ORDER BY ts_add DESC, data ASC"
+    elif order == "TSE-ASC":
+        query = " ORDER BY ts_edit ASC, data ASC"
+    elif order == "TSE-DESC":
+        query = " ORDER BY ts_edit DESC, data ASC"
+    else:
+        query = ""
+
+    return query
+
+
+def db_list(filter=None, search=None, group=None, order=None, limit=None, limit_start=None):
     db = db_connect()
     dbc = db.cursor()
 
-    query_filter = db_announce_filter(filter)
+    query_filter = db_filter(filter)
 
-    query_order = db_announce_order(order)
+    query_group = db_group(group)
+
+    query_order = db_order(order)
 
     if limit == None or limit_start == None:
         query_limit = ""
     else:
-        query_limit = " LIMIT "+str(limit)+" OFFSET "+str(limit_start)
+        query_limit = " LIMIT "+db_sanitize(limit)+" OFFSET "+db_sanitize(limit_start)
 
     if search:
         search = "%"+search+"%"
-        query = "SELECT * FROM announce WHERE ts > 0 AND data LIKE ? COLLATE NOCASE"+query_filter+query_order+query_limit
+        query = "SELECT * FROM announce WHERE ts_add > 0 AND data LIKE ? COLLATE NOCASE"+query_filter+query_group+query_order+query_limit
         dbc.execute(query, (search,))
     else:
-        query = "SELECT * FROM announce WHERE ts > 0"+query_filter+query_order+query_limit
+        query = "SELECT * FROM announce WHERE ts_add > 0"+query_filter+query_group+query_order+query_limit
         dbc.execute(query)
 
     result = dbc.fetchall()
@@ -229,31 +281,34 @@ def db_announce_list(filter=None, search=None, order=None, limit=None, limit_sta
             data.append({
                 "dest": entry[0],
                 "type": entry[1],
-                "ts": entry[2],
-                "data": entry[3],
-                "location_lat": entry[4],
-                "location_lon": entry[5],
-                "owner": entry[6],
-                "state": entry[7],
-                "state_ts": entry[8],
-                "hop_count": entry[9]
+                "data": entry[2],
+                "location_lat": entry[3],
+                "location_lon": entry[4],
+                "owner": entry[5],
+                "state": entry[6],
+                "state_ts": entry[7],
+                "hop_count": entry[8]
+                "ts_add": entry[9],
+                "ts_edit": entry[10],
             })
 
         return data
 
 
-def db_announce_count(filter=None, search=None):
+def db_count(filter=None, search=None, group=None):
     db = db_connect()
     dbc = db.cursor()
 
-    query_filter = db_announce_filter(filter)
+    query_filter = db_filter(filter)
+
+    query_group = db_group(group)
 
     if search:
         search = "%"+search+"%"
-        query = "SELECT COUNT(*) FROM announce WHERE ts > 0 AND data LIKE ? COLLATE NOCASE"+query_filter
+        query = "SELECT COUNT(*) FROM announce WHERE ts_add > 0 AND data LIKE ? COLLATE NOCASE"+query_filter+query_group
         dbc.execute(query, (search,))
     else:
-        query = "SELECT COUNT(*) FROM announce WHERE ts > 0"+query_filter
+        query = "SELECT COUNT(*) FROM announce WHERE ts_add > 0"+query_filter+query_group
         dbc.execute(query)
 
     result = dbc.fetchall()
@@ -262,6 +317,49 @@ def db_announce_count(filter=None, search=None):
         return 0
     else:
         return result[0][0]
+
+
+def db_get(dest):
+    db = db_connect()
+    dbc = db.cursor()
+
+    query = "SELECT * FROM announce WHERE dest = ?"
+    dbc.execute(query, (dest,))
+
+    result = dbc.fetchall()
+
+    if len(result) < 1:
+        return None
+    else:
+        entry = result[0]
+        data = {
+            "dest": entry[0],
+            "type": entry[1],
+            "data": entry[2],
+            "location_lat": entry[3],
+            "location_lon": entry[4],
+            "owner": entry[5],
+            "state": entry[6],
+            "state_ts": entry[7],
+            "hop_count": entry[8]
+            "ts_add": entry[9],
+            "ts_edit": entry[10],
+        }
+        return data
+
+
+def db_delete(dest=None, dest_not=None):
+    db = db_connect()
+    dbc = db.cursor()
+
+    if dest:
+        query = "DELETE FROM announce WHERE dest = ?"
+        dbc.execute(query, (dest,))
+    elif dest_not:
+        query = "DELETE FROM announce WHERE dest != ?"
+        dbc.execute(query, (dest_not,))
+
+    db_commit()
 
 
 ##############################################################################################################
@@ -292,13 +390,13 @@ db_load()
 
 
 entrys = ""
-for entry in db_announce_list(filter={}, search="", order="DESC", limit=DATA_COUNT_VIEW, limit_start=0):
+for entry in db_list(filter={}, search="", group=None, order="DESC", limit=DATA_COUNT_VIEW, limit_start=0):
     tpl = TEMPLATE_ENTRY
     if entry["type"] not in TYPE_LINK:
         continue
     tpl = tpl.replace("{type_link}", TYPE_LINK[entry["type"]])
     tpl = tpl.replace("{dest}", RNS.hexrep(entry["dest"], delimit=False))
-    tpl = tpl.replace("{date_time}", time.strftime(DATE_TIME_FORMAT, time.localtime(entry["ts"])))
+    tpl = tpl.replace("{date_time}", time.strftime(DATE_TIME_FORMAT, time.localtime(entry["ts_edit"])))
     tpl = tpl.replace("{data}", entry["data"])
     tpl = tpl.replace("{hop_count}", str(entry["hop_count"]))
     tpl = tpl.replace("{hop_interface}", entry["hop_interface"])

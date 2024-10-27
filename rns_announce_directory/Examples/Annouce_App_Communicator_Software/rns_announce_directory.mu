@@ -135,12 +135,6 @@ def db_filter(filter):
             array = [db_sanitize(key) for key in filter["type"]]
             querys.append("(type = '"+"' OR type = '".join(array)+"')")
 
-    if "ts_min" in filter and filter["ts_min"] != None:
-        querys.append("ts >= "+db_sanitize(filter["ts_min"]))
-
-    if "ts_max" in filter and filter["ts_max"] != None:
-        querys.append("ts <= "+db_sanitize(filter["ts_max"]))
-
     if "hop_min" in filter and filter["hop_min"] != None:
         querys.append("hop_count >= "+db_sanitize(filter["hop_min"]))
 
@@ -154,13 +148,25 @@ def db_filter(filter):
             querys.append("(hop_interface LIKE '%"+"%' OR hop_interface LIKE '%".join(filter["interface"])+"%')")
 
     if "state" in filter:
-        querys.append("state = '"+db_sanitize(filter["state"])+"'")
+        querys.append("state = '"+self.__db_sanitize(filter["state"])+"'")
 
     if "state_ts_min" in filter and filter["state_ts_min"] != None:
-        querys.append("state_ts >= "+db_sanitize(filter["state_ts_min"]))
+        querys.append("state_ts >= "+self.__db_sanitize(filter["state_ts_min"]))
 
     if "state_ts_max" in filter and filter["state_ts_max"] != None:
-        querys.append("state_ts <= "+db_sanitize(filter["state_ts_max"]))
+        querys.append("state_ts <= "+self.__db_sanitize(filter["state_ts_max"]))
+
+    if "ts_add_min" in filter and filter["ts_add_min"] != None:
+        querys.append("ts_add >= "+db_sanitize(filter["ts_add_min"]))
+
+    if "ts_add_max" in filter and filter["ts_add_max"] != None:
+        querys.append("ts_add <= "+db_sanitize(filter["ts_add_max"]))
+
+    if "ts_edit_min" in filter and filter["ts_edit_min"] != None:
+        querys.append("ts_edit >= "+db_sanitize(filter["ts_edit_min"]))
+
+    if "ts_edit_max" in filter and filter["ts_edit_max"] != None:
+        querys.append("ts_edit <= "+db_sanitize(filter["ts_edit_max"]))
 
     if "pin" in filter:
         if filter["pin"] == True:
@@ -205,25 +211,29 @@ def db_order(order):
     elif order == "A-DESC":
         query = " ORDER BY data DESC"
     elif order == "T-ASC":
-        query = " ORDER BY type ASC, ts ASC, data ASC"
+        query = " ORDER BY type ASC, ts_edit ASC, data ASC"
     elif order == "T-DESC":
-        query = " ORDER BY type DESC, ts ASC, data ASC"
+        query = " ORDER BY type DESC, ts_edit ASC, data ASC"
     elif order == "H-ASC":
-        query = " ORDER BY hop_count ASC, ts ASC, data ASC"
+        query = " ORDER BY hop_count ASC, ts_edit ASC, data ASC"
     elif order == "H-DESC":
-        query = " ORDER BY hop_count DESC, ts ASC, data ASC"
+        query = " ORDER BY hop_count DESC, ts_edit ASC, data ASC"
     elif order == "I-ASC":
-        query = " ORDER BY hop_interface ASC, ts ASC, data ASC"
+        query = " ORDER BY hop_interface ASC, ts_edit ASC, data ASC"
     elif order == "I-DESC":
-        query = " ORDER BY hop_interface DESC, ts ASC, data ASC"
+        query = " ORDER BY hop_interface DESC, ts_edit ASC, data ASC"
     elif order == "S-ASC":
         query = " ORDER BY state_ts ASC, data ASC"
     elif order == "S-DESC":
         query = " ORDER BY state_ts DESC, data ASC"
-    elif order == "ASC":
-        query = " ORDER BY ts ASC, data ASC"
-    elif order == "DESC":
-        query = " ORDER BY ts DESC, data ASC"
+    elif order == "TSA-ASC":
+        query = " ORDER BY ts_add ASC, data ASC"
+    elif order == "TSA-DESC":
+        query = " ORDER BY ts_add DESC, data ASC"
+    elif order == "TSE-ASC":
+        query = " ORDER BY ts_edit ASC, data ASC"
+    elif order == "TSE-DESC":
+        query = " ORDER BY ts_edit DESC, data ASC"
     else:
         query = ""
 
@@ -247,10 +257,10 @@ def db_list(filter=None, search=None, group=None, order=None, limit=None, limit_
 
     if search:
         search = "%"+search+"%"
-        query = "SELECT * FROM announce WHERE ts > 0 AND data LIKE ? COLLATE NOCASE"+query_filter+query_group+query_order+query_limit
+        query = "SELECT * FROM announce WHERE ts_add > 0 AND data LIKE ? COLLATE NOCASE"+query_filter+query_group+query_order+query_limit
         dbc.execute(query, (search,))
     else:
-        query = "SELECT * FROM announce WHERE ts > 0"+query_filter+query_group+query_order+query_limit
+        query = "SELECT * FROM announce WHERE ts_add > 0"+query_filter+query_group+query_order+query_limit
         dbc.execute(query)
 
     result = dbc.fetchall()
@@ -263,14 +273,15 @@ def db_list(filter=None, search=None, group=None, order=None, limit=None, limit_
             data.append({
                 "dest": entry[0],
                 "type": entry[1],
-                "ts": entry[2],
-                "data": entry[3],
-                "location_lat": entry[4],
-                "location_lon": entry[5],
-                "owner": entry[6],
-                "state": entry[7],
-                "state_ts": entry[8],
-                "hop_count": entry[9]
+                "data": entry[2],
+                "location_lat": entry[3],
+                "location_lon": entry[4],
+                "owner": entry[5],
+                "state": entry[6],
+                "state_ts": entry[7],
+                "hop_count": entry[8]
+                "ts_add": entry[9],
+                "ts_edit": entry[10],
             })
 
         return data
@@ -286,10 +297,10 @@ def db_count(filter=None, search=None, group=None):
 
     if search:
         search = "%"+search+"%"
-        query = "SELECT COUNT(*) FROM announce WHERE ts > 0 AND data LIKE ? COLLATE NOCASE"+query_filter+query_group
+        query = "SELECT COUNT(*) FROM announce WHERE ts_add > 0 AND data LIKE ? COLLATE NOCASE"+query_filter+query_group
         dbc.execute(query, (search,))
     else:
-        query = "SELECT COUNT(*) FROM announce WHERE ts > 0"+query_filter+query_group
+        query = "SELECT COUNT(*) FROM announce WHERE ts_add > 0"+query_filter+query_group
         dbc.execute(query)
 
     result = dbc.fetchall()
@@ -316,14 +327,15 @@ def db_get(dest):
         data = {
             "dest": entry[0],
             "type": entry[1],
-            "ts": entry[2],
-            "data": entry[3],
-            "location_lat": entry[4],
-            "location_lon": entry[5],
-            "owner": entry[6],
-            "state": entry[7],
-            "state_ts": entry[8],
-            "hop_count": entry[9]
+            "data": entry[2],
+            "location_lat": entry[3],
+            "location_lon": entry[4],
+            "owner": entry[5],
+            "state": entry[6],
+            "state_ts": entry[7],
+            "hop_count": entry[8]
+            "ts_add": entry[9],
+            "ts_edit": entry[10],
         }
         return data
 
@@ -353,7 +365,7 @@ def cmd(cmd):
     if entry:
         return {KEY_CMD_RESULT: RESULT_OK, KEY_ENTRYS: [entry]}
     else:
-        return {KEY_CMD_RESULT: RESULT_OK, KEY_ENTRYS: [{"dest": cmd[1], "type": 0, "ts": 0, "data": "", "location_lat": 0, "location_lon": 0, "state": 0, "state_ts": 0, "hop_count": 0}]}
+        return {KEY_CMD_RESULT: RESULT_OK, KEY_ENTRYS: [{"dest": cmd[1], "type": 0, "data": "", "location_lat": 0, "location_lon": 0, "state": 0, "state_ts": 0, "hop_count": 0, "ts_add": 0, "ts_edit": 0}]}
 
 
 ##############################################################################################################

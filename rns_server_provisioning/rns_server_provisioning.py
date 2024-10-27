@@ -228,7 +228,8 @@ class ServerProvisioning:
     KEY_RESULT_REASON = 0x0B # Result - Reason
     KEY_A             = 0x0C # Account
     KEY_D             = 0x0D # Directory
-    KEY_T             = 0x0E # Transaction
+    KEY_S             = 0x0E # Service
+    KEY_T             = 0x0F # Transaction
 
     KEY_A_DATA         = 0x00
 
@@ -250,6 +251,58 @@ class ServerProvisioning:
     KEY_D_RX_GROUP_ENTRYS        = 0x0B
     KEY_D_RX_GROUP_ENTRYS_COUNT  = 0x0C
     KEY_D_SEARCH                 = 0x0D
+
+    KEY_D_MAPPING = {
+    }
+
+    KEY_D_ENTRYS_AUTH_ROLE      = 0x00
+    KEY_D_ENTRYS_CITY           = 0x01
+    KEY_D_ENTRYS_COUNT          = 0x02
+    KEY_D_ENTRYS_COUNTRY        = 0x03
+    KEY_D_ENTRYS_DATA           = 0x04
+    KEY_D_ENTRYS_DEST           = 0x05
+    KEY_D_ENTRYS_DISPLAY_NAME   = 0x06
+    KEY_D_ENTRYS_HOP_COUNT      = 0x07
+    KEY_D_ENTRYS_LOCATION_LAT   = 0x08
+    KEY_D_ENTRYS_LOCATION_LON   = 0x09
+    KEY_D_ENTRYS_OCCUPATION     = 0x0A
+    KEY_D_ENTRYS_OWNER          = 0x0B
+    KEY_D_ENTRYS_SKILLS         = 0x0C
+    KEY_D_ENTRYS_STATE          = 0x0D
+    KEY_D_ENTRYS_STATE_TS       = 0x0E
+    KEY_D_ENTRYS_TASKS          = 0x0F
+    KEY_D_ENTRYS_TS             = 0x10
+    KEY_D_ENTRYS_TS_ADD         = 0x11
+    KEY_D_ENTRYS_TS_EDIT        = 0x12
+    KEY_D_ENTRYS_TYPE           = 0x13
+    KEY_D_ENTRYS_WALLET_ADDRESS = 0x14
+
+    KEY_D_ENTRYS_MAPPING = {
+        "auth_role":      KEY_D_ENTRYS_AUTH_ROLE,
+        "city":           KEY_D_ENTRYS_CITY,
+        "count":          KEY_D_ENTRYS_COUNT,
+        "country":        KEY_D_ENTRYS_COUNTRY,
+        "data":           KEY_D_ENTRYS_DATA,
+        "dest":           KEY_D_ENTRYS_DEST,
+        "display_name":   KEY_D_ENTRYS_DISPLAY_NAME,
+        "hop_count":      KEY_D_ENTRYS_HOP_COUNT,
+        "location_lat":   KEY_D_ENTRYS_LOCATION_LAT,
+        "location_lon":   KEY_D_ENTRYS_LOCATION_LON,
+        "occupation":     KEY_D_ENTRYS_OCCUPATION,
+        "owner":          KEY_D_ENTRYS_OWNER,
+        "skills":         KEY_D_ENTRYS_SKILLS,
+        "state":          KEY_D_ENTRYS_STATE,
+        "state_ts":       KEY_D_ENTRYS_STATE_TS,
+        "tasks":          KEY_D_ENTRYS_TASKS,
+        "ts":             KEY_D_ENTRYS_TS,
+        "ts_add":         KEY_D_ENTRYS_TS_ADD,
+        "ts_edit":        KEY_D_ENTRYS_TS_EDIT,
+        "type":           KEY_D_ENTRYS_TYPE,
+        "wallet_address": KEY_D_ENTRYS_WALLET_ADDRESS,
+    }
+
+    KEY_S_MAPPING = {
+    }
 
     KEY_T_DATA         = 0x00
     KEY_T_ID           = 0x01
@@ -280,6 +333,13 @@ class ServerProvisioning:
     RESULT_DISABLED    = 0xFE
     RESULT_BLOCKED     = 0xFF
 
+    SERVICE_STATE_FAILED      = 0x00 # Failed
+    SERVICE_STATE_SUCCESSFULL = 0x01 # Successfull
+    SERVICE_STATE_WAITING     = 0x02 # Waiting in local cache
+    SERVICE_STATE_SYNCING     = 0x03 # Syncing/Transfering to server
+    SERVICE_STATE_PROCESSING  = 0x04 # Processing/Execution on the server
+    SERVICE_STATE_FAILED_TMP  = 0x05 # Temporary failed
+
     STATE_NO_PATH            = 0x00
     STATE_PATH_REQUESTED     = 0x01
     STATE_ESTABLISHING_LINK  = 0x02
@@ -305,6 +365,9 @@ class ServerProvisioning:
     TRANSACTION_TYPE_ACCOUNT_EDIT    = 0x01
     TRANSACTION_TYPE_ACCOUNT_PROVE   = 0x02
     TRANSACTION_TYPE_ACCOUNT_RESTORE = 0x03
+    TRANSACTION_TYPE_SERVICE_CREATE  = 0x04
+    TRANSACTION_TYPE_SERVICE_EDIT    = 0x05
+    TRANSACTION_TYPE_SERVICE_DELETE  = 0x06
 
     TYPE_DIRECTORY_ANNOUNCE = 0x00
     TYPE_DIRECTORY_MEMBER   = 0x01
@@ -615,7 +678,7 @@ class ServerProvisioning:
 
         if init:
             dbc.execute("DROP TABLE IF EXISTS public.announce")
-        dbc.execute("""CREATE TABLE IF NOT EXISTS public.announce(dest character(32) COLLATE pg_catalog."default" NOT NULL, type integer NOT NULL DEFAULT 0, ts timestamp with time zone, data text COLLATE pg_catalog."default" DEFAULT ''::text, location_lat double precision DEFAULT 0, location_lon double precision DEFAULT 0, owner character(32) COLLATE pg_catalog."default", state integer DEFAULT 0, state_ts timestamp with time zone, hop_count integer DEFAULT 0, hop_interface text COLLATE pg_catalog."default" DEFAULT ''::text, hop_dest character(32) COLLATE pg_catalog."default", CONSTRAINT announce_pkey PRIMARY KEY (dest, type))""")
+        dbc.execute("""CREATE TABLE IF NOT EXISTS public.announce(dest character(32) COLLATE pg_catalog."default" NOT NULL, type integer NOT NULL DEFAULT 0, data text COLLATE pg_catalog."default" DEFAULT ''::text, location_lat double precision DEFAULT 0, location_lon double precision DEFAULT 0, owner character(32) COLLATE pg_catalog."default", state integer DEFAULT 0, state_ts timestamp with time zone, hop_count integer DEFAULT 0, hop_interface text COLLATE pg_catalog."default" DEFAULT ''::text, hop_dest character(32) COLLATE pg_catalog."default", ts_add timestamp with time zone, ts_edit timestamp with time zone, CONSTRAINT announce_pkey PRIMARY KEY (dest, type))""")
 
         if init:
             dbc.execute("DROP TABLE IF EXISTS public.devices")
@@ -673,12 +736,6 @@ class ServerProvisioning:
                 array = [self.db_sanitize(key) for key in filter["type"]]
                 querys.append("(type = '"+"' OR type = '".join(array)+"')")
 
-        if "ts_min" in filter and filter["ts_min"] != None:
-            querys.append("ts >= "+datetime.datetime.fromtimestamp(filter["ts_min"]).strftime("%Y-%m-%d %H:%M:%S"))
-
-        if "ts_max" in filter and filter["ts_max"] != None:
-            querys.append("ts <= "+datetime.datetime.fromtimestamp(filter["ts_max"]).strftime("%Y-%m-%d %H:%M:%S"))
-
         if "hop_min" in filter and filter["hop_min"] != None:
             querys.append("hop_count >= "+self.db_sanitize(filter["hop_min"]))
 
@@ -702,6 +759,18 @@ class ServerProvisioning:
 
         if "state_ts_max" in filter and filter["state_ts_max"] != None:
             querys.append("state_ts <= "+datetime.datetime.fromtimestamp(filter["state_ts_max"]).strftime("%Y-%m-%d %H:%M:%S"))
+
+        if "ts_add_min" in filter and filter["ts_add_min"] != None:
+            querys.append("ts_add >= "+datetime.datetime.fromtimestamp(filter["ts_add_min"]).strftime("%Y-%m-%d %H:%M:%S"))
+
+        if "ts_add_max" in filter and filter["ts_add_max"] != None:
+            querys.append("ts_add <= "+datetime.datetime.fromtimestamp(filter["ts_add_max"]).strftime("%Y-%m-%d %H:%M:%S"))
+
+        if "ts_edit_min" in filter and filter["ts_edit_min"] != None:
+            querys.append("ts_edit >= "+datetime.datetime.fromtimestamp(filter["ts_edit_min"]).strftime("%Y-%m-%d %H:%M:%S"))
+
+        if "ts_edit_max" in filter and filter["ts_edit_max"] != None:
+            querys.append("ts_edit <= "+datetime.datetime.fromtimestamp(filter["ts_edit_max"]).strftime("%Y-%m-%d %H:%M:%S"))
 
         if "pin" in filter:
             if filter["pin"] == True:
@@ -746,25 +815,29 @@ class ServerProvisioning:
         elif order == "A-DESC":
             query = " ORDER BY data DESC"
         elif order == "T-ASC":
-            query = " ORDER BY type ASC, ts ASC, data ASC"
+            query = " ORDER BY type ASC, ts_edit ASC, data ASC"
         elif order == "T-DESC":
-            query = " ORDER BY type DESC, ts ASC, data ASC"
+            query = " ORDER BY type DESC, ts_edit ASC, data ASC"
         elif order == "H-ASC":
-            query = " ORDER BY hop_count ASC, ts ASC, data ASC"
+            query = " ORDER BY hop_count ASC, ts_edit ASC, data ASC"
         elif order == "H-DESC":
-            query = " ORDER BY hop_count DESC, ts ASC, data ASC"
+            query = " ORDER BY hop_count DESC, ts_edit ASC, data ASC"
         elif order == "I-ASC":
-            query = " ORDER BY hop_interface ASC, ts ASC, data ASC"
+            query = " ORDER BY hop_interface ASC, ts_edit ASC, data ASC"
         elif order == "I-DESC":
-            query = " ORDER BY hop_interface DESC, ts ASC, data ASC"
+            query = " ORDER BY hop_interface DESC, ts_edit ASC, data ASC"
         elif order == "S-ASC":
             query = " ORDER BY state_ts ASC, data ASC"
         elif order == "S-DESC":
             query = " ORDER BY state_ts DESC, data ASC"
-        elif order == "ASC":
-            query = " ORDER BY ts ASC, data ASC"
-        elif order == "DESC":
-            query = " ORDER BY ts DESC, data ASC"
+        elif order == "TSA-ASC":
+            query = " ORDER BY ts_add ASC, data ASC"
+        elif order == "TSA-DESC":
+            query = " ORDER BY ts_add DESC, data ASC"
+        elif order == "TSE-ASC":
+            query = " ORDER BY ts_edit ASC, data ASC"
+        elif order == "TSE-DESC":
+            query = " ORDER BY ts_edit DESC, data ASC"
         else:
             query = ""
 
@@ -801,19 +874,20 @@ class ServerProvisioning:
         else:
             data = []
             for entry in result:
-                owner = entry[6].strip()
+                owner = entry[5].strip()
                 owner = bytes.fromhex(owner) if owner else None
                 data.append({
                     "dest": bytes.fromhex(entry[0].strip()),
                     "type": entry[1],
-                    "ts": int(entry[2].timestamp()),
-                    "data": entry[3].strip(),
-                    "location_lat": entry[4],
-                    "location_lon": entry[5],
+                    "data": entry[2].strip(),
+                    "location_lat": entry[3],
+                    "location_lon": entry[4],
                     "owner": owner,
-                    "state": entry[7],
-                    "state_ts": int(entry[8].timestamp()),
-                    "hop_count": entry[9],
+                    "state": entry[6],
+                    "state_ts": int(entry[7].timestamp()),
+                    "hop_count": entry[8],
+                    "ts_add": int(entry[11].timestamp()),
+                    "ts_edit": int(entry[12].timestamp()),
                 })
 
             return data
@@ -855,19 +929,20 @@ class ServerProvisioning:
             return None
         else:
             entry = result[0]
-            owner = entry[6].strip()
+            owner = entry[5].strip()
             owner = bytes.fromhex(owner) if owner else None
             data = {
                 "dest": bytes.fromhex(entry[0].strip()),
                 "type": entry[1],
-                "ts": int(entry[2].timestamp()),
-                "data": entry[3].strip(),
-                "location_lat": entry[4],
-                "location_lon": entry[5],
+                "data": entry[2].strip(),
+                "location_lat": entry[3],
+                "location_lon": entry[4],
                 "owner": owner,
-                "state": entry[7],
-                "state_ts": int(entry[8].timestamp()),
-                "hop_count": entry[9],
+                "state": entry[6],
+                "state_ts": int(entry[7].timestamp()),
+                "hop_count": entry[8],
+                "ts_add": int(entry[11].timestamp()),
+                "ts_edit": int(entry[12].timestamp()),
             }
             return data
 
@@ -927,11 +1002,17 @@ class ServerProvisioning:
         if "auth_role" in filter and filter["auth_role"] != None:
             querys.append("members.member_auth_role = '"+self.db_sanitize(filter["auth_role"])+"'")
 
-        if "ts_min" in filter and filter["ts_min"] != None:
-            querys.append("members.member_ts_add >= "+datetime.datetime.fromtimestamp(filter["ts_min"]).strftime("%Y-%m-%d %H:%M:%S"))
+        if "ts_add_min" in filter and filter["ts_add_min"] != None:
+            querys.append("members.member_ts_add >= "+datetime.datetime.fromtimestamp(filter["ts_add_min"]).strftime("%Y-%m-%d %H:%M:%S"))
 
-        if "ts_max" in filter and filter["ts_max"] != None:
-            querys.append("members.member_ts_add <= "+datetime.datetime.fromtimestamp(filter["ts_max"]).strftime("%Y-%m-%d %H:%M:%S"))
+        if "ts_add_max" in filter and filter["ts_add_max"] != None:
+            querys.append("members.member_ts_add <= "+datetime.datetime.fromtimestamp(filter["ts_add_max"]).strftime("%Y-%m-%d %H:%M:%S"))
+
+        if "ts_edit_min" in filter and filter["ts_edit_min"] != None:
+            querys.append("members.member_ts_edit >= "+datetime.datetime.fromtimestamp(filter["ts_edit_min"]).strftime("%Y-%m-%d %H:%M:%S"))
+
+        if "ts_edit_max" in filter and filter["ts_edit_max"] != None:
+            querys.append("members.member_ts_edit <= "+datetime.datetime.fromtimestamp(filter["ts_edit_max"]).strftime("%Y-%m-%d %H:%M:%S"))
 
         if len(querys) > 0:
             query = " AND "+" AND ".join(querys)
@@ -979,10 +1060,14 @@ class ServerProvisioning:
             query = " ORDER BY members.member_country ASC, members.member_city ASC, devices.device_display_name ASC"
         elif order == "CITY-DESC":
             query = " ORDER BY members.member_country DESC, members.member_city DESC, devices.device_display_name ASC"
-        elif order == "ASC":
+        elif order == "TSA-ASC":
             query = " ORDER BY members.member_ts_add ASC, devices.device_display_name ASC"
-        elif order == "DESC":
+        elif order == "TSA-DESC":
             query = " ORDER BY members.member_ts_add DESC, devices.device_display_name ASC"
+        elif order == "TSE-ASC":
+            query = " ORDER BY members.member_ts_edit ASC, devices.device_display_name ASC"
+        elif order == "TSE-DESC":
+            query = " ORDER BY members.member_ts_edit DESC, devices.device_display_name ASC"
         else:
             query = ""
 
@@ -1202,11 +1287,17 @@ class ServerProvisioning:
         if "auth_role" in filter and filter["auth_role"] != None:
             querys.append("services.service_auth_role = '"+self.db_sanitize(filter["auth_role"])+"'")
 
-        if "ts_min" in filter and filter["ts_min"] != None:
-            querys.append("services.service_ts_add >= "+datetime.datetime.fromtimestamp(filter["ts_min"]).strftime("%Y-%m-%d %H:%M:%S"))
+        if "ts_add_min" in filter and filter["ts_add_min"] != None:
+            querys.append("services.service_ts_add >= "+datetime.datetime.fromtimestamp(filter["ts_add_min"]).strftime("%Y-%m-%d %H:%M:%S"))
 
-        if "ts_max" in filter and filter["ts_max"] != None:
-            querys.append("services.service_ts_add <= "+datetime.datetime.fromtimestamp(filter["ts_max"]).strftime("%Y-%m-%d %H:%M:%S"))
+        if "ts_add_max" in filter and filter["ts_add_max"] != None:
+            querys.append("services.service_ts_add <= "+datetime.datetime.fromtimestamp(filter["ts_add_max"]).strftime("%Y-%m-%d %H:%M:%S"))
+
+        if "ts_edit_min" in filter and filter["ts_edit_min"] != None:
+            querys.append("services.service_ts_edit >= "+datetime.datetime.fromtimestamp(filter["ts_edit_min"]).strftime("%Y-%m-%d %H:%M:%S"))
+
+        if "ts_edit_max" in filter and filter["ts_edit_max"] != None:
+            querys.append("services.service_ts_edit <= "+datetime.datetime.fromtimestamp(filter["ts_edit_max"]).strftime("%Y-%m-%d %H:%M:%S"))
 
         if len(querys) > 0:
             query = " AND "+" AND ".join(querys)
@@ -1254,10 +1345,14 @@ class ServerProvisioning:
             query = " ORDER BY services.service_country ASC, services.service_city ASC, services.service_display_name ASC"
         elif order == "CITY-DESC":
             query = " ORDER BY services.service_country DESC, services.service_city DESC, services.service_display_name ASC"
-        elif order == "ASC":
+        elif order == "TSA-ASC":
             query = " ORDER BY services.service_ts_add ASC, services.service_display_name ASC"
-        elif order == "DESC":
+        elif order == "TSA-DESC":
             query = " ORDER BY services.service_ts_add DESC, services.service_display_name ASC"
+        elif order == "TSE-ASC":
+            query = " ORDER BY services.service_ts_edit ASC, services.service_display_name ASC"
+        elif order == "TSE-DESC":
+            query = " ORDER BY services.service_ts_edit DESC, services.service_display_name ASC"
         else:
             query = ""
 
@@ -1445,6 +1540,7 @@ class ServerProvisioning:
 
         try:
             directory = {}
+            entrys = []
 
             hash_destination = RNS.hexrep(RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity), delimit=False)
             hash_identity = ""
@@ -1456,12 +1552,24 @@ class ServerProvisioning:
                         self.db_announce_delete(cmd[1])
                     entry = self.db_announce_get(cmd[1])
                     if entry:
-                        directory.update({ServerProvisioning.KEY_D_CMD_RESULT: ServerProvisioning.RESULT_OK, ServerProvisioning.KEY_D_RX_ENTRYS: [entry]})
+                        directory.update({ServerProvisioning.KEY_D_CMD_RESULT: ServerProvisioning.RESULT_OK})
+                        entrys = [entry]
                     else:
-                        directory.update({ServerProvisioning.KEY_D_CMD_RESULT: ServerProvisioning.RESULT_OK, ServerProvisioning.KEY_D_RX_ENTRYS: [{"dest": cmd[1], "type": 0, "ts": 0, "data": "", "location_lat": 0, "location_lon": 0, "owner": None, "state": 0, "state_ts": 0, "hop_count": 0}]})
+                        directory.update({ServerProvisioning.KEY_D_CMD_RESULT: ServerProvisioning.RESULT_OK})
+                        entrys = [{"dest": cmd[1], "type": 0, "data": "", "location_lat": 0, "location_lon": 0, "owner": None, "state": 0, "state_ts": 0, "hop_count": 0, "ts_add": 0, "ts_edit": 0}]
             else:
-                directory[ServerProvisioning.KEY_D_RX_ENTRYS] = self.db_announce_list(filter=data[ServerProvisioning.KEY_D_FILTER], search=data[ServerProvisioning.KEY_D_SEARCH], group=data[ServerProvisioning.KEY_D_GROUP], order=data[ServerProvisioning.KEY_D_ORDER], limit=data[ServerProvisioning.KEY_D_LIMIT], limit_start=data[ServerProvisioning.KEY_D_LIMIT_START])
                 directory[ServerProvisioning.KEY_D_RX_ENTRYS_COUNT] = self.db_announce_count(filter=data[ServerProvisioning.KEY_D_FILTER], search=data[ServerProvisioning.KEY_D_SEARCH], group=data[ServerProvisioning.KEY_D_GROUP])
+                entrys = self.db_announce_list(filter=data[ServerProvisioning.KEY_D_FILTER], search=data[ServerProvisioning.KEY_D_SEARCH], group=data[ServerProvisioning.KEY_D_GROUP], order=data[ServerProvisioning.KEY_D_ORDER], limit=data[ServerProvisioning.KEY_D_LIMIT], limit_start=data[ServerProvisioning.KEY_D_LIMIT_START])
+
+            if len(entrys) > 0:
+                directory[ServerProvisioning.KEY_D_RX_ENTRYS] = []
+                entrys_return = []
+                for entry in entrys:
+                    entry_return = {}
+                    for key, value in entry.items():
+                        if key in ServerProvisioning.KEY_D_ENTRYS_MAPPING:
+                            entry_return[ServerProvisioning.KEY_D_ENTRYS_MAPPING[key]] = value
+                    directory[ServerProvisioning.KEY_D_RX_ENTRYS].append(entry_return)
 
             if hash_destination in self.admins:
                 directory[ServerProvisioning.KEY_D_CMD] = []
@@ -1507,6 +1615,8 @@ class ServerProvisioning:
 
         try:
             directory = {}
+            entrys = []
+            group_entrys = []
 
             hash_destination = RNS.hexrep(RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity), delimit=False)
             hash_identity = ""
@@ -1532,34 +1642,52 @@ class ServerProvisioning:
                         self.db_member_delete(cmd[1])
                     entry = self.db_member_get(cmd[1])
                     if entry:
-                        directory.update({ServerProvisioning.KEY_D_CMD_RESULT: ServerProvisioning.RESULT_OK, ServerProvisioning.KEY_D_RX_ENTRYS: [entry]})
+                        directory.update({ServerProvisioning.KEY_D_CMD_RESULT: ServerProvisioning.RESULT_OK})
+                        entrys = [entry]
                     else:
-                        directory.update({ServerProvisioning.KEY_D_CMD_RESULT: ServerProvisioning.RESULT_OK, ServerProvisioning.KEY_D_RX_ENTRYS: [{"dest": cmd[1], "ts_edit": 0}]})
+                        directory.update({ServerProvisioning.KEY_D_CMD_RESULT: ServerProvisioning.RESULT_OK})
+                        entrys = [{"dest": cmd[1], "ts_edit": 0}]
             elif ServerProvisioning.KEY_D_GROUP in data and data[ServerProvisioning.KEY_D_GROUP] != None:
-                directory[ServerProvisioning.KEY_D_RX_GROUP_ENTRYS] = self.db_member_count_list(filter=data[ServerProvisioning.KEY_D_FILTER], search=data[ServerProvisioning.KEY_D_SEARCH], group=data[ServerProvisioning.KEY_D_GROUP], order=data[ServerProvisioning.KEY_D_ORDER], limit=data[ServerProvisioning.KEY_D_LIMIT], limit_start=data[ServerProvisioning.KEY_D_LIMIT_START])
-                directory[ServerProvisioning.KEY_D_RX_GROUP_ENTRYS_COUNT] = len(directory[ServerProvisioning.KEY_D_RX_GROUP_ENTRYS])
+                group_entrys = self.db_member_count_list(filter=data[ServerProvisioning.KEY_D_FILTER], search=data[ServerProvisioning.KEY_D_SEARCH], group=data[ServerProvisioning.KEY_D_GROUP], order=data[ServerProvisioning.KEY_D_ORDER], limit=data[ServerProvisioning.KEY_D_LIMIT], limit_start=data[ServerProvisioning.KEY_D_LIMIT_START])
+                directory[ServerProvisioning.KEY_D_RX_GROUP_ENTRYS_COUNT] = len(group_entrys)
             else:
-                directory[ServerProvisioning.KEY_D_RX_ENTRYS] = []
                 directory[ServerProvisioning.KEY_D_RX_ENTRYS_COUNT] = self.db_member_count(filter=data[ServerProvisioning.KEY_D_FILTER], search=data[ServerProvisioning.KEY_D_SEARCH], group=data[ServerProvisioning.KEY_D_GROUP])
 
                 for entry in self.db_member_list(filter=data[ServerProvisioning.KEY_D_FILTER], search=data[ServerProvisioning.KEY_D_SEARCH], group=data[ServerProvisioning.KEY_D_GROUP], order=data[ServerProvisioning.KEY_D_ORDER], limit=data[ServerProvisioning.KEY_D_LIMIT], limit_start=data[ServerProvisioning.KEY_D_LIMIT_START]):
                     if entry["dest"] in data[ServerProvisioning.KEY_D_ENTRYS]:
                         if entry["ts_edit"] > data[ServerProvisioning.KEY_D_ENTRYS][entry["dest"]]:
-                            directory[ServerProvisioning.KEY_D_RX_ENTRYS].append(entry)
+                            entrys.append(entry)
                         del data[ServerProvisioning.KEY_D_ENTRYS][entry["dest"]]
                     else:
-                        directory[ServerProvisioning.KEY_D_RX_ENTRYS].append(entry)
+                        entrys.append(entry)
 
                 for dest in data[ServerProvisioning.KEY_D_ENTRYS]:
                     entry = self.db_member_get(dest=dest)
                     if entry:
                         if entry["ts_edit"] > data[ServerProvisioning.KEY_D_ENTRYS][dest]:
-                            directory[ServerProvisioning.KEY_D_RX_ENTRYS].append(entry)
+                            entrys.append(entry)
                     else:
-                        directory[ServerProvisioning.KEY_D_RX_ENTRYS].append({"dest": dest, "ts_edit": 0})
+                        entrys.append({"dest": dest, "ts_edit": 0})
 
-                if len(directory[ServerProvisioning.KEY_D_RX_ENTRYS]) == 0:
-                    del directory[ServerProvisioning.KEY_D_RX_ENTRYS]
+            if len(entrys) > 0:
+                directory[ServerProvisioning.KEY_D_RX_ENTRYS] = []
+                entrys_return = []
+                for entry in entrys:
+                    entry_return = {}
+                    for key, value in entry.items():
+                        if key in ServerProvisioning.KEY_D_ENTRYS_MAPPING:
+                            entry_return[ServerProvisioning.KEY_D_ENTRYS_MAPPING[key]] = value
+                    directory[ServerProvisioning.KEY_D_RX_ENTRYS].append(entry_return)
+
+            if len(group_entrys) > 0:
+                directory[ServerProvisioning.KEY_D_RX_GROUP_ENTRYS] = []
+                entrys_return = []
+                for entry in group_entrys:
+                    entry_return = {}
+                    for key, value in entry.items():
+                        if key in ServerProvisioning.KEY_D_ENTRYS_MAPPING:
+                            entry_return[ServerProvisioning.KEY_D_ENTRYS_MAPPING[key]] = value
+                    directory[ServerProvisioning.KEY_D_RX_GROUP_ENTRYS].append(entry_return)
 
             if hash_destination in self.admins:
                 directory[ServerProvisioning.KEY_D_CMD] = []
@@ -1605,6 +1733,8 @@ class ServerProvisioning:
 
         try:
             directory = {}
+            entrys = []
+            group_entrys = []
 
             hash_destination = RNS.hexrep(RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity), delimit=False)
             hash_identity = ""
@@ -1616,34 +1746,52 @@ class ServerProvisioning:
                         self.db_service_delete(cmd[1])
                     entry = self.db_service_get(cmd[1])
                     if entry:
-                        directory.update({ServerProvisioning.KEY_D_CMD_RESULT: ServerProvisioning.RESULT_OK, ServerProvisioning.KEY_D_RX_ENTRYS: [entry]})
+                        directory.update({ServerProvisioning.KEY_D_CMD_RESULT: ServerProvisioning.RESULT_OK})
+                        entrys = [entry]
                     else:
-                        directory.update({ServerProvisioning.KEY_D_CMD_RESULT: ServerProvisioning.RESULT_OK, ServerProvisioning.KEY_D_RX_ENTRYS: [{"dest": cmd[1], "ts_edit": 0}]})
+                        directory.update({ServerProvisioning.KEY_D_CMD_RESULT: ServerProvisioning.RESULT_OK})
+                        entrys = [{"dest": cmd[1], "ts_edit": 0}]
             elif ServerProvisioning.KEY_D_GROUP in data and data[ServerProvisioning.KEY_D_GROUP] != None:
-                directory[ServerProvisioning.KEY_D_RX_GROUP_ENTRYS] = self.db_service_count_list(filter=data[ServerProvisioning.KEY_D_FILTER], search=data[ServerProvisioning.KEY_D_SEARCH], group=data[ServerProvisioning.KEY_D_GROUP], order=data[ServerProvisioning.KEY_D_ORDER], limit=data[ServerProvisioning.KEY_D_LIMIT], limit_start=data[ServerProvisioning.KEY_D_LIMIT_START])
-                directory[ServerProvisioning.KEY_D_RX_GROUP_ENTRYS_COUNT] = len(directory[ServerProvisioning.KEY_D_RX_GROUP_ENTRYS])
+                group_entrys = self.db_service_count_list(filter=data[ServerProvisioning.KEY_D_FILTER], search=data[ServerProvisioning.KEY_D_SEARCH], group=data[ServerProvisioning.KEY_D_GROUP], order=data[ServerProvisioning.KEY_D_ORDER], limit=data[ServerProvisioning.KEY_D_LIMIT], limit_start=data[ServerProvisioning.KEY_D_LIMIT_START])
+                directory[ServerProvisioning.KEY_D_RX_GROUP_ENTRYS_COUNT] = len(group_entrys)
             else:
-                directory[ServerProvisioning.KEY_D_RX_ENTRYS] = []
                 directory[ServerProvisioning.KEY_D_RX_ENTRYS_COUNT] = self.db_service_count(filter=data[ServerProvisioning.KEY_D_FILTER], search=data[ServerProvisioning.KEY_D_SEARCH], group=data[ServerProvisioning.KEY_D_GROUP])
 
                 for entry in self.db_service_list(filter=data[ServerProvisioning.KEY_D_FILTER], search=data[ServerProvisioning.KEY_D_SEARCH], group=data[ServerProvisioning.KEY_D_GROUP], order=data[ServerProvisioning.KEY_D_ORDER], limit=data[ServerProvisioning.KEY_D_LIMIT], limit_start=data[ServerProvisioning.KEY_D_LIMIT_START]):
                     if entry["dest"] in data[ServerProvisioning.KEY_D_ENTRYS]:
                         if entry["ts_edit"] > data[ServerProvisioning.KEY_D_ENTRYS][entry["dest"]]:
-                            directory[ServerProvisioning.KEY_D_RX_ENTRYS].append(entry)
+                            entrys.append(entry)
                         del data[ServerProvisioning.KEY_D_ENTRYS][entry["dest"]]
                     else:
-                        directory[ServerProvisioning.KEY_D_RX_ENTRYS].append(entry)
+                        entrys.append(entry)
 
                 for dest in data[ServerProvisioning.KEY_D_ENTRYS]:
                     entry = self.db_service_get(dest=dest)
                     if entry:
                         if entry["ts_edit"] > data[ServerProvisioning.KEY_D_ENTRYS][dest]:
-                            directory[ServerProvisioning.KEY_D_RX_ENTRYS].append(entry)
+                            entrys.append(entry)
                     else:
-                        directory[ServerProvisioning.KEY_D_RX_ENTRYS].append({"dest": dest, "ts_edit": 0})
+                        entrys.append({"dest": dest, "ts_edit": 0})
 
-                if len(directory[ServerProvisioning.KEY_D_RX_ENTRYS]) == 0:
-                    del directory[ServerProvisioning.KEY_D_RX_ENTRYS]
+            if len(entrys) > 0:
+                directory[ServerProvisioning.KEY_D_RX_ENTRYS] = []
+                entrys_return = []
+                for entry in entrys:
+                    entry_return = {}
+                    for key, value in entry.items():
+                        if key in ServerProvisioning.KEY_D_ENTRYS_MAPPING:
+                            entry_return[ServerProvisioning.KEY_D_ENTRYS_MAPPING[key]] = value
+                    directory[ServerProvisioning.KEY_D_RX_ENTRYS].append(entry_return)
+
+            if len(group_entrys) > 0:
+                directory[ServerProvisioning.KEY_D_RX_GROUP_ENTRYS] = []
+                entrys_return = []
+                for entry in group_entrys:
+                    entry_return = {}
+                    for key, value in entry.items():
+                        if key in ServerProvisioning.KEY_D_ENTRYS_MAPPING:
+                            entry_return[ServerProvisioning.KEY_D_ENTRYS_MAPPING[key]] = value
+                    directory[ServerProvisioning.KEY_D_RX_GROUP_ENTRYS].append(entry_return)
 
             if hash_destination in self.admins:
                 directory[ServerProvisioning.KEY_D_CMD] = []

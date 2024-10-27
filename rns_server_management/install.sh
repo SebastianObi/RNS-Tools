@@ -6,9 +6,10 @@
 
 
 SOFTWARE_NAME="rns_server_management"
-SOFTWARE_PATH_SRC=$(dirname $(realpath $0))
+SOFTWARE_PATH=$(dirname $(realpath $0))
+SOFTWARE_PATH_SRC="$SOFTWARE_PATH/bin"
 SOFTWARE_PATH_DST="/usr/local/bin"
-SOFTWARE_CONFIG_SRC="$SOFTWARE_PATH_SRC/Examples"
+SOFTWARE_CONFIG_SRC="$SOFTWARE_PATH/config"
 SOFTWARE_CONFIG_DST="$HOME/.config/$SOFTWARE_NAME"
 RETICULUM_CONFIG_DST=("$HOME/.config/reticulum" "$HOME/.reticulum")
 
@@ -140,7 +141,7 @@ _install_software() {
   apt -y -q update
   apt -y -q install python3-polib
 
-  cp -a "$SOFTWARE_PATH_SRC"/*.py "$SOFTWARE_PATH_DST"
+  cp -a "$SOFTWARE_PATH_SRC"/* "$SOFTWARE_PATH_DST"
   chmod +x "$SOFTWARE_PATH_DST"/*.py
 }
 
@@ -272,7 +273,7 @@ _uninstall_footer() {
 
 
 _update_software() {
-  cp -a "$SOFTWARE_PATH_SRC"/*.py "$SOFTWARE_PATH_DST"
+  cp -a "$SOFTWARE_PATH_SRC"/* "$SOFTWARE_PATH_DST"
   chmod +x "$SOFTWARE_PATH_DST"/*.py
 }
 
