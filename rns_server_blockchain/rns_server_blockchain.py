@@ -1493,11 +1493,11 @@ def config_read(file=None, file_override=None):
         if os.path.isfile(file):
             try:
                 if file_override is None:
-                    CONFIG.read(file, encoding='utf-8')
+                    CONFIG.read(file, encoding="utf-8")
                 elif os.path.isfile(file_override):
-                    CONFIG.read([file, file_override], encoding='utf-8')
+                    CONFIG.read([file, file_override], encoding="utf-8")
                 else:
-                    CONFIG.read(file, encoding='utf-8')
+                    CONFIG.read(file, encoding="utf-8")
             except Exception as e:
                 return False
         else:

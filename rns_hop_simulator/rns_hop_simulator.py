@@ -295,7 +295,7 @@ target_port = """+str(41000+instance-1)+"""
             with open(configdir+"/config", "w") as fh:
                 fh.write(config)
 
-            params = base64.b64encode(msgpack.packb([instance, configdir, rns_loglevel])).decode('utf-8')
+            params = base64.b64encode(msgpack.packb([instance, configdir, rns_loglevel])).decode("utf-8")
             command = ["python", __file__, "-r "+params]
             process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
 

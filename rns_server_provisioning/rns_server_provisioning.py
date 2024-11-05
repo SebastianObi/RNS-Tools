@@ -230,6 +230,7 @@ class ServerProvisioning:
     KEY_D             = 0x0D # Directory
     KEY_S             = 0x0E # Service
     KEY_T             = 0x0F # Transaction
+    KEY_TA            = 0x10 # Task
 
     KEY_A_DATA         = 0x00
 
@@ -267,38 +268,38 @@ class ServerProvisioning:
     KEY_D_ENTRYS_LOCATION_LON   = 0x09
     KEY_D_ENTRYS_OCCUPATION     = 0x0A
     KEY_D_ENTRYS_OWNER          = 0x0B
-    KEY_D_ENTRYS_SKILLS         = 0x0C
-    KEY_D_ENTRYS_STATE          = 0x0D
-    KEY_D_ENTRYS_STATE_TS       = 0x0E
-    KEY_D_ENTRYS_TASKS          = 0x0F
-    KEY_D_ENTRYS_TS             = 0x10
-    KEY_D_ENTRYS_TS_ADD         = 0x11
-    KEY_D_ENTRYS_TS_EDIT        = 0x12
-    KEY_D_ENTRYS_TYPE           = 0x13
-    KEY_D_ENTRYS_WALLET_ADDRESS = 0x14
+    KEY_D_ENTRYS_SHOP_GOODS     = 0x0C
+    KEY_D_ENTRYS_SHOP_SERVICES  = 0x0D
+    KEY_D_ENTRYS_SKILLS         = 0x0E
+    KEY_D_ENTRYS_STATE          = 0x0F
+    KEY_D_ENTRYS_STATE_TS       = 0x10
+    KEY_D_ENTRYS_TS             = 0x11
+    KEY_D_ENTRYS_TS_ADD         = 0x12
+    KEY_D_ENTRYS_TS_EDIT        = 0x13
+    KEY_D_ENTRYS_TYPE           = 0x14
 
     KEY_D_ENTRYS_MAPPING = {
-        "auth_role":      KEY_D_ENTRYS_AUTH_ROLE,
-        "city":           KEY_D_ENTRYS_CITY,
-        "count":          KEY_D_ENTRYS_COUNT,
-        "country":        KEY_D_ENTRYS_COUNTRY,
-        "data":           KEY_D_ENTRYS_DATA,
-        "dest":           KEY_D_ENTRYS_DEST,
-        "display_name":   KEY_D_ENTRYS_DISPLAY_NAME,
-        "hop_count":      KEY_D_ENTRYS_HOP_COUNT,
-        "location_lat":   KEY_D_ENTRYS_LOCATION_LAT,
-        "location_lon":   KEY_D_ENTRYS_LOCATION_LON,
-        "occupation":     KEY_D_ENTRYS_OCCUPATION,
-        "owner":          KEY_D_ENTRYS_OWNER,
-        "skills":         KEY_D_ENTRYS_SKILLS,
-        "state":          KEY_D_ENTRYS_STATE,
-        "state_ts":       KEY_D_ENTRYS_STATE_TS,
-        "tasks":          KEY_D_ENTRYS_TASKS,
-        "ts":             KEY_D_ENTRYS_TS,
-        "ts_add":         KEY_D_ENTRYS_TS_ADD,
-        "ts_edit":        KEY_D_ENTRYS_TS_EDIT,
-        "type":           KEY_D_ENTRYS_TYPE,
-        "wallet_address": KEY_D_ENTRYS_WALLET_ADDRESS,
+        "auth_role":     KEY_D_ENTRYS_AUTH_ROLE,
+        "city":          KEY_D_ENTRYS_CITY,
+        "count":         KEY_D_ENTRYS_COUNT,
+        "country":       KEY_D_ENTRYS_COUNTRY,
+        "data":          KEY_D_ENTRYS_DATA,
+        "dest":          KEY_D_ENTRYS_DEST,
+        "display_name":  KEY_D_ENTRYS_DISPLAY_NAME,
+        "hop_count":     KEY_D_ENTRYS_HOP_COUNT,
+        "location_lat":  KEY_D_ENTRYS_LOCATION_LAT,
+        "location_lon":  KEY_D_ENTRYS_LOCATION_LON,
+        "occupation":    KEY_D_ENTRYS_OCCUPATION,
+        "owner":         KEY_D_ENTRYS_OWNER,
+        "shop_goods":    KEY_D_ENTRYS_SHOP_GOODS,
+        "shop_services": KEY_D_ENTRYS_SHOP_SERVICES,
+        "skills":        KEY_D_ENTRYS_SKILLS,
+        "state":         KEY_D_ENTRYS_STATE,
+        "state_ts":      KEY_D_ENTRYS_STATE_TS,
+        "ts":            KEY_D_ENTRYS_TS,
+        "ts_add":        KEY_D_ENTRYS_TS_ADD,
+        "ts_edit":       KEY_D_ENTRYS_TS_EDIT,
+        "type":          KEY_D_ENTRYS_TYPE,
     }
 
     KEY_S_MAPPING = {
@@ -318,6 +319,9 @@ class ServerProvisioning:
         "state_reason": KEY_T_STATE_REASON,
         "ts":           KEY_T_TS,
         "type":         KEY_T_TYPE,
+    }
+
+    KEY_TA_MAPPING = {
     }
 
     RESULT_ERROR       = 0x00
@@ -677,8 +681,8 @@ class ServerProvisioning:
         dbc = db.cursor()
 
         if init:
-            dbc.execute("DROP TABLE IF EXISTS public.announce")
-        dbc.execute("""CREATE TABLE IF NOT EXISTS public.announce(dest character(32) COLLATE pg_catalog."default" NOT NULL, type integer NOT NULL DEFAULT 0, data text COLLATE pg_catalog."default" DEFAULT ''::text, location_lat double precision DEFAULT 0, location_lon double precision DEFAULT 0, owner character(32) COLLATE pg_catalog."default", state integer DEFAULT 0, state_ts timestamp with time zone, hop_count integer DEFAULT 0, hop_interface text COLLATE pg_catalog."default" DEFAULT ''::text, hop_dest character(32) COLLATE pg_catalog."default", ts_add timestamp with time zone, ts_edit timestamp with time zone, CONSTRAINT announce_pkey PRIMARY KEY (dest, type))""")
+            dbc.execute("DROP TABLE IF EXISTS public.announces")
+        dbc.execute("""CREATE TABLE IF NOT EXISTS public.announces(dest character(32) COLLATE pg_catalog."default" NOT NULL, type integer NOT NULL DEFAULT 0, data text COLLATE pg_catalog."default" DEFAULT ''::text, location_lat double precision DEFAULT 0, location_lon double precision DEFAULT 0, owner character(32) COLLATE pg_catalog."default", state integer DEFAULT 0, state_ts timestamp with time zone, hop_count integer DEFAULT 0, hop_interface text COLLATE pg_catalog."default" DEFAULT ''::text, hop_dest character(32) COLLATE pg_catalog."default", ts_add timestamp with time zone, ts_edit timestamp with time zone, CONSTRAINT announces_pkey PRIMARY KEY (dest, type))""")
 
         if init:
             dbc.execute("DROP TABLE IF EXISTS public.devices")
@@ -686,7 +690,7 @@ class ServerProvisioning:
 
         if init:
             dbc.execute("DROP TABLE IF EXISTS public.members")
-        dbc.execute("""CREATE TABLE IF NOT EXISTS public.members(member_user_id character(100) COLLATE pg_catalog."default" NOT NULL, member_user_name character(100) COLLATE pg_catalog."default", member_first_name character(100) COLLATE pg_catalog."default", member_last_name character(100) COLLATE pg_catalog."default", member_address_1 character(100) COLLATE pg_catalog."default", member_address_2 character(100) COLLATE pg_catalog."default", member_city character(100) COLLATE pg_catalog."default", member_state character(5) COLLATE pg_catalog."default", member_zip_code character(10) COLLATE pg_catalog."default", member_country character(2) COLLATE pg_catalog."default", member_language character(2) COLLATE pg_catalog."default", member_locale character(2) COLLATE pg_catalog."default", member_email character(100) COLLATE pg_catalog."default", member_password character(100) COLLATE pg_catalog."default", member_display_name character(256) COLLATE pg_catalog."default", member_dob date, member_sex character(1) COLLATE pg_catalog."default", member_introduction text COLLATE pg_catalog."default", member_occupation text COLLATE pg_catalog."default", member_skills text COLLATE pg_catalog."default", member_tasks text COLLATE pg_catalog."default", member_wallet_address character(256) COLLATE pg_catalog."default", member_accept_rules boolean, member_ts_add timestamp with time zone, member_ts_edit timestamp with time zone, member_ts_acpt timestamp with time zone, member_did_hash character(100) COLLATE pg_catalog."default", member_auth_state character(1) COLLATE pg_catalog."default", member_auth_role character(1) COLLATE pg_catalog."default", member_update character(1) COLLATE pg_catalog."default", CONSTRAINT members_pkey PRIMARY KEY (member_user_id))""")
+        dbc.execute("""CREATE TABLE IF NOT EXISTS public.members(member_user_id character(100) COLLATE pg_catalog."default" NOT NULL, member_user_name character(100) COLLATE pg_catalog."default", member_first_name character(100) COLLATE pg_catalog."default", member_last_name character(100) COLLATE pg_catalog."default", member_address_1 character(100) COLLATE pg_catalog."default", member_address_2 character(100) COLLATE pg_catalog."default", member_city character(100) COLLATE pg_catalog."default", member_state character(5) COLLATE pg_catalog."default", member_zip_code character(10) COLLATE pg_catalog."default", member_country character(2) COLLATE pg_catalog."default", member_language character(2) COLLATE pg_catalog."default", member_locale character(2) COLLATE pg_catalog."default", member_email character(100) COLLATE pg_catalog."default", member_password character(100) COLLATE pg_catalog."default", member_display_name character(256) COLLATE pg_catalog."default", member_dob date, member_sex character(1) COLLATE pg_catalog."default", member_occupation text COLLATE pg_catalog."default", member_skills text COLLATE pg_catalog."default", member_shop_goods character(256) COLLATE pg_catalog."default", member_shop_services character(256) COLLATE pg_catalog."default", member_accept_rules boolean, member_ts_add timestamp with time zone, member_ts_edit timestamp with time zone, member_ts_acpt timestamp with time zone, member_did_hash character(100) COLLATE pg_catalog."default", member_auth_state character(1) COLLATE pg_catalog."default", member_auth_role character(1) COLLATE pg_catalog."default", member_update character(1) COLLATE pg_catalog."default", CONSTRAINT members_pkey PRIMARY KEY (member_user_id))""")
 
         if init:
             dbc.execute("DROP TABLE IF EXISTS public.proves")
@@ -755,22 +759,22 @@ class ServerProvisioning:
             querys.append("state = '"+self.db_sanitize(filter["state"])+"'")
 
         if "state_ts_min" in filter and filter["state_ts_min"] != None:
-            querys.append("state_ts >= "+datetime.datetime.fromtimestamp(filter["state_ts_min"]).strftime("%Y-%m-%d %H:%M:%S"))
+            querys.append("state_ts >= '"+datetime.datetime.fromtimestamp(filter["state_ts_min"]).strftime("%Y-%m-%d %H:%M:%S")+"'")
 
         if "state_ts_max" in filter and filter["state_ts_max"] != None:
-            querys.append("state_ts <= "+datetime.datetime.fromtimestamp(filter["state_ts_max"]).strftime("%Y-%m-%d %H:%M:%S"))
+            querys.append("state_ts <= '"+datetime.datetime.fromtimestamp(filter["state_ts_max"]).strftime("%Y-%m-%d %H:%M:%S")+"'")
 
         if "ts_add_min" in filter and filter["ts_add_min"] != None:
-            querys.append("ts_add >= "+datetime.datetime.fromtimestamp(filter["ts_add_min"]).strftime("%Y-%m-%d %H:%M:%S"))
+            querys.append("ts_add >= '"+datetime.datetime.fromtimestamp(filter["ts_add_min"]).strftime("%Y-%m-%d %H:%M:%S")+"'")
 
         if "ts_add_max" in filter and filter["ts_add_max"] != None:
-            querys.append("ts_add <= "+datetime.datetime.fromtimestamp(filter["ts_add_max"]).strftime("%Y-%m-%d %H:%M:%S"))
+            querys.append("ts_add <= '"+datetime.datetime.fromtimestamp(filter["ts_add_max"]).strftime("%Y-%m-%d %H:%M:%S")+"'")
 
         if "ts_edit_min" in filter and filter["ts_edit_min"] != None:
-            querys.append("ts_edit >= "+datetime.datetime.fromtimestamp(filter["ts_edit_min"]).strftime("%Y-%m-%d %H:%M:%S"))
+            querys.append("ts_edit >= '"+datetime.datetime.fromtimestamp(filter["ts_edit_min"]).strftime("%Y-%m-%d %H:%M:%S")+"'")
 
         if "ts_edit_max" in filter and filter["ts_edit_max"] != None:
-            querys.append("ts_edit <= "+datetime.datetime.fromtimestamp(filter["ts_edit_max"]).strftime("%Y-%m-%d %H:%M:%S"))
+            querys.append("ts_edit <= '"+datetime.datetime.fromtimestamp(filter["ts_edit_max"]).strftime("%Y-%m-%d %H:%M:%S")+"'")
 
         if "pin" in filter:
             if filter["pin"] == True:
@@ -861,10 +865,10 @@ class ServerProvisioning:
 
         if search:
             search = "%"+search+"%"
-            query = "SELECT * FROM announce WHERE type >= 0 AND data ILIKE %s"+query_filter+query_group+query_order+query_limit
+            query = "SELECT * FROM announces WHERE type >= 0 AND data ILIKE %s"+query_filter+query_group+query_order+query_limit
             dbc.execute(query, (search,))
         else:
-            query = "SELECT * FROM announce WHERE type >= 0"+query_filter+query_group+query_order+query_limit
+            query = "SELECT * FROM announces WHERE type >= 0"+query_filter+query_group+query_order+query_limit
             dbc.execute(query)
 
         result = dbc.fetchall()
@@ -906,7 +910,7 @@ class ServerProvisioning:
             query = "SELECT COUNT(*) FROM announces WHERE type >= 0 AND data ILIKE %s"+query_filter+query_group
             dbc.execute(query, (search,))
         else:
-            query = "SELECT COUNT(*) FROM announce WHERE type >= 0"+query_filter+query_group
+            query = "SELECT COUNT(*) FROM announces WHERE type >= 0"+query_filter+query_group
             dbc.execute(query)
 
         result = dbc.fetchall()
@@ -921,7 +925,7 @@ class ServerProvisioning:
         db = self.db_connect()
         dbc = db.cursor()
 
-        query = "SELECT * FROM announce WHERE dest = %s"
+        query = "SELECT * FROM announces WHERE dest = %s"
         dbc.execute(query, (RNS.hexrep(dest, False),))
         result = dbc.fetchall()
 
@@ -951,7 +955,7 @@ class ServerProvisioning:
         db = self.db_connect()
         dbc = db.cursor()
 
-        query = "DELETE FROM announce WHERE dest = %s"
+        query = "DELETE FROM announces WHERE dest = %s"
         dbc.execute(query, (RNS.hexrep(dest, False),))
 
         self.db_commit()
@@ -986,11 +990,11 @@ class ServerProvisioning:
         if "skills" in filter and filter["skills"] != None:
             querys.append("members.member_skills ILIKE '%"+self.db_sanitize(filter["skills"])+"%'")
 
-        if "tasks" in filter and filter["tasks"] != None:
-            querys.append("members.member_tasks ILIKE '%"+self.db_sanitize(filter["tasks"])+"%'")
+        if "shop_goods" in filter and filter["shop_goods"] != None:
+            querys.append("members.member_shop_goods ILIKE '%"+self.db_sanitize(filter["shop_goods"])+"%'")
 
-        if "wallet_address" in filter and filter["wallet_address"] != None:
-            querys.append("members.member_wallet_address ILIKE '%"+self.db_sanitize(filter["wallet_address"])+"%'")
+        if "shop_services" in filter and filter["shop_services"] != None:
+            querys.append("members.member_shop_services ILIKE '%"+self.db_sanitize(filter["shop_services"])+"%'")
 
         if "type" in filter and filter["type"] != None:
             if isinstance(filter["type"], int):
@@ -1003,16 +1007,16 @@ class ServerProvisioning:
             querys.append("members.member_auth_role = '"+self.db_sanitize(filter["auth_role"])+"'")
 
         if "ts_add_min" in filter and filter["ts_add_min"] != None:
-            querys.append("members.member_ts_add >= "+datetime.datetime.fromtimestamp(filter["ts_add_min"]).strftime("%Y-%m-%d %H:%M:%S"))
+            querys.append("members.member_ts_add >= '"+datetime.datetime.fromtimestamp(filter["ts_add_min"]).strftime("%Y-%m-%d %H:%M:%S")+"'")
 
         if "ts_add_max" in filter and filter["ts_add_max"] != None:
-            querys.append("members.member_ts_add <= "+datetime.datetime.fromtimestamp(filter["ts_add_max"]).strftime("%Y-%m-%d %H:%M:%S"))
+            querys.append("members.member_ts_add <= '"+datetime.datetime.fromtimestamp(filter["ts_add_max"]).strftime("%Y-%m-%d %H:%M:%S")+"'")
 
         if "ts_edit_min" in filter and filter["ts_edit_min"] != None:
-            querys.append("members.member_ts_edit >= "+datetime.datetime.fromtimestamp(filter["ts_edit_min"]).strftime("%Y-%m-%d %H:%M:%S"))
+            querys.append("members.member_ts_edit >= '"+datetime.datetime.fromtimestamp(filter["ts_edit_min"]).strftime("%Y-%m-%d %H:%M:%S")+"'")
 
         if "ts_edit_max" in filter and filter["ts_edit_max"] != None:
-            querys.append("members.member_ts_edit <= "+datetime.datetime.fromtimestamp(filter["ts_edit_max"]).strftime("%Y-%m-%d %H:%M:%S"))
+            querys.append("members.member_ts_edit <= '"+datetime.datetime.fromtimestamp(filter["ts_edit_max"]).strftime("%Y-%m-%d %H:%M:%S")+"'")
 
         if len(querys) > 0:
             query = " AND "+" AND ".join(querys)
@@ -1091,10 +1095,10 @@ class ServerProvisioning:
 
         if search:
             search = "%"+search+"%"
-            query = "SELECT members.member_city, members.member_state, members.member_country, members.member_occupation, members.member_skills, members.member_tasks, members.member_wallet_address, members.member_auth_role, members.member_ts_add, members.member_ts_edit, devices.device_rns_id, devices.device_display_name FROM members LEFT JOIN devices ON devices.device_user_id = members.member_user_id WHERE members.member_user_id != '' AND (devices.device_display_name ILIKE %s OR members.member_city ILIKE %s OR members.member_occupation ILIKE %s OR members.member_skills ILIKE %s OR members.member_tasks ILIKE %s)"+query_filter+query_group+query_order+query_limit
-            dbc.execute(query, (search, search, search, search, search))
+            query = "SELECT members.member_city, members.member_state, members.member_country, members.member_occupation, members.member_skills, members.member_shop_goods, members.member_shop_services, members.member_auth_role, members.member_ts_add, members.member_ts_edit, devices.device_rns_id, devices.device_display_name FROM members LEFT JOIN devices ON devices.device_user_id = members.member_user_id WHERE members.member_user_id != '' AND (devices.device_display_name ILIKE %s OR members.member_city ILIKE %s OR members.member_occupation ILIKE %s OR members.member_skills ILIKE %s OR members.member_shop_goods ILIKE %s OR members.member_shop_services ILIKE %s)"+query_filter+query_group+query_order+query_limit
+            dbc.execute(query, (search, search, search, search, search, search))
         else:
-            query = "SELECT members.member_city, members.member_state, members.member_country, members.member_occupation, members.member_skills, members.member_tasks, members.member_wallet_address, members.member_auth_role, members.member_ts_add, members.member_ts_edit, devices.device_rns_id, devices.device_display_name FROM members LEFT JOIN devices ON devices.device_user_id = members.member_user_id WHERE members.member_user_id != ''"+query_filter+query_group+query_order+query_limit
+            query = "SELECT members.member_city, members.member_state, members.member_country, members.member_occupation, members.member_skills, members.member_shop_goods, members.member_shop_services, members.member_auth_role, members.member_ts_add, members.member_ts_edit, devices.device_rns_id, devices.device_display_name FROM members LEFT JOIN devices ON devices.device_user_id = members.member_user_id WHERE members.member_user_id != ''"+query_filter+query_group+query_order+query_limit
             dbc.execute(query)
 
         result = dbc.fetchall()
@@ -1111,8 +1115,8 @@ class ServerProvisioning:
                         "country": entry[2].strip(),
                         "occupation": entry[3].strip(),
                         "skills": entry[4].strip(),
-                        "tasks": entry[5].strip(),
-                        "wallet_address": entry[6].strip(),
+                        "shop_goods": entry[5].strip(),
+                        "shop_services": entry[6].strip(),
                         "auth_role": int(entry[7].strip()),
                         "ts_add": int(entry[8].timestamp()),
                         "ts_edit": int(entry[9].timestamp()),
@@ -1132,8 +1136,8 @@ class ServerProvisioning:
 
         if search:
             search = "%"+search+"%"
-            query = "SELECT COUNT(*) FROM members LEFT JOIN devices ON devices.device_user_id = members.member_user_id WHERE members.member_user_id != '' AND (devices.device_display_name ILIKE %s OR members.member_city ILIKE %s OR members.member_occupation ILIKE %s OR members.member_skills ILIKE %s OR members.member_tasks ILIKE %s)"+query_filter+query_group
-            dbc.execute(query, (search, search, search, search, search))
+            query = "SELECT COUNT(*) FROM members LEFT JOIN devices ON devices.device_user_id = members.member_user_id WHERE members.member_user_id != '' AND (devices.device_display_name ILIKE %s OR members.member_city ILIKE %s OR members.member_occupation ILIKE %s OR members.member_skills ILIKE %s OR members.member_shop_goods ILIKE %s OR members.member_shop_services ILIKE %s)"+query_filter+query_group
+            dbc.execute(query, (search, search, search, search, search, search))
         else:
             query = "SELECT COUNT(*) FROM members WHERE member_user_id != ''"+query_filter+query_group
             dbc.execute(query)
@@ -1166,8 +1170,8 @@ class ServerProvisioning:
 
         if search:
             search = "%"+search+"%"
-            query = "SELECT COUNT(members.member_ts_add), MAX(members.member_country), MAX(members.member_state), MAX(members.member_city), MAX(members.member_auth_role) FROM members LEFT JOIN devices ON devices.device_user_id = members.member_user_id WHERE members.member_user_id != '' AND (devices.device_display_name ILIKE %s OR members.member_city ILIKE %s OR members.member_occupation ILIKE %s OR members.member_skills ILIKE %s OR members.member_tasks ILIKE %s)"+query_filter+query_group+query_order+query_limit
-            dbc.execute(query, (search, search, search, search, search))
+            query = "SELECT COUNT(members.member_ts_add), MAX(members.member_country), MAX(members.member_state), MAX(members.member_city), MAX(members.member_auth_role) FROM members LEFT JOIN devices ON devices.device_user_id = members.member_user_id WHERE members.member_user_id != '' AND (devices.device_display_name ILIKE %s OR members.member_city ILIKE %s OR members.member_occupation ILIKE %s OR members.member_skills ILIKE %s OR members.member_shop_goods ILIKE %s OR members.member_shop_services ILIKE %s)"+query_filter+query_group+query_order+query_limit
+            dbc.execute(query, (search, search, search, search, search, search))
         else:
             query = "SELECT COUNT(members.member_ts_add), MAX(members.member_country), MAX(members.member_state), MAX(members.member_city), MAX(members.member_auth_role) FROM members LEFT JOIN devices ON devices.device_user_id = members.member_user_id WHERE member_user_id != ''"+query_filter+query_group+query_order+query_limit
             dbc.execute(query)
@@ -1193,7 +1197,7 @@ class ServerProvisioning:
         db = self.db_connect()
         dbc = db.cursor()
 
-        query = "SELECT members.member_city, members.member_state, members.member_country, members.member_occupation, members.member_skills, members.member_tasks, members.member_wallet_address, members.member_auth_role, members.member_ts_add, members.member_ts_edit, devices.device_rns_id, devices.device_display_name FROM members LEFT JOIN devices ON devices.device_user_id = members.member_user_id WHERE devices.device_rns_id = %s"
+        query = "SELECT members.member_city, members.member_state, members.member_country, members.member_occupation, members.member_skills, members.member_shop_goods, members.member_shop_services, members.member_auth_role, members.member_ts_add, members.member_ts_edit, devices.device_rns_id, devices.device_display_name FROM members LEFT JOIN devices ON devices.device_user_id = members.member_user_id WHERE devices.device_rns_id = %s"
         dbc.execute(query, (RNS.hexrep(dest, False),))
         result = dbc.fetchall()
 
@@ -1207,8 +1211,8 @@ class ServerProvisioning:
                 "country": entry[2].strip(),
                 "occupation": entry[3].strip(),
                 "skills": entry[4].strip(),
-                "tasks": entry[5].strip(),
-                "wallet_address": entry[6].strip(),
+                "shop_goods": entry[5].strip(),
+                "shop_services": entry[6].strip(),
                 "auth_role": int(entry[7].strip()),
                 "ts_add": int(entry[8].timestamp()),
                 "ts_edit": int(entry[9].timestamp()),
@@ -1288,16 +1292,16 @@ class ServerProvisioning:
             querys.append("services.service_auth_role = '"+self.db_sanitize(filter["auth_role"])+"'")
 
         if "ts_add_min" in filter and filter["ts_add_min"] != None:
-            querys.append("services.service_ts_add >= "+datetime.datetime.fromtimestamp(filter["ts_add_min"]).strftime("%Y-%m-%d %H:%M:%S"))
+            querys.append("services.service_ts_add >= '"+datetime.datetime.fromtimestamp(filter["ts_add_min"]).strftime("%Y-%m-%d %H:%M:%S")+"'")
 
         if "ts_add_max" in filter and filter["ts_add_max"] != None:
-            querys.append("services.service_ts_add <= "+datetime.datetime.fromtimestamp(filter["ts_add_max"]).strftime("%Y-%m-%d %H:%M:%S"))
+            querys.append("services.service_ts_add <= '"+datetime.datetime.fromtimestamp(filter["ts_add_max"]).strftime("%Y-%m-%d %H:%M:%S")+"'")
 
         if "ts_edit_min" in filter and filter["ts_edit_min"] != None:
-            querys.append("services.service_ts_edit >= "+datetime.datetime.fromtimestamp(filter["ts_edit_min"]).strftime("%Y-%m-%d %H:%M:%S"))
+            querys.append("services.service_ts_edit >= '"+datetime.datetime.fromtimestamp(filter["ts_edit_min"]).strftime("%Y-%m-%d %H:%M:%S")+"'")
 
         if "ts_edit_max" in filter and filter["ts_edit_max"] != None:
-            querys.append("services.service_ts_edit <= "+datetime.datetime.fromtimestamp(filter["ts_edit_max"]).strftime("%Y-%m-%d %H:%M:%S"))
+            querys.append("services.service_ts_edit <= '"+datetime.datetime.fromtimestamp(filter["ts_edit_max"]).strftime("%Y-%m-%d %H:%M:%S")+"'")
 
         if len(querys) > 0:
             query = " AND "+" AND ".join(querys)
@@ -2031,20 +2035,19 @@ class ServerProvisioning:
                             if not self.config["features"].getboolean("account_add"):
                                 continue
                             user_id = str(uuid.uuid4())
-                            dbc.execute("INSERT INTO members (member_user_id, member_email, member_password, member_dob, member_sex, member_introduction, member_country, member_state, member_city, member_occupation, member_skills, member_tasks, member_wallet_address, member_accept_rules, member_language, member_locale, member_ts_add, member_ts_edit, member_auth_state, member_auth_role, member_update) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, '0', '0', '0')", (
+                            dbc.execute("INSERT INTO members (member_user_id, member_email, member_password, member_dob, member_sex, member_country, member_state, member_city, member_occupation, member_skills, member_shop_goods, member_shop_services, member_accept_rules, member_language, member_locale, member_ts_add, member_ts_edit, member_auth_state, member_auth_role, member_update) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, '0', '0', '0')", (
                                 user_id,
                                 data["email"],
                                 data["password"],
                                 data["dob"],
                                 data["sex"],
-                                data["introduction"],
                                 data["country"],
                                 data["state"],
                                 data["city"],
                                 data["occupation"],
                                 data["skills"],
-                                data["tasks"],
-                                data["wallet_address"],
+                                data["shop_goods"],
+                                data["shop_services"],
                                 data["accept_rules"],
                                 data["language"],
                                 data["language"],
@@ -2059,19 +2062,18 @@ class ServerProvisioning:
                             if not self.config["features"].getboolean("account_edit"):
                                 continue
                             user_id = result[0][0]
-                            dbc.execute("UPDATE members SET member_email = %s, member_password = %s, member_dob = %s, member_sex = %s, member_introduction = %s, member_country = %s, member_state = %s, member_city = %s, member_occupation = %s, member_skills = %s, member_tasks = %s, member_wallet_address = %s, member_accept_rules = %s, member_language = %s, member_locale = %s, member_ts_edit = %s WHERE member_user_id = %s", (
+                            dbc.execute("UPDATE members SET member_email = %s, member_password = %s, member_dob = %s, member_sex = %s, member_country = %s, member_state = %s, member_city = %s, member_occupation = %s, member_skills = %s, member_shop_goods = %s, member_shop_services = %s, member_accept_rules = %s, member_language = %s, member_locale = %s, member_ts_edit = %s WHERE member_user_id = %s", (
                                 data["email"],
                                 data["password"],
                                 data["dob"],
                                 data["sex"],
-                                data["introduction"],
                                 data["country"],
                                 data["state"],
                                 data["city"],
                                 data["occupation"],
                                 data["skills"],
-                                data["tasks"],
-                                data["wallet_address"],
+                                data["shop_goods"],
+                                data["shop_services"],
                                 data["accept_rules"],
                                 data["language"],
                                 data["language"],
@@ -2213,11 +2215,11 @@ def config_read(file=None, file_override=None):
         if os.path.isfile(file):
             try:
                 if file_override is None:
-                    CONFIG.read(file, encoding='utf-8')
+                    CONFIG.read(file, encoding="utf-8")
                 elif os.path.isfile(file_override):
-                    CONFIG.read([file, file_override], encoding='utf-8')
+                    CONFIG.read([file, file_override], encoding="utf-8")
                 else:
-                    CONFIG.read(file, encoding='utf-8')
+                    CONFIG.read(file, encoding="utf-8")
             except Exception as e:
                 return False
         else:

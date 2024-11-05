@@ -149,13 +149,13 @@ class AnnounceHandler:
     def received_announce(self, destination_hash, announced_identity, app_data):
         if app_data == None:
             if self.hidden:
-                app_data = b''
+                app_data = b""
             else:
                 return
 
         if len(app_data) == 0:
             if self.hidden:
-                app_data = b''
+                app_data = b""
             else:
                 return
 
@@ -178,34 +178,40 @@ class AnnounceHandler:
                     if app_data != None and len(app_data) > 0:
                         pass
                     else:
-                        app_data = b''
+                        app_data = b""
                 else:
-                    app_data = b''
+                    app_data = b""
             except:
                 pass
         else:
             try:
-                app_data_dict = msgpack.unpackb(app_data)
-                if isinstance(app_data_dict, dict):
-                    if ANNOUNCE_DATA_CONTENT in app_data_dict:
-                        app_data = app_data_dict[ANNOUNCE_DATA_CONTENT]
-                    if ANNOUNCE_DATA_FIELDS in app_data_dict and MSG_FIELD_TYPE in app_data_dict[ANNOUNCE_DATA_FIELDS]:
-                        dest_type = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_TYPE]
-                        if not isinstance(dest_type, list):
-                            dest_type = [dest_type]
-                    if ANNOUNCE_DATA_FIELDS in app_data_dict and MSG_FIELD_LOCATION in app_data_dict[ANNOUNCE_DATA_FIELDS]:
-                        location_lat = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_LOCATION][0]
-                        location_lon = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_LOCATION][1]
-                    if ANNOUNCE_DATA_FIELDS in app_data_dict and MSG_FIELD_OWNER in app_data_dict[ANNOUNCE_DATA_FIELDS]:
-                        owner = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_OWNER]
-                    if ANNOUNCE_DATA_FIELDS in app_data_dict and MSG_FIELD_STATE in app_data_dict[ANNOUNCE_DATA_FIELDS]:
-                        d_state = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_STATE]
-                        if isinstance(d_state, list):
-                            state = d_state[0]
-                            state_ts = d_state[1]
-                        else:
-                            state = d_state
-                            state_ts = 0
+                if app_data[0] == 0x83 or (app_data[0] >= 0x90 and app_data[0] <= 0x9f) or app_data[0] == 0xdc:
+                    app_data_dict = msgpack.unpackb(app_data)
+                    app_data = b""
+                    if isinstance(app_data_dict, dict):
+                        if ANNOUNCE_DATA_CONTENT in app_data_dict:
+                            app_data = app_data_dict[ANNOUNCE_DATA_CONTENT]
+                        if ANNOUNCE_DATA_FIELDS in app_data_dict and MSG_FIELD_TYPE in app_data_dict[ANNOUNCE_DATA_FIELDS]:
+                            dest_type = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_TYPE]
+                            if not isinstance(dest_type, list):
+                                dest_type = [dest_type]
+                        if ANNOUNCE_DATA_FIELDS in app_data_dict and MSG_FIELD_LOCATION in app_data_dict[ANNOUNCE_DATA_FIELDS]:
+                            location_lat = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_LOCATION][0]
+                            location_lon = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_LOCATION][1]
+                        if ANNOUNCE_DATA_FIELDS in app_data_dict and MSG_FIELD_OWNER in app_data_dict[ANNOUNCE_DATA_FIELDS]:
+                            owner = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_OWNER]
+                        if ANNOUNCE_DATA_FIELDS in app_data_dict and MSG_FIELD_STATE in app_data_dict[ANNOUNCE_DATA_FIELDS]:
+                            d_state = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_STATE]
+                            if isinstance(d_state, list):
+                                state = d_state[0]
+                                state_ts = d_state[1]
+                            else:
+                                state = d_state
+                                state_ts = 0
+                    elif isinstance(app_data_dict, list) and len(app_data_dict) > 1 and app_data_dict[0] != None:
+                        app_data = app_data_dict[0]
+                    else:
+                        app_data = b""
             except:
                 pass
 
@@ -289,12 +295,12 @@ def db_init(init=True):
 
     if CONFIG["database"]["type"] == "postgresql":
         if init:
-            dbc.execute("DROP TABLE IF EXISTS public.announce")
-        dbc.execute("""CREATE TABLE IF NOT EXISTS public.announce(dest character(32) COLLATE pg_catalog."default" NOT NULL, type integer NOT NULL DEFAULT 0, data text COLLATE pg_catalog."default" DEFAULT ''::text, location_lat double precision DEFAULT 0, location_lon double precision DEFAULT 0, owner character(32) COLLATE pg_catalog."default", state integer DEFAULT 0, state_ts timestamp with time zone, hop_count integer DEFAULT 0, hop_interface text COLLATE pg_catalog."default" DEFAULT ''::text, hop_dest character(32) COLLATE pg_catalog."default", ts_add timestamp with time zone, ts_edit timestamp with time zone, CONSTRAINT announce_pkey PRIMARY KEY (dest, type))""")
+            dbc.execute("DROP TABLE IF EXISTS public.announces")
+        dbc.execute("""CREATE TABLE IF NOT EXISTS public.announces(dest character(32) COLLATE pg_catalog."default" NOT NULL, type integer NOT NULL DEFAULT 0, data text COLLATE pg_catalog."default" DEFAULT ''::text, location_lat double precision DEFAULT 0, location_lon double precision DEFAULT 0, owner character(32) COLLATE pg_catalog."default", state integer DEFAULT 0, state_ts timestamp with time zone, hop_count integer DEFAULT 0, hop_interface text COLLATE pg_catalog."default" DEFAULT ''::text, hop_dest character(32) COLLATE pg_catalog."default", ts_add timestamp with time zone, ts_edit timestamp with time zone, CONSTRAINT announces_pkey PRIMARY KEY (dest, type))""")
     else:
         if init:
-            dbc.execute("DROP TABLE IF EXISTS announce")
-        dbc.execute("CREATE TABLE IF NOT EXISTS announce (dest BLOB, type INTEGER DEFAULT 0, data TEXT DEFAULT '', location_lat REAL DEFAULT 0, location_lon REAL DEFAULT 0, owner BLOB, state INTEGER DEFAULT 0, state_ts INTEGER DEFAULT 0, hop_count INTEGER DEFAULT 0, hop_interface TEXT DEFAULT '', hop_dest BLOB, ts_add INTEGER DEFAULT 0, ts_edit INTEGER DEFAULT 0, PRIMARY KEY(dest, type))")
+            dbc.execute("DROP TABLE IF EXISTS announces")
+        dbc.execute("CREATE TABLE IF NOT EXISTS announces (dest BLOB, type INTEGER DEFAULT 0, data TEXT DEFAULT '', location_lat REAL DEFAULT 0, location_lon REAL DEFAULT 0, owner BLOB, state INTEGER DEFAULT 0, state_ts INTEGER DEFAULT 0, hop_count INTEGER DEFAULT 0, hop_interface TEXT DEFAULT '', hop_dest BLOB, ts_add INTEGER DEFAULT 0, ts_edit INTEGER DEFAULT 0, PRIMARY KEY(dest, type))")
 
     db_commit()
 
@@ -318,7 +324,7 @@ def db_load():
     db_init(False)
 
 
-def db_announce_add(dest, dest_type=0x01, dest_recall=None, dest_recall_type=None, data="", location_lat=0, location_lon=0, owner=None, state=0, state_ts=0, hop_count=0, hop_interface="", hop_dest=None, aspect_filter=""):
+def db_add(dest, dest_type=0x01, dest_recall=None, dest_recall_type=None, data="", location_lat=0, location_lon=0, owner=None, state=0, state_ts=0, hop_count=0, hop_interface="", hop_dest=None, aspect_filter=""):
     db = db_connect()
     dbc = db.cursor()
 
@@ -339,12 +345,12 @@ def db_announce_add(dest, dest_type=0x01, dest_recall=None, dest_recall_type=Non
 
         state_ts = datetime.datetime.fromtimestamp(state_ts).strftime("%Y-%m-%d %H:%M:%S")
 
-        query = "SELECT dest FROM announce WHERE dest = %s AND type = %s"
+        query = "SELECT dest FROM announces WHERE dest = %s AND type = %s"
         dbc.execute(query, (dest, dest_type))
         exist = True if len(dbc.fetchall()) > 0 else False
 
         if dest_recall and dest_recall_type:
-            query = "SELECT * FROM announce WHERE dest = %s AND type = %s"
+            query = "SELECT * FROM announces WHERE dest = %s AND type = %s"
             dbc.execute(query, (RNS.hexrep(dest_recall, False), dest_recall_type))
             result = dbc.fetchall()
             if len(result) > 0:
@@ -357,20 +363,20 @@ def db_announce_add(dest, dest_type=0x01, dest_recall=None, dest_recall_type=Non
                 state_ts = entry[8]
 
         if not exist:
-            query = "INSERT INTO announce (dest, type, data, location_lat, location_lon, owner, state, state_ts, hop_count, hop_interface, hop_dest, ts_add, ts_edit) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            query = "INSERT INTO announces (dest, type, data, location_lat, location_lon, owner, state, state_ts, hop_count, hop_interface, hop_dest, ts_add, ts_edit) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
             dbc.execute(query, (dest, dest_type, data, location_lat, location_lon, owner, state, state_ts, hop_count, hop_interface, hop_dest, ts, ts))
         elif data == "":
-            query = "UPDATE announce SET hop_count = %s, hop_interface = %s, hop_dest = %s, ts_edit = %s WHERE dest = %s AND type = %s"
+            query = "UPDATE announces SET hop_count = %s, hop_interface = %s, hop_dest = %s, ts_edit = %s WHERE dest = %s AND type = %s"
             dbc.execute(query, (hop_count, hop_interface, hop_dest, ts, dest, dest_type))
         else:
-            query = "UPDATE announce SET data = %s, location_lat = %s, location_lon = %s, owner = %s, state = %s, state_ts = %s, hop_count = %s, hop_interface = %s, hop_dest = %s, ts_edit = %s WHERE dest = %s AND type = %s"
+            query = "UPDATE announces SET data = %s, location_lat = %s, location_lon = %s, owner = %s, state = %s, state_ts = %s, hop_count = %s, hop_interface = %s, hop_dest = %s, ts_edit = %s WHERE dest = %s AND type = %s"
             dbc.execute(query, (data, location_lat, location_lon, owner, state, state_ts, hop_count, hop_interface, hop_dest, ts, dest, dest_type))
 
     else:
         ts = time.time()
 
         if dest_recall and dest_recall_type:
-            query = "SELECT * FROM announce WHERE dest = ? AND type = ?"
+            query = "SELECT * FROM announces WHERE dest = ? AND type = ?"
             dbc.execute(query, (dest_recall, dest_recall_type))
             result = dbc.fetchall()
             if len(result) > 0:
@@ -383,13 +389,13 @@ def db_announce_add(dest, dest_type=0x01, dest_recall=None, dest_recall_type=Non
                 state_ts = entry[8]
 
         if not exist:
-            query = "INSERT OR REPLACE INTO announce (dest, type, data, location_lat, location_lon, owner, state, state_ts, hop_count, hop_interface, hop_dest, ts_add, ts_edit) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            query = "INSERT OR REPLACE INTO announces (dest, type, data, location_lat, location_lon, owner, state, state_ts, hop_count, hop_interface, hop_dest, ts_add, ts_edit) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
             dbc.execute(query, (dest, dest_type, data, location_lat, location_lon, owner, state, state_ts, hop_count, hop_interface, hop_dest, ts, ts))
         elif data == "":
-            query = "UPDATE announce SET hop_count = ?, hop_interface = ?, hop_dest = ?, ts_edit = ? WHERE dest = ? AND type = ?"
+            query = "UPDATE announces SET hop_count = ?, hop_interface = ?, hop_dest = ?, ts_edit = ? WHERE dest = ? AND type = ?"
             dbc.execute(query, (hop_count, hop_interface, hop_dest, ts , dest, dest_type))
         else:
-            query = "UPDATE announce SET data = ?, location_lat = ?, location_lon = ?, owner = ?, state = ?, state_ts = ?, hop_count = ?, hop_interface = ?, hop_dest = ?, ts_edit = ? WHERE dest = ? AND type = ?"
+            query = "UPDATE announces SET data = ?, location_lat = ?, location_lon = ?, owner = ?, state = ?, state_ts = ?, hop_count = ?, hop_interface = ?, hop_dest = ?, ts_edit = ? WHERE dest = ? AND type = ?"
             dbc.execute(query, (data, location_lat, location_lon, owner, state, state_ts, hop_count, hop_interface, hop_dest, ts, dest, dest_type))
 
     db_commit()
@@ -462,11 +468,11 @@ def config_read(file=None, file_override=None):
         if os.path.isfile(file):
             try:
                 if file_override is None:
-                    CONFIG.read(file, encoding='utf-8')
+                    CONFIG.read(file, encoding="utf-8")
                 elif os.path.isfile(file_override):
-                    CONFIG.read([file, file_override], encoding='utf-8')
+                    CONFIG.read([file, file_override], encoding="utf-8")
                 else:
-                    CONFIG.read(file, encoding='utf-8')
+                    CONFIG.read(file, encoding="utf-8")
             except Exception as e:
                 return False
         else:
@@ -883,7 +889,7 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False,
             else:
                 recall_app_data_type = None
 
-            RNS_ANNOUNCE_HANDLER[section] = AnnounceHandler(section, db_announce_add, dest_type, hidden, hop_min, hop_max, hop_interfaces, recall_app_data, recall_app_data_type, dest_allow, dest_deny)
+            RNS_ANNOUNCE_HANDLER[section] = AnnounceHandler(section, db_add, dest_type, hidden, hop_min, hop_max, hop_interfaces, recall_app_data, recall_app_data_type, dest_allow, dest_deny)
             RNS.Transport.register_announce_handler(RNS_ANNOUNCE_HANDLER[section])
 
             log("RNS - Added announce handler for '"+section+"'", LOG_DEBUG)

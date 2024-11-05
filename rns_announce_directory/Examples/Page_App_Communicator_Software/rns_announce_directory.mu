@@ -265,10 +265,10 @@ def db_list(filter=None, search=None, group=None, order=None, limit=None, limit_
 
     if search:
         search = "%"+search+"%"
-        query = "SELECT * FROM announce WHERE ts_add > 0 AND data LIKE ? COLLATE NOCASE"+query_filter+query_group+query_order+query_limit
+        query = "SELECT * FROM announces WHERE ts_add > 0 AND data LIKE ? COLLATE NOCASE"+query_filter+query_group+query_order+query_limit
         dbc.execute(query, (search,))
     else:
-        query = "SELECT * FROM announce WHERE ts_add > 0"+query_filter+query_group+query_order+query_limit
+        query = "SELECT * FROM announces WHERE ts_add > 0"+query_filter+query_group+query_order+query_limit
         dbc.execute(query)
 
     result = dbc.fetchall()
@@ -305,10 +305,10 @@ def db_count(filter=None, search=None, group=None):
 
     if search:
         search = "%"+search+"%"
-        query = "SELECT COUNT(*) FROM announce WHERE ts_add > 0 AND data LIKE ? COLLATE NOCASE"+query_filter+query_group
+        query = "SELECT COUNT(*) FROM announces WHERE ts_add > 0 AND data LIKE ? COLLATE NOCASE"+query_filter+query_group
         dbc.execute(query, (search,))
     else:
-        query = "SELECT COUNT(*) FROM announce WHERE ts_add > 0"+query_filter+query_group
+        query = "SELECT COUNT(*) FROM announces WHERE ts_add > 0"+query_filter+query_group
         dbc.execute(query)
 
     result = dbc.fetchall()
@@ -323,7 +323,7 @@ def db_get(dest):
     db = db_connect()
     dbc = db.cursor()
 
-    query = "SELECT * FROM announce WHERE dest = ?"
+    query = "SELECT * FROM announces WHERE dest = ?"
     dbc.execute(query, (dest,))
 
     result = dbc.fetchall()
@@ -353,10 +353,10 @@ def db_delete(dest=None, dest_not=None):
     dbc = db.cursor()
 
     if dest:
-        query = "DELETE FROM announce WHERE dest = ?"
+        query = "DELETE FROM announces WHERE dest = ?"
         dbc.execute(query, (dest,))
     elif dest_not:
-        query = "DELETE FROM announce WHERE dest != ?"
+        query = "DELETE FROM announces WHERE dest != ?"
         dbc.execute(query, (dest_not,))
 
     db_commit()

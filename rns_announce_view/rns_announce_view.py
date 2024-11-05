@@ -135,13 +135,13 @@ class AnnounceHandler:
     def received_announce(self, destination_hash, announced_identity, app_data):
         if app_data == None:
             if self.hidden:
-                app_data = b''
+                app_data = b""
             else:
                 return
 
         if len(app_data) == 0:
             if self.hidden:
-                app_data = b''
+                app_data = b""
             else:
                 return
 
@@ -155,21 +155,27 @@ class AnnounceHandler:
                     if app_data != None and len(app_data) > 0:
                         pass
                     else:
-                        app_data = b''
+                        app_data = b""
                 else:
-                    app_data = b''
+                    app_data = b""
             except:
                 pass
         else:
             try:
-                app_data_dict = msgpack.unpackb(app_data)
-                if isinstance(app_data_dict, dict):
-                    if ANNOUNCE_DATA_CONTENT in app_data_dict:
-                        app_data = app_data_dict[ANNOUNCE_DATA_CONTENT]
-                    if ANNOUNCE_DATA_FIELDS in app_data_dict and MSG_FIELD_TYPE in app_data_dict[ANNOUNCE_DATA_FIELDS]:
-                        dest_type = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_TYPE]
-                        if not isinstance(dest_type, list):
-                            dest_type = [dest_type]
+                if app_data[0] == 0x83 or (app_data[0] >= 0x90 and app_data[0] <= 0x9f) or app_data[0] == 0xdc:
+                    app_data_dict = msgpack.unpackb(app_data)
+                    app_data = b""
+                    if isinstance(app_data_dict, dict):
+                        if ANNOUNCE_DATA_CONTENT in app_data_dict:
+                            app_data = app_data_dict[ANNOUNCE_DATA_CONTENT]
+                        if ANNOUNCE_DATA_FIELDS in app_data_dict and MSG_FIELD_TYPE in app_data_dict[ANNOUNCE_DATA_FIELDS]:
+                            dest_type = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_TYPE]
+                            if not isinstance(dest_type, list):
+                                dest_type = [dest_type]
+                    elif isinstance(app_data_dict, list) and len(app_data_dict) > 1 and app_data_dict[0] != None:
+                        app_data = app_data_dict[0]
+                    else:
+                        app_data = b""
             except:
                 pass
 
