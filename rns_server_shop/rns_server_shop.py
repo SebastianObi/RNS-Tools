@@ -2720,15 +2720,18 @@ def cmd_db():
             cmd = input()
             if cmd.strip() == "":
                 continue
-            readline.add_history(cmd)
             if cmd.lower() == "exit" or cmd.lower() == "quit":
                 exit()
+            readline.add_history(cmd)
 
         except KeyboardInterrupt:
             exit()
 
         except EOFError:
             exit()
+
+        except:
+            pass
 
         if cmd.lower() == "clear":
             print("\033c", end="")

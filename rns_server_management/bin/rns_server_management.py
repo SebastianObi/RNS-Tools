@@ -1150,8 +1150,11 @@ class ServerManagement:
                 file = data["file"]
                 if not os.path.isfile(file):
                     raise ValueError(file+" does not exist.")
+                os.chown(file, data["uid"], data["gid"])
+                os.chmod(file, data["rights"])
                 file_stat = os.stat(file)
-                data_return["files_properties"] = [file, file_stat.st_mode, file_stat.st_uid, file_stat.st_gid]
+                data_return["files_update"] = {}
+                data_return["files_update"][os.path.basename(file)] = [os.path.getsize(file), file_stat.st_mode, file_stat.st_uid, file_stat.st_gid]
             except Exception as e:
                 self.log_exception(e, "Server - Files - CMD")
                 data_return["result"] = ServerManagement.RESULT_ERROR
