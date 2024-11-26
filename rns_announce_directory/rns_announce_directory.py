@@ -183,37 +183,37 @@ class AnnounceHandler:
                     app_data = b""
             except:
                 pass
-        else:
-            try:
-                if app_data[0] == 0x83 or (app_data[0] >= 0x90 and app_data[0] <= 0x9f) or app_data[0] == 0xdc:
-                    app_data_dict = msgpack.unpackb(app_data)
+
+        try:
+            if app_data[0] == 0x83 or (app_data[0] >= 0x90 and app_data[0] <= 0x9f) or app_data[0] == 0xdc:
+                app_data_dict = msgpack.unpackb(app_data)
+                app_data = b""
+                if isinstance(app_data_dict, dict):
+                    if ANNOUNCE_DATA_CONTENT in app_data_dict:
+                        app_data = app_data_dict[ANNOUNCE_DATA_CONTENT]
+                    if ANNOUNCE_DATA_FIELDS in app_data_dict and MSG_FIELD_TYPE in app_data_dict[ANNOUNCE_DATA_FIELDS]:
+                        dest_type = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_TYPE]
+                        if not isinstance(dest_type, list):
+                            dest_type = [dest_type]
+                    if ANNOUNCE_DATA_FIELDS in app_data_dict and MSG_FIELD_LOCATION in app_data_dict[ANNOUNCE_DATA_FIELDS]:
+                        location_lat = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_LOCATION][0]
+                        location_lon = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_LOCATION][1]
+                    if ANNOUNCE_DATA_FIELDS in app_data_dict and MSG_FIELD_OWNER in app_data_dict[ANNOUNCE_DATA_FIELDS]:
+                        owner = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_OWNER]
+                    if ANNOUNCE_DATA_FIELDS in app_data_dict and MSG_FIELD_STATE in app_data_dict[ANNOUNCE_DATA_FIELDS]:
+                        d_state = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_STATE]
+                        if isinstance(d_state, list):
+                            state = d_state[0]
+                            state_ts = d_state[1]
+                        else:
+                            state = d_state
+                            state_ts = 0
+                elif isinstance(app_data_dict, list) and len(app_data_dict) > 1 and app_data_dict[0] != None:
+                    app_data = app_data_dict[0]
+                else:
                     app_data = b""
-                    if isinstance(app_data_dict, dict):
-                        if ANNOUNCE_DATA_CONTENT in app_data_dict:
-                            app_data = app_data_dict[ANNOUNCE_DATA_CONTENT]
-                        if ANNOUNCE_DATA_FIELDS in app_data_dict and MSG_FIELD_TYPE in app_data_dict[ANNOUNCE_DATA_FIELDS]:
-                            dest_type = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_TYPE]
-                            if not isinstance(dest_type, list):
-                                dest_type = [dest_type]
-                        if ANNOUNCE_DATA_FIELDS in app_data_dict and MSG_FIELD_LOCATION in app_data_dict[ANNOUNCE_DATA_FIELDS]:
-                            location_lat = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_LOCATION][0]
-                            location_lon = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_LOCATION][1]
-                        if ANNOUNCE_DATA_FIELDS in app_data_dict and MSG_FIELD_OWNER in app_data_dict[ANNOUNCE_DATA_FIELDS]:
-                            owner = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_OWNER]
-                        if ANNOUNCE_DATA_FIELDS in app_data_dict and MSG_FIELD_STATE in app_data_dict[ANNOUNCE_DATA_FIELDS]:
-                            d_state = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_STATE]
-                            if isinstance(d_state, list):
-                                state = d_state[0]
-                                state_ts = d_state[1]
-                            else:
-                                state = d_state
-                                state_ts = 0
-                    elif isinstance(app_data_dict, list) and len(app_data_dict) > 1 and app_data_dict[0] != None:
-                        app_data = app_data_dict[0]
-                    else:
-                        app_data = b""
-            except:
-                pass
+        except:
+            pass
 
         try:
             app_data = app_data.decode("utf-8")
@@ -354,12 +354,12 @@ def db_add(dest, dest_type=0x01, dest_recall=None, dest_recall_type=None, data="
             result = dbc.fetchall()
             if len(result) > 0:
                 entry = result[0]
-                data = entry[3].strip()
-                location_lat = entry[4]
-                location_lon = entry[5]
-                owner = entry[6].strip()
-                state = entry[7]
-                state_ts = entry[8]
+                data = entry[2].strip()
+                location_lat = entry[3]
+                location_lon = entry[4]
+                owner = entry[5].strip()
+                state = entry[6]
+                state_ts = entry[7]
 
         if not exist:
             query = "INSERT INTO announces (dest, dest_type, data, location_lat, location_lon, owner, state, state_ts, hop_count, hop_interface, hop_dest, ts_add, ts_edit) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
@@ -381,12 +381,12 @@ def db_add(dest, dest_type=0x01, dest_recall=None, dest_recall_type=None, data="
             result = dbc.fetchall()
             if len(result) > 0:
                 entry = result[0]
-                data = entry[3]
-                location_lat = entry[4]
-                location_lon = entry[5]
-                owner = entry[6]
-                state = entry[7]
-                state_ts = entry[8]
+                data = entry[2]
+                location_lat = entry[3]
+                location_lon = entry[4]
+                owner = entry[5]
+                state = entry[6]
+                state_ts = entry[7]
 
         if not exist:
             query = "INSERT OR REPLACE INTO announces (dest, dest_type, data, location_lat, location_lon, owner, state, state_ts, hop_count, hop_interface, hop_dest, ts_add, ts_edit) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
