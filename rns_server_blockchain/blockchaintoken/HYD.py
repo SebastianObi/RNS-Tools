@@ -281,7 +281,7 @@ test.explorer.hydraledger.tech
 
         self.iop = sdk.IopPython()
 
-        self.config = self.owner.config_load(file=self.name+".cfg", default=BlockchainTokenHYD.DEFAULT_CONFIG)
+        self.config = self.owner.config_load(file=self.name+".cfg", default=self.DEFAULT_CONFIG)
         self.config_changed = False
 
         threading.Thread(target=self.jobs, daemon=True).start()
@@ -315,12 +315,16 @@ test.explorer.hydraledger.tech
         morpheus = self.iop.get_morpheus_vault(phrase, password)
         vault = self.iop.get_hyd_vault(phrase, password, network, account)
         account_id = self.iop.get_wallet_address(vault, account, idx, network)
+        did = self.iop.generate_did_by_morpheus(morpheus, password, idx) if idx == 0 else ""
 
         result = {
             "account_id":   account_id,
             "data": {
                 "morpheus": morpheus,
                 "vault":    vault
+            },
+            "metadata": {
+                "did":      did
             },
             "state":        self.owner.ACCOUNT_STATE_SUCCESSFULL
         }
@@ -1170,7 +1174,7 @@ test.explorer.hydraledger.tech
                 now = time.time()
 
                 if not self.config:
-                    self.config = self.owner.config_load(file=self.name+".cfg", default=BlockchainTokenHYD.DEFAULT_CONFIG)
+                    self.config = self.owner.config_load(file=self.name+".cfg", default=self.DEFAULT_CONFIG)
  
                 if now-server_discovery > int(self.config["main"]["server_discovery_interval"])*60:
                     server_discovery = now

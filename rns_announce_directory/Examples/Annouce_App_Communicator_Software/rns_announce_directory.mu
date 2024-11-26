@@ -130,10 +130,10 @@ def db_filter(filter):
 
     if "type" in filter and filter["type"] != None:
         if isinstance(filter["type"], int):
-            querys.append("type = '"+db_sanitize(filter["type"])+"'")
+            querys.append("dest_type = '"+db_sanitize(filter["type"])+"'")
         else:
             array = [db_sanitize(key) for key in filter["type"]]
-            querys.append("(type = '"+"' OR type = '".join(array)+"')")
+            querys.append("(dest_type = '"+"' OR dest_type = '".join(array)+"')")
 
     if "hop_min" in filter and filter["hop_min"] != None:
         querys.append("hop_count >= "+db_sanitize(filter["hop_min"]))
@@ -211,9 +211,9 @@ def db_order(order):
     elif order == "A-DESC":
         query = " ORDER BY data DESC"
     elif order == "T-ASC":
-        query = " ORDER BY type ASC, ts_edit ASC, data ASC"
+        query = " ORDER BY dest_type ASC, ts_edit ASC, data ASC"
     elif order == "T-DESC":
-        query = " ORDER BY type DESC, ts_edit ASC, data ASC"
+        query = " ORDER BY dest_type DESC, ts_edit ASC, data ASC"
     elif order == "H-ASC":
         query = " ORDER BY hop_count ASC, ts_edit ASC, data ASC"
     elif order == "H-DESC":
@@ -365,7 +365,7 @@ def cmd(cmd):
     if entry:
         return {KEY_CMD_RESULT: RESULT_OK, KEY_ENTRYS: [entry]}
     else:
-        return {KEY_CMD_RESULT: RESULT_OK, KEY_ENTRYS: [{"dest": cmd[1], "type": 0, "data": "", "location_lat": 0, "location_lon": 0, "state": 0, "state_ts": 0, "hop_count": 0, "ts_add": 0, "ts_edit": 0}]}
+        return {KEY_CMD_RESULT: RESULT_OK, KEY_ENTRYS: [{"dest": cmd[1]}]
 
 
 ##############################################################################################################

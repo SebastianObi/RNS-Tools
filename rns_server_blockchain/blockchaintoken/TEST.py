@@ -63,15 +63,15 @@ class BlockchainTokenTEST():
 
         if account_id not in self.data["accounts"]:
             self.data["accounts"][account_id] = {
-                "balance": BlockchainTokenTEST.AMOUNT,
-                "nonce":   BlockchainTokenTEST.NONCE
+                "balance": self.AMOUNT,
+                "nonce":   self.NONCE
             }
 
             self.data["transactions"][self.owner.generate_id(64)] = {
-                "amount":  BlockchainTokenTEST.AMOUNT,
+                "amount":  self.AMOUNT,
                 "comment": "Initial test money",
                 "dest":    account_id,
-                "fee":     BlockchainTokenTEST.FEE,
+                "fee":     self.FEE,
                 "source":  self.data["uid"],
                 "ts":      int(time.time())
             }
@@ -214,7 +214,7 @@ class BlockchainTokenTEST():
         if transaction_data["nonce"] != self.data["accounts"][account_id]["nonce"]:
             raise ValueError("Nonce invalid")
 
-        fee = transaction_data["fee"] if "fee" in transaction_data else BlockchainTokenTEST.FEE
+        fee = transaction_data["fee"] if "fee" in transaction_data else self.FEE
 
         if self.data["accounts"][account_id]["balance"] < (transaction_data["amount"]+fee):
             raise ValueError("Balance not sufficient")

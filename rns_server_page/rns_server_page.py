@@ -502,13 +502,13 @@ class ServerPage:
                     register_timer.daemon = True
                     register_timer.start()
                 else:
-                    self.register_now()
+                    self.register_now(initial)
             return
 
-        self.register_now()
+        self.register_now(initial)
 
 
-    def register_now(self):
+    def register_now(self, initial=False):
         RNS.log("Server - Register", RNS.LOG_DEBUG)
 
         if self.pages_enabled:

@@ -38,28 +38,27 @@ The full documentation is not yet available. Due to lack of time I can also not 
   pip3 install rns
   pip3 install pyserial netifaces
   ```
+- Download the files an folders from this repository.
+  ```bash
+  https://github.com/SebastianObi/RNS-Tools/tree/main/rns_server_provisioning
+  ```
 - Install all required prerequisites.
   ```bash
-  pip3 install psycopg2
-  pip3 install psycopg2-binary
+  pip install -r requirements.txt
   ```
 - Change the Reticulum configuration to suit your needs and use-case.
   ```bash
   nano /.reticulum/config
   ```
-- Download the [file](rns_server_provisioning.py) from this repository.
-  ```bash
-  wget https://raw.githubusercontent.com/SebastianObi/RNS-Tools/main/rns_server_provisioning/rns_server_provisioning.py
-  ```
 - Make it executable with the following command
   ```bash
-  chmod +x rns_server_provisioning.py
+  chmod +x main.py
   ```
 
 ### Start:
 - Start it
   ```bash
-  ./rns_server_provisioning.py
+  ./main.py
   ```
 - After the first start edit the configuration file to suit your needs and use-case. The file location is displayed.
 - Example minimal configuration (override of the default config `config.cfg`). These are the most relevant settings that need to be adjusted. All other settings are in `config.cfg`
@@ -70,7 +69,7 @@ The full documentation is not yet available. Due to lack of time I can also not 
   ```
 - Start it again. Finished!
   ```bash
-  ./rns_server_provisioning.py
+  ./main.py
   ```
 
 
@@ -91,7 +90,7 @@ The full documentation is not yet available. Due to lack of time I can also not 
   RestartSec=3
   User=root
   Group=root
-  ExecStart=/root/rns_server_provisioning.py
+  ExecStart=/root/rns_server_provisioning/main.py
   [Install]
   WantedBy=multi-user.target
   ```
@@ -122,8 +121,8 @@ The full documentation is not yet available. Due to lack of time I can also not 
 ### Run several instances (To copy the same application):
 - Run the program with a different configuration path.
   ```bash
-  ./rns_server_provisioning.py -p /root/.rns_server_provisioning_2nd
-  ./rns_server_provisioning.py -p /root/.rns_server_provisioning_3nd
+  ./main.py -p /root/.rns_server_provisioning_2nd
+  ./main.py -p /root/.rns_server_provisioning_3nd
   ```
 
 
@@ -141,7 +140,7 @@ The full documentation is not yet available. Due to lack of time I can also not 
 
 ### Startup parameters:
 ```bash
-usage: rns_server_provisioning.py [-h] [-p PATH] [-pr PATH_RNS] [-pl PATH_LOG] [-l LOGLEVEL] [-s] [--exampleconfig] [--exampleconfigoverride]
+usage: main.py [-h] [-p PATH] [-pr PATH_RNS] [-pl PATH_LOG] [-l LOGLEVEL] [-s] [-i] [--exampleconfig] [--exampleconfigoverride]
 
 RNS Server Provisioning - Provisioning for RNS based apps
 
@@ -154,6 +153,7 @@ optional arguments:
                         Path to alternative log directory
   -l LOGLEVEL, --loglevel LOGLEVEL
   -s, --service         Running as a service and should log to file
+  -i, --install         Check and install requirements.
   --exampleconfig       Print verbose configuration example to stdout and exit
   --exampleconfigoverride
                         Print verbose configuration example to stdout and exit

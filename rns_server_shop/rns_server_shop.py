@@ -724,16 +724,16 @@ class ServerShop:
 
     def sync_rx(self, path, data, request_id, link_id, remote_identity, requested_at):
         if not remote_identity:
-            return msgpack.packb({"result": ServerShop.RESULT_NO_IDENTITY})
+            return msgpack.packb({"result": self.RESULT_NO_IDENTITY})
 
         if self.limiter_server and not self.limiter_server.handle("server"):
-            return msgpack.packb({"result": ServerShop.RESULT_LIMIT_SERVER})
+            return msgpack.packb({"result": self.RESULT_LIMIT_SERVER})
 
         if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
-            return msgpack.packb({"result": ServerShop.RESULT_LIMIT_PEER})
+            return msgpack.packb({"result": self.RESULT_LIMIT_PEER})
 
         if not data:
-            return msgpack.packb({"result": ServerShop.RESULT_NO_DATA})
+            return msgpack.packb({"result": self.RESULT_NO_DATA})
 
         now = time.time()
 
@@ -742,15 +742,15 @@ class ServerShop:
         vendor_id = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
 
         if not self.right(vendor_id, [0, 1, 2, 255]):
-            data_return["result"] = ServerShop.RESULT_NO_USER
+            data_return["result"] = self.RESULT_NO_USER
             return msgpack.packb(data_return)
 
         if self.right(vendor_id, [255]) and not self.right(vendor_id, [0, 1, 2]):
-            data_return["result"] = ServerShop.RESULT_BLOCKED
+            data_return["result"] = self.RESULT_BLOCKED
             return msgpack.packb(data_return)
 
         if not self.enabled() and not self.right(vendor_id, [2]):
-            data_return["result"] = ServerShop.RESULT_DISABLED
+            data_return["result"] = self.RESULT_DISABLED
             if "ts_config" in data:
                 if self.core.db_shops_get_config_ts(self.destination_hash()) > data["ts_config"]:
                     data_return["rx_config"] = self.core.db_shops_get_config(self.destination_hash())
@@ -848,10 +848,10 @@ class ServerShop:
                         file["name"] = data["file"]["name"]
                     data_return["rx_file"] = file
 
-            data_return["result"] = ServerShop.RESULT_OK
+            data_return["result"] = self.RESULT_OK
         except Exception as e:
             RNS.log("Server - Sync RX: "+str(e), RNS.LOG_ERROR)
-            data_return["result"] = ServerShop.RESULT_ERROR
+            data_return["result"] = self.RESULT_ERROR
 
         data_return = msgpack.packb(data_return)
 
@@ -873,16 +873,16 @@ class ServerShop:
 
     def sync_tx(self, path, data, request_id, link_id, remote_identity, requested_at):
         if not remote_identity:
-            return msgpack.packb({"result": ServerShop.RESULT_NO_IDENTITY})
+            return msgpack.packb({"result": self.RESULT_NO_IDENTITY})
 
         if self.limiter_server and not self.limiter_server.handle("server"):
-            return msgpack.packb({"result": ServerShop.RESULT_LIMIT_SERVER})
+            return msgpack.packb({"result": self.RESULT_LIMIT_SERVER})
 
         if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
-            return msgpack.packb({"result": ServerShop.RESULT_LIMIT_PEER})
+            return msgpack.packb({"result": self.RESULT_LIMIT_PEER})
 
         if not data:
-            return msgpack.packb({"result": ServerShop.RESULT_NO_DATA})
+            return msgpack.packb({"result": self.RESULT_NO_DATA})
 
         now = time.time()
 
@@ -891,19 +891,19 @@ class ServerShop:
         vendor_id = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
 
         if not self.right(vendor_id, [0, 1, 2, 255]):
-            data_return["result"] = ServerShop.RESULT_NO_USER
+            data_return["result"] = self.RESULT_NO_USER
             return msgpack.packb(data_return)
 
         if self.right(vendor_id, [255]) and not self.right(vendor_id, [1, 2]):
-            data_return["result"] = ServerShop.RESULT_BLOCKED
+            data_return["result"] = self.RESULT_BLOCKED
             return msgpack.packb(data_return)
 
         if not self.enabled() and not self.right(vendor_id, [2]):
-            data_return["result"] = ServerShop.RESULT_DISABLED
+            data_return["result"] = self.RESULT_DISABLED
             return msgpack.packb(data_return)
 
         if not self.right(vendor_id, [1, 2]):
-            data_return["result"] = ServerShop.RESULT_NO_RIGHT
+            data_return["result"] = self.RESULT_NO_RIGHT
             return msgpack.packb(data_return)
 
         try:
@@ -999,10 +999,10 @@ class ServerShop:
                 if len(data_return["cmd"]) == 0:
                     del data_return["cmd"]
 
-            data_return["result"] = ServerShop.RESULT_OK
+            data_return["result"] = self.RESULT_OK
         except Exception as e:
             RNS.log("Server - Sync TX: "+str(e), RNS.LOG_ERROR)
-            data_return["result"] = ServerShop.RESULT_ERROR
+            data_return["result"] = self.RESULT_ERROR
 
         data_return = msgpack.packb(data_return)
 

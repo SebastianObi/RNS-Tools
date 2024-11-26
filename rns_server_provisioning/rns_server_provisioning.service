@@ -7,6 +7,6 @@ Type=simple
 Restart=always
 RestartSec=3
 User=root
-ExecStart=/root/RNS-Tools/rns_server_provisioning/rns_server_provisioning.py
+ExecStart=/root/RNS-Tools/rns_server_provisioning/main.py
 [Install]
 WantedBy=multi-user.target

@@ -8,7 +8,7 @@
 SOFTWARE_NAME="rns_server_management"
 SOFTWARE_PATH=$(dirname $(realpath $0))
 SOFTWARE_PATH_SRC="$SOFTWARE_PATH/bin"
-SOFTWARE_PATH_DST="/usr/local/bin"
+SOFTWARE_PATH_DST="/usr/local/bin/rns"
 SOFTWARE_CONFIG_SRC="$SOFTWARE_PATH/config"
 SOFTWARE_CONFIG_DST="$HOME/.config/$SOFTWARE_NAME"
 RETICULUM_CONFIG_DST=("$HOME/.config/reticulum" "$HOME/.reticulum")

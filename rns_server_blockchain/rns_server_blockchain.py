@@ -218,6 +218,9 @@ class ServerBlockchain:
     DELEGATE_STATE_ACTIVE   = 0x01
     DELEGATE_STATE_STANDBY  = 0x02
 
+    JOBS_PERIODIC_DELAY    = 10 # Seconds
+    JOBS_PERIODIC_INTERVAL = 60 # Seconds
+
     KEY_RESULT        = 0x0A # Result
     KEY_RESULT_REASON = 0x0B # Result - Reason
     KEY_A             = 0x0C # Account
@@ -233,13 +236,14 @@ class ServerBlockchain:
     KEY_A_DELEGATE     = 0x02
     KEY_A_ID           = 0x03
     KEY_A_KEY          = 0x04
-    KEY_A_NAME         = 0x05
-    KEY_A_NONCE        = 0x06
-    KEY_A_STATE        = 0x07
-    KEY_A_STATE_REASON = 0x08
-    KEY_A_TOKEN        = 0x09
-    KEY_A_TS           = 0x0A
-    KEY_A_VOTE         = 0x0B
+    KEY_A_METADATA     = 0x05
+    KEY_A_NAME         = 0x06
+    KEY_A_NONCE        = 0x07
+    KEY_A_STATE        = 0x08
+    KEY_A_STATE_REASON = 0x09
+    KEY_A_TOKEN        = 0x0A
+    KEY_A_TS           = 0x0B
+    KEY_A_VOTE         = 0x0C
 
     KEY_A_MAPPING = {
         "balance":      KEY_A_BALANCE,
@@ -376,12 +380,13 @@ class ServerBlockchain:
     KEY_T_FEE           = 0x07
     KEY_T_ID            = 0x08
     KEY_T_INDEX         = 0x09
-    KEY_T_NONCE         = 0x0A
-    KEY_T_SOURCE        = 0x0B
-    KEY_T_STATE         = 0x0C
-    KEY_T_STATE_REASON  = 0x0D
-    KEY_T_TS            = 0x0E
-    KEY_T_TYPE          = 0x0F
+    KEY_T_METADATA      = 0x0A
+    KEY_T_NONCE         = 0x0B
+    KEY_T_SOURCE        = 0x0C
+    KEY_T_STATE         = 0x0D
+    KEY_T_STATE_REASON  = 0x0E
+    KEY_T_TS            = 0x0F
+    KEY_T_TYPE          = 0x10
 
     KEY_T_MAPPING = {
         "amount":        KEY_T_AMOUNT,
@@ -502,7 +507,17 @@ class ServerBlockchain:
     TYPE_UNKNOWN  = 0xFF
 
 
-    def __init__(self, storage_path=None, identity_file="identity", identity=None, destination_name="nomadnetwork", destination_type="bc", announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False, register_startup=True, register_startup_delay=0, register_periodic=True, register_periodic_interval=30, limiter_server_enabled=False, limiter_server_calls=1000, limiter_server_size=0, limiter_server_duration=60, limiter_peer_enabled=True, limiter_peer_calls=15, limiter_peer_size=500*1024, limiter_peer_duration=60):
+    def __init__(self, storage_path=None, identity_file="identity", identity=None,
+                 destination_name="nomadnetwork", destination_type="bc",
+                 announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False,
+                 register_startup=True, register_startup_delay=0, register_periodic=True, register_periodic_interval=30,
+                 limiter_server_enabled=False, limiter_server_calls=1000, limiter_server_size=0, limiter_server_duration=60,
+                 limiter_peer_enabled=True, limiter_peer_calls=15, limiter_peer_size=500*1024, limiter_peer_duration=60,
+                 limiter_api_enabled=False, limiter_api_calls=15, limiter_api_size=500*1024, limiter_api_duration=60,
+                 limiter_explorer_enabled=False, limiter_explorer_calls=15, limiter_explorer_size=500*1024, limiter_explorer_duration=60,
+                 limiter_wallet_enabled=False, limiter_wallet_calls=15, limiter_wallet_size=500*1024, limiter_wallet_duration=60,
+        ):
+
         self.storage_path = storage_path
 
         self.identity_file = identity_file
@@ -578,6 +593,21 @@ class ServerBlockchain:
             self.limiter_peer = RateLimiter(int(limiter_peer_calls), int(limiter_peer_size), int(limiter_peer_duration))
         else:
             self.limiter_peer = None
+
+        if limiter_api_enabled:
+            self.limiter_api = RateLimiter(int(limiter_api_calls), int(limiter_api_size), int(limiter_api_duration))
+        else:
+            self.limiter_api = None
+
+        if limiter_explorer_enabled:
+            self.limiter_explorer = RateLimiter(int(limiter_explorer_calls), int(limiter_explorer_size), int(limiter_explorer_duration))
+        else:
+            self.limiter_explorer = None
+
+        if limiter_wallet_enabled:
+            self.limiter_wallet = RateLimiter(int(limiter_wallet_calls), int(limiter_wallet_size), int(limiter_wallet_duration))
+        else:
+            self.limiter_wallet = None
 
 
     def start(self):
@@ -774,27 +804,30 @@ class ServerBlockchain:
 
     def response_api(self, path, data, request_id, link_id, remote_identity, requested_at):
         if not remote_identity:
-            return msgpack.packb({ServerBlockchain.KEY_RESULT: ServerBlockchain.RESULT_NO_IDENTITY})
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_IDENTITY})
 
         if self.limiter_server and not self.limiter_server.handle("server"):
-            return msgpack.packb({ServerBlockchain.KEY_RESULT: ServerBlockchain.RESULT_LIMIT_SERVER})
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_LIMIT_SERVER})
 
         if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
-            return msgpack.packb({ServerBlockchain.KEY_RESULT: ServerBlockchain.RESULT_LIMIT_PEER})
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_LIMIT_PEER})
+
+        if self.limiter_api and not self.limiter_api.handle(str(remote_identity)):
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_LIMIT_PEER})
 
         if not data:
-            return msgpack.packb({ServerBlockchain.KEY_RESULT: ServerBlockchain.RESULT_NO_DATA})
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_DATA})
 
         RNS.log("Server - Response - API", RNS.LOG_DEBUG)
         RNS.log(data, RNS.LOG_EXTREME)
 
         data_return = {}
 
-        data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_OK
+        data_return[self.KEY_RESULT] = self.RESULT_OK
 
-        if ServerBlockchain.KEY_API in data:
-            data_return[ServerBlockchain.KEY_API] = {}
-            for key, value in data[ServerBlockchain.KEY_API].items():
+        if self.KEY_API in data:
+            data_return[self.KEY_API] = {}
+            for key, value in data[self.KEY_API].items():
                 try:
                     value_token = value["token"] if "token" in value else None
                     value_url = value["url"] if "url" in value else None
@@ -817,13 +850,13 @@ class ServerBlockchain:
                         response = self.api_put(token=value_token, url=value_url if value_url else value["put"], data=value_data, json=value_json, headers=value_headers, cookies=value_cookies, auth=value_auth, timeout=value_timeout)
                     else:
                         raise ValueError("Wrong api type")
-                    data_return[ServerBlockchain.KEY_API][key] = response
+                    data_return[self.KEY_API][key] = response
                 except Exception as e:
                     self.log_exception(e, "Server - API")
-                    data_return[ServerBlockchain.KEY_API][key] = None
-                    data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
-            if len(data_return[ServerBlockchain.KEY_API]) == 0:
-                del data_return[ServerBlockchain.KEY_API]
+                    data_return[self.KEY_API][key] = None
+                    data_return[self.KEY_RESULT] = self.RESULT_PARTIAL
+            if len(data_return[self.KEY_API]) == 0:
+                del data_return[self.KEY_API]
 
         data_return = msgpack.packb(data_return)
 
@@ -838,45 +871,48 @@ class ServerBlockchain:
 
     def response_explorer(self, path, data, request_id, link_id, remote_identity, requested_at):
         if not remote_identity:
-            return msgpack.packb({ServerBlockchain.KEY_RESULT: ServerBlockchain.RESULT_NO_IDENTITY})
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_IDENTITY})
 
         if self.limiter_server and not self.limiter_server.handle("server"):
-            return msgpack.packb({ServerBlockchain.KEY_RESULT: ServerBlockchain.RESULT_LIMIT_SERVER})
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_LIMIT_SERVER})
 
         if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
-            return msgpack.packb({ServerBlockchain.KEY_RESULT: ServerBlockchain.RESULT_LIMIT_PEER})
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_LIMIT_PEER})
+
+        if self.limiter_explorer and not self.limiter_explorer.handle(str(remote_identity)):
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_LIMIT_PEER})
 
         if not data:
-            return msgpack.packb({ServerBlockchain.KEY_RESULT: ServerBlockchain.RESULT_NO_DATA})
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_DATA})
 
         RNS.log("Server - Response - Explorer", RNS.LOG_DEBUG)
         RNS.log(data, RNS.LOG_EXTREME)
 
         data_return = {}
 
-        data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_OK
+        data_return[self.KEY_RESULT] = self.RESULT_OK
 
-        if ServerBlockchain.KEY_E in data:
+        if self.KEY_E in data:
             # explorer
-            data_explorer = data[ServerBlockchain.KEY_E]
-            filter = data_explorer[ServerBlockchain.KEY_E_FILTER] if ServerBlockchain.KEY_E_FILTER in data_explorer else None
-            hash = data_explorer[ServerBlockchain.KEY_E_HASH] if ServerBlockchain.KEY_E_HASH in data_explorer else None
-            limit = data_explorer[ServerBlockchain.KEY_E_LIMIT] if ServerBlockchain.KEY_E_LIMIT in data_explorer else None
-            limit_start = data_explorer[ServerBlockchain.KEY_E_LIMIT_START] if ServerBlockchain.KEY_E_LIMIT_START in data_explorer else None
-            order = data_explorer[ServerBlockchain.KEY_E_ORDER] if ServerBlockchain.KEY_E_ORDER in data_explorer else None
-            search = data_explorer[ServerBlockchain.KEY_E_SEARCH] if ServerBlockchain.KEY_E_SEARCH in data_explorer else None
-            token = data_explorer[ServerBlockchain.KEY_E_TOKEN] if ServerBlockchain.KEY_E_TOKEN in data_explorer else None
+            data_explorer = data[self.KEY_E]
+            filter = data_explorer[self.KEY_E_FILTER] if self.KEY_E_FILTER in data_explorer else None
+            hash = data_explorer[self.KEY_E_HASH] if self.KEY_E_HASH in data_explorer else None
+            limit = data_explorer[self.KEY_E_LIMIT] if self.KEY_E_LIMIT in data_explorer else None
+            limit_start = data_explorer[self.KEY_E_LIMIT_START] if self.KEY_E_LIMIT_START in data_explorer else None
+            order = data_explorer[self.KEY_E_ORDER] if self.KEY_E_ORDER in data_explorer else None
+            search = data_explorer[self.KEY_E_SEARCH] if self.KEY_E_SEARCH in data_explorer else None
+            token = data_explorer[self.KEY_E_TOKEN] if self.KEY_E_TOKEN in data_explorer else None
 
-            if ServerBlockchain.KEY_A in data:
-                mapping = {v: k for k, v in ServerBlockchain.KEY_A_MAPPING.items()}
-            elif ServerBlockchain.KEY_B in data:
-                mapping = {v: k for k, v in ServerBlockchain.KEY_B_MAPPING.items()}
-            elif ServerBlockchain.KEY_D in data:
-                mapping = {v: k for k, v in ServerBlockchain.KEY_D_MAPPING.items()}
-            elif ServerBlockchain.KEY_I in data:
-                mapping = {v: k for k, v in ServerBlockchain.KEY_I_MAPPING.items()}
-            elif ServerBlockchain.KEY_T in data:
-                mapping = {v: k for k, v in ServerBlockchain.KEY_T_MAPPING.items()}
+            if self.KEY_A in data:
+                mapping = {v: k for k, v in self.KEY_A_MAPPING.items()}
+            elif self.KEY_B in data:
+                mapping = {v: k for k, v in self.KEY_B_MAPPING.items()}
+            elif self.KEY_D in data:
+                mapping = {v: k for k, v in self.KEY_D_MAPPING.items()}
+            elif self.KEY_I in data:
+                mapping = {v: k for k, v in self.KEY_I_MAPPING.items()}
+            elif self.KEY_T in data:
+                mapping = {v: k for k, v in self.KEY_T_MAPPING.items()}
             else:
                 mapping = {}
 
@@ -893,7 +929,7 @@ class ServerBlockchain:
 
             # explorer - order
             if order != None:
-                order_mapping = {v: k for k, v in ServerBlockchain.KEY_E_ORDER_MAPPING.items()}
+                order_mapping = {v: k for k, v in self.KEY_E_ORDER_MAPPING.items()}
                 order[1] = order_mapping[order[1]]
                 if order[0] in mapping:
                     order[0] = mapping[order[0]]
@@ -901,115 +937,115 @@ class ServerBlockchain:
                     order = None
 
             # accounts
-            if ServerBlockchain.KEY_A in data:
+            if self.KEY_A in data:
                 try:
                     count, entrys = self.accounts_list(token=token, filter=filter, search=search, order=order, limit=limit, limit_start=limit_start)
                     accounts = {}
                     for account_id, result in entrys.items():
                         accounts[account_id] = {}
                         for key, value in result.items():
-                            if key in ServerBlockchain.KEY_A_MAPPING:
-                                accounts[account_id][ServerBlockchain.KEY_A_MAPPING[key]] = value
+                            if key in self.KEY_A_MAPPING:
+                                accounts[account_id][self.KEY_A_MAPPING[key]] = value
                     hash_new = RNS.Identity.full_hash(msgpack.packb(accounts))
                     if hash != hash_new:
-                        data_return[ServerBlockchain.KEY_A] = [count, accounts]
-                        data_return[ServerBlockchain.KEY_E] = {ServerBlockchain.KEY_E_HASH: hash_new}
+                        data_return[self.KEY_A] = [count, accounts]
+                        data_return[self.KEY_E] = {self.KEY_E_HASH: hash_new}
                 except Exception as e:
                     self.log_exception(e, "Server - Explorer - Accounts")
-                    data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
+                    data_return[self.KEY_RESULT] = self.RESULT_PARTIAL
 
             # blocks
-            if ServerBlockchain.KEY_B in data:
+            if self.KEY_B in data:
                 try:
                     count, entrys = self.blocks_list(token=token, filter=filter, search=search, order=order, limit=limit, limit_start=limit_start)
                     blocks = {}
                     for blocks_id, result in entrys.items():
                         blocks[blocks_id] = {}
                         for key, value in result.items():
-                            if key in ServerBlockchain.KEY_B_MAPPING:
-                                blocks[blocks_id][ServerBlockchain.KEY_B_MAPPING[key]] = value
+                            if key in self.KEY_B_MAPPING:
+                                blocks[blocks_id][self.KEY_B_MAPPING[key]] = value
                     hash_new = RNS.Identity.full_hash(msgpack.packb(blocks))
                     if hash != hash_new:
-                        data_return[ServerBlockchain.KEY_B] = [count, blocks]
-                        data_return[ServerBlockchain.KEY_E] = {ServerBlockchain.KEY_E_HASH: hash_new}
+                        data_return[self.KEY_B] = [count, blocks]
+                        data_return[self.KEY_E] = {self.KEY_E_HASH: hash_new}
                 except Exception as e:
                     self.log_exception(e, "Server - Explorer - Blocks")
-                    data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
+                    data_return[self.KEY_RESULT] = self.RESULT_PARTIAL
 
             # delegates
-            if ServerBlockchain.KEY_D in data:
+            if self.KEY_D in data:
                 try:
                     count, entrys = self.delegates_list(token=token, filter=filter, search=search, order=order, limit=limit, limit_start=limit_start)
                     delegates = {}
                     for delegate_id, result in entrys.items():
                         delegates[delegate_id] = {}
                         for key, value in result.items():
-                            if key in ServerBlockchain.KEY_D_MAPPING:
-                                delegates[delegate_id][ServerBlockchain.KEY_D_MAPPING[key]] = value
+                            if key in self.KEY_D_MAPPING:
+                                delegates[delegate_id][self.KEY_D_MAPPING[key]] = value
                     hash_new = RNS.Identity.full_hash(msgpack.packb(delegates))
                     if hash != hash_new:
-                        data_return[ServerBlockchain.KEY_D] = [count, delegates]
-                        data_return[ServerBlockchain.KEY_E] = {ServerBlockchain.KEY_E_HASH: hash_new}
+                        data_return[self.KEY_D] = [count, delegates]
+                        data_return[self.KEY_E] = {self.KEY_E_HASH: hash_new}
                 except Exception as e:
                     self.log_exception(e, "Server - Explorer - Delegates")
-                    data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
+                    data_return[self.KEY_RESULT] = self.RESULT_PARTIAL
 
             # infos
-            if ServerBlockchain.KEY_I in data:
+            if self.KEY_I in data:
                 try:
                     count, entrys = self.infos_list(token=token, filter=filter, search=search, order=order, limit=limit, limit_start=limit_start)
                     infos = {}
                     for info_id, result in entrys.items():
                         infos[info_id] = {}
                         for key, value in result.items():
-                            if key in ServerBlockchain.KEY_I_MAPPING:
-                                if ServerBlockchain.KEY_I_MAPPING[key] == ServerBlockchain.KEY_A:
-                                    infos[info_id][ServerBlockchain.KEY_I_MAPPING[key]] = {}
+                            if key in self.KEY_I_MAPPING:
+                                if self.KEY_I_MAPPING[key] == self.KEY_A:
+                                    infos[info_id][self.KEY_I_MAPPING[key]] = {}
                                     for value_key, value_value in value.items():
-                                        if value_key in ServerBlockchain.KEY_A_MAPPING:
-                                            infos[info_id][ServerBlockchain.KEY_I_MAPPING[key]][ServerBlockchain.KEY_A_MAPPING[value_key]] = value_value
-                                elif ServerBlockchain.KEY_I_MAPPING[key] == ServerBlockchain.KEY_B:
-                                    infos[info_id][ServerBlockchain.KEY_I_MAPPING[key]] = {}
+                                        if value_key in self.KEY_A_MAPPING:
+                                            infos[info_id][self.KEY_I_MAPPING[key]][self.KEY_A_MAPPING[value_key]] = value_value
+                                elif self.KEY_I_MAPPING[key] == self.KEY_B:
+                                    infos[info_id][self.KEY_I_MAPPING[key]] = {}
                                     for value_key, value_value in value.items():
-                                        if value_key in ServerBlockchain.KEY_B_MAPPING:
-                                            infos[info_id][ServerBlockchain.KEY_I_MAPPING[key]][ServerBlockchain.KEY_B_MAPPING[value_key]] = value_value
-                                elif ServerBlockchain.KEY_I_MAPPING[key] == ServerBlockchain.KEY_D:
-                                    infos[info_id][ServerBlockchain.KEY_I_MAPPING[key]] = {}
+                                        if value_key in self.KEY_B_MAPPING:
+                                            infos[info_id][self.KEY_I_MAPPING[key]][self.KEY_B_MAPPING[value_key]] = value_value
+                                elif self.KEY_I_MAPPING[key] == self.KEY_D:
+                                    infos[info_id][self.KEY_I_MAPPING[key]] = {}
                                     for value_key, value_value in value.items():
-                                        if value_key in ServerBlockchain.KEY_D_MAPPING:
-                                            infos[info_id][ServerBlockchain.KEY_I_MAPPING[key]][ServerBlockchain.KEY_D_MAPPING[value_key]] = value_value
-                                elif ServerBlockchain.KEY_I_MAPPING[key] == ServerBlockchain.KEY_T:
-                                    infos[info_id][ServerBlockchain.KEY_I_MAPPING[key]] = {}
+                                        if value_key in self.KEY_D_MAPPING:
+                                            infos[info_id][self.KEY_I_MAPPING[key]][self.KEY_D_MAPPING[value_key]] = value_value
+                                elif self.KEY_I_MAPPING[key] == self.KEY_T:
+                                    infos[info_id][self.KEY_I_MAPPING[key]] = {}
                                     for value_key, value_value in value.items():
-                                        if value_key in ServerBlockchain.KEY_T_MAPPING:
-                                            infos[info_id][ServerBlockchain.KEY_I_MAPPING[key]][ServerBlockchain.KEY_T_MAPPING[value_key]] = value_value
+                                        if value_key in self.KEY_T_MAPPING:
+                                            infos[info_id][self.KEY_I_MAPPING[key]][self.KEY_T_MAPPING[value_key]] = value_value
                                 else:
-                                    infos[info_id][ServerBlockchain.KEY_I_MAPPING[key]] = value
+                                    infos[info_id][self.KEY_I_MAPPING[key]] = value
                     hash_new = RNS.Identity.full_hash(msgpack.packb(infos))
                     if hash != hash_new:
-                        data_return[ServerBlockchain.KEY_I] = [count, infos]
-                        data_return[ServerBlockchain.KEY_E] = {ServerBlockchain.KEY_E_HASH: hash_new}
+                        data_return[self.KEY_I] = [count, infos]
+                        data_return[self.KEY_E] = {self.KEY_E_HASH: hash_new}
                 except Exception as e:
                     self.log_exception(e, "Server - Explorer - Infos")
-                    data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
+                    data_return[self.KEY_RESULT] = self.RESULT_PARTIAL
 
             # transactions
-            if ServerBlockchain.KEY_T in data:
+            if self.KEY_T in data:
                 try:
                     count, entrys = self.transactions_list(token=token, filter=filter, search=search, order=order, limit=limit, limit_start=limit_start)
                     transactions = {}
                     for transaction_id, result in entrys.items():
                         transactions[transaction_id] = {}
                         for key, value in result.items():
-                            if key in ServerBlockchain.KEY_T_MAPPING:
-                                transactions[transaction_id][ServerBlockchain.KEY_T_MAPPING[key]] = value
+                            if key in self.KEY_T_MAPPING:
+                                transactions[transaction_id][self.KEY_T_MAPPING[key]] = value
                     hash_new = RNS.Identity.full_hash(msgpack.packb(transactions))
                     if hash != hash_new:
-                        data_return[ServerBlockchain.KEY_T] = [count, transactions]
-                        data_return[ServerBlockchain.KEY_E] = {ServerBlockchain.KEY_E_HASH: hash_new}
+                        data_return[self.KEY_T] = [count, transactions]
+                        data_return[self.KEY_E] = {self.KEY_E_HASH: hash_new}
                 except Exception as e:
                     self.log_exception(e, "Server - Explorer - Transactions")
-                    data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
+                    data_return[self.KEY_RESULT] = self.RESULT_PARTIAL
 
         data_return = msgpack.packb(data_return)
 
@@ -1024,16 +1060,19 @@ class ServerBlockchain:
 
     def response_wallet(self, path, data, request_id, link_id, remote_identity, requested_at):
         if not remote_identity:
-            return msgpack.packb({ServerBlockchain.KEY_RESULT: ServerBlockchain.RESULT_NO_IDENTITY})
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_IDENTITY})
 
         if self.limiter_server and not self.limiter_server.handle("server"):
-            return msgpack.packb({ServerBlockchain.KEY_RESULT: ServerBlockchain.RESULT_LIMIT_SERVER})
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_LIMIT_SERVER})
 
         if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
-            return msgpack.packb({ServerBlockchain.KEY_RESULT: ServerBlockchain.RESULT_LIMIT_PEER})
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_LIMIT_PEER})
+
+        if self.limiter_wallet and not self.limiter_wallet.handle(str(remote_identity)):
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_LIMIT_PEER})
 
         if not data:
-            return msgpack.packb({ServerBlockchain.KEY_RESULT: ServerBlockchain.RESULT_NO_DATA})
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_DATA})
 
         RNS.log("Server - Response - Wallet", RNS.LOG_DEBUG)
         RNS.log(data, RNS.LOG_EXTREME)
@@ -1053,123 +1092,123 @@ class ServerBlockchain:
 
         data_return = {}
 
-        data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_OK
+        data_return[self.KEY_RESULT] = self.RESULT_OK
 
         # accounts
-        if ServerBlockchain.KEY_A in data:
-            data_return[ServerBlockchain.KEY_A] = {}
+        if self.KEY_A in data:
+            data_return[self.KEY_A] = {}
 
-            for account_id, account in data[ServerBlockchain.KEY_A].items():
-                token = account[ServerBlockchain.KEY_A_TOKEN]
+            for account_id, account in data[self.KEY_A].items():
+                token = account[self.KEY_A_TOKEN]
                 token_connection = token_connection_response_start(token_connection=token_connection, token=token)
 
                 # accounts_add - New account
-                if ServerBlockchain.KEY_A_STATE in account:
+                if self.KEY_A_STATE in account:
                     try:
                         result = self.accounts_add(
                             token=token,
-                            data=account[ServerBlockchain.KEY_A_DATA] if ServerBlockchain.KEY_A_DATA in account else None
+                            data=account[self.KEY_A_DATA] if self.KEY_A_DATA in account else None
                         )
                         account_id_new = result["account_id"] if "account_id" in result else account_id
-                        data_return[ServerBlockchain.KEY_A][account_id_new] = {
-                            ServerBlockchain.KEY_A_STATE: result["state"] if "state" in result else ServerBlockchain.ACCOUNT_STATE_SUCCESSFULL
+                        data_return[self.KEY_A][account_id_new] = {
+                            self.KEY_A_STATE: result["state"] if "state" in result else self.ACCOUNT_STATE_SUCCESSFULL
                         }
                         if account_id_new != account_id:
-                            data_return[ServerBlockchain.KEY_A][account_id_new][ServerBlockchain.KEY_A_ID] = account_id
+                            data_return[self.KEY_A][account_id_new][self.KEY_A_ID] = account_id
                         if "data" in result and result["data"] != None and len(result["data"]) > 0:
-                            data_return[ServerBlockchain.KEY_A][account_id_new][ServerBlockchain.KEY_A_DATA] = result["data"]
+                            data_return[self.KEY_A][account_id_new][self.KEY_A_DATA] = result["data"]
                         if "state_reason" in result:
-                            data_return[ServerBlockchain.KEY_A][account_id_new][ServerBlockchain.KEY_A_STATE_REASON] = result["state_reason"]
+                            data_return[self.KEY_A][account_id_new][self.KEY_A_STATE_REASON] = result["state_reason"]
                         account_id = account_id_new
                     except Exception as e:
                         self.log_exception(e, "Server - Wallet - New account")
-                        data_return[ServerBlockchain.KEY_A][account_id] = {
-                            ServerBlockchain.KEY_A_STATE: ServerBlockchain.ACCOUNT_STATE_FAILED_TMP
+                        data_return[self.KEY_A][account_id] = {
+                            self.KEY_A_STATE: self.ACCOUNT_STATE_FAILED_TMP
                         }
-                        data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
+                        data_return[self.KEY_RESULT] = self.RESULT_PARTIAL
 
                 # accounts_get - Existing account
                 else:
-                    data_return[ServerBlockchain.KEY_A][account_id] = {}
+                    data_return[self.KEY_A][account_id] = {}
 
                 transactions = {}
 
                 # transactions_get - Existing transaction
                 try:
-                    ts = account[ServerBlockchain.KEY_A_TS] if ServerBlockchain.KEY_A_TS in account else 0
+                    ts = account[self.KEY_A_TS] if self.KEY_A_TS in account else 0
                     for transaction_id, result in self.transactions_get(token=token, account_id=account_id, ts=ts).items():
                         transactions[transaction_id] = {
-                            ServerBlockchain.KEY_T_AMOUNT: result["amount"],
-                            ServerBlockchain.KEY_T_TS: result["ts"],
+                            self.KEY_T_AMOUNT: result["amount"],
+                            self.KEY_T_TS: result["ts"],
                         }
                         if result["source"] != account_id:
-                            transactions[transaction_id][ServerBlockchain.KEY_T_SOURCE] = result["source"]
+                            transactions[transaction_id][self.KEY_T_SOURCE] = result["source"]
                         if result["dest"] != account_id:
-                            transactions[transaction_id][ServerBlockchain.KEY_T_DEST] = result["dest"]
+                            transactions[transaction_id][self.KEY_T_DEST] = result["dest"]
                         if "fee" in result and result["fee"] != None and result["fee"] > 0:
-                            transactions[transaction_id][ServerBlockchain.KEY_T_FEE] = result["fee"]
+                            transactions[transaction_id][self.KEY_T_FEE] = result["fee"]
                         if "comment" in result and result["comment"] != None and result["comment"] != "":
-                            transactions[transaction_id][ServerBlockchain.KEY_T_COMMENT] = result["comment"]
+                            transactions[transaction_id][self.KEY_T_COMMENT] = result["comment"]
                         if "type" in result and result["type"] != None:
-                            transactions[transaction_id][ServerBlockchain.KEY_T_TYPE] = result["type"]
+                            transactions[transaction_id][self.KEY_T_TYPE] = result["type"]
                 except Exception as e:
                     self.log_exception(e, "Server - Wallet - Existing transaction")
-                    data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
+                    data_return[self.KEY_RESULT] = self.RESULT_PARTIAL
 
                 # transactions_add - New transaction
-                if ServerBlockchain.KEY_T in account:
-                    transaction_list = dict(sorted(account[ServerBlockchain.KEY_T].items(), key=lambda item: item[1][ServerBlockchain.KEY_T_INDEX]))
+                if self.KEY_T in account:
+                    transaction_list = dict(sorted(account[self.KEY_T].items(), key=lambda item: item[1][self.KEY_T_INDEX]))
                     for transaction_id, transaction in transaction_list.items():
                         try:
                             result = self.transactions_add(
                                 token=token,
                                 account_id=account_id,
-                                account_data=account[ServerBlockchain.KEY_A_DATA] if ServerBlockchain.KEY_A_DATA in account else None,
-                                transaction_data=transaction[ServerBlockchain.KEY_T_DATA]
+                                account_data=account[self.KEY_A_DATA] if self.KEY_A_DATA in account else None,
+                                transaction_data=transaction[self.KEY_T_DATA]
                             )
                             transaction_id_new = result["transaction_id"] if "transaction_id" in result else transaction_id
                             transactions[transaction_id_new] = {
-                                ServerBlockchain.KEY_T_STATE: result["state"] if "state" in result else ServerBlockchain.TRANSACTION_STATE_PROCESSING
+                                self.KEY_T_STATE: result["state"] if "state" in result else self.TRANSACTION_STATE_PROCESSING
                             }
                             if transaction_id_new != transaction_id:
-                                transactions[transaction_id_new][ServerBlockchain.KEY_T_ID] = transaction_id
+                                transactions[transaction_id_new][self.KEY_T_ID] = transaction_id
                             if "data" in result and result["data"] != None and len(result["data"]) > 0:
-                                transactions[transaction_id_new][ServerBlockchain.KEY_T_DATA] = result["data"]
+                                transactions[transaction_id_new][self.KEY_T_DATA] = result["data"]
                             if "state_reason" in result:
-                                transactions[transaction_id_new][ServerBlockchain.KEY_T_STATE_REASON] = result["state_reason"]
+                                transactions[transaction_id_new][self.KEY_T_STATE_REASON] = result["state_reason"]
                         except Exception as e:
                             self.log_exception(e, "Server - Wallet - New transaction")
                             transactions[transaction_id] = {
-                                ServerBlockchain.KEY_T_STATE: ServerBlockchain.TRANSACTION_STATE_FAILED_TMP
+                                self.KEY_T_STATE: self.TRANSACTION_STATE_FAILED_TMP
                             }
-                            data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
+                            data_return[self.KEY_RESULT] = self.RESULT_PARTIAL
 
                 if len(transactions) > 0:
-                    data_return[ServerBlockchain.KEY_A][account_id][ServerBlockchain.KEY_T] = transactions
+                    data_return[self.KEY_A][account_id][self.KEY_T] = transactions
 
                 # accounts_get - Existing account
                 try:
                     result = self.accounts_get(token=token, account_id=account_id)
                     if "balance" in result:
-                        data_return[ServerBlockchain.KEY_A][account_id][ServerBlockchain.KEY_A_BALANCE] = result["balance"]
+                        data_return[self.KEY_A][account_id][self.KEY_A_BALANCE] = result["balance"]
                     if "nonce" in result:
-                        data_return[ServerBlockchain.KEY_A][account_id][ServerBlockchain.KEY_A_NONCE] = result["nonce"]
+                        data_return[self.KEY_A][account_id][self.KEY_A_NONCE] = result["nonce"]
                     if "delegate" in result:
-                        data_return[ServerBlockchain.KEY_A][account_id][ServerBlockchain.KEY_A_DELEGATE] = result["delegate"]
+                        data_return[self.KEY_A][account_id][self.KEY_A_DELEGATE] = result["delegate"]
                     if "vote" in result:
-                        data_return[ServerBlockchain.KEY_A][account_id][ServerBlockchain.KEY_A_VOTE] = result["vote"]
+                        data_return[self.KEY_A][account_id][self.KEY_A_VOTE] = result["vote"]
                 except Exception as e:
                     self.log_exception(e, "Server - Wallet - Existing account")
-                    data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
+                    data_return[self.KEY_RESULT] = self.RESULT_PARTIAL
 
-            if len(data_return[ServerBlockchain.KEY_A]) == 0:
-                del data_return[ServerBlockchain.KEY_A]
+            if len(data_return[self.KEY_A]) == 0:
+                del data_return[self.KEY_A]
 
         # delegates
-        if ServerBlockchain.KEY_D in data:
-            data_return[ServerBlockchain.KEY_D] = {}
+        if self.KEY_D in data:
+            data_return[self.KEY_D] = {}
 
-            for delegate_token, delegate in data[ServerBlockchain.KEY_D].items():
+            for delegate_token, delegate in data[self.KEY_D].items():
                 token_connection = token_connection_response_start(token_connection=token_connection, token=delegate_token)
 
                 # delegates_get - Existing delegate
@@ -1183,36 +1222,36 @@ class ServerBlockchain:
                         delegates_name[delegate_id] = {}
                         delegates_value[delegate_id] = {}
                         if "name" in result and result["name"] != None and result["name"] != "":
-                            delegates[delegate_id][ServerBlockchain.KEY_D_NAME] = result["name"]
-                            delegates_name[delegate_id][ServerBlockchain.KEY_D_NAME] = result["name"]
+                            delegates[delegate_id][self.KEY_D_NAME] = result["name"]
+                            delegates_name[delegate_id][self.KEY_D_NAME] = result["name"]
                         if "value" in result and result["value"] != None and result["value"] != 0:
-                            delegates[delegate_id][ServerBlockchain.KEY_D_VALUE] = result["value"]
-                            delegates_value[delegate_id][ServerBlockchain.KEY_D_VALUE] = result["value"]
+                            delegates[delegate_id][self.KEY_D_VALUE] = result["value"]
+                            delegates_value[delegate_id][self.KEY_D_VALUE] = result["value"]
                         if "data" in result and result["data"] != None and len(result["data"]) > 0:
-                            delegates[delegate_id][ServerBlockchain.KEY_D_DATA] = result["data"]
+                            delegates[delegate_id][self.KEY_D_DATA] = result["data"]
                         if "state" in result and result["state"] != None:
-                            delegates[delegate_id][ServerBlockchain.KEY_D_STATE] = result["state"]
-                            delegates_value[delegate_id][ServerBlockchain.KEY_D_STATE] = result["state"]
+                            delegates[delegate_id][self.KEY_D_STATE] = result["state"]
+                            delegates_value[delegate_id][self.KEY_D_STATE] = result["state"]
 
                     delegates_name_hash = RNS.Identity.full_hash(msgpack.packb(sorted(delegates_name.items())))
                     delegates_value_hash = RNS.Identity.full_hash(msgpack.packb(sorted(delegates_value.items())))
-                    if delegate[ServerBlockchain.KEY_D_NAME_HASH] != delegates_name_hash and delegate[ServerBlockchain.KEY_D_VALUE_HASH] != delegates_value_hash:
+                    if delegate[self.KEY_D_NAME_HASH] != delegates_name_hash and delegate[self.KEY_D_VALUE_HASH] != delegates_value_hash:
                         pass
-                    elif delegate[ServerBlockchain.KEY_D_NAME_HASH] != delegates_name_hash:
+                    elif delegate[self.KEY_D_NAME_HASH] != delegates_name_hash:
                         delegates = delegates_name
-                    elif delegate[ServerBlockchain.KEY_D_VALUE_HASH] != delegates_value_hash:
+                    elif delegate[self.KEY_D_VALUE_HASH] != delegates_value_hash:
                         delegates = delegates_value
                     else:
                         delegates = {}
 
                     if len(delegates) > 0:
-                        data_return[ServerBlockchain.KEY_D][delegate_token] = delegates
+                        data_return[self.KEY_D][delegate_token] = delegates
                 except Exception as e:
                     self.log_exception(e, "Server - Wallet - Existing delegate")
-                    data_return[ServerBlockchain.KEY_RESULT] = ServerBlockchain.RESULT_PARTIAL
+                    data_return[self.KEY_RESULT] = self.RESULT_PARTIAL
 
-            if len(data_return[ServerBlockchain.KEY_D]) == 0:
-                del data_return[ServerBlockchain.KEY_D]
+            if len(data_return[self.KEY_D]) == 0:
+                del data_return[self.KEY_D]
 
         token_connection_response_stop(token_connection=token_connection)
 
@@ -1493,11 +1532,11 @@ def config_read(file=None, file_override=None):
         if os.path.isfile(file):
             try:
                 if file_override is None:
-                    CONFIG.read(file, encoding="utf-8")
+                    CONFIG.read(file, encoding='utf-8')
                 elif os.path.isfile(file_override):
-                    CONFIG.read([file, file_override], encoding="utf-8")
+                    CONFIG.read([file, file_override], encoding='utf-8')
                 else:
-                    CONFIG.read(file, encoding="utf-8")
+                    CONFIG.read(file, encoding='utf-8')
             except Exception as e:
                 return False
         else:
@@ -1757,24 +1796,44 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
 
     RNS_SERVER_BLOCKCHAIN = ServerBlockchain(
         storage_path=path,
+
         identity_file="identity",
         identity=None,
+
         destination_name=CONFIG["rns_server"]["destination_name"],
         destination_type=CONFIG["rns_server"]["destination_type"],
+
         announce_startup=CONFIG["rns_server"].getboolean("announce_startup"),
         announce_startup_delay=CONFIG["rns_server"]["announce_startup_delay"],
         announce_periodic=CONFIG["rns_server"].getboolean("announce_periodic"),
         announce_periodic_interval=CONFIG["rns_server"]["announce_periodic_interval"],
         announce_data=announce_data,
         announce_hidden=CONFIG["rns_server"].getboolean("announce_hidden"),
+
         limiter_server_enabled=CONFIG["rns_server"].getboolean("limiter_server_enabled"),
         limiter_server_calls=CONFIG["rns_server"]["limiter_server_calls"],
         limiter_server_size=CONFIG["rns_server"]["limiter_server_size"],
         limiter_server_duration=CONFIG["rns_server"]["limiter_server_duration"],
+
         limiter_peer_enabled=CONFIG["rns_server"].getboolean("limiter_peer_enabled"),
         limiter_peer_calls=CONFIG["rns_server"]["limiter_peer_calls"],
         limiter_peer_size=CONFIG["rns_server"]["limiter_peer_size"],
         limiter_peer_duration=CONFIG["rns_server"]["limiter_peer_duration"],
+
+        limiter_api_enabled=CONFIG["rns_server"].getboolean("limiter_api_enabled"),
+        limiter_api_calls=CONFIG["rns_server"]["limiter_api_calls"],
+        limiter_api_size=CONFIG["rns_server"]["limiter_api_size"],
+        limiter_api_duration=CONFIG["rns_server"]["limiter_api_duration"],
+
+        limiter_explorer_enabled=CONFIG["rns_server"].getboolean("limiter_explorer_enabled"),
+        limiter_explorer_calls=CONFIG["rns_server"]["limiter_explorer_calls"],
+        limiter_explorer_size=CONFIG["rns_server"]["limiter_explorer_size"],
+        limiter_explorer_duration=CONFIG["rns_server"]["limiter_explorer_duration"],
+
+        limiter_wallet_enabled=CONFIG["rns_server"].getboolean("limiter_wallet_enabled"),
+        limiter_wallet_calls=CONFIG["rns_server"]["limiter_wallet_calls"],
+        limiter_wallet_size=CONFIG["rns_server"]["limiter_wallet_size"],
+        limiter_wallet_duration=CONFIG["rns_server"]["limiter_wallet_duration"],
     )
 
     log("RNS - Connected", LOG_DEBUG)
@@ -1912,6 +1971,24 @@ limiter_peer_enabled = Yes
 limiter_peer_calls = 30 # Number of calls per duration. 0=Any
 limiter_peer_size = 0 # Data transfer size in bytes per duration. 0=Any
 limiter_peer_duration = 60 # Seconds
+
+# Limits the number of simultaneous requests/calls per peer.
+limiter_api_enabled = No
+limiter_api_calls = 30 # Number of calls per duration. 0=Any
+limiter_api_size = 0 # Data transfer size in bytes per duration. 0=Any
+limiter_api_duration = 60 # Seconds
+
+# Limits the number of simultaneous requests/calls per peer.
+limiter_explorer_enabled = No
+limiter_explorer_calls = 30 # Number of calls per duration. 0=Any
+limiter_explorer_size = 0 # Data transfer size in bytes per duration. 0=Any
+limiter_explorer_duration = 60 # Seconds
+
+# Limits the number of simultaneous requests/calls per peer.
+limiter_wallet_enabled = No
+limiter_wallet_calls = 30 # Number of calls per duration. 0=Any
+limiter_wallet_size = 0 # Data transfer size in bytes per duration. 0=Any
+limiter_wallet_duration = 60 # Seconds
 
 
 #### Telemetry settings ####

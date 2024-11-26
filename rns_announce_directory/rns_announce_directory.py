@@ -296,11 +296,11 @@ def db_init(init=True):
     if CONFIG["database"]["type"] == "postgresql":
         if init:
             dbc.execute("DROP TABLE IF EXISTS public.announces")
-        dbc.execute("""CREATE TABLE IF NOT EXISTS public.announces(dest character(32) COLLATE pg_catalog."default" NOT NULL, type integer NOT NULL DEFAULT 0, data text COLLATE pg_catalog."default" DEFAULT ''::text, location_lat double precision DEFAULT 0, location_lon double precision DEFAULT 0, owner character(32) COLLATE pg_catalog."default", state integer DEFAULT 0, state_ts timestamp with time zone, hop_count integer DEFAULT 0, hop_interface text COLLATE pg_catalog."default" DEFAULT ''::text, hop_dest character(32) COLLATE pg_catalog."default", ts_add timestamp with time zone, ts_edit timestamp with time zone, CONSTRAINT announces_pkey PRIMARY KEY (dest, type))""")
+        dbc.execute("""CREATE TABLE IF NOT EXISTS public.announces(dest character varying(32) COLLATE pg_catalog."default" NOT NULL, dest_type integer NOT NULL, data character varying COLLATE pg_catalog."default", location_lat double precision, location_lon double precision, owner character varying(32) COLLATE pg_catalog."default", state integer, state_ts integer NOT NULL, hop_count integer, hop_interface character varying COLLATE pg_catalog."default", hop_dest character varying(32) COLLATE pg_catalog."default", ts_add integer NOT NULL, ts_edit integer NOT NULL, CONSTRAINT announces_pkey PRIMARY KEY (dest, dest_type))""")
     else:
         if init:
             dbc.execute("DROP TABLE IF EXISTS announces")
-        dbc.execute("CREATE TABLE IF NOT EXISTS announces (dest BLOB, type INTEGER DEFAULT 0, data TEXT DEFAULT '', location_lat REAL DEFAULT 0, location_lon REAL DEFAULT 0, owner BLOB, state INTEGER DEFAULT 0, state_ts INTEGER DEFAULT 0, hop_count INTEGER DEFAULT 0, hop_interface TEXT DEFAULT '', hop_dest BLOB, ts_add INTEGER DEFAULT 0, ts_edit INTEGER DEFAULT 0, PRIMARY KEY(dest, type))")
+        dbc.execute("CREATE TABLE IF NOT EXISTS announces (dest BLOB, dest_type INTEGER DEFAULT 0, data TEXT DEFAULT '', location_lat REAL DEFAULT 0, location_lon REAL DEFAULT 0, owner BLOB, state INTEGER DEFAULT 0, state_ts INTEGER DEFAULT 0, hop_count INTEGER DEFAULT 0, hop_interface TEXT DEFAULT '', hop_dest BLOB, ts_add INTEGER DEFAULT 0, ts_edit INTEGER DEFAULT 0, PRIMARY KEY(dest, dest_type))")
 
     db_commit()
 
@@ -341,16 +341,15 @@ def db_add(dest, dest_type=0x01, dest_recall=None, dest_recall_type=None, data="
         else:
             hop_dest = RNS.hexrep(hop_dest, False)
 
-        ts = datetime.datetime.now(datetime.timezone.utc)
+        ts = int(time.time())
+        state_ts = int(state_ts)
 
-        state_ts = datetime.datetime.fromtimestamp(state_ts).strftime("%Y-%m-%d %H:%M:%S")
-
-        query = "SELECT dest FROM announces WHERE dest = %s AND type = %s"
+        query = "SELECT dest FROM announces WHERE dest = %s AND dest_type = %s"
         dbc.execute(query, (dest, dest_type))
         exist = True if len(dbc.fetchall()) > 0 else False
 
         if dest_recall and dest_recall_type:
-            query = "SELECT * FROM announces WHERE dest = %s AND type = %s"
+            query = "SELECT * FROM announces WHERE dest = %s AND dest_type = %s"
             dbc.execute(query, (RNS.hexrep(dest_recall, False), dest_recall_type))
             result = dbc.fetchall()
             if len(result) > 0:
@@ -363,20 +362,21 @@ def db_add(dest, dest_type=0x01, dest_recall=None, dest_recall_type=None, data="
                 state_ts = entry[8]
 
         if not exist:
-            query = "INSERT INTO announces (dest, type, data, location_lat, location_lon, owner, state, state_ts, hop_count, hop_interface, hop_dest, ts_add, ts_edit) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            query = "INSERT INTO announces (dest, dest_type, data, location_lat, location_lon, owner, state, state_ts, hop_count, hop_interface, hop_dest, ts_add, ts_edit) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
             dbc.execute(query, (dest, dest_type, data, location_lat, location_lon, owner, state, state_ts, hop_count, hop_interface, hop_dest, ts, ts))
         elif data == "":
-            query = "UPDATE announces SET hop_count = %s, hop_interface = %s, hop_dest = %s, ts_edit = %s WHERE dest = %s AND type = %s"
+            query = "UPDATE announces SET hop_count = %s, hop_interface = %s, hop_dest = %s, ts_edit = %s WHERE dest = %s AND dest_type = %s"
             dbc.execute(query, (hop_count, hop_interface, hop_dest, ts, dest, dest_type))
         else:
-            query = "UPDATE announces SET data = %s, location_lat = %s, location_lon = %s, owner = %s, state = %s, state_ts = %s, hop_count = %s, hop_interface = %s, hop_dest = %s, ts_edit = %s WHERE dest = %s AND type = %s"
+            query = "UPDATE announces SET data = %s, location_lat = %s, location_lon = %s, owner = %s, state = %s, state_ts = %s, hop_count = %s, hop_interface = %s, hop_dest = %s, ts_edit = %s WHERE dest = %s AND dest_type = %s"
             dbc.execute(query, (data, location_lat, location_lon, owner, state, state_ts, hop_count, hop_interface, hop_dest, ts, dest, dest_type))
 
     else:
-        ts = time.time()
+        ts = int(time.time())
+        state_ts = int(state_ts)
 
         if dest_recall and dest_recall_type:
-            query = "SELECT * FROM announces WHERE dest = ? AND type = ?"
+            query = "SELECT * FROM announces WHERE dest = ? AND dest_type = ?"
             dbc.execute(query, (dest_recall, dest_recall_type))
             result = dbc.fetchall()
             if len(result) > 0:
@@ -389,13 +389,13 @@ def db_add(dest, dest_type=0x01, dest_recall=None, dest_recall_type=None, data="
                 state_ts = entry[8]
 
         if not exist:
-            query = "INSERT OR REPLACE INTO announces (dest, type, data, location_lat, location_lon, owner, state, state_ts, hop_count, hop_interface, hop_dest, ts_add, ts_edit) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            query = "INSERT OR REPLACE INTO announces (dest, dest_type, data, location_lat, location_lon, owner, state, state_ts, hop_count, hop_interface, hop_dest, ts_add, ts_edit) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
             dbc.execute(query, (dest, dest_type, data, location_lat, location_lon, owner, state, state_ts, hop_count, hop_interface, hop_dest, ts, ts))
         elif data == "":
-            query = "UPDATE announces SET hop_count = ?, hop_interface = ?, hop_dest = ?, ts_edit = ? WHERE dest = ? AND type = ?"
+            query = "UPDATE announces SET hop_count = ?, hop_interface = ?, hop_dest = ?, ts_edit = ? WHERE dest = ? AND dest_type = ?"
             dbc.execute(query, (hop_count, hop_interface, hop_dest, ts , dest, dest_type))
         else:
-            query = "UPDATE announces SET data = ?, location_lat = ?, location_lon = ?, owner = ?, state = ?, state_ts = ?, hop_count = ?, hop_interface = ?, hop_dest = ?, ts_edit = ? WHERE dest = ? AND type = ?"
+            query = "UPDATE announces SET data = ?, location_lat = ?, location_lon = ?, owner = ?, state = ?, state_ts = ?, hop_count = ?, hop_interface = ?, hop_dest = ?, ts_edit = ? WHERE dest = ? AND dest_type = ?"
             dbc.execute(query, (data, location_lat, location_lon, owner, state, state_ts, hop_count, hop_interface, hop_dest, ts, dest, dest_type))
 
     db_commit()
