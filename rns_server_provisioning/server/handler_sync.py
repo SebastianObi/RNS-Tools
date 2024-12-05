@@ -17,7 +17,7 @@ from sqlalchemy.exc import SQLAlchemyError, IntegrityError, OperationalError
 
 #### Internal ####
 from utils.utils import invitation_code_generate, invitation_code_verify, RateLimiter, ResponseError
-from db.schema import (allocated_tasks, Announce, Device, InviteCode, Member, Service, task_definition,
+from db.schema import (allocated_tasks, Announce, Device, EVM_address, InviteCode, Member, Service, task_definition,
                        device_status, device_type, member_role, member_state, sex)
 
 
@@ -96,13 +96,13 @@ class HandlerSync:
             if _member:
                 raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_MemberFound, "account_create - Error: User already exists")
             _member = Member()
-            _member.username = account["display_name"]
+            _member.username = dest
             _member.display_name = account["display_name"]
             _member.email = account["email"] if account["email"] != "" else dest
             _member.password = account["password"]
-            _member.did = blockchain["did"] if blockchain["did"] != "" else "did:morpheus:"+dest
+            _member.did = blockchain[self.owner.BLOCKCHAIN_TOKEN_DID]["did"] if self.owner.BLOCKCHAIN_TOKEN_DID in blockchain and blockchain[self.owner.BLOCKCHAIN_TOKEN_DID]["did"] != "" else "did:morpheus:"+dest
             _member.rns_id = dest
-            _member.hydra_wallet_address = blockchain["address"] if blockchain["address"] != "" else dest
+            _member.hydra_wallet_address = blockchain[self.owner.BLOCKCHAIN_TOKEN_DID]["address"] if self.owner.BLOCKCHAIN_TOKEN_DID in blockchain and blockchain[self.owner.BLOCKCHAIN_TOKEN_DID]["address"] != "" else dest
             _member.first_name = ""
             _member.last_name = ""
             _member.registered_at = now
@@ -142,6 +142,15 @@ class HandlerSync:
                 _device._type = device_type(self.owner.config["handler_sync"].getint("account_device_type")).name
                 _device.status = device_status(self.owner.config["handler_sync"].getint("account_device_status")).name
                 self.owner.db.add(_device)
+
+            # EVM address
+            _evm_address = self.owner.db.query(EVM_address).filter_by(user=dest).first()
+            if _evm_address:
+                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_EntryFound, "account_create - Error: EVM address already exists")
+            _evm_address = EVM_address()
+            _evm_address.address = blockchain[self.owner.BLOCKCHAIN_TOKEN_PAY]["address"] if self.owner.BLOCKCHAIN_TOKEN_PAY in blockchain and blockchain[self.owner.BLOCKCHAIN_TOKEN_PAY]["address"] != "" else ""
+            _evm_address.user = dest
+            self.owner.db.add(_evm_address)
 
             # Invitation
             if account["invite"] and invitation_code_verify(account["invite"]):
@@ -205,6 +214,11 @@ class HandlerSync:
             if _device:
                 self.owner.db.delete(_device)
 
+            # EVM address
+            _evm_address = self.owner.db.query(EVM_address).filter_by(user=dest).first()
+            if _evm_address:
+                self.owner.db.delete(_evm_address)
+
             # Invitation
             _invite_codes = self.owner.db.query(InviteCode).filter_by(inviter=dest).filter(InviteCode.used_at.is_(None))
             if _invite_codes:
@@ -250,7 +264,7 @@ class HandlerSync:
             _member = self.owner.db.query(Member).filter_by(rns_id=dest).first()
             if not _member:
                 raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_MemberNotFound, "account_edit - Error: User does not exist")
-            _member.username = account["display_name"]
+            _member.username = dest
             _member.display_name = account["display_name"]
             _member.email = account["email"] if account["email"] != "" else dest
             _member.password = account["password"]
