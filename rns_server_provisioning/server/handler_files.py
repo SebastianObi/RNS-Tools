@@ -35,6 +35,11 @@ class HandlerFiles:
             RNS.log("Server - HandlerFiles: Path was created", RNS.LOG_NOTICE)
         RNS.log("Server - HandlerFiles: Path: " + self.path, RNS.LOG_INFO)
 
+        if "limiter_enabled" in self.owner.config["handler_files"] and  self.owner.config["handler_files"].getboolean("limiter_enabled"):
+            self.limiter = RateLimiter(int(self.owner.config["handler_files"]["limiter_calls"]), int(self.owner.config["handler_files"]["limiter_size"]), int(self.owner.config["handler_files"]["limiter_duration"]))
+        else:
+            self.limiter = None
+
 
     def register(self):
         array = self.files.copy()
@@ -45,11 +50,16 @@ class HandlerFiles:
 
         for file in array:
             if file not in self.files:
-                self.owner.destination.deregister_request_handler(file)
+                self.owner.deregister_request_handler(file)
 
         for file in self.files:
             if file not in array:
-                self.owner.destination.register_request_handler(self.root+file, response_generator=self.response_handler, allow=RNS.Destination.ALLOW_ALL)
+                self.owner.register_request_handler(
+                    path=self.root+file,
+                    response_generator=self.response_handler,
+                    limiter=self.limiter,
+                    limiter_type=self.owner.LIMITER_TYPE_NONE
+                )
 
 
     def scan(self, base_path):
@@ -67,18 +77,6 @@ class HandlerFiles:
 
 
     def response_handler(self, path, data, request_id, link_id, remote_identity, requested_at):
-        if not remote_identity:
-            return None
-
-        if self.owner.limiter_server and not self.owner.limiter_server.handle("server"):
-            return None
-
-        if self.owner.limiter_peer and not self.owner.limiter_peer.handle(str(remote_identity)):
-            return None
-
-        if self.owner.limiter_handler_files and not self.owner.limiter_handler_files.handle(str(remote_identity)):
-            return None
-
         if request_id:
             RNS.log("Server - HandlerFiles: Request "+RNS.prettyhexrep(request_id)+" for: "+str(path), RNS.LOG_VERBOSE)
         else:
@@ -167,23 +165,11 @@ class HandlerFiles:
 
                     generated = subprocess.run([file_path], stdout=subprocess.PIPE, env=env_map)
                     generated = generated.stdout
-                    if self.owner.limiter_server:
-                        self.owner.limiter_server.handle_size("server", len(generated))
-                    if self.owner.limiter_peer:
-                        self.owner.limiter_peer.handle_size(str(remote_identity), len(generated))
-                    if self.owner.limiter_handler_files:
-                        self.owner.limiter_handler_files.handle_size(str(remote_identity), len(generated))
                     return generated
                 else:
                     fh = open(file_path, "rb")
                     response_data = fh.read()
                     fh.close()
-                    if self.owner.limiter_server:
-                        self.owner.limiter_server.handle_size("server", len(response_data))
-                    if self.owner.limiter_peer:
-                        self.owner.limiter_peer.handle_size(str(remote_identity), len(response_data))
-                    if self.owner.limiter_handler_files:
-                        self.owner.limiter_handler_files.handle_size(str(remote_identity), len(response_data))
                     return response_data
             else:
                 RNS.log("Server - HandlerFiles: Request denied", RNS.LOG_VERBOSE)

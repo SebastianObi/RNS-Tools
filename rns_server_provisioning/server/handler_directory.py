@@ -31,6 +31,32 @@ class HandlerDirectory:
     def __init__(self, owner):
         self.owner = owner
 
+        if "limiter_enabled" in self.owner.config["handler_directory"] and  self.owner.config["handler_directory"].getboolean("limiter_enabled"):
+            self.limiter = RateLimiter(int(self.owner.config["handler_directory"]["limiter_calls"]), int(self.owner.config["handler_directory"]["limiter_size"]), int(self.owner.config["handler_directory"]["limiter_duration"]))
+        else:
+            self.limiter = None
+
+        root = self.owner.config["handler_directory"]["root"]
+
+        self.owner.register_request_handler(
+            path=root+"directory_announce",
+            response_generator=self.announce,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_MSGPACK
+        )
+        self.owner.register_request_handler(
+            path=root+"directory_member",
+            response_generator=self.member,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_MSGPACK
+        )
+        self.owner.register_request_handler(
+            path=root+"directory_service",
+            response_generator=self.service,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_MSGPACK
+        )
+
         self.db = None
         self.db_load()
 
@@ -42,7 +68,7 @@ class HandlerDirectory:
 
     def auth(self, dest, required=False):
         try:
-            _member = self.owner.db_session.query(Member).filter_by(rns_id=dest).first()
+            _member = self.owner.db.query(Member).filter_by(rns_id=dest).first()
             if _member:
                 if _member.state == member_state.restricted or _member.state == member_state.onhold:
                     return False
@@ -127,6 +153,9 @@ class HandlerDirectory:
     def announce(self, path, data, request_id, link_id, remote_identity, requested_at):
         RNS.log("Server - HandlerDirectory: announce", RNS.LOG_DEBUG)
         RNS.log(data, RNS.LOG_EXTREME)
+
+        if not data:
+            return msgpack.packb({self.owner.KEY_RESULT: self.owner.RESULT_NO_DATA})
 
         dest = RNS.hexrep(RNS.Destination.hash_from_name_and_identity(self.owner.aspect_filter_conv, remote_identity), delimit=False)
 
@@ -431,6 +460,9 @@ class HandlerDirectory:
     def member(self, path, data, request_id, link_id, remote_identity, requested_at):
         RNS.log("Server - HandlerDirectory: member", RNS.LOG_DEBUG)
         RNS.log(data, RNS.LOG_EXTREME)
+
+        if not data:
+            return msgpack.packb({self.owner.KEY_RESULT: self.owner.RESULT_NO_DATA})
 
         dest = RNS.hexrep(RNS.Destination.hash_from_name_and_identity(self.owner.aspect_filter_conv, remote_identity), delimit=False)
 
@@ -829,6 +861,9 @@ class HandlerDirectory:
     def service(self, path, data, request_id, link_id, remote_identity, requested_at):
         RNS.log("Server - HandlerDirectory: service", RNS.LOG_DEBUG)
         RNS.log(data, RNS.LOG_EXTREME)
+
+        if not data:
+            return msgpack.packb({self.owner.KEY_RESULT: self.owner.RESULT_NO_DATA})
 
         dest = RNS.hexrep(RNS.Destination.hash_from_name_and_identity(self.owner.aspect_filter_conv, remote_identity), delimit=False)
 

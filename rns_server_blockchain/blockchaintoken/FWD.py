@@ -26,7 +26,17 @@
 ##############################################################################################################
 
 
+#### FWD ####
+import time
+import os
+import RNS.vendor.umsgpack as msgpack
+from Crypto.Hash import HMAC
+
+
 class BlockchainTokenFWD():
+    AMOUNT = 0
+    FEE    = 0
+    NONCE  = 0
 
     def __init__(self, owner, name):
         self.owner = owner
@@ -36,6 +46,9 @@ class BlockchainTokenFWD():
             "FWD": {},
         }
 
+        self.data = None
+        self.data_changed = False
+
 
     #################################################
     # Accounts                                      #
@@ -43,7 +56,37 @@ class BlockchainTokenFWD():
 
 
     def accounts_add(self, token, data):
-        raise ValueError("Not implemented")
+        if "phrase" in data:
+            phrase = data["phrase"].strip()
+
+        account_id = HMAC.new(phrase.encode("utf8")).hexdigest()
+
+        if account_id not in self.data["accounts"]:
+            self.data["accounts"][account_id] = {
+                "balance": self.AMOUNT,
+                "nonce":   self.NONCE
+            }
+
+            if self.AMOUNT > 0:
+                self.data["transactions"][self.owner.generate_id(64)] = {
+                    "amount":  self.AMOUNT,
+                    "comment": "Initial test money",
+                    "dest":    account_id,
+                    "fee":     self.FEE,
+                    "source":  self.data["uid"],
+                    "ts":      int(time.time())
+                }
+
+            self.data_changed = True
+
+        result = {
+            "account_id": account_id,
+            "data": {
+            },
+            "state":      self.owner.ACCOUNT_STATE_SUCCESSFULL
+        }
+
+        return result
 
 
     def accounts_count(self, token, filter, search):
@@ -51,7 +94,20 @@ class BlockchainTokenFWD():
 
 
     def accounts_get(self, token, account_id):
-        raise ValueError("Not implemented")
+        if account_id in self.data["accounts"]:
+            result = {
+                "account_id": account_id,
+                "balance":    self.data["accounts"][account_id]["balance"],
+                "nonce":      self.data["accounts"][account_id]["nonce"]
+            }
+        else:
+            result = {
+                "account_id": account_id,
+                "balance":    0,
+                "nonce":      0
+            }
+
+        return result
 
 
     def accounts_list(self, token, filter, search, order, limit, limit_start):
@@ -102,11 +158,14 @@ class BlockchainTokenFWD():
 
 
     def connection_response_start(self, token):
-        pass
+        if not self.data:
+            self.data_load()
 
 
     def connection_response_stop(self, token):
-        pass
+        if self.data_changed:
+            self.data_changed = False
+            self.data_save()
 
 
     #################################################
@@ -147,7 +206,42 @@ class BlockchainTokenFWD():
 
 
     def transactions_add(self, token, account_id, account_data, transaction_data):
-        raise ValueError("Not implemented")
+        if account_id not in self.data["accounts"]:
+            raise ValueError("Source account not exist")
+
+        if transaction_data["dest"] not in self.data["accounts"]:
+            raise ValueError("Destination account not exist")
+
+        if transaction_data["nonce"] != self.data["accounts"][account_id]["nonce"]:
+            raise ValueError("Nonce invalid")
+
+        fee = transaction_data["fee"] if "fee" in transaction_data else self.FEE
+
+        if self.data["accounts"][account_id]["balance"] < (transaction_data["amount"]+fee):
+            raise ValueError("Balance not sufficient")
+
+        transaction_id = self.owner.generate_id(64)
+
+        self.data["transactions"][transaction_id] = {
+                "amount":  transaction_data["amount"],
+                "comment": transaction_data["comment"],
+                "dest":    transaction_data["dest"],
+                "fee":     fee,
+                "source":  account_id,
+                "ts":      int(time.time())
+        }
+
+        self.data["accounts"][transaction_data["dest"]]["balance"] += transaction_data["amount"]
+        self.data["accounts"][account_id]["balance"] -= (transaction_data["amount"]+fee)
+        self.data["accounts"][account_id]["nonce"] += 1
+
+        self.data_changed = True
+
+        result = {
+            "transaction_id": transaction_id
+        }
+
+        return result
 
 
     def transactions_count(self, token, filter, search):
@@ -157,8 +251,57 @@ class BlockchainTokenFWD():
     def transactions_get(self, token, account_id, ts):
         result = {}
 
+        for transaction_id, transaction in self.data["transactions"].items():
+            if (transaction["source"] == account_id or transaction["dest"] == account_id) and transaction["ts"] > ts:
+                result[transaction_id] = {
+                    "amount":  transaction["amount"],
+                    "comment": transaction["comment"],
+                    "dest":    transaction["dest"],
+                    "fee":     transaction["fee"],
+                    "source":  transaction["source"],
+                    "ts":      transaction["ts"]
+                }
+
         return result
 
 
     def transactions_list(self, token, filter, search, order, limit, limit_start):
         raise ValueError("Not implemented")
+
+
+    #################################################
+    # Helpers - Data                                #
+    #################################################
+
+
+    def data_load(self):
+        try:
+            file = self.owner.storage_path+"/"+self.name+".data"
+            if os.path.isfile(file):
+                fh = open(file, "rb")
+                self.data = msgpack.unpackb(fh.read())
+                fh.close()
+            else:
+                self.data_default()
+                fh = open(self.owner.storage_path+"/"+self.name+".data", "wb")
+                fh.write(msgpack.packb(self.data))
+                fh.close()
+        except:
+            self.data_default()
+
+
+    def data_save(self):
+        try:
+            file = self.owner.storage_path+"/"+self.name+".data"
+            fh = open(self.owner.storage_path+"/"+self.name+".data", "wb")
+            fh.write(msgpack.packb(self.data))
+            fh.close()
+        except:
+            pass
+
+
+    def data_default(self):
+        self.data = {}
+        self.data["accounts"]     = {}
+        self.data["transactions"] = {}
+        self.data["uid"]          = self.owner.generate_id(32)

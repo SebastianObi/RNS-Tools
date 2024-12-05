@@ -26,7 +26,7 @@
 ##############################################################################################################
 
 
-#### Test ####
+#### TEST ####
 import time
 import os
 import RNS.vendor.umsgpack as msgpack
@@ -67,14 +67,15 @@ class BlockchainTokenTEST():
                 "nonce":   self.NONCE
             }
 
-            self.data["transactions"][self.owner.generate_id(64)] = {
-                "amount":  self.AMOUNT,
-                "comment": "Initial test money",
-                "dest":    account_id,
-                "fee":     self.FEE,
-                "source":  self.data["uid"],
-                "ts":      int(time.time())
-            }
+            if self.AMOUNT > 0:
+                self.data["transactions"][self.owner.generate_id(64)] = {
+                    "amount":  self.AMOUNT,
+                    "comment": "Initial test money",
+                    "dest":    account_id,
+                    "fee":     self.FEE,
+                    "source":  self.data["uid"],
+                    "ts":      int(time.time())
+                }
 
             self.data_changed = True
 

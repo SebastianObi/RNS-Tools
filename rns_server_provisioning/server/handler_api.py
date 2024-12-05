@@ -25,21 +25,111 @@ from db.schema import (Member, Device, sex, member_state,
 
 
 ##############################################################################################################
-# Globals
-
-
-limiter1 = RateLimiter(5, 0, 60) # validate_invite_code
-limiter2 = RateLimiter(5, 0, 60) # verify_password
-limiter3 = RateLimiter(5, 0, 60) # get_similar_contacts_for_rns
-
-
-##############################################################################################################
 # HandlerAPI Class
 
 
 class HandlerAPI:
-    @staticmethod
-    def add_member(session, path, data, request_id, link_id, remote_identity, requested_at):
+    def __init__(self, owner):
+        self.owner = owner
+
+        if "limiter_enabled" in self.owner.config["handler_api"] and  self.owner.config["handler_api"].getboolean("limiter_enabled"):
+            self.limiter = RateLimiter(int(self.owner.config["handler_api"]["limiter_calls"]), int(self.owner.config["handler_api"]["limiter_size"]), int(self.owner.config["handler_api"]["limiter_duration"]))
+        else:
+            self.limiter = None
+
+        self.limiter1 = RateLimiter(5, 0, 60) # validate_invite_code
+        self.limiter2 = RateLimiter(5, 0, 60) # verify_password
+        self.limiter3 = RateLimiter(5, 0, 60) # get_similar_contacts_for_rns
+
+        root = self.owner.config["handler_api"]["root"]
+
+        self.owner.register_request_handler(
+            path=root+"member/register",
+            response_generator=self.add_member,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_JSON
+        )
+        self.owner.register_request_handler(
+            path=root+"member/get-member",
+            response_generator=self.get_member,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_JSON
+        )
+        self.owner.register_request_handler(
+            path=root+"member/get-member-status",
+            response_generator=self.get_member_status_with_rns,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_JSON
+        )
+        self.owner.register_request_handler(
+            path=root+"member/validate-ic",
+            response_generator=self.validate_invite_code,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_JSON
+        )
+        self.owner.register_request_handler(
+            path=root+"device/add-device",
+            response_generator=self.add_device,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_JSON
+        )
+        self.owner.register_request_handler(
+            path=root+"device/get-devices-for-member",
+            response_generator=self.get_all_devices_for_member_with_rns,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_JSON
+        )
+        self.owner.register_request_handler(
+            path=root+"device/get-device-byid",
+            response_generator=self.get_device_by_device_id,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_JSON
+        )
+        self.owner.register_request_handler(
+            path=root+"member/get-invite-codes",
+            response_generator=self.get_invite_codes_for_member_with_rns_id,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_JSON
+        )
+        self.owner.register_request_handler(
+            path=root+"device/device-status",
+            response_generator=self.get_device_status_with_filter,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_JSON
+        )
+        self.owner.register_request_handler(
+            path=root+"member/update-device",
+            response_generator=self.update_member_with_rns_id,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_JSON
+        )
+        self.owner.register_request_handler(
+            path=root+"device/update-device",
+            response_generator=self.update_device_with_filters,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_JSON
+        )
+        self.owner.register_request_handler(
+            path=root+"member/reset-password",
+            response_generator=self.reset_password_for_rns_id,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_JSON
+        )
+        self.owner.register_request_handler(
+            path=root+"member/change-password",
+            response_generator=self.change_password,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_JSON
+        )
+        self.owner.register_request_handler(
+            path=root+"member/verify-password",
+            response_generator=self.verify_password,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_JSON
+        )
+
+
+    def add_member(self, path, data, request_id, link_id, remote_identity, requested_at):
         try:
             if type(remote_identity) == type(None):
                 return response_create('0x00', resp.get('0x00'), "Invalid identity")
@@ -52,9 +142,9 @@ class HandlerAPI:
             if not data.get('invite_code'):
                 return response_create('0x02', resp.get('0x02'), 'invalid invite code')
             else:
-                ic = HandlerAPI.validate_invite_code(session, path, data, request_id, link_id, remote_identity, requested_at)
+                ic = self.validate_invite_code(path, data, request_id, link_id, remote_identity, requested_at)
                 if ic.status == 'RESULT_OK':
-                    invite_code = session.query(InviteCode).filter_by(code=data.get('invite_code')).first()
+                    invite_code = self.owner.db.query(InviteCode).filter_by(code=data.get('invite_code')).first()
                 else:
                     return ic
 
@@ -66,48 +156,47 @@ class HandlerAPI:
                 return response_create('0x02', resp.get('0x02'), "Invalid Sex type")
 
             member = Member.from_json(data,remote_identity)
-            session.add(member)
+            self.owner.db.add(member)
 
             setattr(invite_code, 'invitee', member.rns_id)
             setattr(invite_code, 'used_at', int(time.time()))
 
-            session.commit()
+            self.owner.db.commit()
 
             return response_create('201', resp.get('201'), "Member registeration success")
 
         except IntegrityError as e:
             # Handle database integrity errors (e.g., unique constraint violations)
-            session.rollback()
+            self.owner.db.rollback()
             return response_create('409', resp.get('409'), f"IntegrityError: {str(e)}")
 
         except OperationalError as e:
             # Handle operational errors (e.g., database connection issues)
-            session.rollback()
+            self.owner.db.rollback()
             return response_create('503', resp.get('503'), f"OperationalError: {str(e)}")
 
         except SQLAlchemyError as e:
             # Handle other general SQLAlchemy errors
-            session.rollback()
+            self.owner.db.rollback()
             return response_create('500', resp.get('500'), f"SQLAlchemyError: {str(e)}")
 
         except TypeError as e:
             # Handle type errors specifically
-            session.rollback()
+            self.owner.db.rollback()
             return response_create('0x01', resp.get('0x01'), f"TypeError: {str(e)}")
 
         except Exception as e:
             # Handle any other exceptions
-            session.rollback()
+            self.owner.db.rollback()
             return response_create('500', resp.get('500'), f"Error: {str(e)}")
 
 
-    @staticmethod
-    def get_member(session, path, data, request_id, link_id, remote_identity, requested_at):
+    def get_member(self, path, data, request_id, link_id, remote_identity, requested_at):
         try:
             if not isinstance(remote_identity, type(RNS.Identity())):
                 return response_create('0x00', resp.get('0x00'), "Invalid identity")
 
-            member = session.query(Member).filter_by(rns_id=str(remote_identity)).first()
+            member = self.owner.db.query(Member).filter_by(rns_id=str(remote_identity)).first()
 
             if isinstance(member, type(None)):
                 return response_create('0x03', resp.get('0x03'), 'Member not found')
@@ -121,13 +210,12 @@ class HandlerAPI:
             return response_create('500', resp.get('500'), f"Error: {str(e)}")
 
 
-    @staticmethod
-    def get_member_status_with_rns(session, path, data, request_id, link_id, remote_identity, requested_at):
+    def get_member_status_with_rns(self, path, data, request_id, link_id, remote_identity, requested_at):
         try:
             if type(remote_identity) == type(None):
                 return response_create('0x00', resp.get('0x00'), "Invalid identity")
 
-            member = session.query(Member).filter_by(rns_id=str(remote_identity)).first()
+            member = self.owner.db.query(Member).filter_by(rns_id=str(remote_identity)).first()
 
             if isinstance(member, type(None)):
                 return response_create('0x03', resp.get('0x03'), 'Member not found')
@@ -138,13 +226,12 @@ class HandlerAPI:
             return response_create('500', resp.get('500'), f"Error: {str(e)}")
 
 
-    @staticmethod
-    def validate_invite_code(session, path, data, request_id, link_id, remote_identity, requested_at):
+    def validate_invite_code(self, path, data, request_id, link_id, remote_identity, requested_at):
         try:
             if not isinstance(remote_identity, type(RNS.Identity())):
                 return response_create('0x00', resp.get('0x00'), "Invalid identity")
 
-            if not limiter1.handle(str(remote_identity)):
+            if not self.limiter1.handle(str(remote_identity)):
                 return response_create('429', resp.get('429'), 'Unusual activity detected')
 
             data = json.loads(data)
@@ -159,7 +246,7 @@ class HandlerAPI:
                 if len(invite_code) != 5:
                     return response_create('0x02', resp.get('0x02'), 'invalid invite code')
 
-                invite_code = session.query(InviteCode).filter_by(code=invite_code).first()
+                invite_code = self.owner.db.query(InviteCode).filter_by(code=invite_code).first()
 
                 if type(invite_code) == type(None):
                     return response_create('0x02', resp.get('0x02'), 'invalid invite code')
@@ -179,8 +266,7 @@ class HandlerAPI:
             return response_create('500', resp.get('500'), f"Error: {str(e)}")
 
 
-    @staticmethod
-    def add_device(session, path, data, request_id, link_id, remote_identity, requested_at):
+    def add_device(self, path, data, request_id, link_id, remote_identity, requested_at):
         try:
             if type(remote_identity) == type(None):
                 return response_create('0x00', resp.get('0x00'), "Invalid identity")
@@ -193,24 +279,24 @@ class HandlerAPI:
             print(data)
 
             _device = Device.from_json(data,remote_identity)
-            session.add(_device)
-            session.commit()
+            self.owner.db.add(_device)
+            self.owner.db.commit()
 
             return response_create('200', resp.get('200'), 'Device added successfully' )
 
         except IntegrityError as e:
             # Handle database integrity errors (e.g., unique constraint violations)
-            session.rollback()
+            self.owner.db.rollback()
             return response_create('409', resp.get('409'), f"IntegrityError: {str(e.orig)}")
 
         except OperationalError as e:
             # Handle operational errors (e.g., database connection issues)
-            session.rollback()
+            self.owner.db.rollback()
             return response_create('503', resp.get('503'), f"OperationalError: {str(e.orig)}")
 
         except SQLAlchemyError as e:
             # Handle other general SQLAlchemy errors
-            session.rollback()
+            self.owner.db.rollback()
             return response_create('500', resp.get('500'), f"SQLAlchemyError: {str(e)}")
 
         except TypeError as e:
@@ -222,13 +308,12 @@ class HandlerAPI:
             return response_create('500', resp.get('500'), f"Error: {str(e)}")
 
 
-    @staticmethod
-    def get_all_devices_for_member_with_rns(session, path, data, request_id, link_id, remote_identity, requested_at):
+    def get_all_devices_for_member_with_rns(self, path, data, request_id, link_id, remote_identity, requested_at):
         try:
             if not isinstance(remote_identity, type(RNS.Identity())):
                 return response_create('0x00', resp.get('0x00'), "Invalid identity")
 
-            _devices = session.query(Device).filter_by(device_associated_user_id=str(remote_identity)).all()
+            _devices = self.owner.db.query(Device).filter_by(device_associated_user_id=str(remote_identity)).all()
 
             if not len(_devices):
                 return response_create('0x04', resp.get('0x04'), 'No device found')
@@ -242,8 +327,7 @@ class HandlerAPI:
             return response_create('500', resp.get('500'), f"Error: {str(e)}")
 
 
-    @staticmethod
-    def get_device_by_device_id(session, path, data, request_id, link_id, remote_identity, requested_at):
+    def get_device_by_device_id(self, path, data, request_id, link_id, remote_identity, requested_at):
         try:
             if type(remote_identity) == type(None):
                 return response_create('0x00', resp.get('0x00'), "Invalid identity")
@@ -260,13 +344,13 @@ class HandlerAPI:
             else:
                 if data.get('filter') == 'device_id':
                     if data.get('device_id', None) != None:
-                        _device = session.query(Device).filter_by(device_id=data.get('device_id')).first()
+                        _device = self.owner.db.query(Device).filter_by(device_id=data.get('device_id')).first()
                     else:
                         return response_create('0x04', resp.get('0x04'), 'Invalid Device ID')
 
                 elif data.get('filter') == 'device_rns_id':
                     if data.get('device_rns_id', None) != None:
-                        _device = session.query(Device).filter_by(device_rns_id=data.get('device_rns_id')).first()
+                        _device = self.owner.db.query(Device).filter_by(device_rns_id=data.get('device_rns_id')).first()
                     else:
                         return response_create('0x04', resp.get('0x04'), 'Invalid device_rns_id')
 
@@ -279,13 +363,12 @@ class HandlerAPI:
             return response_create('500', resp.get('500'), f"Error: {str(e)}")
 
 
-    @staticmethod
-    def get_invite_codes_for_member_with_rns_id(session, path, data, request_id, link_id, remote_identity, requested_at):
+    def get_invite_codes_for_member_with_rns_id(self, path, data, request_id, link_id, remote_identity, requested_at):
         try:
             if not isinstance(remote_identity, type(RNS.Identity())):
                 return response_create('0x00', resp.get('0x00'), "Invalid identity")
 
-            codes = session.query(InviteCode).filter_by(inviter=str(remote_identity), is_valid=True, used_at=None).all()
+            codes = self.owner.db.query(InviteCode).filter_by(inviter=str(remote_identity), is_valid=True, used_at=None).all()
 
             if not len(codes):
                 return response_create('0x04', resp.get('0x04'), 'Invite code not found')
@@ -299,8 +382,7 @@ class HandlerAPI:
             return response_create('500', resp.get('500'), f"Error: {str(e)}")
 
 
-    @staticmethod
-    def get_device_status_with_filter(session, path, data, request_id, link_id, remote_identity, requested_at):
+    def get_device_status_with_filter(self, path, data, request_id, link_id, remote_identity, requested_at):
         try:
             if type(remote_identity) == type(None):
                 return response_create('0x00', resp.get('0x00'), "Invalid identity")
@@ -317,13 +399,13 @@ class HandlerAPI:
             else:
                 if data.get('filter') == 'device_id':
                     if data.get('device_id', None) != None:
-                        _device = session.query(Device).filter_by(device_id=data.get('device_id')).first()
+                        _device = self.owner.db.query(Device).filter_by(device_id=data.get('device_id')).first()
                     else:
                         return response_create('0x04', resp.get('0x04'), 'Invalid Device ID')
 
                 elif data.get('filter') == 'device_rns_id':
                     if data.get('device_rns_id', None) != None:
-                        _device = session.query(Device).filter_by(device_rns_id=data.get('device_rns_id')).first()
+                        _device = self.owner.db.query(Device).filter_by(device_rns_id=data.get('device_rns_id')).first()
                     else:
                         return response_create('0x04', resp.get('0x04'), 'Invalid device_rns_id')
 
@@ -337,8 +419,7 @@ class HandlerAPI:
             return response_create('500', resp.get('500'), f"Error: {str(e)}")
 
 
-    @staticmethod
-    def update_member_with_rns_id(session, path, data, request_id, link_id, remote_identity, requested_at):
+    def update_member_with_rns_id(self, path, data, request_id, link_id, remote_identity, requested_at):
         try:
             if type(remote_identity) == type(None):
                 return response_create('0x00', resp.get('0x00'), "Invalid identity")
@@ -348,14 +429,14 @@ class HandlerAPI:
                 print(type(data))
                 return response_create('0x01', resp.get('0x01'), "Invalid Data")
 
-            member = session.query(Member).filter_by(rns_id=str(remote_identity)).first()
+            member = self.owner.db.query(Member).filter_by(rns_id=str(remote_identity)).first()
 
             if member:
                 for key, value in data.items():
                     if hasattr(member, key) and key not in MEMBER_IMMUTABLE_FIELDS:
                         setattr(member, key, value)
 
-                session.commit()
+                self.owner.db.commit()
                 return response_create('200', resp.get('200'), 'Member updated sucessfully')
             else:
                 return response_create('0x03', resp.get('0x03'), 'No member found')
@@ -364,8 +445,7 @@ class HandlerAPI:
             return response_create('500', resp.get('500'), f"Error: {str(e)}")
 
 
-    @staticmethod
-    def update_device_with_filters(session, path, data, request_id, link_id, remote_identity, requested_at):
+    def update_device_with_filters(self, path, data, request_id, link_id, remote_identity, requested_at):
         try:
             if type(remote_identity) == type(None):
                 return response_create('0x00', resp.get('0x00'), "Invalid identity")
@@ -382,7 +462,7 @@ class HandlerAPI:
             else:
                 if data.get('filter') == 'device_id':
                     if data.get('device_id', None) != None:
-                        _device = session.query(Device).filter_by(device_id=data.get('device_id')).first()
+                        _device = self.owner.db.query(Device).filter_by(device_id=data.get('device_id')).first()
 
                         if _device:
                             if _device.device_associated_user_id == str(remote_identity):
@@ -390,7 +470,7 @@ class HandlerAPI:
                                     if hasattr(_device, key) and key not in DEVICE_IMMUTABLE_FIELDS:
                                         setattr(_device, key, value)
 
-                                session.commit()
+                                self.owner.db.commit()
                                 return response_create('200', resp.get('200'), 'Device updated sucessfully')
 
                             else:
@@ -402,7 +482,7 @@ class HandlerAPI:
 
                 elif data.get('filter') == 'device_rns_id':
                     if data.get('device_id', None) != None:
-                        _device = session.query(Device).filter_by(device_rns_id=data.get('device_rns_id')).first()
+                        _device = self.owner.db.query(Device).filter_by(device_rns_id=data.get('device_rns_id')).first()
 
                         if _device:
                             if _device.device_associated_user_id == str(remote_identity):
@@ -410,7 +490,7 @@ class HandlerAPI:
                                     if hasattr(_device, key) and key not in MEMBER_IMMUTABLE_FIELDS:
                                         setattr(_device, key, value)
 
-                                session.commit()
+                                self.owner.db.commit()
                                 return response_create('200', resp.get('200'), 'Device updated sucessfully')
 
                             else:
@@ -424,8 +504,7 @@ class HandlerAPI:
             return response_create('500', resp.get('500'), f"Error: {str(e)}")
 
 
-    @staticmethod
-    def reset_password_for_rns_id(session, path, data, request_id, link_id, remote_identity, requested_at):
+    def reset_password_for_rns_id(self, path, data, request_id, link_id, remote_identity, requested_at):
         try:
             if type(remote_identity) == type(None):
                 return response_create('0x00', resp.get('0x00'), "Invalid identity")
@@ -436,11 +515,11 @@ class HandlerAPI:
                 return response_create('0x01', resp.get('0x01'), "Invalid Data")
 
             if data.get('new_password', None) != None:
-                member = session.query(Member).filter_by(rns_id=str(remote_identity)).first()
+                member = self.owner.db.query(Member).filter_by(rns_id=str(remote_identity)).first()
                 if member:
                     password_hash = password_hash_get(data.get('new_password'))
                     member.password = password_hash
-                    session.commit()
+                    self.owner.db.commit()
                     return response_create('200', resp.get('200'), 'Password reset sucessfull')
 
                 else:
@@ -452,8 +531,7 @@ class HandlerAPI:
             return response_create('500', resp.get('500'), f"Error: {str(e)}")
 
 
-    @staticmethod
-    def change_password(session, path, data, request_id, link_id, remote_identity, requested_at):
+    def change_password(self, path, data, request_id, link_id, remote_identity, requested_at):
         try:
             if type(remote_identity) == type(None):
                 return response_create('0x00', resp.get('0x00'), "Invalid identity")
@@ -464,11 +542,11 @@ class HandlerAPI:
                 return response_create('0x01', resp.get('0x01'), "Invalid Data")
 
             if data.get('old_password', None) != None and data.get('new_password', None) != None:
-                member = session.query(Member).filter_by(rns_id=str(remote_identity)).first()
+                member = self.owner.db.query(Member).filter_by(rns_id=str(remote_identity)).first()
                 if member:
                     if password_hash_check(data.get('old_password'), member.password):
                         member.password = password_hash_get(data.get("new_password"))
-                        session.commit()
+                        self.owner.db.commit()
                         return response_create('200', resp.get('200'), 'Password change sucessfull')
                     else:
                         return response_create('0x02', resp.get('0x02'), 'Invalid old password')
@@ -481,13 +559,12 @@ class HandlerAPI:
             return response_create('500', resp.get('500'), f"Error: {str(e)}")
 
 
-    @staticmethod
-    def verify_password(session, path, data, request_id, link_id, remote_identity, requested_at):
+    def verify_password(self, path, data, request_id, link_id, remote_identity, requested_at):
         try:
             if type(remote_identity) == type(None):
                 return response_create('0x00', resp.get('0x00'), "Invalid identity")
 
-            if not limiter2.handle(str(remote_identity)):
+            if not self.limiter2.handle(str(remote_identity)):
                 return response_create('429', resp.get('429'), 'Unusual activity detected')
 
             data = json.loads(data)
@@ -496,7 +573,7 @@ class HandlerAPI:
                 return response_create('0x01', resp.get('0x01'), "Invalid Data")
 
             if data.get('password', None) != None:
-                member = session.query(Member).filter_by(rns_id=str(remote_identity)).first()
+                member = self.owner.db.query(Member).filter_by(rns_id=str(remote_identity)).first()
                 if member:
                     print(data.get('password'))
                     if password_hash_check(data.get('password'), member.password):
@@ -512,13 +589,12 @@ class HandlerAPI:
             return response_create('500', resp.get('500'), f"Error: {str(e)}",  data={'is_correct':False})
 
 
-    @staticmethod
-    def get_similar_contacts_for_rns(session, path, data, request_id, link_id, remote_identity, requested_at):
+    def get_similar_contacts_for_rns(self, path, data, request_id, link_id, remote_identity, requested_at):
         try:
             if type(remote_identity) == type(None):
                 return response_create('0x00', resp.get('0x00'), "Invalid identity")
 
-            if not limiter3.handle(str(remote_identity)):
+            if not self.limiter3.handle(str(remote_identity)):
                 return response_create('429', resp.get('429'), 'Unusual activity detected')
 
             data = json.loads(data)
@@ -528,14 +604,14 @@ class HandlerAPI:
 
             order_by = data.get('order_by', 'ASC').upper()
 
-            member = session.query(Member).filter_by(id=str(remote_identity)).first()
+            member = self.owner.db.query(Member).filter_by(id=str(remote_identity)).first()
 
             if not member:
                 return response_create('0x03', resp.get('0x03'), 'Member not found')
 
             order_func = asc if order_by == 'ASC' else desc
 
-            similar_members = session.query(Member).filter(
+            similar_members = self.owner.db.query(Member).filter(
                 (Member.country == member.country) |
                 (Member.state_name == member.state_name) |
                 (Member.city == member.city) |

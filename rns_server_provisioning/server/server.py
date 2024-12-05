@@ -15,7 +15,7 @@ import RNS
 import RNS.vendor.umsgpack as msgpack
 
 #### Internal ####
-from utils.utils import RateLimiter, ResponseError
+from utils.utils import RateLimiter, ResponseError, response_create, RESPONSE_CODES as resp
 from db.connection import db_session
 
 
@@ -156,6 +156,10 @@ class ServerProvisioning:
         "data": KEY_TA_DATA,
         "ts":   KEY_TA_TS,
     }
+
+    LIMITER_TYPE_JSON    = 0x00
+    LIMITER_TYPE_MSGPACK = 0x01
+    LIMITER_TYPE_NONE    = 0x02
 
     RESULT_ERROR       = 0x00
     RESULT_OK          = 0x01
@@ -320,7 +324,7 @@ class ServerProvisioning:
 
         self.destination.set_link_established_callback(self.peer_connected)
 
-        self.db_session = db_session(host=self.config["database"]["host"], port=self.config["database"]["port"], user=self.config["database"]["user"], password=self.config["database"]["password"], database=self.config["database"]["database"])
+        self.db = db_session(host=self.config["database"]["host"], port=self.config["database"]["port"], user=self.config["database"]["user"], password=self.config["database"]["password"], database=self.config["database"]["database"])
 
         if limiter_server_enabled:
             self.limiter_server = RateLimiter(int(limiter_server_calls), int(limiter_server_size), int(limiter_server_duration))
@@ -332,12 +336,18 @@ class ServerProvisioning:
         else:
             self.limiter_peer = None
 
+        # HandlerAPI
+        if self.config.has_section("handler_api") and self.config["handler_api"].getboolean("enabled"):
+            from server.handler_api import HandlerAPI
+            self.handler_api = HandlerAPI(self)
+
+        # HandlerDirectory
+        if self.config.has_section("handler_directory") and self.config["handler_directory"].getboolean("enabled"):
+            from server.handler_directory import HandlerDirectory
+            self.handler_directory = HandlerDirectory(self)
+
         # HandlerFiles
         if self.config.has_section("handler_files") and self.config["handler_files"].getboolean("enabled"):
-            if "limiter_enabled" in self.config["handler_files"] and self.config["handler_files"].getboolean("limiter_enabled"):
-                self.limiter_handler_files = RateLimiter(int(self.config["handler_files"]["limiter_calls"]), int(self.config["handler_files"]["limiter_size"]), int(self.config["handler_files"]["limiter_duration"]))
-            else:
-                self.limiter_handler_files = None
             from server.handler_files import HandlerFiles
             self.handler_files = HandlerFiles(
                 owner=self,
@@ -346,6 +356,16 @@ class ServerProvisioning:
                 ext_allow=self.config["handler_files"]["ext_allow"].split(","),
                 ext_deny=self.config["handler_files"]["ext_deny"].split(",")
             )
+
+        # Handler IOP
+        if self.config.has_section("handler_iop") and self.config["handler_iop"].getboolean("enabled"):
+            from server.handler_iop import HandlerIOP
+            self.handler_iop = HandlerIOP(self)
+
+        # HandlerSync
+        if self.config.has_section("handler_sync") and self.config["handler_sync"].getboolean("enabled"):
+            from server.handler_sync import HandlerSync
+            self.handler_sync = HandlerSync(self)
 
 
     def start(self):
@@ -477,217 +497,52 @@ class ServerProvisioning:
         if self.config.has_section("handler_files") and self.config["handler_files"].getboolean("enabled"):
             self.handler_files.register()
 
-        if not initial:
-            return
 
-        # HandlerAPI
-        if self.config.has_section("handler_api") and self.config["handler_api"].getboolean("enabled"):
-            if "limiter_enabled" in self.config["handler_api"] and  self.config["handler_api"].getboolean("limiter_enabled"):
-                self.limiter_handler_api = RateLimiter(int(self.config["handler_api"]["limiter_calls"]), int(self.config["handler_api"]["limiter_size"]), int(self.config["handler_api"]["limiter_duration"]))
-            else:
-                self.limiter_handler_api = None
-            root = self.config["handler_api"]["root"]
-            from server.handler_api import HandlerAPI
-
-            self.destination.register_request_handler(
-                root+"member/register",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: HandlerAPI.add_member(self.db_session, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-            self.destination.register_request_handler(
-                root+"member/get-member",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: HandlerAPI.get_member(self.db_session, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-            self.destination.register_request_handler(
-                root+"member/get-member-status",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: HandlerAPI.get_member_status_with_rns(self.db_session, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-            self.destination.register_request_handler(
-                root+"member/validate-ic",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: HandlerAPI.validate_invite_code(self.db_session, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-            self.destination.register_request_handler(
-                root+"device/add-device",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: HandlerAPI.add_device(self.db_session, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-            self.destination.register_request_handler(
-                root+"device/get-devices-for-member",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: HandlerAPI.get_all_devices_for_member_with_rns(self.db_session, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-            self.destination.register_request_handler(
-                root+"device/get-device-byid",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: HandlerAPI.get_device_by_device_id(self.db_session, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-            self.destination.register_request_handler(
-                root+"member/get-invite-codes",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: HandlerAPI.get_invite_codes_for_member_with_rns_id(self.db_session, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-            self.destination.register_request_handler(
-                root+"device/device-status",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: HandlerAPI.get_device_status_with_filter(self.db_session, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-            self.destination.register_request_handler(
-                root+"member/update-device",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: HandlerAPI.update_member_with_rns_id(self.db_session, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-            self.destination.register_request_handler(
-                root+"device/update-device",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: HandlerAPI.update_device_with_filters(self.db_session, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-            self.destination.register_request_handler(
-                root+"member/reset-password",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: HandlerAPI.reset_password_for_rns_id(self.db_session, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-            self.destination.register_request_handler(
-                root+"member/change-password",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: HandlerAPI.change_password(self.db_session, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-            self.destination.register_request_handler(
-                root+"member/verify-password",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: HandlerAPI.verify_password(self.db_session, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-
-        # HandlerDirectory
-        if self.config.has_section("handler_directory") and self.config["handler_directory"].getboolean("enabled"):
-            if "limiter_enabled" in self.config["handler_directory"] and  self.config["handler_directory"].getboolean("limiter_enabled"):
-                self.limiter_handler_directory = RateLimiter(int(self.config["handler_directory"]["limiter_calls"]), int(self.config["handler_directory"]["limiter_size"]), int(self.config["handler_directory"]["limiter_duration"]))
-            else:
-                self.limiter_handler_directory = None
-            root = self.config["handler_directory"]["root"]
-            from server.handler_directory import HandlerDirectory
-            self.handler_directory = HandlerDirectory(self)
-
-            self.destination.register_request_handler(
-                root+"directory_announce",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: self.response_handler(self.handler_directory.announce, self.limiter_handler_directory, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-            self.destination.register_request_handler(
-                root+"directory_member",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: self.response_handler(self.handler_directory.member, self.limiter_handler_directory, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-            self.destination.register_request_handler(
-                root+"directory_service",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: self.response_handler(self.handler_directory.service, self.limiter_handler_directory, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-
-        # Handler IOP
-        if self.config.has_section("handler_iop") and self.config["handler_iop"].getboolean("enabled"):
-            if "limiter_enabled" in self.config["handler_iop"] and  self.config["handler_iop"].getboolean("limiter_enabled"):
-                self.limiter_handler_iop = RateLimiter(int(self.config["handler_iop"]["limiter_calls"]), int(self.config["handler_iop"]["limiter_size"]), int(self.config["handler_iop"]["limiter_duration"]))
-            else:
-                self.limiter_handler_iop = None
-            root = self.config["handler_iop"]["root"]
-            from server.handler_iop import HandlerIOP
-
-            self.destination.register_request_handler(
-                root+"phrase",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: HandlerIOP.get_phrase_handler(None, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-            self.destination.register_request_handler(
-                root+"get_hyd_vault",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: HandlerIOP.get_hyd_vault_handler(None, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-            self.destination.register_request_handler(
-                root+"phrase",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: HandlerIOP.get_phrase_handler(None, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-            self.destination.register_request_handler(
-                root+"get_hyd_vault",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: HandlerIOP.get_hyd_vault_handler(None, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-            self.destination.register_request_handler(
-                root+"get_morpheus_vault",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: HandlerIOP.get_morpheus_vault_handler(None, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-            self.destination.register_request_handler(
-                root+"get_new_acc_on_vault",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: HandlerIOP.get_new_account_on_vault_handler(None, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-            self.destination.register_request_handler(
-                root+"get_wallet",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: HandlerIOP.get_wallet_handler(None, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-            self.destination.register_request_handler(
-                root+"generate_did_by_morpheus",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: HandlerIOP.generate_did_by_morpheus_handler(None, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-            self.destination.register_request_handler(
-                root+"sign_witness_statement",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: HandlerIOP.sign_witness_statement_handler(None, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-            self.destination.register_request_handler(
-                root+"sign_did_statement",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: HandlerIOP.sign_did_statement_handler(None, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-            self.destination.register_request_handler(
-                root+"nonce",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: HandlerIOP.get_nonce_handler(None, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-            self.destination.register_request_handler(
-                root+"sign_transaction",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: HandlerIOP.sign_transaction_handler(None, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
-
-        # HandlerSync
-        if self.config.has_section("handler_sync") and self.config["handler_sync"].getboolean("enabled"):
-            if "limiter_enabled" in self.config["handler_sync"] and  self.config["handler_sync"].getboolean("limiter_enabled"):
-                self.limiter_handler_sync = RateLimiter(int(self.config["handler_sync"]["limiter_calls"]), int(self.config["handler_sync"]["limiter_size"]), int(self.config["handler_sync"]["limiter_duration"]))
-            else:
-                self.limiter_handler_sync = None
-            root = self.config["handler_sync"]["root"]
-            from server.handler_sync import HandlerSync
-            self.handler_sync = HandlerSync(self)
-
-            self.destination.register_request_handler(
-                root+"sync",
-                response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: self.response_handler(self.handler_sync.sync, self.limiter_handler_directory, path, data, request_id, link_id, remote_identity, requested_at),
-                allow=RNS.Destination.ALLOW_ALL
-            )
+    def register_request_handler(self, path, response_generator=None, allow=None, allowed_list=None, limiter=None, limiter_type=None):
+        self.destination.register_request_handler(
+            path=path,
+            response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: self.request_handler(response_generator, limiter, limiter_type, path, data, request_id, link_id, remote_identity, requested_at),
+            allow=allow if allow != None else RNS.Destination.ALLOW_ALL,
+            allowed_list=allowed_list
+        )
 
 
-    def response_handler(self, callback, limiter, path, data, request_id, link_id, remote_identity, requested_at):
+    def deregister_request_handler(self, path):
+        self.destination.deregister_request_handler(path)
+
+
+    def request_handler(self, callback, limiter, limiter_type, path, data, request_id, link_id, remote_identity, requested_at):
         if not remote_identity:
-            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_IDENTITY})
+            if limiter_type == self.LIMITER_TYPE_JSON:
+                return response_create("0x00", resp.get("0x00"), "Invalid identity")
+            elif limiter_type == self.LIMITER_TYPE_MSGPACK:
+                return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_IDENTITY})
+            else:
+                return None
 
         if self.limiter_server and not self.limiter_server.handle("server"):
-            return msgpack.packb({self.KEY_RESULT: self.RESULT_LIMIT_SERVER})
+            if limiter_type == self.LIMITER_TYPE_JSON:
+                return response_create("429", resp.get("429"), "Unusual activity detected")
+            elif limiter_type == self.LIMITER_TYPE_MSGPACK:
+                return msgpack.packb({self.KEY_RESULT: self.RESULT_LIMIT_SERVER})
+            else:
+                return None
 
         if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
-            return msgpack.packb({self.KEY_RESULT: self.RESULT_LIMIT_PEER})
+            if limiter_type == self.LIMITER_TYPE_JSON:
+                return response_create("429", resp.get("429"), "Unusual activity detected")
+            elif limiter_type == self.LIMITER_TYPE_MSGPACK:
+                return msgpack.packb({self.KEY_RESULT: self.RESULT_LIMIT_PEER})
+            else:
+                return None
 
         if limiter and not limiter.handle(str(remote_identity)):
-            return msgpack.packb({self.KEY_RESULT: self.RESULT_LIMIT_PEER})
-
-        if not data:
-            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_DATA})
+            if limiter_type == self.LIMITER_TYPE_JSON:
+                return response_create("429", resp.get("429"), "Unusual activity detected")
+            elif limiter_type == self.LIMITER_TYPE_MSGPACK:
+                return msgpack.packb({self.KEY_RESULT: self.RESULT_LIMIT_PEER})
+            else:
+                return None
 
         data = callback(path, data, request_id, link_id, remote_identity, requested_at)
 

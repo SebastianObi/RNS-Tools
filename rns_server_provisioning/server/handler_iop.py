@@ -3,7 +3,7 @@
 
 
 #### System ####
-import rsa, json, iop
+import rsa, json, iop_python as iop
 
 #### Internal ####
 from utils.utils import response_create, RESPONSE_CODES as resp
@@ -14,8 +14,91 @@ from utils.utils import response_create, RESPONSE_CODES as resp
 
 
 class HandlerIOP:
-    @staticmethod
-    def get_phrase_handler(session, path, data, request_id, link_id, remote_identity, requested_at):
+    def __init__(self, owner):
+        self.owner = owner
+
+        if "limiter_enabled" in self.owner.config["handler_iop"] and  self.owner.config["handler_iop"].getboolean("limiter_enabled"):
+            self.limiter = RateLimiter(int(self.owner.config["handler_iop"]["limiter_calls"]), int(self.owner.config["handler_iop"]["limiter_size"]), int(self.owner.config["handler_iop"]["limiter_duration"]))
+        else:
+            self.limiter = None
+
+        root = self.owner.config["handler_iop"]["root"]
+
+        self.owner.register_request_handler(
+            path=root+"phrase",
+            response_generator=self.get_phrase_handler,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_JSON
+        )
+        self.owner.register_request_handler(
+            path=root+"get_hyd_vault",
+            response_generator=self.get_hyd_vault_handler,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_JSON
+        )
+        self.owner.register_request_handler(
+            path=root+"phrase",
+            response_generator=self.get_phrase_handler,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_JSON
+        )
+        self.owner.register_request_handler(
+            path=root+"get_hyd_vault",
+            response_generator=self.get_hyd_vault_handler,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_JSON
+        )
+        self.owner.register_request_handler(
+            path=root+"get_morpheus_vault",
+            response_generator=self.get_morpheus_vault_handler,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_JSON
+        )
+        self.owner.register_request_handler(
+            path=root+"get_new_acc_on_vault",
+            response_generator=self.get_new_account_on_vault_handler,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_JSON
+        )
+        self.owner.register_request_handler(
+            path=root+"get_wallet",
+            response_generator=self.get_wallet_handler,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_JSON
+        )
+        self.owner.register_request_handler(
+            path=root+"generate_did_by_morpheus",
+            response_generator=self.generate_did_by_morpheus_handler,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_JSON
+        )
+        self.owner.register_request_handler(
+            path=root+"sign_witness_statement",
+            response_generator=self.sign_witness_statement_handler,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_JSON
+        )
+        self.owner.register_request_handler(
+            path=root+"sign_did_statement",
+            response_generator=self.sign_did_statement_handler,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_JSON
+        )
+        self.owner.register_request_handler(
+            path=root+"nonce",
+            response_generator=self.get_nonce_handler,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_JSON
+        )
+        self.owner.register_request_handler(
+            path=root+"sign_transaction",
+            response_generator=self.sign_transaction_handler,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_JSON
+        )
+
+
+    def get_phrase_handler(self, path, data, request_id, link_id, remote_identity, requested_at):
         try:
             data = json.loads(data)
             if type(data) is not dict:
@@ -31,8 +114,7 @@ class HandlerIOP:
             return response_create('500', '500', f'Error: {str(e)}')
 
 
-    @staticmethod
-    def get_hyd_vault_handler(session, path, data, request_id, link_id, remote_identity, requested_at):
+    def get_hyd_vault_handler(self, path, data, request_id, link_id, remote_identity, requested_at):
         try:
             data = json.loads(data)
             if type(data) is not dict:
@@ -54,8 +136,7 @@ class HandlerIOP:
             return response_create('500', '500', f'Error: {str(e)}')
 
 
-    @staticmethod
-    def get_morpheus_vault_handler(session, path, data, request_id, link_id, remote_identity, requested_at):
+    def get_morpheus_vault_handler(self, path, data, request_id, link_id, remote_identity, requested_at):
         try:
             data = json.loads(data)
             if type(data) is not dict:
@@ -74,8 +155,7 @@ class HandlerIOP:
             return response_create('500', '500', f'Error: {str(e)}')
 
 
-    @staticmethod
-    def get_new_account_on_vault_handler(session, path, data, request_id, link_id, remote_identity, requested_at):
+    def get_new_account_on_vault_handler(self, path, data, request_id, link_id, remote_identity, requested_at):
         try:
             data = json.loads(data)
             if type(data) is not dict:
@@ -95,8 +175,7 @@ class HandlerIOP:
             return response_create('500', '500', f'Error: {str(e)}')
 
 
-    @staticmethod
-    def get_wallet_handler(session, path, data, request_id, link_id, remote_identity, requested_at):
+    def get_wallet_handler(self, path, data, request_id, link_id, remote_identity, requested_at):
         try:
             data = json.loads(data)
             if type(data) is not dict:
@@ -115,8 +194,7 @@ class HandlerIOP:
             return response_create('500', '500', f'Error: {str(e)}')
 
 
-    @staticmethod
-    def generate_did_by_morpheus_handler(session, path, data, request_id, link_id, remote_identity, requested_at):
+    def generate_did_by_morpheus_handler(self, path, data, request_id, link_id, remote_identity, requested_at):
         try:
             data = json.loads(data)
             if type(data) is not dict:
@@ -135,8 +213,7 @@ class HandlerIOP:
             return response_create('500', '500', f'Error: {str(e)}')
 
 
-    @staticmethod
-    def sign_witness_statement_handler(session, path, data, request_id, link_id, remote_identity, requested_at):
+    def sign_witness_statement_handler(self, path, data, request_id, link_id, remote_identity, requested_at):
         try:
             data = json.loads(data)
             if type(data) is not dict:
@@ -156,8 +233,7 @@ class HandlerIOP:
             return response_create('500', '500', f'Error: {str(e)}')
 
 
-    @staticmethod
-    def sign_did_statement_handler(session, path, data, request_id, link_id, remote_identity, requested_at):
+    def sign_did_statement_handler(self, path, data, request_id, link_id, remote_identity, requested_at):
         try:
             data = json.loads(data)
             if type(data) is not dict:
@@ -178,8 +254,7 @@ class HandlerIOP:
             return response_create('500', '500', f'Error: {str(e)}')
 
 
-    @staticmethod
-    def get_nonce_handler(session, path, data, request_id, link_id, remote_identity, requested_at):
+    def get_nonce_handler(self, path, data, request_id, link_id, remote_identity, requested_at):
         try:
             nonce = iop.generate_nonce()
             response_data = {'nonce':nonce}
@@ -190,8 +265,7 @@ class HandlerIOP:
             return response_create('500', '500', f'Error: {str(e)}')
 
 
-    @staticmethod
-    def sign_transaction_handler(session, path, data, request_id, link_id, remote_identity, requested_at):
+    def sign_transaction_handler(self, path, data, request_id, link_id, remote_identity, requested_at):
         try:
             data = json.loads(data)
             if type(data) is not dict:

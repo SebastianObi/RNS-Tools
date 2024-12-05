@@ -29,6 +29,11 @@ class HandlerSync:
     def __init__(self, owner):
         self.owner = owner
 
+        if "limiter_enabled" in self.owner.config["handler_sync"] and  self.owner.config["handler_sync"].getboolean("limiter_enabled"):
+            self.limiter = RateLimiter(int(self.owner.config["handler_sync"]["limiter_calls"]), int(self.owner.config["handler_sync"]["limiter_size"]), int(self.owner.config["handler_sync"]["limiter_duration"]))
+        else:
+            self.limiter = None
+
         if "account_limiter_enabled" in self.owner.config["handler_sync"] and self.owner.config["handler_sync"].getboolean("account_limiter_enabled"):
             self.account_limiter = RateLimiter(int(self.owner.config["handler_sync"]["account_limiter_calls"]), int(self.owner.config["handler_sync"]["account_limiter_size"]), int(self.owner.config["handler_sync"]["account_limiter_duration"]))
         else:
@@ -44,6 +49,15 @@ class HandlerSync:
         else:
             self.service_limiter = None
 
+        root = self.owner.config["handler_sync"]["root"]
+
+        self.owner.register_request_handler(
+            path=root+"sync",
+            response_generator=self.sync,
+            limiter=self.limiter,
+            limiter_type=self.owner.LIMITER_TYPE_MSGPACK
+        )
+
 
     #################################################
     # Auth                                          #
@@ -52,7 +66,7 @@ class HandlerSync:
 
     def auth(self, dest, required=False):
         try:
-            _member = self.owner.db_session.query(Member).filter_by(rns_id=dest).first()
+            _member = self.owner.db.query(Member).filter_by(rns_id=dest).first()
             if _member:
                 if _member.state == member_state.restricted or _member.state == member_state.onhold:
                     return False
@@ -78,7 +92,7 @@ class HandlerSync:
             now = int(time.time())
 
             # Member
-            _member = self.owner.db_session.query(Member).filter_by(rns_id=dest).first()
+            _member = self.owner.db.query(Member).filter_by(rns_id=dest).first()
             if _member:
                 raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_MemberFound, "account_create - Error: User already exists")
             _member = Member()
@@ -106,13 +120,13 @@ class HandlerSync:
             _member.shop_goods = account["shop_goods"]
             _member.shop_services = account["shop_services"]
             _member.attributes = ",".join(account["attributes"])
-            self.owner.db_session.add(_member)
+            self.owner.db.add(_member)
 
             # Device
-            _device = self.owner.db_session.query(Device).filter_by(device_id=device["id"]).first()
+            _device = self.owner.db.query(Device).filter_by(device_id=device["id"]).first()
             if _device:
                 raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_DeviceFound, "account_create - Error: Device already exists")
-            _device = self.owner.db_session.query(Device).filter_by(device_rns_id=dest).first()
+            _device = self.owner.db.query(Device).filter_by(device_rns_id=dest).first()
             if _device:
                 _device.device_id = device["id"]
                 _device.device_display_name = device["name"]
@@ -127,53 +141,53 @@ class HandlerSync:
                 _device.edited_at = now
                 _device._type = device_type(self.owner.config["handler_sync"].getint("account_device_type")).name
                 _device.status = device_status(self.owner.config["handler_sync"].getint("account_device_status")).name
-                self.owner.db_session.add(_device)
+                self.owner.db.add(_device)
 
             # Invitation
             if account["invite"] and invitation_code_verify(account["invite"]):
-                _invite_code = self.owner.db_session.query(InviteCode).filter_by(code=account["invite"]).first()
+                _invite_code = self.owner.db.query(InviteCode).filter_by(code=account["invite"]).first()
                 if _invite_code and _invite_code.inviter != dest and _invite_code.is_valid and not _invite_code.used_at:
                     _invite_code.invitee = dest
                     _invite_code.used_at = now
 
             # Tasks
-            _tasks = self.owner.db_session.query(allocated_tasks).filter_by(member_id=dest).all()
+            _tasks = self.owner.db.query(allocated_tasks).filter_by(member_id=dest).all()
             if _tasks:
                 raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_TaskFound, "account_create - Error: Tasks already exists")
 
-            _task_list = self.owner.db_session.query(task_definition).all()
+            _task_list = self.owner.db.query(task_definition).all()
             for i in _task_list:
                 _task = allocated_tasks()
                 _task.member_id = dest
                 _task.task_id = i.task_id
                 _task.task_issue_ts = now
                 _task.task_due_ts = now + i.task_deadline
-                self.owner.db_session.add(_task)
+                self.owner.db.add(_task)
 
-            self.owner.db_session.commit()
+            self.owner.db.commit()
 
         except ResponseError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(e.error_number, e.error_reason, str(e))
 
         except IntegrityError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "account_create - IntegrityError: "+str(e))
 
         except OperationalError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "account_create - OperationalError: "+str(e))
 
         except SQLAlchemyError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "account_create - SQLAlchemyError: "+str(e))
 
         except TypeError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "account_create - TypeError: "+str(e))
 
         except Exception as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "account_create - Error: "+str(e))
 
 
@@ -182,49 +196,49 @@ class HandlerSync:
             now = int(time.time())
 
             # Member
-            _member = self.owner.db_session.query(Member).filter_by(rns_id=dest).first()
+            _member = self.owner.db.query(Member).filter_by(rns_id=dest).first()
             if _member:
-                self.owner.db_session.delete(_member)
+                self.owner.db.delete(_member)
 
             # Device
-            _device = self.owner.db_session.query(Device).filter_by(device_rns_id=dest).first()
+            _device = self.owner.db.query(Device).filter_by(device_rns_id=dest).first()
             if _device:
-                self.owner.db_session.delete(_device)
+                self.owner.db.delete(_device)
 
             # Invitation
-            _invite_codes = self.owner.db_session.query(InviteCode).filter_by(inviter=dest).filter(InviteCode.used_at.is_(None))
+            _invite_codes = self.owner.db.query(InviteCode).filter_by(inviter=dest).filter(InviteCode.used_at.is_(None))
             if _invite_codes:
                 _invite_codes.delete()
 
             # Service
-            _services = self.owner.db_session.query(Service).filter_by(owner=dest)
+            _services = self.owner.db.query(Service).filter_by(owner=dest)
             if _services:
                 _services.delete()
 
-            self.owner.db_session.commit()
+            self.owner.db.commit()
 
         except ResponseError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(e.error_number, e.error_reason, str(e))
 
         except IntegrityError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "account_delete - IntegrityError: "+str(e))
 
         except OperationalError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "account_delete - OperationalError: "+str(e))
 
         except SQLAlchemyError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "account_delete - SQLAlchemyError: "+str(e))
 
         except TypeError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "account_delete - TypeError: "+str(e))
 
         except Exception as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "account_delete - Error: "+str(e))
 
 
@@ -233,7 +247,7 @@ class HandlerSync:
             now = int(time.time())
 
             # Member
-            _member = self.owner.db_session.query(Member).filter_by(rns_id=dest).first()
+            _member = self.owner.db.query(Member).filter_by(rns_id=dest).first()
             if not _member:
                 raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_MemberNotFound, "account_edit - Error: User does not exist")
             _member.username = account["display_name"]
@@ -254,7 +268,7 @@ class HandlerSync:
             _member.attributes = ",".join(account["attributes"])
 
             # Device
-            _device = self.owner.db_session.query(Device).filter_by(device_rns_id=dest).first()
+            _device = self.owner.db.query(Device).filter_by(device_rns_id=dest).first()
             if not _device:
                 raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_DeviceNotFound, "account_edit - Error: Device does not exist")
             _device.device_id = device["id"]
@@ -263,43 +277,43 @@ class HandlerSync:
 
             # Invitation
             if account["invite"] and invitation_code_verify(account["invite"]):
-                _invite_code = self.owner.db_session.query(InviteCode).filter_by(invitee=dest).first()
+                _invite_code = self.owner.db.query(InviteCode).filter_by(invitee=dest).first()
                 if not _invite_code:
-                    _invite_code = self.owner.db_session.query(InviteCode).filter_by(code=account["invite"]).first()
+                    _invite_code = self.owner.db.query(InviteCode).filter_by(code=account["invite"]).first()
                     if _invite_code and _invite_code.inviter != dest and _invite_code.is_valid and not _invite_code.used_at:
                         _invite_code.invitee = dest
                         _invite_code.used_at = now
 
-            self.owner.db_session.commit()
+            self.owner.db.commit()
 
         except ResponseError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(e.error_number, e.error_reason, str(e))
 
         except IntegrityError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "account_edit - IntegrityError: "+str(e))
 
         except OperationalError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "account_edit - OperationalError: "+str(e))
 
         except SQLAlchemyError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "account_edit - SQLAlchemyError: "+str(e))
 
         except TypeError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "account_edit - TypeError: "+str(e))
 
         except Exception as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "account_edit - Error: "+str(e))
 
 
     def account_get(self, dest, ts):
         try:
-            _member = self.owner.db_session.query(Member).filter_by(rns_id=dest).filter(Member.edited_at>ts).first()
+            _member = self.owner.db.query(Member).filter_by(rns_id=dest).filter(Member.edited_at>ts).first()
             if not _member:
                 return None
             else:
@@ -332,32 +346,32 @@ class HandlerSync:
                 return data
 
         except ResponseError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             RNS.log(str(e), RNS.LOG_ERROR)
             return None
 
         except IntegrityError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             RNS.log("account_get - IntegrityError: "+str(e), RNS.LOG_ERROR)
             return None
 
         except OperationalError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             RNS.log("account_get - OperationalError: "+str(e), RNS.LOG_ERROR)
             return None
 
         except SQLAlchemyError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             RNS.log("account_get - SQLAlchemyError: "+str(e), RNS.LOG_ERROR)
             return None
 
         except TypeError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             RNS.log("account_get - TypeError: "+str(e), RNS.LOG_ERROR)
             return None
 
         except Exception as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             RNS.log("account_get - Error: "+str(e), RNS.LOG_ERROR)
             return None
 
@@ -367,15 +381,15 @@ class HandlerSync:
             now = int(time.time())
 
             # Member
-            _member = self.owner.db_session.query(Member).filter_by(rns_id=dest).first()
+            _member = self.owner.db.query(Member).filter_by(rns_id=dest).first()
             if not _member:
                 raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_MemberNotFound, "account_restore - Error: User does not exist")
 
             # Device
-            _device = self.owner.db_session.query(Device).filter_by(device_id=device["id"]).filter(Device.device_rns_id!=dest).first()
+            _device = self.owner.db.query(Device).filter_by(device_id=device["id"]).filter(Device.device_rns_id!=dest).first()
             if _device:
                 raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_DeviceFound, "account_restore - Error: Device already exists")
-            _device = self.owner.db_session.query(Device).filter_by(device_rns_id=dest).first()
+            _device = self.owner.db.query(Device).filter_by(device_rns_id=dest).first()
             if _device:
                 _device.device_id = device["id"]
                 _device.device_display_name = device["name"]
@@ -390,32 +404,32 @@ class HandlerSync:
                 _device.edited_at = now
                 _device._type = device_type(self.owner.config["handler_sync"].getint("account_device_type")).name
                 _device.status = device_status(self.owner.config["handler_sync"].getint("account_device_status")).name
-                self.owner.db_session.add(_device)
+                self.owner.db.add(_device)
 
-            self.owner.db_session.commit()
+            self.owner.db.commit()
 
         except ResponseError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(e.error_number, e.error_reason, str(e))
 
         except IntegrityError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "account_restore - IntegrityError: "+str(e))
 
         except OperationalError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "account_restore - OperationalError: "+str(e))
 
         except SQLAlchemyError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "account_restore - SQLAlchemyError: "+str(e))
 
         except TypeError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "account_restore - TypeError: "+str(e))
 
         except Exception as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "account_restore - Error: "+str(e))
 
 
@@ -430,16 +444,16 @@ class HandlerSync:
 
             for i in range(10):
                 code = invitation_code_generate()
-                if not self.owner.db_session.query(InviteCode).filter_by(code=code).first():
+                if not self.owner.db.query(InviteCode).filter_by(code=code).first():
                     break
 
             _invite_code = InviteCode()
             _invite_code.code = code
             _invite_code.inviter = dest
             _invite_code.generated_at = now
-            self.owner.db_session.add(_invite_code)
+            self.owner.db.add(_invite_code)
 
-            self.owner.db_session.commit()
+            self.owner.db.commit()
 
             return {
                 _invite_code.code: _invite_code.generated_at
@@ -449,23 +463,23 @@ class HandlerSync:
             raise ResponseError(e.error_number, e.error_reason, str(e))
 
         except IntegrityError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "invitation_create - IntegrityError: "+str(e))
 
         except OperationalError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "invitation_create - OperationalError: "+str(e))
 
         except SQLAlchemyError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "invitation_create - SQLAlchemyError: "+str(e))
 
         except TypeError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "invitation_create - TypeError: "+str(e))
 
         except Exception as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "invitation_create - Error: "+str(e))
 
 
@@ -474,44 +488,44 @@ class HandlerSync:
             now = int(time.time())
 
             if data["code"] != None:
-                _invite_code = self.owner.db_session.query(InviteCode).filter_by(code=data["code"], inviter=dest).filter(InviteCode.used_at.is_(None)).first()
+                _invite_code = self.owner.db.query(InviteCode).filter_by(code=data["code"], inviter=dest).filter(InviteCode.used_at.is_(None)).first()
                 if _invite_code:
-                    self.owner.db_session.delete(_invite_code)
+                    self.owner.db.delete(_invite_code)
             else:
-                _invite_codes = self.owner.db_session.query(InviteCode).filter_by(inviter=dest).filter(InviteCode.used_at.is_(None))
+                _invite_codes = self.owner.db.query(InviteCode).filter_by(inviter=dest).filter(InviteCode.used_at.is_(None))
                 if _invite_codes:
                     _invite_codes.delete()
 
-            self.owner.db_session.commit()
+            self.owner.db.commit()
 
         except ResponseError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(e.error_number, e.error_reason, str(e))
 
         except IntegrityError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "invitation_delete - IntegrityError: "+str(e))
 
         except OperationalError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "invitation_delete - OperationalError: "+str(e))
 
         except SQLAlchemyError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "invitation_delete - SQLAlchemyError: "+str(e))
 
         except TypeError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "invitation_delete - TypeError: "+str(e))
 
         except Exception as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "invitation_delete - Error: "+str(e))
 
 
     def invitation_list(self, dest, ts):
         try:
-            _invite_codes = self.owner.db_session.query(InviteCode).filter_by(inviter=dest).order_by(asc(InviteCode.generated_at)).all()
+            _invite_codes = self.owner.db.query(InviteCode).filter_by(inviter=dest).order_by(asc(InviteCode.generated_at)).all()
             if not _invite_codes:
                 return None
             else:
@@ -526,32 +540,32 @@ class HandlerSync:
                 return data
 
         except ResponseError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             RNS.log(str(e), RNS.LOG_ERROR)
             return []
 
         except IntegrityError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             RNS.log("invitation_list - IntegrityError: "+str(e), RNS.LOG_ERROR)
             return []
 
         except OperationalError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             RNS.log("invitation_list - OperationalError: "+str(e), RNS.LOG_ERROR)
             return []
 
         except SQLAlchemyError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             RNS.log("invitation_list - SQLAlchemyError: "+str(e), RNS.LOG_ERROR)
             return []
 
         except TypeError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             RNS.log("invitation_list - TypeError: "+str(e), RNS.LOG_ERROR)
             return []
 
         except Exception as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             RNS.log("invitation_list - Error: "+str(e), RNS.LOG_ERROR)
             return []
 
@@ -565,11 +579,11 @@ class HandlerSync:
         try:
             now = int(time.time())
 
-            _service = self.owner.db_session.query(Service).filter_by(rns_id=data["dest"]).first()
+            _service = self.owner.db.query(Service).filter_by(rns_id=data["dest"]).first()
             if _service:
                 raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_EntryFound, "service_create - Error: Service already exists")
 
-            _announce = self.owner.db_session.query(Announce).filter_by(dest=data["dest"], dest_type=data["type"], owner=dest).first()
+            _announce = self.owner.db.query(Announce).filter_by(dest=data["dest"], dest_type=data["type"], owner=dest).first()
             if not _announce:
                 raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_EntryNotFound, "service_create - Error: Announce does not exist")
 
@@ -583,32 +597,32 @@ class HandlerSync:
             _service.owner = dest
             _service.ts_add = now
             _service.ts_edit = now
-            self.owner.db_session.add(_service)
+            self.owner.db.add(_service)
 
-            self.owner.db_session.commit()
+            self.owner.db.commit()
 
         except ResponseError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(e.error_number, e.error_reason, str(e))
 
         except IntegrityError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "service_create - IntegrityError: "+str(e))
 
         except OperationalError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "service_create - OperationalError: "+str(e))
 
         except SQLAlchemyError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "service_create - SQLAlchemyError: "+str(e))
 
         except TypeError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "service_create - TypeError: "+str(e))
 
         except Exception as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "service_create - Error: "+str(e))
 
 
@@ -616,34 +630,34 @@ class HandlerSync:
         try:
             now = int(time.time())
 
-            _service = self.owner.db_session.query(Service).filter_by(rns_id=data["dest"], owner=dest).first()
+            _service = self.owner.db.query(Service).filter_by(rns_id=data["dest"], owner=dest).first()
             if _service:
-                self.owner.db_session.delete(_service)
+                self.owner.db.delete(_service)
 
-            self.owner.db_session.commit()
+            self.owner.db.commit()
 
         except ResponseError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(e.error_number, e.error_reason, str(e))
 
         except IntegrityError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "service_delete - IntegrityError: "+str(e))
 
         except OperationalError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "service_delete - OperationalError: "+str(e))
 
         except SQLAlchemyError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "service_delete - SQLAlchemyError: "+str(e))
 
         except TypeError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "service_delete - TypeError: "+str(e))
 
         except Exception as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "service_delete - Error: "+str(e))
 
 
@@ -651,7 +665,7 @@ class HandlerSync:
         try:
             now = int(time.time())
 
-            _service = self.owner.db_session.query(Service).filter_by(rns_id=data["dest"], owner=dest).first()
+            _service = self.owner.db.query(Service).filter_by(rns_id=data["dest"], owner=dest).first()
             if not _service:
                 raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_EntryNotFound, "service_edit - Error: Service does not exist")
 
@@ -662,36 +676,36 @@ class HandlerSync:
             _service._type = data["type"]
             _service.ts_edit = now
 
-            self.owner.db_session.commit()
+            self.owner.db.commit()
 
         except ResponseError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(e.error_number, e.error_reason, str(e))
 
         except IntegrityError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "service_edit - IntegrityError: "+str(e))
 
         except OperationalError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "service_edit - OperationalError: "+str(e))
 
         except SQLAlchemyError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "service_edit - SQLAlchemyError: "+str(e))
 
         except TypeError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "service_edit - TypeError: "+str(e))
 
         except Exception as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "service_edit - Error: "+str(e))
 
 
     def service_list(self, dest, ts):
         try:
-            _services = self.owner.db_session.query(Service).filter_by(owner=dest).filter(Service.ts_edit>ts).order_by(asc(Service.ts_edit)).all()
+            _services = self.owner.db.query(Service).filter_by(owner=dest).filter(Service.ts_edit>ts).order_by(asc(Service.ts_edit)).all()
             if not _services:
                 return None
             else:
@@ -710,32 +724,32 @@ class HandlerSync:
                 return data
 
         except ResponseError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             RNS.log(str(e), RNS.LOG_ERROR)
             return []
 
         except IntegrityError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             RNS.log("service_list - IntegrityError: "+str(e), RNS.LOG_ERROR)
             return []
 
         except OperationalError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             RNS.log("service_list - OperationalError: "+str(e), RNS.LOG_ERROR)
             return []
 
         except SQLAlchemyError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             RNS.log("service_list - SQLAlchemyError: "+str(e), RNS.LOG_ERROR)
             return []
 
         except TypeError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             RNS.log("service_list - TypeError: "+str(e), RNS.LOG_ERROR)
             return []
 
         except Exception as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             RNS.log("service_list - Error: "+str(e), RNS.LOG_ERROR)
             return []
 
@@ -748,6 +762,9 @@ class HandlerSync:
     def sync(self, path, data, request_id, link_id, remote_identity, requested_at):
         RNS.log("Server - HandlerSync", RNS.LOG_DEBUG)
         RNS.log(data, RNS.LOG_EXTREME)
+
+        if not data:
+            return msgpack.packb({self.owner.KEY_RESULT: self.owner.RESULT_NO_DATA})
 
         dest = RNS.hexrep(RNS.Destination.hash_from_name_and_identity(self.owner.aspect_filter_conv, remote_identity), delimit=False)
 
@@ -946,7 +963,7 @@ class HandlerSync:
 
     def task_list(self, dest, ts):
         try:
-            _tasks = self.owner.db_session.query(allocated_tasks).filter_by(member_id=dest).all()
+            _tasks = self.owner.db.query(allocated_tasks).filter_by(member_id=dest).all()
             if not _tasks:
                 return None
             else:
@@ -961,31 +978,31 @@ class HandlerSync:
                 return data
 
         except ResponseError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             RNS.log(str(e), RNS.LOG_ERROR)
             return []
 
         except IntegrityError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             RNS.log("task_list - IntegrityError: "+str(e), RNS.LOG_ERROR)
             return []
 
         except OperationalError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             RNS.log("task_list - OperationalError: "+str(e), RNS.LOG_ERROR)
             return []
 
         except SQLAlchemyError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             RNS.log("task_list - SQLAlchemyError: "+str(e), RNS.LOG_ERROR)
             return []
 
         except TypeError as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             RNS.log("task_list - TypeError: "+str(e), RNS.LOG_ERROR)
             return []
 
         except Exception as e:
-            self.owner.db_session.rollback()
+            self.owner.db.rollback()
             RNS.log("task_list - Error: "+str(e), RNS.LOG_ERROR)
             return []
