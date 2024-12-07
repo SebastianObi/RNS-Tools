@@ -179,10 +179,12 @@ class RateLimiter:
 
 
 class ResponseError(Exception):
-    def __init__(self, error_number, error_reason, error_message):
-        super().__init__(f"{error_message}")
+    def __init__(self, error_number, error_reason, error_key, error_message):
+        super().__init__(f"{error_key} - {error_message}")
         self.error_number = error_number
         self.error_reason = error_reason
+        self.error_key = error_key
+        self.error_message = error_message
 
     def __str__(self):
         return f"{self.args[0]}"

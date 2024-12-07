@@ -641,6 +641,13 @@ service_edit = True
 service_delete = True
 
 
+[log]
+enabled = False
+success = False
+error = True
+prefix = server_
+
+
 [admins]
 
 
@@ -821,6 +828,14 @@ service_limiter_enabled = No
 service_limiter_calls = 15 # Number of calls per duration. 0=Any
 service_limiter_size = 0 # Data transfer size in bytes per duration. 0=Any
 service_limiter_duration = 60 # Seconds
+
+
+#### Log settings ####
+[log]
+enabled = False
+success = False
+error = True
+prefix = server_
 
 
 #### Admin users ####

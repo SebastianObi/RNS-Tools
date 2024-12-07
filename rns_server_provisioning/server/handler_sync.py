@@ -94,7 +94,7 @@ class HandlerSync:
             # Member
             _member = self.owner.db.query(Member).filter_by(rns_id=dest).first()
             if _member:
-                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_MemberFound, "account_create - Error: User already exists")
+                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_MemberFound, "account_create", "Error: User already exists")
             _member = Member()
             _member.username = dest
             _member.display_name = account["display_name"]
@@ -125,7 +125,7 @@ class HandlerSync:
             # Device
             _device = self.owner.db.query(Device).filter_by(device_id=device["id"]).first()
             if _device:
-                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_DeviceFound, "account_create - Error: Device already exists")
+                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_DeviceFound, "account_create", "Error: Device already exists")
             _device = self.owner.db.query(Device).filter_by(device_rns_id=dest).first()
             if _device:
                 _device.device_id = device["id"]
@@ -146,9 +146,9 @@ class HandlerSync:
             # EVM address
             _evm_address = self.owner.db.query(EVM_address).filter_by(user=dest).first()
             if _evm_address:
-                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_EntryFound, "account_create - Error: EVM address already exists")
+                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_EntryFound, "account_create", "Error: EVM address already exists")
             _evm_address = EVM_address()
-            _evm_address.address = blockchain[self.owner.BLOCKCHAIN_TOKEN_PAY]["address"] if self.owner.BLOCKCHAIN_TOKEN_PAY in blockchain and blockchain[self.owner.BLOCKCHAIN_TOKEN_PAY]["address"] != "" else ""
+            _evm_address.address = blockchain[self.owner.BLOCKCHAIN_TOKEN_PRIMARY]["address"] if self.owner.BLOCKCHAIN_TOKEN_PRIMARY in blockchain and blockchain[self.owner.BLOCKCHAIN_TOKEN_PRIMARY]["address"] != "" else ""
             _evm_address.user = dest
             self.owner.db.add(_evm_address)
 
@@ -162,7 +162,7 @@ class HandlerSync:
             # Tasks
             _tasks = self.owner.db.query(allocated_tasks).filter_by(member_id=dest).all()
             if _tasks:
-                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_TaskFound, "account_create - Error: Tasks already exists")
+                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_TaskFound, "account_create", "Error: Tasks already exists")
 
             _task_list = self.owner.db.query(task_definition).all()
             for i in _task_list:
@@ -177,27 +177,27 @@ class HandlerSync:
 
         except ResponseError as e:
             self.owner.db.rollback()
-            raise ResponseError(e.error_number, e.error_reason, str(e))
+            raise ResponseError(e.error_number, e.error_reason, e.error_key, e.error_message)
 
         except IntegrityError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "account_create - IntegrityError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "account_create", "IntegrityError: "+str(e))
 
         except OperationalError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "account_create - OperationalError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "account_create", "OperationalError: "+str(e))
 
         except SQLAlchemyError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "account_create - SQLAlchemyError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "account_create", "SQLAlchemyError: "+str(e))
 
         except TypeError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "account_create - TypeError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "account_create", "TypeError: "+str(e))
 
         except Exception as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "account_create - Error: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "account_create", "Error: "+str(e))
 
 
     def account_delete(self, dest):
@@ -233,27 +233,27 @@ class HandlerSync:
 
         except ResponseError as e:
             self.owner.db.rollback()
-            raise ResponseError(e.error_number, e.error_reason, str(e))
+            raise ResponseError(e.error_number, e.error_reason, e.error_key, e.error_message)
 
         except IntegrityError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "account_delete - IntegrityError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "account_delete", "IntegrityError: "+str(e))
 
         except OperationalError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "account_delete - OperationalError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "account_delete", "OperationalError: "+str(e))
 
         except SQLAlchemyError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "account_delete - SQLAlchemyError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "account_delete", "SQLAlchemyError: "+str(e))
 
         except TypeError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "account_delete - TypeError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "account_delete", "TypeError: "+str(e))
 
         except Exception as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "account_delete - Error: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "account_delete", "Error: "+str(e))
 
 
     def account_edit(self, dest, account, blockchain, device):
@@ -263,7 +263,7 @@ class HandlerSync:
             # Member
             _member = self.owner.db.query(Member).filter_by(rns_id=dest).first()
             if not _member:
-                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_MemberNotFound, "account_edit - Error: User does not exist")
+                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_MemberNotFound, "account_edit", "Error: User does not exist")
             _member.username = dest
             _member.display_name = account["display_name"]
             _member.email = account["email"] if account["email"] != "" else dest
@@ -284,7 +284,7 @@ class HandlerSync:
             # Device
             _device = self.owner.db.query(Device).filter_by(device_rns_id=dest).first()
             if not _device:
-                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_DeviceNotFound, "account_edit - Error: Device does not exist")
+                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_DeviceNotFound, "account_edit", "Error: Device does not exist")
             _device.device_id = device["id"]
             _device.device_display_name = device["name"]
             _device.edited_at = now
@@ -302,27 +302,27 @@ class HandlerSync:
 
         except ResponseError as e:
             self.owner.db.rollback()
-            raise ResponseError(e.error_number, e.error_reason, str(e))
+            raise ResponseError(e.error_number, e.error_reason, e.error_key, e.error_message)
 
         except IntegrityError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "account_edit - IntegrityError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "account_edit", "IntegrityError: "+str(e))
 
         except OperationalError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "account_edit - OperationalError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "account_edit", "OperationalError: "+str(e))
 
         except SQLAlchemyError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "account_edit - SQLAlchemyError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "account_edit", "SQLAlchemyError: "+str(e))
 
         except TypeError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "account_edit - TypeError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "account_edit", "TypeError: "+str(e))
 
         except Exception as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "account_edit - Error: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "account_edit", "Error: "+str(e))
 
 
     def account_get(self, dest, ts):
@@ -397,12 +397,12 @@ class HandlerSync:
             # Member
             _member = self.owner.db.query(Member).filter_by(rns_id=dest).first()
             if not _member:
-                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_MemberNotFound, "account_restore - Error: User does not exist")
+                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_MemberNotFound, "account_restore", "Error: User does not exist")
 
             # Device
             _device = self.owner.db.query(Device).filter_by(device_id=device["id"]).filter(Device.device_rns_id!=dest).first()
             if _device:
-                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_DeviceFound, "account_restore - Error: Device already exists")
+                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_DeviceFound, "account_restore", "Error: Device already exists")
             _device = self.owner.db.query(Device).filter_by(device_rns_id=dest).first()
             if _device:
                 _device.device_id = device["id"]
@@ -424,27 +424,27 @@ class HandlerSync:
 
         except ResponseError as e:
             self.owner.db.rollback()
-            raise ResponseError(e.error_number, e.error_reason, str(e))
+            raise ResponseError(e.error_number, e.error_reason, e.error_key, e.error_message)
 
         except IntegrityError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "account_restore - IntegrityError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "account_restore", "IntegrityError: "+str(e))
 
         except OperationalError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "account_restore - OperationalError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "account_restore", "OperationalError: "+str(e))
 
         except SQLAlchemyError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "account_restore - SQLAlchemyError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "account_restore", "SQLAlchemyError: "+str(e))
 
         except TypeError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "account_restore - TypeError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "account_restore", "TypeError: "+str(e))
 
         except Exception as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "account_restore - Error: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "account_restore", "Error: "+str(e))
 
 
     #################################################
@@ -474,27 +474,27 @@ class HandlerSync:
             }
 
         except ResponseError as e:
-            raise ResponseError(e.error_number, e.error_reason, str(e))
+            raise ResponseError(e.error_number, e.error_reason, e.error_key, e.error_message)
 
         except IntegrityError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "invitation_create - IntegrityError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "invitation_create", "IntegrityError: "+str(e))
 
         except OperationalError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "invitation_create - OperationalError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "invitation_create", "OperationalError: "+str(e))
 
         except SQLAlchemyError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "invitation_create - SQLAlchemyError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "invitation_create", "SQLAlchemyError: "+str(e))
 
         except TypeError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "invitation_create - TypeError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "invitation_create", "TypeError: "+str(e))
 
         except Exception as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "invitation_create - Error: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "invitation_create", "Error: "+str(e))
 
 
     def invitation_delete(self, dest, data):
@@ -514,27 +514,27 @@ class HandlerSync:
 
         except ResponseError as e:
             self.owner.db.rollback()
-            raise ResponseError(e.error_number, e.error_reason, str(e))
+            raise ResponseError(e.error_number, e.error_reason, e.error_key, e.error_message)
 
         except IntegrityError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "invitation_delete - IntegrityError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "invitation_delete", "IntegrityError: "+str(e))
 
         except OperationalError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "invitation_delete - OperationalError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "invitation_delete", "OperationalError: "+str(e))
 
         except SQLAlchemyError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "invitation_delete - SQLAlchemyError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "invitation_delete", "SQLAlchemyError: "+str(e))
 
         except TypeError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "invitation_delete - TypeError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "invitation_delete", "TypeError: "+str(e))
 
         except Exception as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "invitation_delete - Error: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "invitation_delete", "Error: "+str(e))
 
 
     def invitation_list(self, dest, ts):
@@ -595,11 +595,11 @@ class HandlerSync:
 
             _service = self.owner.db.query(Service).filter_by(rns_id=data["dest"]).first()
             if _service:
-                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_EntryFound, "service_create - Error: Service already exists")
+                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_EntryFound, "service_create", "Error: Service already exists")
 
             _announce = self.owner.db.query(Announce).filter_by(dest=data["dest"], dest_type=data["type"], owner=dest).first()
             if not _announce:
-                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_EntryNotFound, "service_create - Error: Announce does not exist")
+                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_EntryNotFound, "service_create", "Error: Announce does not exist")
 
             _service = Service()
             _service.rns_id = data["dest"]
@@ -617,27 +617,27 @@ class HandlerSync:
 
         except ResponseError as e:
             self.owner.db.rollback()
-            raise ResponseError(e.error_number, e.error_reason, str(e))
+            raise ResponseError(e.error_number, e.error_reason, e.error_key, e.error_message)
 
         except IntegrityError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "service_create - IntegrityError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "service_create", "IntegrityError: "+str(e))
 
         except OperationalError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "service_create - OperationalError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "service_create", "OperationalError: "+str(e))
 
         except SQLAlchemyError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "service_create - SQLAlchemyError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "service_create", "SQLAlchemyError: "+str(e))
 
         except TypeError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "service_create - TypeError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "service_create", "TypeError: "+str(e))
 
         except Exception as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "service_create - Error: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "service_create", "Error: "+str(e))
 
 
     def service_delete(self, dest, data):
@@ -652,27 +652,27 @@ class HandlerSync:
 
         except ResponseError as e:
             self.owner.db.rollback()
-            raise ResponseError(e.error_number, e.error_reason, str(e))
+            raise ResponseError(e.error_number, e.error_reason, e.error_key, e.error_message)
 
         except IntegrityError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "service_delete - IntegrityError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "service_delete", "IntegrityError: "+str(e))
 
         except OperationalError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "service_delete - OperationalError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "service_delete", "OperationalError: "+str(e))
 
         except SQLAlchemyError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "service_delete - SQLAlchemyError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "service_delete", "SQLAlchemyError: "+str(e))
 
         except TypeError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "service_delete - TypeError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "service_delete", "TypeError: "+str(e))
 
         except Exception as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "service_delete - Error: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "service_delete", "Error: "+str(e))
 
 
     def service_edit(self, dest, data):
@@ -681,7 +681,7 @@ class HandlerSync:
 
             _service = self.owner.db.query(Service).filter_by(rns_id=data["dest"], owner=dest).first()
             if not _service:
-                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_EntryNotFound, "service_edit - Error: Service does not exist")
+                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_EntryNotFound, "service_edit", "Error: Service does not exist")
 
             _service.display_name = data["display_name"]
             _service.city = data["location_city"]
@@ -694,27 +694,27 @@ class HandlerSync:
 
         except ResponseError as e:
             self.owner.db.rollback()
-            raise ResponseError(e.error_number, e.error_reason, str(e))
+            raise ResponseError(e.error_number, e.error_reason, e.error_key, e.error_message)
 
         except IntegrityError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "service_edit - IntegrityError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Conflict, "service_edit", "IntegrityError: "+str(e))
 
         except OperationalError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "service_edit - OperationalError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_ServiceUnavailable, "service_edit", "OperationalError: "+str(e))
 
         except SQLAlchemyError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "service_edit - SQLAlchemyError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "service_edit", "SQLAlchemyError: "+str(e))
 
         except TypeError as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "service_edit - TypeError: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_InvalidData, "service_edit", "TypeError: "+str(e))
 
         except Exception as e:
             self.owner.db.rollback()
-            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "service_edit - Error: "+str(e))
+            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Internal, "service_edit", "Error: "+str(e))
 
 
     def service_list(self, dest, ts):
@@ -797,120 +797,132 @@ class HandlerSync:
                 for transaction_id, transaction in transaction_list.items():
                     try:
                         if self.owner.KEY_T_TYPE not in transaction or self.owner.KEY_T_DATA not in transaction:
-                            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_InvalidData, "Transaction: Missing type/data")
+                            raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_InvalidData, "transaction", "Missing type/data")
 
                         transaction_data = transaction[self.owner.KEY_T_DATA]
 
                         # Account - Create
                         if transaction[self.owner.KEY_T_TYPE] == self.owner.TRANSACTION_TYPE_ACCOUNT_CREATE:
                             if not self.owner.config["handler_sync"].getboolean("account_create"):
-                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Disabled, "Account - Create: Feature disabled")
+                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Disabled, "account_create", "Feature disabled")
                             if self.account_limiter and not self.account_limiter.handle(dest):
-                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_LimitPeer, "Account - Create: Limit peer")
+                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_LimitPeer, "account_create", "Limit peer")
 
                             self.account_create(dest=dest, account=transaction_data["account"], blockchain=transaction_data["blockchain"], device=transaction_data["device"])
+                            self.owner.log(key="account_create", message="", dest=dest, status=True)
                             data[self.owner.KEY_A] = {self.owner.KEY_A_TS: 0}
 
                         # Account - Delete
                         if transaction[self.owner.KEY_T_TYPE] == self.owner.TRANSACTION_TYPE_ACCOUNT_DELETE:
                             if not self.owner.config["handler_sync"].getboolean("account_delete"):
-                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Disabled, "Account - Delete: Feature disabled")
+                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Disabled, "account_delete", "Feature disabled")
                             if self.account_limiter and not self.account_limiter.handle(dest):
-                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_LimitPeer, "Account - Create: Limit peer")
+                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_LimitPeer, "account_delete", "Limit peer")
 
                             self.account_delete(dest=dest)
+                            self.owner.log(key="account_delete", message="", dest=dest, status=True)
                             data[self.owner.KEY_A] = {self.owner.KEY_A_TS: 0}
 
                         # Account - Edit
                         if transaction[self.owner.KEY_T_TYPE] == self.owner.TRANSACTION_TYPE_ACCOUNT_EDIT:
                             if not self.owner.config["handler_sync"].getboolean("account_edit"):
-                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Disabled, "Account - Edit: Feature disabled")
+                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Disabled, "account_edit", "Feature disabled")
                             if not self.auth(dest, True):
-                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_NoRight, "Account - Edit: No right")
+                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_NoRight, "account_edit", "No right")
                             if self.account_limiter and not self.account_limiter.handle(dest):
-                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_LimitPeer, "Account - Create: Limit peer")
+                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_LimitPeer, "account_edit", "Limit peer")
 
                             self.account_edit(dest=dest, account=transaction_data["account"], blockchain=transaction_data["blockchain"], device=transaction_data["device"])
+                            self.owner.log(key="account_edit", message="", dest=dest, status=True)
 
                         # Account - Restore
                         if transaction[self.owner.KEY_T_TYPE] == self.owner.TRANSACTION_TYPE_ACCOUNT_RESTORE:
                             if not self.owner.config["handler_sync"].getboolean("account_restore"):
-                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Disabled, "Account - Restore: Feature disabled")
+                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Disabled, "account_restore", "Feature disabled")
                             if self.account_limiter and not self.account_limiter.handle(dest):
-                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_LimitPeer, "Account - Create: Limit peer")
+                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_LimitPeer, "account_restore", "Limit peer")
 
                             self.account_restore(dest=dest, device=transaction_data["device"])
+                            self.owner.log(key="account_restore", message="", dest=dest, status=True)
                             data[self.owner.KEY_A] = {self.owner.KEY_A_TS: 0}
 
                         # Invitation - Create
                         if transaction[self.owner.KEY_T_TYPE] == self.owner.TRANSACTION_TYPE_INVITATION_CREATE:
                             if not self.owner.config["handler_sync"].getboolean("invitation_create"):
-                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Disabled, "Invitation - Create: Feature disabled")
+                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Disabled, "invitation_create", "Feature disabled")
                             if not self.auth(dest, True):
-                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_NoRight, "Invitation - Create: No right")
+                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_NoRight, "invitation_create", "No right")
                             if self.invitation_limiter and not self.invitation_limiter.handle(dest):
-                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_LimitPeer, "Invitation - Create: Limit peer")
+                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_LimitPeer, "invitation_create", "Limit peer")
 
                             self.invitation_create(dest=dest)
+                            self.owner.log(key="invitation_create", message="", dest=dest, status=True)
 
                         # Invitation - Delete
                         if transaction[self.owner.KEY_T_TYPE] == self.owner.TRANSACTION_TYPE_INVITATION_DELETE:
                             if not self.owner.config["handler_sync"].getboolean("invitation_delete"):
-                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Disabled, "Invitation - Delete: Feature disabled")
+                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Disabled, "invitation_delete", "Feature disabled")
                             if not self.auth(dest, True):
-                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_NoRight, "Invitation - Delete: No right")
+                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_NoRight, "invitation_delete", "No right")
                             if self.invitation_limiter and not self.invitation_limiter.handle(dest):
-                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_LimitPeer, "Invitation - Create: Limit peer")
+                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_LimitPeer, "invitation_delete", "Limit peer")
 
                             self.invitation_delete(dest=dest, data=transaction_data)
+                            self.owner.log(key="invitation_delete", message="", dest=dest, status=True)
 
                         # Service - Create
                         if transaction[self.owner.KEY_T_TYPE] == self.owner.TRANSACTION_TYPE_SERVICE_CREATE:
                             if not self.owner.config["handler_sync"].getboolean("service_create"):
-                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Disabled, "Service - Create: Feature disabled")
+                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Disabled, "service_create", "Feature disabled")
                             if not self.auth(dest, True):
-                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_NoRight, "Service - Create: No right")
+                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_NoRight, "service_create", "No right")
                             if self.service_limiter and not self.service_limiter.handle(dest):
-                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_LimitPeer, "Service - Create: Limit peer")
+                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_LimitPeer, "service_create", "Limit peer")
 
                             self.service_create(dest=dest, data=transaction_data)
+                            self.owner.log(key="service_create", message="", dest=dest, status=True)
 
                         # Service - Edit
                         if transaction[self.owner.KEY_T_TYPE] == self.owner.TRANSACTION_TYPE_SERVICE_EDIT:
                             if not self.owner.config["handler_sync"].getboolean("service_edit"):
-                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Disabled, "Service - Edit: Feature disabled")
+                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Disabled, "service_edit", "Feature disabled")
                             if not self.auth(dest, True):
-                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_NoRight, "Service - Edit: No right")
+                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_NoRight, "service_edit", "No right")
                             if self.service_limiter and not self.service_limiter.handle(dest):
-                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_LimitPeer, "Service - Create: Limit peer")
+                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_LimitPeer, "service_edit", "Limit peer")
 
                             self.service_edit(dest=dest, data=transaction_data)
+                            self.owner.log(key="service_edit", message="", dest=dest, status=True)
 
                         # Service - Delete
                         if transaction[self.owner.KEY_T_TYPE] == self.owner.TRANSACTION_TYPE_SERVICE_DELETE:
                             if not self.owner.config["handler_sync"].getboolean("service_delete"):
-                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Disabled, "Service - Delete: Feature disabled")
+                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_Disabled, "service_delete", "Feature disabled")
                             if not self.auth(dest, True):
-                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_NoRight, "Service - Delete: No right")
+                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_NoRight, "service_delete", "No right")
                             if self.service_limiter and not self.service_limiter.handle(dest):
-                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_LimitPeer, "Service - Create: Limit peer")
+                                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.TRANSACTION_STATE_REASON_LimitPeer, "service_delete", "Limit peer")
 
                             self.service_delete(dest=dest, data=transaction_data)
+                            self.owner.log(key="service_delete", message="", dest=dest, status=True)
 
                         transactions[transaction_id] = {self.owner.KEY_T_STATE: self.owner.TRANSACTION_STATE_SUCCESSFULL}
 
                     except ResponseError as e:
                         RNS.log("Server - HandlerSync - Error: "+str(e), RNS.LOG_ERROR)
+                        self.owner.log(number=e.error_number, reason=e.error_reason, key=e.error_key, message=e.error_message, dest=dest, status=False)
                         transactions[transaction_id] = {self.owner.KEY_T_STATE: e.error_number, self.owner.KEY_T_STATE_REASON: e.error_reason}
                         data_return[self.owner.KEY_RESULT] = self.owner.RESULT_PARTIAL
 
                     except TypeError as e:
                         RNS.log("Server - HandlerSync - Error: "+str(e), RNS.LOG_ERROR)
+                        self.owner.log(number=self.owner.TRANSACTION_STATE_FAILED, reason=self.owner.TRANSACTION_STATE_REASON_InvalidData, key="sync", message=str(e), dest=dest, status=False)
                         transactions[transaction_id] = {self.owner.KEY_T_STATE: self.owner.TRANSACTION_STATE_FAILED, self.owner.KEY_T_STATE_REASON: self.owner.TRANSACTION_STATE_REASON_InvalidData}
                         data_return[self.owner.KEY_RESULT] = self.owner.RESULT_PARTIAL
 
                     except Exception as e:
                         RNS.log("Server - HandlerSync - Error: "+str(e), RNS.LOG_ERROR)
+                        self.owner.log(number=self.owner.TRANSACTION_STATE_FAILED_TMP, reason=self.owner.TRANSACTION_STATE_REASON_Internal, key="sync", message=str(e), dest=dest, status=False)
                         transactions[transaction_id] = {self.owner.KEY_T_STATE: self.owner.TRANSACTION_STATE_FAILED_TMP, self.owner.KEY_T_STATE_REASON: self.owner.TRANSACTION_STATE_REASON_Internal}
                         data_return[self.owner.KEY_RESULT] = self.owner.RESULT_PARTIAL
 

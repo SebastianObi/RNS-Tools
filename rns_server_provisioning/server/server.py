@@ -17,6 +17,7 @@ import RNS.vendor.umsgpack as msgpack
 #### Internal ####
 from utils.utils import RateLimiter, ResponseError, response_create, RESPONSE_CODES as resp
 from db.connection import db_session
+from db.schema import logs
 
 
 ##############################################################################################################
@@ -29,8 +30,8 @@ class ServerProvisioning:
     ACCOUNT_INVITE_STATE_ERROR_INVALID = 0x02
     ACCOUNT_INVITE_STATE_ERROR_USED    = 0x03
 
-    BLOCKCHAIN_TOKEN_DID = 0x01
-    BLOCKCHAIN_TOKEN_PAY = 0x02
+    BLOCKCHAIN_TOKEN_DID     = 0x01
+    BLOCKCHAIN_TOKEN_PRIMARY = 0x02
 
     CONNECTION_TIMEOUT = 10 # Seconds
 
@@ -575,3 +576,22 @@ class ServerProvisioning:
     def peer_identified(self, link, identity):
         if not identity:
             link.teardown()
+
+
+    def log(self, number=None, reason=None, key="", message="", dest="", status=False):
+        if not self.config.has_section("log") or not self.config["log"].getboolean("enabled"):
+            return
+
+        if (status and self.config["log"].getboolean("success")) or (not status and self.config["log"].getboolean("error")):
+            prefix = self.config["log"]["prefix"]
+            try:
+                _log = logs()
+                _log.log_name = prefix+key
+                _log.ts = int(time.time())
+                _log.status = "success" if status else "error"
+                _log.message = message
+                _log.remarks = "RNS ID: "+dest if dest else ""
+                self.db.add(_log)
+                self.db.commit()
+            except Exception as e:
+                self.db.rollback()
