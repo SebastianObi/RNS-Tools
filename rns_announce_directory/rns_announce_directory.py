@@ -375,6 +375,10 @@ def db_add(dest, dest_type=0x01, dest_recall=None, dest_recall_type=None, data="
         ts = int(time.time())
         state_ts = int(state_ts)
 
+        query = "SELECT dest FROM announces WHERE dest = ? AND dest_type = ?"
+        dbc.execute(query, (dest, dest_type))
+        exist = True if len(dbc.fetchall()) > 0 else False
+
         if dest_recall and dest_recall_type:
             query = "SELECT * FROM announces WHERE dest = ? AND dest_type = ?"
             dbc.execute(query, (dest_recall, dest_recall_type))

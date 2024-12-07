@@ -10,9 +10,6 @@
 # - Make the file executable with the command chmod +x <filename>
 # - Rename the file as you want.
 # - Modify the configuration section in this file according to your own needs. This can, but does not have to be changed.
-# - Create a link to this file on the start page or another nomadnet page.
-# - Open the page in nomandet client.
-# - The first time the page is opened, the data file will be created in the .filename folder in the user's home directory.
 
 
 ##############################################################################################################
@@ -287,7 +284,7 @@ def db_list(filter=None, search=None, group=None, order=None, limit=None, limit_
                 "owner": entry[5],
                 "state": entry[6],
                 "state_ts": entry[7],
-                "hop_count": entry[8]
+                "hop_count": entry[8],
                 "ts_add": entry[9],
                 "ts_edit": entry[10],
             })
@@ -341,7 +338,7 @@ def db_get(dest):
             "owner": entry[5],
             "state": entry[6],
             "state_ts": entry[7],
-            "hop_count": entry[8]
+            "hop_count": entry[8],
             "ts_add": entry[9],
             "ts_edit": entry[10],
         }
@@ -399,7 +396,6 @@ for entry in db_list(filter={}, search="", group=None, order="DESC", limit=DATA_
     tpl = tpl.replace("{date_time}", time.strftime(DATE_TIME_FORMAT, time.localtime(entry["ts_edit"])))
     tpl = tpl.replace("{data}", entry["data"])
     tpl = tpl.replace("{hop_count}", str(entry["hop_count"]))
-    tpl = tpl.replace("{hop_interface}", entry["hop_interface"])
     entrys += tpl+"\n"
 
 

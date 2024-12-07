@@ -279,7 +279,7 @@ def db_list(filter=None, search=None, group=None, order=None, limit=None, limit_
                 "owner": entry[5],
                 "state": entry[6],
                 "state_ts": entry[7],
-                "hop_count": entry[8]
+                "hop_count": entry[8],
                 "ts_add": entry[9],
                 "ts_edit": entry[10],
             })
@@ -333,7 +333,7 @@ def db_get(dest):
             "owner": entry[5],
             "state": entry[6],
             "state_ts": entry[7],
-            "hop_count": entry[8]
+            "hop_count": entry[8],
             "ts_add": entry[9],
             "ts_edit": entry[10],
         }
@@ -365,7 +365,7 @@ def cmd(cmd):
     if entry:
         return {KEY_CMD_RESULT: RESULT_OK, KEY_ENTRYS: [entry]}
     else:
-        return {KEY_CMD_RESULT: RESULT_OK, KEY_ENTRYS: [{"dest": cmd[1]}]
+        return {KEY_CMD_RESULT: RESULT_OK, KEY_ENTRYS: [{"dest": cmd[1]}]}
 
 
 ##############################################################################################################
