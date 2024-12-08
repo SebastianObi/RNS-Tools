@@ -796,7 +796,7 @@ class ServerPage:
                             content_add = content_add.replace("{url}", page)
                             content += content_add
                     else:
-                        for page in self.pages_index:
+                        for page in self.pages_root:
                             content_add = self.pages_content_index_pages_entry
                             content_add = content_add.replace("{name}", page.replace("/page/", "", 1))
                             content_add = content_add.replace("{url}", page)
@@ -832,7 +832,7 @@ class ServerPage:
                             content_add = content_add.replace("{url}", page)
                             content += content_add
                     else:
-                        for page in self.pages_index:
+                        for page in self.pages_root:
                             content_add = self.pages_content_index_pages_entry
                             content_add = content_add.replace("{name}", page.replace("/page/", "", 1))
                             content_add = content_add.replace("{url}", page)

@@ -144,13 +144,14 @@ class HandlerSync:
                 self.owner.db.add(_device)
 
             # EVM address
-            _evm_address = self.owner.db.query(EVM_address).filter_by(user=dest).first()
-            if _evm_address:
-                raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_EntryFound, "account_create", "Error: EVM address already exists")
-            _evm_address = EVM_address()
-            _evm_address.address = blockchain[self.owner.BLOCKCHAIN_TOKEN_PRIMARY]["address"] if self.owner.BLOCKCHAIN_TOKEN_PRIMARY in blockchain and blockchain[self.owner.BLOCKCHAIN_TOKEN_PRIMARY]["address"] != "" else ""
-            _evm_address.user = dest
-            self.owner.db.add(_evm_address)
+            if self.owner.BLOCKCHAIN_TOKEN_PRIMARY in blockchain and blockchain[self.owner.BLOCKCHAIN_TOKEN_PRIMARY]["address"] != "":
+                _evm_address = self.owner.db.query(EVM_address).filter_by(user=dest).first()
+                if _evm_address:
+                    raise ResponseError(self.owner.TRANSACTION_STATE_FAILED, self.owner.TRANSACTION_STATE_REASON_EntryFound, "account_create", "Error: EVM address already exists")
+                _evm_address = EVM_address()
+                _evm_address.address = blockchain[self.owner.BLOCKCHAIN_TOKEN_PRIMARY]["address"]
+                _evm_address.user = dest
+                self.owner.db.add(_evm_address)
 
             # Invitation
             if account["invite"] and invitation_code_verify(account["invite"]):
