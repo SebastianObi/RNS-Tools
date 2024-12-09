@@ -485,6 +485,8 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
         identity_file="identity",
         identity=None,
 
+        ratchets=CONFIG["rns_server"].getboolean("destination_ratchets"),
+
         destination_name=CONFIG["rns_server"]["destination_name"],
         destination_type=CONFIG["rns_server"]["destination_type"],
 
@@ -695,6 +697,9 @@ fields_announce_data = True
 
 #### RNS server settings ####
 [rns_server]
+
+# Enable ratchets for the destination
+destination_ratchets = No
 
 # Destination name & type need to fits the RNS protocoll
 # to be compatibel with other RNS programs.

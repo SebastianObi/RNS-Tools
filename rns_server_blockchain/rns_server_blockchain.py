@@ -507,7 +507,7 @@ class ServerBlockchain:
     TYPE_UNKNOWN  = 0xFF
 
 
-    def __init__(self, storage_path=None, identity_file="identity", identity=None,
+    def __init__(self, storage_path=None, identity_file="identity", identity=None, ratchets=False,
                  destination_name="nomadnetwork", destination_type="bc",
                  announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False,
                  register_startup=True, register_startup_delay=0, register_periodic=True, register_periodic_interval=30,
@@ -522,6 +522,7 @@ class ServerBlockchain:
 
         self.identity_file = identity_file
         self.identity = identity
+        self.ratchets = ratchets
 
         self.destination_name = destination_name
         self.destination_type = destination_type
@@ -572,6 +573,9 @@ class ServerBlockchain:
                     RNS.log("Server - The contained exception was: %s" % (str(e)), RNS.LOG_ERROR)
 
         self.destination = RNS.Destination(self.identity, RNS.Destination.IN, RNS.Destination.SINGLE, self.destination_name, self.destination_type)
+
+        if self.ratchets:
+            self.destination.enable_ratchets(self.identity_path+"."+RNS.hexrep(self.destination.hash, delimit=False)+".ratchets")
 
         self.destination.set_proof_strategy(RNS.Destination.PROVE_ALL)
 
@@ -1800,6 +1804,8 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
         identity_file="identity",
         identity=None,
 
+        ratchets=CONFIG["rns_server"].getboolean("destination_ratchets"),
+
         destination_name=CONFIG["rns_server"]["destination_name"],
         destination_type=CONFIG["rns_server"]["destination_type"],
 
@@ -1936,6 +1942,9 @@ fields_announce = True
 
 #### RNS server settings ####
 [rns_server]
+
+# Enable ratchets for the destination
+destination_ratchets = No
 
 # Destination name & type need to fits the RNS protocoll
 # to be compatibel with other RNS programs.

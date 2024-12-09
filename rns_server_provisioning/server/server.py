@@ -244,7 +244,7 @@ class ServerProvisioning:
     TYPE_UNKNOWN            = 0xFF
 
 
-    def __init__(self, storage_path=None, identity_file="identity", identity=None,
+    def __init__(self, storage_path=None, identity_file="identity", identity=None, ratchets=False,
         destination_name="nomadnetwork", destination_type="provisioning", destination_conv_name="lxmf", destination_conv_type="delivery", destination_mode=True,
         announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False,
         register_startup=True, register_startup_delay=0, register_periodic=True, register_periodic_interval=30,
@@ -257,6 +257,7 @@ class ServerProvisioning:
 
         self.identity_file = identity_file
         self.identity = identity
+        self.ratchets = ratchets
 
         self.destination_name = destination_name
         self.destination_type = destination_type
@@ -323,6 +324,9 @@ class ServerProvisioning:
                     RNS.log("Server - The contained exception was: %s" % (str(e)), RNS.LOG_ERROR)
 
         self.destination = RNS.Destination(self.identity, RNS.Destination.IN, RNS.Destination.SINGLE, self.destination_name, self.destination_type)
+
+        if self.ratchets:
+            self.destination.enable_ratchets(self.identity_path+"."+RNS.hexrep(self.destination.hash, delimit=False)+".ratchets")
 
         self.destination.set_proof_strategy(RNS.Destination.PROVE_ALL)
 

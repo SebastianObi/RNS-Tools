@@ -64,6 +64,7 @@ COPYRIGHT = "(c) 2024 Sebastian Obele  /  obele.eu"
 PATH = os.path.expanduser("~")+"/.config/"+os.path.splitext(os.path.basename(__file__))[0]
 PATH_RNS = None
 RIGHTS = {0: "User", 1: "Vendor", 2: "Admin", 255: "Blocked"}
+DESTINATION_RATCHETS = False
 DESTINATION_NAME = "nomadnetwork"
 DESTINATION_TYPE = "shop"
 DESTINATION_CONV_NAME = "lxmf"
@@ -208,7 +209,7 @@ class ServerShop:
     RESULT_BLOCKED     = 0xFF
 
 
-    def __init__(self, core, is_standalone=True, storage_path=None, identity_file="identity", identity=None, destination_name="nomadnetwork", destination_type="shop", destination_conv_name="lxmf", destination_conv_type="delivery", statistic=None, default_config=None, default_title=None, default_categorys=None, default_pages=None, default_users=None, default_user=None, default_user_interfaces=None, default_user_hops=None, default_user_callback=None, default_right=None, default_right_block=None):
+    def __init__(self, core, is_standalone=True, storage_path=None, identity_file="identity", identity=None, ratchets=False, destination_name="nomadnetwork", destination_type="shop", destination_conv_name="lxmf", destination_conv_type="delivery", statistic=None, default_config=None, default_title=None, default_categorys=None, default_pages=None, default_users=None, default_user=None, default_user_interfaces=None, default_user_hops=None, default_user_callback=None, default_right=None, default_right_block=None):
         self.core = core
         self.is_standalone = is_standalone
 
@@ -216,6 +217,7 @@ class ServerShop:
 
         self.identity_file = identity_file
         self.identity = identity
+        self.ratchets = ratchets
 
         self.destination_name = destination_name
         self.destination_type = destination_type
@@ -277,6 +279,9 @@ class ServerShop:
                     RNS.log("Server - The contained exception was: %s" % (str(e)), RNS.LOG_ERROR)
 
         self.destination = RNS.Destination(self.identity, RNS.Destination.IN, RNS.Destination.SINGLE, self.destination_name, self.destination_type)
+
+        if self.ratchets:
+            self.destination.enable_ratchets(self.identity_path+"."+RNS.hexrep(self.destination.hash, delimit=False)+".ratchets")
 
         self.destination.set_proof_strategy(RNS.Destination.PROVE_ALL)
 
@@ -3115,6 +3120,7 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
         storage_path=path,
         identity_file="identity",
         identity=None,
+        ratchets=DESTINATION_RATCHETS,
         destination_name=DESTINATION_NAME,
         destination_type=DESTINATION_TYPE,
         destination_conv_name=DESTINATION_CONV_NAME,

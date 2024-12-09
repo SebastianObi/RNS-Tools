@@ -345,7 +345,7 @@ class ServerManagement:
     RESULT_BLOCKED     = 0xFF
 
 
-    def __init__(self, storage_path=None, identity_file="identity", identity=None, destination_name="nomadnetwork", destination_type="management", destination_conv_name="lxmf", destination_conv_type="delivery", destination_mode=True, announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False, allow=[], statistic=None, link_timeout=300, default_user=None, default_user_interfaces=None, default_user_hops=None, default_user_callback=None, configs_cmd=None, environment_variables=None, services_system_path="/etc/systemd/system", services_system_extension=".service", limiter_server_enabled=False, limiter_server_calls=1000, limiter_server_size=0, limiter_server_duration=60, limiter_peer_enabled=True, limiter_peer_calls=0, limiter_peer_size=0, limiter_peer_duration=60):
+    def __init__(self, storage_path=None, identity_file="identity", identity=None, ratchets=False, destination_name="nomadnetwork", destination_type="management", destination_conv_name="lxmf", destination_conv_type="delivery", destination_mode=True, announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False, allow=[], statistic=None, link_timeout=300, default_user=None, default_user_interfaces=None, default_user_hops=None, default_user_callback=None, configs_cmd=None, environment_variables=None, services_system_path="/etc/systemd/system", services_system_extension=".service", limiter_server_enabled=False, limiter_server_calls=1000, limiter_server_size=0, limiter_server_duration=60, limiter_peer_enabled=True, limiter_peer_calls=0, limiter_peer_size=0, limiter_peer_duration=60):
         self.storage_path = storage_path
         self.configs_path = self.storage_path+"/configs"
         self.files_path = os.path.expanduser("~")
@@ -357,6 +357,7 @@ class ServerManagement:
 
         self.identity_file = identity_file
         self.identity = identity
+        self.ratchets = ratchets
 
         self.destination_name = destination_name
         self.destination_type = destination_type
@@ -450,6 +451,9 @@ class ServerManagement:
                     RNS.log("Server - The contained exception was: %s" % (str(e)), RNS.LOG_ERROR)
 
         self.destination = RNS.Destination(self.identity, RNS.Destination.IN, RNS.Destination.SINGLE, self.destination_name, self.destination_type)
+
+        if self.ratchets:
+            self.destination.enable_ratchets(self.identity_path+"."+RNS.hexrep(self.destination.hash, delimit=False)+".ratchets")
 
         self.destination.set_proof_strategy(RNS.Destination.PROVE_ALL)
 
@@ -2537,6 +2541,7 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
         storage_path=path,
         identity_file="identity",
         identity=None,
+        ratchets=CONFIG["rns_server"].getboolean("destination_ratchets"),
         destination_name=CONFIG["rns_server"]["destination_name"],
         destination_type=CONFIG["rns_server"]["destination_type"],
         announce_startup=CONFIG["rns_server"].getboolean("announce_startup"),
@@ -2677,6 +2682,9 @@ fields_announce = False
 
 #### RNS server settings ####
 [rns_server]
+
+# Enable ratchets for the destination
+destination_ratchets = No
 
 # Destination name & type need to fits the RNS protocoll
 # to be compatibel with other RNS programs.

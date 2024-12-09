@@ -132,11 +132,12 @@ class ServerCall:
     DATA_VALUE     = 0x03
 
 
-    def __init__(self, storage_path=None, identity_file="identity", identity=None, destination_name="nomadnetwork", destination_type="call", announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False, type="talk", answer_cmd=12, answer_delay=2, hold_cmd=15, hold_delay=0, hold_value="", reject_cmd=15, reject_delay=0, reject_value="", connection_timeout=0):
+    def __init__(self, storage_path=None, identity_file="identity", identity=None, ratchets=False, destination_name="nomadnetwork", destination_type="call", announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False, type="talk", answer_cmd=12, answer_delay=2, hold_cmd=15, hold_delay=0, hold_value="", reject_cmd=15, reject_delay=0, reject_value="", connection_timeout=0):
         self.storage_path = storage_path
 
         self.identity_file = identity_file
         self.identity = identity
+        self.ratchets = ratchets
 
         self.destination_name = destination_name
         self.destination_type = destination_type
@@ -204,6 +205,9 @@ class ServerCall:
                     log("RNS - The contained exception was: %s" % (str(e)), LOG_ERROR)
 
         self.destination = RNS.Destination(self.identity, RNS.Destination.IN, RNS.Destination.SINGLE, self.destination_name, self.destination_type)
+
+        if self.ratchets:
+            self.destination.enable_ratchets(self.identity_path+"."+RNS.hexrep(self.destination.hash, delimit=False)+".ratchets")
 
         self.destination.set_proof_strategy(RNS.Destination.PROVE_ALL)
 
@@ -741,6 +745,7 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
         storage_path=path,
         identity_file="identity",
         identity=None,
+        ratchets=CONFIG["rns_call"].getboolean("destination_ratchets"),
         destination_name=CONFIG["rns_call"]["destination_name"],
         destination_type=CONFIG["rns_call"]["destination_type"],
         announce_startup=CONFIG["rns_call"].getboolean("announce_startup"),
@@ -868,6 +873,9 @@ fields_announce = False
 
 #### RNS call settings ####
 [rns_call]
+
+# Enable ratchets for the destination
+destination_ratchets = No
 
 # Destination name & type need to fits the RNS protocoll
 # to be compatibel with other RNS programs.
