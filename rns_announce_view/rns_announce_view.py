@@ -160,7 +160,12 @@ class AnnounceHandler:
                     dest_recall_type = self.recall_app_data_type
                     app_data = RNS.Identity.recall_app_data(dest_recall)
                     if app_data != None and len(app_data) > 0:
-                        pass
+                        if (app_data[0] >= 0x90 and app_data[0] <= 0x9f) or app_data[0] == 0xdc:
+                            app_data = msgpack.unpackb(app_data)
+                            if isinstance(app_data, list) and len(app_data) > 1 and app_data[0] != None:
+                                app_data = app_data[0]
+                            else:
+                                app_data = b""
                     else:
                         app_data = b""
                 else:
