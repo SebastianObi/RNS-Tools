@@ -454,7 +454,7 @@ class ServerShop:
             if config["telemetry_state_enabled"]:
                 fields[self.core.MSG_FIELD_STATE] = [config["telemetry_state_data"], int(time.time())]
             if len(fields) > 0:
-                self.destination.announce(msgpack.packb({self.core.ANNOUNCE_DATA_CONTENT: config["title"].encode("utf-8"), self.core.ANNOUNCE_DATA_TITLE: None, self.core.ANNOUNCE_DATA_FIELDS: fields}), attached_interface=attached_interface)
+                self.destination.announce(msgpack.packb([config["title"].encode("utf-8"), None, fields]), attached_interface=attached_interface)
             else:
                 self.destination.announce(config["title"].encode("utf-8"), attached_interface=attached_interface)
             RNS.log("Server - Announced: " + RNS.prettyhexrep(self.destination_hash()) +": " + config["title"], RNS.LOG_DEBUG)
@@ -1027,10 +1027,6 @@ class ServerShop:
 
 
 class Core:
-    ANNOUNCE_DATA_CONTENT = 0x00
-    ANNOUNCE_DATA_FIELDS  = 0x01
-    ANNOUNCE_DATA_TITLE   = 0x02
-
     MSG_FIELD_EMBEDDED_LXMS    = 0x01
     MSG_FIELD_TELEMETRY        = 0x02
     MSG_FIELD_TELEMETRY_STREAM = 0x03

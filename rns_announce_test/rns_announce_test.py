@@ -219,7 +219,7 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, dest="", value
         if count == 0 or count_current < count:
             count_current = count_current+1
             letters = string.ascii_lowercase
-            content = ''.join(random.choice(letters) for i in range(size))
+            content = "".join(random.choice(letters) for i in range(size))
             content = "#"+str(count_current)+" "+value+" "+content
 
             identity = RNS.Identity()

@@ -77,10 +77,6 @@ DB = None
 RNS_CONNECTION = None
 RNS_ANNOUNCE_HANDLER = None
 
-ANNOUNCE_DATA_CONTENT = 0x00
-ANNOUNCE_DATA_FIELDS  = 0x01
-ANNOUNCE_DATA_TITLE   = 0x02
-
 MSG_FIELD_EMBEDDED_LXMS    = 0x01
 MSG_FIELD_TELEMETRY        = 0x02
 MSG_FIELD_TELEMETRY_STREAM = 0x03
@@ -162,6 +158,7 @@ class AnnounceHandler:
         dest_type = [self.dest_type]
         dest_recall = None
         dest_recall_type = None
+
         location_lat = 0
         location_lon = 0
         owner = None
@@ -185,35 +182,35 @@ class AnnounceHandler:
                 pass
 
         try:
-            if app_data[0] == 0x83 or (app_data[0] >= 0x90 and app_data[0] <= 0x9f) or app_data[0] == 0xdc:
-                app_data_dict = msgpack.unpackb(app_data)
-                app_data = b""
-                if isinstance(app_data_dict, dict):
-                    if ANNOUNCE_DATA_CONTENT in app_data_dict:
-                        app_data = app_data_dict[ANNOUNCE_DATA_CONTENT]
-                    if ANNOUNCE_DATA_FIELDS in app_data_dict and MSG_FIELD_TYPE in app_data_dict[ANNOUNCE_DATA_FIELDS]:
-                        dest_type = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_TYPE]
-                        if not isinstance(dest_type, list):
-                            dest_type = [dest_type]
-                    if ANNOUNCE_DATA_FIELDS in app_data_dict and MSG_FIELD_LOCATION in app_data_dict[ANNOUNCE_DATA_FIELDS]:
-                        location_lat = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_LOCATION][0]
-                        location_lon = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_LOCATION][1]
-                    if ANNOUNCE_DATA_FIELDS in app_data_dict and MSG_FIELD_OWNER in app_data_dict[ANNOUNCE_DATA_FIELDS]:
-                        owner = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_OWNER]
-                    if ANNOUNCE_DATA_FIELDS in app_data_dict and MSG_FIELD_STATE in app_data_dict[ANNOUNCE_DATA_FIELDS]:
-                        d_state = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_STATE]
-                        if isinstance(d_state, list):
-                            state = d_state[0]
-                            state_ts = d_state[1]
-                        else:
-                            state = d_state
-                            state_ts = 0
-                elif isinstance(app_data_dict, list) and len(app_data_dict) > 1 and app_data_dict[0] != None:
-                    app_data = app_data_dict[0]
+            if (app_data[0] >= 0x90 and app_data[0] <= 0x9f) or app_data[0] == 0xdc:
+                app_data = msgpack.unpackb(app_data)
+                if isinstance(app_data, list):
+                    if len(app_data) > 2 and app_data[2] != None and isinstance(app_data[2], dict):
+                        if MSG_FIELD_TYPE in app_data[2]:
+                            dest_type = app_data[2][MSG_FIELD_TYPE]
+                            if not isinstance(dest_type, list):
+                                dest_type = [dest_type]
+                        if MSG_FIELD_LOCATION in app_data[2]:
+                            location_lat = app_data[2][MSG_FIELD_LOCATION][0]
+                            location_lon = app_data[2][MSG_FIELD_LOCATION][1]
+                        if MSG_FIELD_OWNER in app_data[2]:
+                            owner = app_data[2][MSG_FIELD_OWNER]
+                        if MSG_FIELD_STATE in app_data[2]:
+                            d_state = app_data[2][MSG_FIELD_STATE]
+                            if isinstance(d_state, list):
+                                state = d_state[0]
+                                state_ts = d_state[1]
+                            else:
+                                state = d_state
+                                state_ts = 0
+                    if len(app_data) > 1 and app_data[0] != None:
+                        app_data = app_data[0]
+                    else:
+                        app_data = b""
                 else:
                     app_data = b""
         except:
-            pass
+            app_data = b""
 
         try:
             app_data = app_data.decode("utf-8")

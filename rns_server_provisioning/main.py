@@ -70,10 +70,6 @@ CONFIG = None
 RNS_CONNECTION = None
 RNS_SERVER_PROVISIONING = None
 
-ANNOUNCE_DATA_CONTENT = 0x00
-ANNOUNCE_DATA_FIELDS  = 0x01
-ANNOUNCE_DATA_TITLE   = 0x02
-
 MSG_FIELD_EMBEDDED_LXMS    = 0x01
 MSG_FIELD_TELEMETRY        = 0x02
 MSG_FIELD_TELEMETRY_STREAM = 0x03
@@ -470,7 +466,7 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False)
                 if len(type_fields) > 0:
                     fields[MSG_FIELD_TYPE_FIELDS] = type_fields
         if len(fields) > 0:
-            announce_data = {ANNOUNCE_DATA_CONTENT: CONFIG["rns_server"]["display_name"].encode("utf-8"), ANNOUNCE_DATA_TITLE: None, ANNOUNCE_DATA_FIELDS: fields}
+            announce_data = [CONFIG["rns_server"]["display_name"].encode("utf-8"), None, fields]
             log("RNS - Configured announce data: "+str(announce_data), LOG_DEBUG)
             announce_data = msgpack.packb(announce_data)
 

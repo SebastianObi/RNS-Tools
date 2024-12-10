@@ -152,6 +152,7 @@ class HandlerSync:
                 _evm_address.address = blockchain[self.owner.BLOCKCHAIN_TOKEN_PRIMARY]["address"]
                 _evm_address.user = dest
                 self.owner.db.add(_evm_address)
+                # TODO: Add EVM address to blockchain
 
             # Invitation
             if account["invite"] and invitation_code_verify(account["invite"]):

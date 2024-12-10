@@ -64,10 +64,6 @@ SEARCH = None
 RNS_CONNECTION = None
 RNS_ANNOUNCE_HANDLER = None
 
-ANNOUNCE_DATA_CONTENT = 0x00
-ANNOUNCE_DATA_FIELDS  = 0x01
-ANNOUNCE_DATA_TITLE   = 0x02
-
 MSG_FIELD_EMBEDDED_LXMS    = 0x01
 MSG_FIELD_TELEMETRY        = 0x02
 MSG_FIELD_TELEMETRY_STREAM = 0x03
@@ -119,7 +115,7 @@ MSG_FIELD_VOICE              = 0xBF
 
 
 class AnnounceHandler:
-    def __init__(self, aspect_filter=None, callback=None, dest_type=None, hidden=False, hop_min=0, hop_max=0, hop_interfaces=[], recall_app_data=None, dest_allow=[], dest_deny=[]):
+    def __init__(self, aspect_filter=None, callback=None, dest_type=None, hidden=False, hop_min=0, hop_max=0, hop_interfaces=[], recall_app_data=None, recall_app_data_type=None, dest_allow=[], dest_deny=[]):
         self.aspect_filter = aspect_filter
         self.callback = callback
         self.dest_type = dest_type
@@ -128,6 +124,7 @@ class AnnounceHandler:
         self.hop_max = hop_max
         self.hop_interfaces = hop_interfaces
         self.recall_app_data = recall_app_data
+        self.recall_app_data_type = recall_app_data_type
         self.dest_allow = dest_allow
         self.dest_deny = dest_deny
 
@@ -146,12 +143,22 @@ class AnnounceHandler:
                 return
 
         dest_type = [self.dest_type]
+        dest_recall = None
+        dest_recall_type = None
 
-        if self.recall_app_data and self.recall_app_data != "":
+        location_lat = 0
+        location_lon = 0
+        owner = None
+        state = 0
+        state_ts = 0
+
+        if self.recall_app_data:
             try:
                 identity = RNS.Identity.recall(destination_hash)
                 if identity != None:
-                    app_data = RNS.Identity.recall_app_data(RNS.Destination.hash_from_name_and_identity(self.recall_app_data, identity))
+                    dest_recall = RNS.Destination.hash_from_name_and_identity(self.recall_app_data, identity)
+                    dest_recall_type = self.recall_app_data_type
+                    app_data = RNS.Identity.recall_app_data(dest_recall)
                     if app_data != None and len(app_data) > 0:
                         pass
                     else:
@@ -160,24 +167,37 @@ class AnnounceHandler:
                     app_data = b""
             except:
                 pass
-        else:
-            try:
-                if app_data[0] == 0x83 or (app_data[0] >= 0x90 and app_data[0] <= 0x9f) or app_data[0] == 0xdc:
-                    app_data_dict = msgpack.unpackb(app_data)
-                    app_data = b""
-                    if isinstance(app_data_dict, dict):
-                        if ANNOUNCE_DATA_CONTENT in app_data_dict:
-                            app_data = app_data_dict[ANNOUNCE_DATA_CONTENT]
-                        if ANNOUNCE_DATA_FIELDS in app_data_dict and MSG_FIELD_TYPE in app_data_dict[ANNOUNCE_DATA_FIELDS]:
-                            dest_type = app_data_dict[ANNOUNCE_DATA_FIELDS][MSG_FIELD_TYPE]
+
+        try:
+            if (app_data[0] >= 0x90 and app_data[0] <= 0x9f) or app_data[0] == 0xdc:
+                app_data = msgpack.unpackb(app_data)
+                if isinstance(app_data, list):
+                    if len(app_data) > 2 and app_data[2] != None and isinstance(app_data[2], dict):
+                        if MSG_FIELD_TYPE in app_data[2]:
+                            dest_type = app_data[2][MSG_FIELD_TYPE]
                             if not isinstance(dest_type, list):
                                 dest_type = [dest_type]
-                    elif isinstance(app_data_dict, list) and len(app_data_dict) > 1 and app_data_dict[0] != None:
-                        app_data = app_data_dict[0]
+                        if MSG_FIELD_LOCATION in app_data[2]:
+                            location_lat = app_data[2][MSG_FIELD_LOCATION][0]
+                            location_lon = app_data[2][MSG_FIELD_LOCATION][1]
+                        if MSG_FIELD_OWNER in app_data[2]:
+                            owner = app_data[2][MSG_FIELD_OWNER]
+                        if MSG_FIELD_STATE in app_data[2]:
+                            d_state = app_data[2][MSG_FIELD_STATE]
+                            if isinstance(d_state, list):
+                                state = d_state[0]
+                                state_ts = d_state[1]
+                            else:
+                                state = d_state
+                                state_ts = 0
+                    if len(app_data) > 1 and app_data[0] != None:
+                        app_data = app_data[0]
                     else:
                         app_data = b""
-            except:
-                pass
+                else:
+                    app_data = b""
+        except:
+            app_data = b""
 
         try:
             app_data = app_data.decode("utf-8")
@@ -205,7 +225,14 @@ class AnnounceHandler:
                 self.callback(
                     dest=destination_hash,
                     dest_type=key,
-                    app_data=app_data,
+                    dest_recall=dest_recall,
+                    dest_recall_type=dest_recall_type,
+                    data=app_data,
+                    location_lat=location_lat,
+                    location_lon=location_lon,
+                    owner=owner,
+                    state=state,
+                    state_ts=state_ts,
                     hop_count=hop_count,
                     hop_interface=hop_interface,
                     hop_dest=None,
@@ -219,21 +246,21 @@ class AnnounceHandler:
 ##############################################################################################################
 # Announce functions
 
-def announce_view(dest, dest_type=0x01, app_data="", hop_count=0, hop_interface="", hop_dest=None, aspect_filter=""):
+def announce_view(dest, dest_type=0x01, dest_recall=None, dest_recall_type=None, data="", location_lat=0, location_lon=0, owner=None, state=0, state_ts=0, hop_count=0, hop_interface="", hop_dest=None, aspect_filter=""):
     global DATA
     global SEARCH
 
     dest_str = RNS.prettyhexrep(dest)
 
     if SEARCH:
-        if SEARCH not in dest_str.lower() and SEARCH not in app_data.lower() and SEARCH not in hop_interface.lower():
+        if SEARCH not in dest_str.lower() and SEARCH not in data.lower() and SEARCH not in hop_interface.lower():
             return
 
     if dest not in DATA:
         DATA[dest] = 0
     DATA[dest] += 1
 
-    print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+"  |  "+dest_str+"  |  "+app_data+"  |  "+aspect_filter+"  |  "+str(hop_count)+"  |  "+hop_interface+"  |  "+str(DATA[dest]))
+    print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+"  |  "+dest_str+"  |  "+data+"  |  "+aspect_filter+"  |  "+str(hop_count)+"  |  "+hop_interface+"  |  "+str(DATA[dest]))
 
 
 ##############################################################################################################
@@ -433,7 +460,7 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False,
 
     for val in aspect_filter:
         try:
-            RNS_ANNOUNCE_HANDLER[val] = AnnounceHandler(val, announce_view, None, hidden, hop_min, hop_max, hop_interfaces, recall_app_data, dest_allow, dest_deny)
+            RNS_ANNOUNCE_HANDLER[val] = AnnounceHandler(val, announce_view, None, hidden, hop_min, hop_max, hop_interfaces, recall_app_data, None, dest_allow, dest_deny)
             RNS.Transport.register_announce_handler(RNS_ANNOUNCE_HANDLER[val])
             log("RNS - Added announce handler for '"+val+"'", LOG_DEBUG)
         except Exception as e:
