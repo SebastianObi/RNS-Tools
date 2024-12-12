@@ -364,20 +364,20 @@ class HandlerDirectory:
         else:
             data = []
             for entry in result:
-                owner = entry[5].strip()
+                owner = entry[6].strip()
                 owner = bytes.fromhex(owner) if owner else None
                 data.append({
                     "dest": bytes.fromhex(entry[0].strip()),
                     "type": entry[1],
                     "data": entry[2].strip(),
-                    "location_lat": entry[3],
-                    "location_lon": entry[4],
+                    "location_lat": entry[4],
+                    "location_lon": entry[5],
                     "owner": owner,
-                    "state": entry[6],
-                    "state_ts": entry[7],
-                    "hop_count": entry[8],
-                    "ts_add": entry[11],
-                    "ts_edit": entry[12],
+                    "state": entry[7],
+                    "state_ts": entry[8],
+                    "hop_count": entry[9],
+                    "ts_add": entry[12],
+                    "ts_edit": entry[13],
                 })
 
             return data
@@ -419,20 +419,20 @@ class HandlerDirectory:
             return None
         else:
             entry = result[0]
-            owner = entry[5].strip()
+            owner = entry[6].strip()
             owner = bytes.fromhex(owner) if owner else None
             data = {
                 "dest": bytes.fromhex(entry[0].strip()),
                 "type": entry[1],
                 "data": entry[2].strip(),
-                "location_lat": entry[3],
-                "location_lon": entry[4],
+                "location_lat": entry[4],
+                "location_lon": entry[5],
                 "owner": owner,
-                "state": entry[6],
-                "state_ts": entry[7],
-                "hop_count": entry[8],
-                "ts_add": entry[11],
-                "ts_edit": entry[12],
+                "state": entry[7],
+                "state_ts": entry[8],
+                "hop_count": entry[9],
+                "ts_add": entry[12],
+                "ts_edit": entry[13],
             }
             return data
 

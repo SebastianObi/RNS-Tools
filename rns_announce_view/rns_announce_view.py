@@ -140,7 +140,7 @@ class AnnounceHandler:
         self.dest_deny = dest_deny
 
 
-    def received_announce(self, destination_hash, announced_identity, app_data):
+    def received_announce(self, destination_hash, announced_identity, app_data, announce_packet_hash):
         if app_data == None:
             if self.hidden:
                 app_data = b""
@@ -235,6 +235,16 @@ class AnnounceHandler:
             if len(self.dest_deny) > 0 and destination_hash in self.dest_deny:
                 return
 
+            metadata = {}
+
+            rssi = RNS_CONNECTION.get_packet_rssi(announce_packet_hash)
+            snr = RNS_CONNECTION.get_packet_snr(announce_packet_hash)
+            q = RNS_CONNECTION.get_packet_q(announce_packet_hash)
+            if rssi or snr or q:
+                metadata["rssi"] = rssi
+                metadata["snr"] = snr
+                metadata["q"] = q
+
             log("RNS - Received '"+self.aspect_filter+"' announce for "+RNS.prettyhexrep(destination_hash)+" "+str(hop_count)+" hops away with data: "+app_data, LOG_DEBUG)
 
             for key in dest_type:
@@ -244,6 +254,7 @@ class AnnounceHandler:
                     dest_recall=dest_recall,
                     dest_recall_type=dest_recall_type,
                     data=app_data,
+                    metadata=metadata if len(metadata) > 0 else None,
                     location_lat=location_lat,
                     location_lon=location_lon,
                     owner=owner,
@@ -262,7 +273,7 @@ class AnnounceHandler:
 ##############################################################################################################
 # Announce functions
 
-def announce_view(dest, dest_type=0x01, dest_recall=None, dest_recall_type=None, data="", location_lat=0, location_lon=0, owner=None, state=0, state_ts=0, hop_count=0, hop_interface="", hop_dest=None, aspect_filter=""):
+def announce_view(dest, dest_type=0x01, dest_recall=None, dest_recall_type=None, data="", metadata=None, location_lat=0, location_lon=0, owner=None, state=0, state_ts=0, hop_count=0, hop_interface="", hop_dest=None, aspect_filter=""):
     global DATA
     global SEARCH
 

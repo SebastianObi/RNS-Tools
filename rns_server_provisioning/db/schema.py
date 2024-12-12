@@ -15,7 +15,8 @@ from sqlalchemy import (
     Enum as eum,
     Numeric,
     CheckConstraint,
-    Float
+    Float,
+    LargeBinary
 )
 
 Base = declarative_base()
@@ -627,6 +628,7 @@ class Announce(Base):
     dest_type = Column(Integer, nullable=False, default=0, primary_key=True)
 
     data = Column(String, nullable=False, default="")
+    data_meta = Column(LargeBinary)
 
     location_lat = Column(Float, nullable=False, default=0)
     location_lon = Column(Float, nullable=False, default=0)
