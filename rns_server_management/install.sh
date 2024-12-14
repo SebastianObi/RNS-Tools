@@ -76,14 +76,14 @@ _install_core_config() {
 
   cat <<EOF | tee "$CONFIG_FOLDER/config" > /dev/null
 [reticulum]
-  enable_transport = True 
+  enable_transport = False
   share_instance = Yes
   shared_instance_port = 37428
   instance_control_port = 37429
   panic_on_interface_error = No
 
 [logging]
-  loglevel = 6
+  loglevel = 4
 
 [interfaces]
 
@@ -141,6 +141,7 @@ _install_software() {
   apt -y -q update
   apt -y -q install python3-polib
 
+  mkdir -p "$SOFTWARE_PATH_DST"
   cp -a "$SOFTWARE_PATH_SRC"/* "$SOFTWARE_PATH_DST"
   chmod +x "$SOFTWARE_PATH_DST"/*.py
 }
@@ -273,6 +274,7 @@ _uninstall_footer() {
 
 
 _update_software() {
+  mkdir -p "$SOFTWARE_PATH_DST"
   cp -a "$SOFTWARE_PATH_SRC"/* "$SOFTWARE_PATH_DST"
   chmod +x "$SOFTWARE_PATH_DST"/*.py
 }
