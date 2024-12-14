@@ -1807,7 +1807,7 @@ class ServerManagement:
             for key, value in services.items():
                 if key == "":
                     continue
-                enabled, state = self.services_state_mapping(value[0], value[1])
+                enabled, state = self.services_state_mapping_int(value[0], value[1])
                 if filter and "enabled" in filter and enabled not in filter["enabled"]:
                     continue
                 if filter and "state" in filter and state not in filter["state"]:
@@ -1868,10 +1868,41 @@ class ServerManagement:
                     raise ValueError(file_src+" does not exist.")
                 if os.path.isfile(file_dst):
                     raise ValueError(file_dst+" does exist.")
+                state_enabled, state_running = self.services_state(data["service"], True)
+                result = subprocess.run(["systemctl", "stop", data["service"]], capture_output=True, text=True)
+                if result.returncode != 0:
+                    raise ValueError(result.returncode)
+                result = subprocess.run(["systemctl", "disable", data["service"]], capture_output=True, text=True)
+                if result.returncode != 0:
+                    raise ValueError(result.returncode)
                 shutil.move(file_src, file_dst)
+                if ("files" in data and data["files"]) or ("config" in data and data["config"]):
+                    with open(file_dst, "r") as fh:
+                        content = fh.read()
+                    if "files" in data and data["files"]:
+                        search = data["service"]
+                        pattern = re.compile(rf'(\/(?:[^\/\s]+\/)*{re.escape(search)})\b')
+                        matches = pattern.findall(content)
+                        for files_src in matches:
+                            if os.path.isdir(files_src):
+                                files_dst = files_src.replace(data["service"], data["name"])
+                                shutil.move(files_src, files_dst)
+                                break
+                    if "config" in data and data["config"]:
+                        content = content.replace(data["service"], data["name"])
+                    with open(file_dst, "w") as fh:
+                        fh.write(content)
                 result = subprocess.run(["systemctl", "daemon-reload"], capture_output=True, text=True)
                 if result.returncode != 0:
                     raise ValueError(result.returncode)
+                if state_enabled:
+                    result = subprocess.run(["systemctl", "enable", data["name"]], capture_output=True, text=True)
+                    if result.returncode != 0:
+                        raise ValueError(result.returncode)
+                if state_running:
+                    result = subprocess.run(["systemctl", "start", data["name"]], capture_output=True, text=True)
+                    if result.returncode != 0:
+                        raise ValueError(result.returncode)
                 data_return["services_del"] = {}
                 data_return["services_del"][data["service"]] = True
                 data_return["services_update"] = {}
@@ -1903,7 +1934,7 @@ class ServerManagement:
                             break
                 if "config" in data and data["config"]:
                     content = content.replace(data["service"], data["name"])
-                with open(file_dst, 'w') as fh:
+                with open(file_dst, "w") as fh:
                     fh.write(content)
                 result = subprocess.run(["systemctl", "daemon-reload"], capture_output=True, text=True)
                 if result.returncode != 0:
@@ -1931,7 +1962,7 @@ class ServerManagement:
                 file = self.services_system_path+"/"+data["service"]+self.services_system_extension
                 if not os.path.isfile(file):
                     raise ValueError(file+" does not exist.")
-                with open(file, 'w') as fh:
+                with open(file, "w") as fh:
                     fh.write(data["content"])
                 result = subprocess.run(["systemctl", "daemon-reload"], capture_output=True, text=True)
                 if result.returncode != 0:
@@ -1996,17 +2027,30 @@ class ServerManagement:
         return data_return
 
 
-    def services_state(self, service):
+    def services_state(self, service, boolean=False):
         result = subprocess.run(["systemctl", "is-enabled", service], capture_output=True, text=True)
         enabled = result.stdout.strip()
 
         result = subprocess.run(["systemctl", "is-active", service], capture_output=True, text=True)
         state = result.stdout.strip()
 
-        return self.services_state_mapping(enabled, state)
+        if boolean:
+            return self.services_state_mapping_boolean(enabled, state)
+        else:
+            return self.services_state_mapping_int(enabled, state)
 
 
-    def services_state_mapping(self, enabled, state):
+    def services_state_mapping_boolean(self, enabled, state):
+        enabled_mapping = {"disabled": False, "enabled": True, "static": False, "masked": False, "alias": False}
+        state_mapping = {"inactive": False, "active": True, "activating": True, "deactivating": True, "failed": True}
+
+        enabled = enabled_mapping.get(enabled.lower(), False)
+        state = state_mapping.get(state.lower(), True)
+
+        return [enabled, state]
+
+
+    def services_state_mapping_int(self, enabled, state):
         enabled_mapping = {"disabled": 0x00, "enabled": 0x01, "static": 0x02, "masked": 0x03, "alias": 0x04}
         state_mapping = {"inactive": 0x00, "active": 0x01, "activating": 0x02, "deactivating": 0x03, "failed": 0x04}
 
