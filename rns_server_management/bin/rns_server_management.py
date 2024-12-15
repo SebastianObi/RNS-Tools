@@ -1082,14 +1082,14 @@ class ServerManagement:
                 if os.path.isfile(file_src):
                     if os.path.isfile(file_dst):
                         raise ValueError(file_dst+" does exist.")
-                    shutil.copy(file_src, file_dst)
+                    shutil.copy2(file_src, file_dst)
                     data_return["files_update"] = {}
                     file_stat = os.stat(file_dst)
                     data_return["files_update"][os.path.basename(file_dst)] = [os.path.getsize(file_dst), file_stat.st_mode, file_stat.st_uid, file_stat.st_gid]
                 elif os.path.isdir(file_src):
                     if os.path.isdir(file_dst):
                         raise ValueError(file_dst+" does exist.")
-                    shutil.copytree(file_src, file_dst)
+                    shutil.copytree(file_src, file_dst, copy_function=shutil.copy2)
                     data_return["files_update"] = {}
                     data_return["files_update"][os.path.basename(file_dst)] = []
                 else:
@@ -1930,7 +1930,7 @@ class ServerManagement:
                     for files_src in matches:
                         if os.path.isdir(files_src):
                             files_dst = files_src.replace(data["service"], data["name"])
-                            shutil.copytree(files_src, files_dst)
+                            shutil.copytree(files_src, files_dst, copy_function=shutil.copy2)
                             break
                 if "config" in data and data["config"]:
                     content = content.replace(data["service"], data["name"])
