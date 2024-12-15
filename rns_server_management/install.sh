@@ -280,6 +280,14 @@ _update_software() {
 }
 
 
+_update_config() {
+  mkdir -p "$SOFTWARE_CONFIG_DST"
+  cp -r "$SOFTWARE_CONFIG_SRC"/* "$SOFTWARE_CONFIG_DST"
+  find "$SOFTWARE_CONFIG_DST" -type f -name "*.sh" -exec chmod +x {} \;
+  find "$SOFTWARE_CONFIG_DST" -type f -name "*.py" -exec chmod +x {} \;
+}
+
+
 _update_footer() {
   _divider
   echo -e "You have successfully updated $SOFTWARE_NAME"
@@ -341,7 +349,7 @@ echo -e "The installation of the dependencies may not work on some systems. In t
   while [ $LOOP -eq 1 ]; do
     echo -e ""
     echo -e "Select a function:"
-    options=("Install Core+Software" "Install" "Uninstall" "Update" "None/Exit")
+    options=("Install Core+Software" "Install" "Uninstall" "Update Software+Config" "Update" "None/Exit")
     select opt in "${options[@]}"; do
       case $opt in
       "Install Core+Software"*)
@@ -372,6 +380,12 @@ echo -e "The installation of the dependencies may not work on some systems. In t
         _uninstall_software
         _uninstall_service
         _uninstall_footer
+        LOOP=0
+        break;;
+      "Update Software+Config"*)
+        _update_software
+        _update_config
+        _update_footer
         LOOP=0
         break;;
       "Update"*)
