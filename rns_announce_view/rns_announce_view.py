@@ -389,7 +389,7 @@ def exit():
 
 
 #### Setup #####
-def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False, search="", aspect_filter="", dest_allow="", dest_deny="", hop_min=0, hop_max=0, hop_interfaces="", hidden=True, recall_app_data=True):
+def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False, require_shared_instance=False, search="", aspect_filter="", dest_allow="", dest_deny="", hop_min=0, hop_max=0, hop_interfaces="", hidden=True, recall_app_data=True):
     global DATA
     global SEARCH
     global PATH
@@ -430,7 +430,7 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False,
 
     SEARCH = search.lower()
 
-    RNS_CONNECTION = RNS.Reticulum(configdir=PATH_RNS, loglevel=rns_loglevel)
+    RNS_CONNECTION = RNS.Reticulum(configdir=PATH_RNS, loglevel=rns_loglevel, require_shared_instance=require_shared_instance)
 
     log("...............................................................................", LOG_INFO)
     log("        Name: " + NAME, LOG_INFO)
@@ -518,6 +518,7 @@ def main():
         parser.add_argument("-pl", "--path_log", action="store", type=str, default=None, help="Path to alternative log directory")
         parser.add_argument("-l", "--loglevel", action="store", type=int, default=LOG_LEVEL)
         parser.add_argument("-s", "--service", action="store_true", default=False, help="Running as a service and should log to file")
+        parser.add_argument("-rs", "--require_shared_instance", action="store_true", default=False, help="Require a shared reticulum instance")
 
         parser.add_argument("--search", action="store", type=str, default="", help="Search string for destination, data or hop interface")
 
@@ -535,7 +536,7 @@ def main():
 
         params = parser.parse_args()
 
-        setup(path=params.path, path_rns=params.path_rns, path_log=params.path_log, loglevel=params.loglevel, service=params.service, search=params.search, aspect_filter=params.aspect_filter, dest_allow=params.dest_allow, dest_deny=params.dest_deny, hop_min=params.hop_min, hop_max=params.hop_max, hop_interfaces=params.hop_interfaces, hidden=params.hidden, recall_app_data=params.recall_app_data)
+        setup(path=params.path, path_rns=params.path_rns, path_log=params.path_log, loglevel=params.loglevel, service=params.service, require_shared_instance=params.require_shared_instance, search=params.search, aspect_filter=params.aspect_filter, dest_allow=params.dest_allow, dest_deny=params.dest_deny, hop_min=params.hop_min, hop_max=params.hop_max, hop_interfaces=params.hop_interfaces, hidden=params.hidden, recall_app_data=params.recall_app_data)
 
     except KeyboardInterrupt:
         print("Terminated by CTRL-C")

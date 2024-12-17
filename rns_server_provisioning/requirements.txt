@@ -1,7 +1,9 @@
 cffi
 cryptography
+pycrypto
+py-bcrypt
 greenlet
-psycopg2
+psycopg2-binary
 pycparser
 pyserial
 python-dotenv

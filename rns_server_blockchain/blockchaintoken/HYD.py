@@ -33,6 +33,7 @@
 #  sudo apt install libssl-dev
 #  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 #  . "$HOME/.cargo/env"
+#  pip3 install pycrypto
 #  pip3 install maturin
 #  pip3 install iop-python
 #  pip3 install requests

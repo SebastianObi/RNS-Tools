@@ -1,4 +1,5 @@
 rns
+pycrypto
 maturin
 iop-python
 requests

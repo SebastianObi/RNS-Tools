@@ -168,11 +168,6 @@ _install_config() {
 # This also has the advantage that all changed settings can be kept when updating the program.
 
 
-#### Main program settings ####
-[main]
-fields_announce = True
-
-
 #### RNS server settings ####
 [rns_server]
 display_name = $SETTINGS_DISPLAY_NAME
