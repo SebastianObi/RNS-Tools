@@ -106,7 +106,7 @@ Description=Reticulum Network Stack Daemon
 After=multi-user.target
 
 [Service]
-#ExecStartPre=/bin/sleep 10
+#ExecStartPre=/bin/sleep 5
 Type=simple
 Restart=always
 RestartSec=3
@@ -207,7 +207,7 @@ Description=$SOFTWARE_NAME
 After=multi-user.target
 
 [Service]
-ExecStartPre=/bin/sleep 10
+ExecStartPre=/bin/sleep 5
 Type=simple
 Restart=always
 RestartSec=3
