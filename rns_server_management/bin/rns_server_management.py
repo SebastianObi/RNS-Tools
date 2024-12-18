@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 ##############################################################################################################
 #
-# Copyright (c) 2024 Sebastian Obele  /  obele.eu
+# Copyright (c) 2024 HydraMeshnet  /  hydramesh.net
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -86,7 +86,7 @@ import RNS.vendor.umsgpack as msgpack
 NAME = "RNS Server Management"
 DESCRIPTION = "Tool for the remote administration of servers"
 VERSION = "0.0.1 (2024-05-31)"
-COPYRIGHT = "(c) 2024 Sebastian Obele  /  obele.eu"
+COPYRIGHT = "(c) 2024 HydraMeshnet  /  hydramesh.net"
 PATH = os.path.expanduser("~")+"/.config/"+os.path.splitext(os.path.basename(__file__))[0]
 PATH_RNS = None
 
@@ -1082,14 +1082,14 @@ class ServerManagement:
                 if os.path.isfile(file_src):
                     if os.path.isfile(file_dst):
                         raise ValueError(file_dst+" does exist.")
-                    shutil.copy2(file_src, file_dst)
+                    self.shutil_copy(file_src, file_dst)
                     data_return["files_update"] = {}
                     file_stat = os.stat(file_dst)
                     data_return["files_update"][os.path.basename(file_dst)] = [os.path.getsize(file_dst), file_stat.st_mode, file_stat.st_uid, file_stat.st_gid]
                 elif os.path.isdir(file_src):
                     if os.path.isdir(file_dst):
                         raise ValueError(file_dst+" does exist.")
-                    shutil.copytree(file_src, file_dst, copy_function=shutil.copy2)
+                    self.shutil_copytree(file_src, file_dst)
                     data_return["files_update"] = {}
                     data_return["files_update"][os.path.basename(file_dst)] = []
                 else:
@@ -1930,7 +1930,7 @@ class ServerManagement:
                     for files_src in matches:
                         if os.path.isdir(files_src):
                             files_dst = files_src.replace(data["service"], data["name"])
-                            shutil.copytree(files_src, files_dst, copy_function=shutil.copy2)
+                            self.shutil_copytree(files_src, files_dst)
                             break
                 if "config" in data and data["config"]:
                     content = content.replace(data["service"], data["name"])
@@ -2064,7 +2064,50 @@ class ServerManagement:
 
 
     #################################################
-    # Buffer (Scripts, Console)                     #
+    # Helpers                                       #
+    #################################################
+
+
+    def shutil_copy(self, src, dst, permissions=True):
+        shutil.copy(src, dst)
+
+        if not permissions:
+            return
+
+        st = os.stat(src)
+        os.chmod(dst, st.st_mode)
+        if hasattr(os, "chown"):
+            os.chown(dst, st.st_uid, st.st_gid)
+
+
+    def shutil_copytree(self, src, dst, permissions=True):
+        shutil.copytree(src, dst, copy_function=shutil.copy)
+
+        if not permissions:
+            return
+
+        for dirpath, dirnames, filenames in os.walk(src):
+            relative_path = os.path.relpath(dirpath, src)
+            dst_dirpath = os.path.join(dst, relative_path)
+
+            st = os.stat(dirpath)
+            os.chmod(dst_dirpath, st.st_mode)
+
+            if hasattr(os, "chown"):
+                os.chown(dst_dirpath, st.st_uid, st.st_gid)
+
+            for filename in filenames:
+                src_file = os.path.join(dirpath, filename)
+                dst_file = os.path.join(dst_dirpath, filename)
+
+                st = os.stat(src_file)
+                os.chmod(dst_file, st.st_mode)
+                if hasattr(os, "chown"):
+                    os.chown(dst_file, st.st_uid, st.st_gid)
+
+
+    #################################################
+    # Helpers - Buffer (Scripts, Console)           #
     #################################################
 
 
@@ -2161,7 +2204,7 @@ class ServerManagement:
 
 
     #################################################
-    # Locales/Language                              #
+    # Helpers - Locales/Language                    #
     #################################################
 
 
