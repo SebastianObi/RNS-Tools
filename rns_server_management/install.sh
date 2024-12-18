@@ -76,7 +76,7 @@ _install_core_config() {
 
   cat <<EOF | tee "$CONFIG_FOLDER/config" > /dev/null
 [reticulum]
-  enable_transport = False
+  enable_transport = True
   share_instance = Yes
   shared_instance_port = 37428
   instance_control_port = 37429
@@ -91,18 +91,6 @@ _install_core_config() {
 type = AutoInterface
 enabled = True
 mode = gateway
-networkname = fdn
-passphrase = FreieDeutscheGesellschaft
-
-[[TCP FDN]]
-type = TCPClientInterface
-enabled = True
-outgoing = True
-mode = boundary
-target_host = fdn.freiedeutschegesellschaft.org
-target_port = 42043
-networkname = fdn
-passphrase = FreieDeutscheGesellschaft
 EOF
 
   if [ "$SETTINGS_USER" != "$USER" ]; then

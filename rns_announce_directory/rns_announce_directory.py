@@ -170,11 +170,21 @@ class AnnounceHandler:
         dest_recall = None
         dest_recall_type = None
 
+        metadata = {}
         location_lat = 0
         location_lon = 0
         owner = None
         state = 0
         state_ts = 0
+
+        if self.aspect_filter == "lxmf.propagation":
+            try:
+                unpacked = msgpack.unpackb(app_data)
+                metadata["node_enabled"] = unpacked[0]
+                metadata["node_ts"] = unpacked[1]
+                metadata["node_transfer_limit"] = unpacked[2]
+            except:
+                pass
 
         if self.recall_app_data:
             try:
@@ -220,6 +230,8 @@ class AnnounceHandler:
                                 state = d_state
                                 state_ts = 0
                     if len(app_data) > 1 and app_data[0] != None:
+                        if app_data[1] != None and self.aspect_filter == "lxmf.delivery":
+                            metadata["stamp_cost"] = app_data[1]
                         app_data = app_data[0]
                     else:
                         app_data = b""
@@ -247,9 +259,6 @@ class AnnounceHandler:
 
             if len(self.dest_deny) > 0 and destination_hash in self.dest_deny:
                 return
-
-            metadata = {}
-
 
             rssi = RNS_CONNECTION.get_packet_rssi(announce_packet_hash)
             snr = RNS_CONNECTION.get_packet_snr(announce_packet_hash)
