@@ -300,11 +300,12 @@ class ServerPage:
             self.limiter_peer = None
 
 
-    def pages_config(self, enabled=True, path="pages", ext_allow=[], ext_deny=[], allow_all=True, allow=[], deny=[], index="", pages_index_depth=255, files_index_depth=255, content_index_header="", content_index_footer="", content_index_pages_header=">>Index - Pages!n!!n!", content_index_pages_entry="`[{name}`:{url}]`!n!!n!", content_index_files_header=">>Index - Files!n!!n!", content_index_files_entry="`[{name}`:{url}]`!n!!n!", content_index="Default Home Page\n\nThis server is serving pages, but the home page file (index.mu) was not found in the page storage directory.", content_auth="Request not allowed!\n\nYou are not authorised to carry out the request."):
+    def pages_config(self, enabled=True, path="pages", execute=True, ext_allow=[], ext_deny=[], allow_all=True, allow=[], deny=[], index="", pages_index_depth=255, files_index_depth=255, content_index_header="", content_index_footer="", content_index_pages_header=">>Index - Pages!n!!n!", content_index_pages_entry="`[{name}`:{url}]`!n!!n!", content_index_files_header=">>Index - Files!n!!n!", content_index_files_entry="`[{name}`:{url}]`!n!!n!", content_index="Default Home Page\n\nThis server is serving pages, but the home page file (index.mu) was not found in the page storage directory.", content_auth="Request not allowed!\n\nYou are not authorised to carry out the request."):
         self.pages = []
         self.pages_root = []
-        self.pages_enabled = enabled
         self.pages_path = path
+        self.pages_enabled = enabled
+        self.pages_execute = execute
         self.pages_ext_allow = ext_allow
         self.pages_ext_deny = ext_deny
         self.pages_ext_deny.append("allowed")
@@ -326,11 +327,12 @@ class ServerPage:
         self.pages_content_auth = content_auth.replace("!n!", "\n")
 
 
-    def files_config(self, enabled=True, path="files", ext_allow=[], ext_deny=[], allow_all=True, allow=[], deny=[]):
+    def files_config(self, enabled=True, path="files", execute=True, ext_allow=[], ext_deny=[], allow_all=True, allow=[], deny=[]):
         self.files = []
         self.files_index = []
         self.files_enabled = enabled
         self.files_path = path
+        self.files_execute = execute
         self.files_ext_allow = ext_allow
         self.files_ext_deny = ext_deny
         self.files_ext_deny.append("allowed")
@@ -651,7 +653,7 @@ class ServerPage:
             allowed_list = []
 
             try:
-                if os.access(allowed_path, os.X_OK):
+                if self.pages_execute and os.access(allowed_path, os.X_OK):
                     allowed_result = subprocess.run([allowed_path], stdout=subprocess.PIPE)
                     allowed_input = allowed_result.stdout
                 else:
@@ -701,7 +703,7 @@ class ServerPage:
         try:
             if allowed:
                 RNS.log("Server - Pages: Serving "+file_path, RNS.LOG_VERBOSE)
-                if os.access(file_path, os.X_OK):
+                if self.pages_execute and os.access(file_path, os.X_OK):
                     env_map = {}
                     if "PATH" in os.environ:
                         env_map["PATH"] = os.environ["PATH"]
@@ -968,7 +970,7 @@ class ServerPage:
             allowed_list = []
 
             try:
-                if os.access(allowed_path, os.X_OK):
+                if self.files_execute and os.access(allowed_path, os.X_OK):
                     allowed_result = subprocess.run([allowed_path], stdout=subprocess.PIPE)
                     allowed_input = allowed_result.stdout
                 else:
@@ -1479,6 +1481,7 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False,
     RNS_SERVER_PAGE.pages_config(
         enabled=CONFIG["rns_server"].getboolean("pages_enabled"),
         path=CONFIG["rns_server"]["pages_path"],
+        execute=CONFIG["rns_server"].getboolean("pages_execute"),
         ext_allow=CONFIG["rns_server"]["pages_ext_allow"].split(","),
         ext_deny=CONFIG["rns_server"]["pages_ext_deny"].split(","),
         index=CONFIG["rns_server"]["index"],
@@ -1497,6 +1500,7 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False,
     RNS_SERVER_PAGE.files_config(
         enabled=CONFIG["rns_server"].getboolean("files_enabled"),
         path=CONFIG["rns_server"]["files_path"],
+        execute=CONFIG["rns_server"].getboolean("files_execute"),
         ext_allow=CONFIG["rns_server"]["files_ext_allow"].split(","),
         ext_deny=CONFIG["rns_server"]["files_ext_deny"].split(",")
     )
@@ -1657,6 +1661,7 @@ limiter_peer_duration = 60 # Seconds
 # Pages
 pages_enabled = True
 pages_path = pages
+pages_execute = True
 pages_ext_allow = #,-separated list
 pages_ext_deny = py,sh #,-separated list
 index = content #none=none/empty, #content=configured string, pages=Index pages, files=Index files, both=Index pages/files
@@ -1674,6 +1679,7 @@ content_auth = Request Not Allowed!n!!n!You are not authorised to carry out the 
 # Files
 files_enabled = True
 files_path = files
+files_execute = True
 files_ext_allow = #,-separated list
 files_ext_deny = #,-separated list
 

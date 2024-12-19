@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 ##############################################################################################################
 #
-# Copyright (c) 2024 HydraMeshnet  /  hydramesh.net
+# Copyright (c) 2024 Sebastian Obele  /  obele.eu
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -86,7 +86,7 @@ import RNS.vendor.umsgpack as msgpack
 NAME = "RNS Server Management"
 DESCRIPTION = "Tool for the remote administration of servers"
 VERSION = "0.0.1 (2024-05-31)"
-COPYRIGHT = "(c) 2024 HydraMeshnet  /  hydramesh.net"
+COPYRIGHT = "(c) 2024 Sebastian Obele  /  obele.eu"
 PATH = os.path.expanduser("~")+"/.config/"+os.path.splitext(os.path.basename(__file__))[0]
 PATH_RNS = None
 
@@ -622,6 +622,7 @@ class ServerManagement:
         self.destination.register_request_handler("scripts_list", response_generator=self.scripts_list, allow=RNS.Destination.ALLOW_ALL)
         self.destination.register_request_handler("services_list", response_generator=self.services_list, allow=RNS.Destination.ALLOW_ALL)
         self.destination.register_request_handler("services_cmd", response_generator=self.services_cmd, allow=RNS.Destination.ALLOW_ALL)
+        self.destination.register_request_handler("services_logs", response_generator=self.services_logs, allow=RNS.Destination.ALLOW_ALL)
 
 
     def peer_connected(self, link):
@@ -2011,6 +2012,63 @@ class ServerManagement:
                 data_return["services_update"][data["service"]] = self.services_state(data["service"])
             except Exception as e:
                 self.log_exception(e, "Server - Services - CMD")
+                data_return["result"] = self.RESULT_ERROR
+
+        else:
+            data_return["result"] = self.RESULT_ERROR
+
+        data_return = msgpack.packb(data_return)
+
+        if self.limiter_server:
+            self.limiter_server.handle_size("server", len(data_return))
+
+        if self.limiter_peer:
+             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
+
+        return data_return
+
+
+    def services_logs(self, path, data, request_id, link_id, remote_identity, requested_at):
+        if not remote_identity:
+            return msgpack.packb({"result": self.RESULT_NO_IDENTITY})
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return msgpack.packb({"result": self.RESULT_LIMIT_SERVER})
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return msgpack.packb({"result": self.RESULT_LIMIT_PEER})
+
+        if not data:
+            return msgpack.packb({"result": self.RESULT_NO_DATA})
+
+        self.link_ts = time.time()
+
+        data_return = {}
+
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        if dest not in self.allow:
+            data_return["result"] = self.RESULT_NO_RIGHT
+            return msgpack.packb(data_return)
+
+        if "locales" in data:
+            self.locales_init(data["locales"])
+
+        data_return["result"] = self.RESULT_OK
+        data_return["logs_o"] = []
+
+        if "file" in data and "mode" in data:
+            try:
+                file = data["file"]
+                mode = data["mode"]
+                result = subprocess.run(["journalctl", "-u", file, "-n", str(mode)], capture_output=True, text=True)
+                if result.returncode == 0:
+                    lines = result.stdout.split('\n')
+                    lines = lines[-mode:]
+                    data_return["logs_o"] = lines
+                else:
+                    raise ValueError(result.returncode)
+            except Exception as e:
+                self.log_exception(e, "Server - Services - Logs")
                 data_return["result"] = self.RESULT_ERROR
 
         else:
