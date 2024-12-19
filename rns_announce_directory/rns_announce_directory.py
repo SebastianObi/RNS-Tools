@@ -183,6 +183,7 @@ class AnnounceHandler:
                 metadata["node_enabled"] = unpacked[0]
                 metadata["node_ts"] = unpacked[1]
                 metadata["node_transfer_limit"] = unpacked[2]
+                app_data = unpacked[3] if len(unpacked) > 3 else  b""
             except:
                 pass
 
@@ -192,18 +193,9 @@ class AnnounceHandler:
                 if identity != None:
                     dest_recall = RNS.Destination.hash_from_name_and_identity(self.recall_app_data, identity)
                     dest_recall_type = self.recall_app_data_type
-                    app_data = RNS.Identity.recall_app_data(dest_recall)
-                    if app_data != None and len(app_data) > 0:
-                        if (app_data[0] >= 0x90 and app_data[0] <= 0x9f) or app_data[0] == 0xdc:
-                            app_data = msgpack.unpackb(app_data)
-                            if isinstance(app_data, list) and len(app_data) > 1 and app_data[0] != None:
-                                app_data = app_data[0]
-                            else:
-                                app_data = b""
-                    else:
-                        app_data = b""
-                else:
-                    app_data = b""
+                    recall_app_data = RNS.Identity.recall_app_data(dest_recall)
+                    if recall_app_data != None and len(recall_app_data) > 0:
+                        app_data = recall_app_data
             except:
                 pass
 
