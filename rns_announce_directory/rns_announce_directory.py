@@ -170,12 +170,17 @@ class AnnounceHandler:
         dest_recall = None
         dest_recall_type = None
 
+        data = b""
         metadata = {}
-        location_lat = 0
-        location_lon = 0
-        owner = None
-        state = 0
-        state_ts = 0
+        fields = None
+
+        rssi = RNS_CONNECTION.get_packet_rssi(announce_packet_hash)
+        snr = RNS_CONNECTION.get_packet_snr(announce_packet_hash)
+        q = RNS_CONNECTION.get_packet_q(announce_packet_hash)
+        if rssi or snr or q:
+            metadata["rssi"] = rssi
+            metadata["snr"] = snr
+            metadata["q"] = q
 
         if self.aspect_filter == "lxmf.propagation":
             try:
@@ -184,6 +189,7 @@ class AnnounceHandler:
                 metadata["node_ts"] = unpacked[1]
                 metadata["node_transfer_limit"] = unpacked[2]
                 app_data = unpacked[3] if len(unpacked) > 3 else  b""
+                fields = unpacked[4] if len(unpacked) > 4 and unpacked[4] != None and isinstance(unpacked[4], dict) else None
             except:
                 pass
 
@@ -203,37 +209,19 @@ class AnnounceHandler:
             if (app_data[0] >= 0x90 and app_data[0] <= 0x9f) or app_data[0] == 0xdc:
                 app_data = msgpack.unpackb(app_data)
                 if isinstance(app_data, list):
-                    if len(app_data) > 2 and app_data[2] != None and isinstance(app_data[2], dict):
-                        if MSG_FIELD_TYPE in app_data[2]:
-                            dest_type = app_data[2][MSG_FIELD_TYPE]
-                            if not isinstance(dest_type, list):
-                                dest_type = [dest_type]
-                        if MSG_FIELD_LOCATION in app_data[2]:
-                            location_lat = app_data[2][MSG_FIELD_LOCATION][0]
-                            location_lon = app_data[2][MSG_FIELD_LOCATION][1]
-                        if MSG_FIELD_OWNER in app_data[2]:
-                            owner = app_data[2][MSG_FIELD_OWNER]
-                        if MSG_FIELD_STATE in app_data[2]:
-                            d_state = app_data[2][MSG_FIELD_STATE]
-                            if isinstance(d_state, list):
-                                state = d_state[0]
-                                state_ts = d_state[1]
-                            else:
-                                state = d_state
-                                state_ts = 0
                     if len(app_data) > 1 and app_data[0] != None:
+                        data = app_data[0]
                         if app_data[1] != None and self.aspect_filter == "lxmf.delivery":
                             metadata["stamp_cost"] = app_data[1]
-                        app_data = app_data[0]
-                    else:
-                        app_data = b""
-                else:
-                    app_data = b""
+                    if len(app_data) > 2 and app_data[2] != None and isinstance(app_data[2], dict):
+                        fields = app_data[2]
+            else:
+                data = app_data
         except:
-            app_data = b""
+            pass
 
         try:
-            app_data = app_data.decode("utf-8")
+            data = data.decode("utf-8")
             hop_count = RNS.Transport.hops_to(destination_hash)
             hop_interface = RNS_CONNECTION.get_next_hop_if_name(destination_hash)
 
@@ -252,15 +240,32 @@ class AnnounceHandler:
             if len(self.dest_deny) > 0 and destination_hash in self.dest_deny:
                 return
 
-            rssi = RNS_CONNECTION.get_packet_rssi(announce_packet_hash)
-            snr = RNS_CONNECTION.get_packet_snr(announce_packet_hash)
-            q = RNS_CONNECTION.get_packet_q(announce_packet_hash)
-            if rssi or snr or q:
-                metadata["rssi"] = rssi
-                metadata["snr"] = snr
-                metadata["q"] = q
+            location_lat = 0
+            location_lon = 0
+            owner = None
+            state = 0
+            state_ts = 0
 
-            log("RNS - Received '"+self.aspect_filter+"' announce for "+RNS.prettyhexrep(destination_hash)+" "+str(hop_count)+" hops away with data: "+app_data, LOG_DEBUG)
+            if fields:
+                if MSG_FIELD_TYPE in fields:
+                    dest_type = fields[MSG_FIELD_TYPE]
+                    if not isinstance(dest_type, list):
+                        dest_type = [dest_type]
+                if MSG_FIELD_LOCATION in fields:
+                    location_lat = fields[MSG_FIELD_LOCATION][0]
+                    location_lon = fields[MSG_FIELD_LOCATION][1]
+                if MSG_FIELD_OWNER in fields:
+                    owner = fields[MSG_FIELD_OWNER]
+                if MSG_FIELD_STATE in fields:
+                    d_state = fields[MSG_FIELD_STATE]
+                    if isinstance(d_state, list):
+                        state = d_state[0]
+                        state_ts = d_state[1]
+                    else:
+                        state = d_state
+                        state_ts = 0
+
+            log("RNS - Received '"+self.aspect_filter+"' announce for "+RNS.prettyhexrep(destination_hash)+" "+str(hop_count)+" hops away with data: "+data, LOG_DEBUG)
 
             for key in dest_type:
                 self.callback(
@@ -268,7 +273,7 @@ class AnnounceHandler:
                     dest_type=key,
                     dest_recall=dest_recall,
                     dest_recall_type=dest_recall_type,
-                    data=app_data,
+                    data=data,
                     metadata=metadata if len(metadata) > 0 else None,
                     location_lat=location_lat,
                     location_lon=location_lon,
