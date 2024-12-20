@@ -352,7 +352,7 @@ class ServerManagement:
     RESULT_BLOCKED     = 0xFF
 
 
-    def __init__(self, storage_path=None, identity_file="identity", identity=None, ratchets=False, destination_name="nomadnetwork", destination_type="management", destination_conv_name="lxmf", destination_conv_type="delivery", destination_mode=True, announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False, allow=[], statistic=None, link_timeout=300, default_user=None, default_user_interfaces=None, default_user_hops=None, default_user_callback=None, configs_cmd=None, environment_variables=None, services_system_path="/etc/systemd/system", services_system_extension=".service", limiter_server_enabled=False, limiter_server_calls=1000, limiter_server_size=0, limiter_server_duration=60, limiter_peer_enabled=True, limiter_peer_calls=0, limiter_peer_size=0, limiter_peer_duration=60):
+    def __init__(self, storage_path=None, identity_file="identity", identity=None, ratchets=False, destination_name="nomadnetwork", destination_type="management", destination_conv_name="lxmf", destination_conv_type="delivery", destination_mode=True, announce_startup=False, announce_startup_delay=0, announce_periodic=False, announce_periodic_interval=360, announce_data="", announce_hidden=False, allow=[], statistic=None, link_timeout=300, default_user=None, default_user_interfaces=None, default_user_hops=None, default_user_callback=None, configs_cmd=None, environment_variables=None, services_system_path="/etc/systemd/system", services_system_extension=".service", services_files=[], limiter_server_enabled=False, limiter_server_calls=1000, limiter_server_size=0, limiter_server_duration=60, limiter_peer_enabled=True, limiter_peer_calls=0, limiter_peer_size=0, limiter_peer_duration=60):
         self.storage_path = storage_path
         self.configs_path = self.storage_path+"/configs"
         self.files_path = os.path.expanduser("~")
@@ -410,6 +410,7 @@ class ServerManagement:
 
         self.services_system_path = services_system_path
         self.services_system_extension = services_system_extension
+        self.services_files = services_files
 
         if self.storage_path:
             if not os.path.isdir(self.storage_path):
@@ -2071,6 +2072,51 @@ class ServerManagement:
                 self.log_exception(e, "Server - Services - CMD")
                 data_return["result"] = self.RESULT_ERROR
 
+        elif "cmd" in data and data["cmd"] == "files" and "service" in data and data["service"] != "":
+            try:
+                file = self.services_system_path+"/"+data["service"]+self.services_system_extension
+                if not os.path.isfile(file):
+                    raise ValueError(file+" does not exist.")
+                path = None
+                for item in self.services_files:
+                    if os.path.isdir(item+"/"+data["service"]):
+                        path = item+"/"+data["service"]
+                        break
+                with open(file, "r") as fh:
+                    content = fh.read()
+                search = data["service"]
+                pattern = re.compile(rf'(\/(?:[^\/\s]+\/)*{re.escape(search)})\b')
+                matches = pattern.findall(content)
+                for match in matches:
+                    if os.path.isdir(match):
+                        path = match
+                        break
+                if path:
+                    data_return["files"] = {}
+                    data_return["path"] = path
+                    files = []
+                    folders = []
+                    items = os.listdir(path)
+                    for item in items:
+                        full_path = os.path.join(path, item)
+                        if os.path.isfile(full_path):
+                            files.append(item)
+                        elif os.path.isdir(full_path):
+                            folders.append(item)
+                    files.sort()
+                    folders.sort()
+                    if path != "/":
+                        data_return["files"][".."] = []
+                    for folder in folders:
+                        data_return["files"][folder] = []
+                    for file in files:
+                        full_path = os.path.join(path, file)
+                        file_stat = os.stat(full_path)
+                        data_return["files"][file] = [os.path.getsize(full_path), file_stat.st_mode, file_stat.st_uid, file_stat.st_gid]
+            except Exception as e:
+                self.log_exception(e, "Server - Services - CMD")
+                data_return["result"] = self.RESULT_ERROR
+
         elif "cmd" in data and data["cmd"] != "" and "service" in data and data["service"] != "":
             try:
                 result = subprocess.run(["systemctl", data["cmd"], data["service"]], capture_output=True, text=True)
@@ -2756,6 +2802,11 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False,
         for (key, val) in CONFIG.items("environment_variables"):
             environment_variables[key] = val
 
+    services_files = []
+    if CONFIG.has_section("services_files"):
+        for (key, val) in CONFIG.items("services_files"):
+            services_files.append(key)
+
     RNS_SERVER_MANAGEMENT = ServerManagement(
         storage_path=path,
         identity_file="identity",
@@ -2780,6 +2831,7 @@ def setup(path=None, path_rns=None, path_log=None, loglevel=None, service=False,
         environment_variables=environment_variables,
         services_system_path=CONFIG["services"]["system_path"],
         services_system_extension=CONFIG["services"]["system_extension"],
+        services_files=services_files,
         limiter_server_enabled=CONFIG["rns_server"].getboolean("limiter_server_enabled"),
         limiter_server_calls=CONFIG["rns_server"]["limiter_server_calls"],
         limiter_server_size=CONFIG["rns_server"]["limiter_server_size"],
@@ -2875,6 +2927,9 @@ state_data = 0
 
 
 [environment_variables]
+
+
+[services_files]
 '''
 
 
@@ -2973,10 +3028,14 @@ shutdown = shutdown
 [environment_variables]
 
 
-#### services settings ####
+#### Services settings ####
 [services]
 system_path = /etc/systemd/system
 system_extension = .service
+
+
+#### Paths where the configuration files of the service are located. ####
+[services_files]
 '''
 
 

@@ -100,7 +100,7 @@ EOF
 
 
 _install_core_service() {
-  cat <<EOF | tee "/etc/systemd/system/rnsd.service" > /dev/null
+  cat <<EOF | tee "/etc/systemd/system/reticulum.service" > /dev/null
 [Unit]
 Description=Reticulum Network Stack Daemon
 After=multi-user.target
@@ -119,8 +119,8 @@ EOF
 
   systemctl daemon-reload
 
-  systemctl enable rnsd
-  systemctl start rnsd
+  systemctl enable reticulum
+  systemctl start reticulum
 }
 
 
@@ -188,6 +188,14 @@ $SETTINGS_ALLOWED
 #### Environment settings ####
 [environment_variables]
 $SETTINGS_USER_TARGET
+
+
+#### Paths where the configuration files of the service are located. ####
+[services_files]
+/home/$SETTINGS_USER_TARGET/.config
+/home/$SETTINGS_USER_TARGET
+/root/.config
+/root/
 EOF
 }
 
