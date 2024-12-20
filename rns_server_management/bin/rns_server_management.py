@@ -359,6 +359,7 @@ class ServerManagement:
         self.infos_path = self.storage_path+"/infos"
         self.locales_path = self.storage_path+"/locales"
         self.logs_path = self.storage_path+"/logs"
+        self.notes_path = self.storage_path+"/notes.txt"
         self.scripts_path = self.storage_path+"/scripts"
         self.services_path = self.storage_path+"/services"
 
@@ -619,6 +620,7 @@ class ServerManagement:
         self.destination.register_request_handler("infos_list", response_generator=self.infos_list, allow=RNS.Destination.ALLOW_ALL)
         self.destination.register_request_handler("logs_list", response_generator=self.logs_list, allow=RNS.Destination.ALLOW_ALL)
         self.destination.register_request_handler("logs_cmd", response_generator=self.logs_cmd, allow=RNS.Destination.ALLOW_ALL)
+        self.destination.register_request_handler("notes_cmd", response_generator=self.notes_cmd, allow=RNS.Destination.ALLOW_ALL)
         self.destination.register_request_handler("scripts_list", response_generator=self.scripts_list, allow=RNS.Destination.ALLOW_ALL)
         self.destination.register_request_handler("services_list", response_generator=self.services_list, allow=RNS.Destination.ALLOW_ALL)
         self.destination.register_request_handler("services_cmd", response_generator=self.services_cmd, allow=RNS.Destination.ALLOW_ALL)
@@ -1587,6 +1589,72 @@ class ServerManagement:
                             break
             except Exception as e:
                 self.log_exception(e, "Server - Logs - CMD")
+                data_return["result"] = self.RESULT_ERROR
+
+        else:
+            data_return["result"] = self.RESULT_ERROR
+
+        data_return = msgpack.packb(data_return)
+
+        if self.limiter_server:
+            self.limiter_server.handle_size("server", len(data_return))
+
+        if self.limiter_peer:
+             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
+
+        return data_return
+
+
+    #################################################
+    # Notes                                         #
+    #################################################
+
+
+    def notes_cmd(self, path, data, request_id, link_id, remote_identity, requested_at):
+        if not remote_identity:
+            return msgpack.packb({"result": self.RESULT_NO_IDENTITY})
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            return msgpack.packb({"result": self.RESULT_LIMIT_SERVER})
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            return msgpack.packb({"result": self.RESULT_LIMIT_PEER})
+
+        if not data:
+            return msgpack.packb({"result": self.RESULT_NO_DATA})
+
+        self.link_ts = time.time()
+
+        data_return = {}
+
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        if dest not in self.allow:
+            data_return["result"] = self.RESULT_NO_RIGHT
+            return msgpack.packb(data_return)
+
+        if "locales" in data:
+            self.locales_init(data["locales"])
+
+        data_return["result"] = self.RESULT_OK
+
+        if "cmd" in data and data["cmd"] == "r":
+            try:
+                data_return["notes"] = ""
+                file = self.notes_path
+                if os.path.isfile(file):
+                    with open(file, "r") as fh:
+                        data_return["notes"] = fh.read()
+            except Exception as e:
+                self.log_exception(e, "Server - Notes - CMD")
+                data_return["result"] = self.RESULT_ERROR
+
+        elif "cmd" in data and data["cmd"] == "w" and "content" in data:
+            try:
+                file = self.notes_path
+                with open(file, "w") as fh:
+                    fh.write(data["content"])
+            except Exception as e:
+                self.log_exception(e, "Server - Notes - CMD")
                 data_return["result"] = self.RESULT_ERROR
 
         else:
