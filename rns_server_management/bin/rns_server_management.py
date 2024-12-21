@@ -338,6 +338,13 @@ class ServerManagementConsole:
 
 
 class ServerManagement:
+    KEY_RESULT        = "result" # Result
+    KEY_RESULT_REASON = "result_reason" # Result - Reason
+
+    LIMITER_TYPE_JSON    = 0x00
+    LIMITER_TYPE_MSGPACK = 0x01
+    LIMITER_TYPE_NONE    = 0x02
+
     RESULT_ERROR       = 0x00
     RESULT_OK          = 0x01
     RESULT_SYNCRONIZE  = 0x02
@@ -480,10 +487,10 @@ class ServerManagement:
 
         self.scripts = None
         self.scripts_env = {}
+
         self.console = ServerManagementConsole()
         self.console_env = {}
         self.configs_reboot = False
-
 
         if limiter_server_enabled:
             self.limiter_server = RateLimiter(int(limiter_server_calls), int(limiter_server_size), int(limiter_server_duration))
@@ -613,19 +620,72 @@ class ServerManagement:
 
     def register(self):
         RNS.log("Server - Register", RNS.LOG_DEBUG)
-        self.destination.register_request_handler("configs_list", response_generator=self.configs_list, allow=RNS.Destination.ALLOW_ALL)
-        self.destination.register_request_handler("configs_cmd", response_generator=self.configs_cmd, allow=RNS.Destination.ALLOW_ALL)
-        self.destination.register_request_handler("files_list", response_generator=self.files_list, allow=RNS.Destination.ALLOW_ALL)
-        self.destination.register_request_handler("files_cmd", response_generator=self.files_cmd, allow=RNS.Destination.ALLOW_ALL)
-        self.destination.register_request_handler("files_download", response_generator=self.files_download, allow=RNS.Destination.ALLOW_ALL)
-        self.destination.register_request_handler("infos_list", response_generator=self.infos_list, allow=RNS.Destination.ALLOW_ALL)
-        self.destination.register_request_handler("logs_list", response_generator=self.logs_list, allow=RNS.Destination.ALLOW_ALL)
-        self.destination.register_request_handler("logs_cmd", response_generator=self.logs_cmd, allow=RNS.Destination.ALLOW_ALL)
-        self.destination.register_request_handler("notes_cmd", response_generator=self.notes_cmd, allow=RNS.Destination.ALLOW_ALL)
-        self.destination.register_request_handler("scripts_list", response_generator=self.scripts_list, allow=RNS.Destination.ALLOW_ALL)
-        self.destination.register_request_handler("services_list", response_generator=self.services_list, allow=RNS.Destination.ALLOW_ALL)
-        self.destination.register_request_handler("services_cmd", response_generator=self.services_cmd, allow=RNS.Destination.ALLOW_ALL)
-        self.destination.register_request_handler("services_logs", response_generator=self.services_logs, allow=RNS.Destination.ALLOW_ALL)
+        self.register_request_handler(path="configs_list", response_generator=self.configs_list, limiter_type=self.LIMITER_TYPE_MSGPACK)
+        self.register_request_handler(path="configs_cmd", response_generator=self.configs_cmd, limiter_type=self.LIMITER_TYPE_MSGPACK)
+        self.register_request_handler(path="files_list", response_generator=self.files_list, limiter_type=self.LIMITER_TYPE_MSGPACK)
+        self.register_request_handler(path="files_cmd", response_generator=self.files_cmd, limiter_type=self.LIMITER_TYPE_MSGPACK)
+        self.register_request_handler(path="files_download", response_generator=self.files_download, limiter_type=self.LIMITER_TYPE_NONE)
+        self.register_request_handler(path="infos_list", response_generator=self.infos_list, limiter_type=self.LIMITER_TYPE_MSGPACK)
+        self.register_request_handler(path="logs_list", response_generator=self.logs_list, limiter_type=self.LIMITER_TYPE_MSGPACK)
+        self.register_request_handler(path="logs_cmd", response_generator=self.logs_cmd, limiter_type=self.LIMITER_TYPE_MSGPACK)
+        self.register_request_handler(path="notes_cmd", response_generator=self.notes_cmd, limiter_type=self.LIMITER_TYPE_MSGPACK)
+        self.register_request_handler(path="scripts_list", response_generator=self.scripts_list, limiter_type=self.LIMITER_TYPE_MSGPACK)
+        self.register_request_handler(path="services_list", response_generator=self.services_list, limiter_type=self.LIMITER_TYPE_MSGPACK)
+        self.register_request_handler(path="services_cmd", response_generator=self.services_cmd, limiter_type=self.LIMITER_TYPE_MSGPACK)
+        self.register_request_handler(path="services_logs", response_generator=self.services_logs, limiter_type=self.LIMITER_TYPE_MSGPACK)
+
+
+
+    def register_request_handler(self, path, response_generator=None, allow=None, allowed_list=None, limiter=None, limiter_type=None):
+        self.destination.register_request_handler(
+            path=path,
+            response_generator=lambda path, data, request_id, link_id, remote_identity, requested_at: self.request_handler(response_generator, limiter, limiter_type, path, data, request_id, link_id, remote_identity, requested_at),
+            allow=allow if allow != None else RNS.Destination.ALLOW_ALL,
+            allowed_list=allowed_list
+        )
+
+
+    def deregister_request_handler(self, path):
+        self.destination.deregister_request_handler(path)
+
+
+    def request_handler(self, callback, limiter, limiter_type, path, data, request_id, link_id, remote_identity, requested_at):
+        if not remote_identity:
+            if limiter_type == self.LIMITER_TYPE_MSGPACK:
+                return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_IDENTITY})
+            else:
+                return None
+
+        if self.limiter_server and not self.limiter_server.handle("server"):
+            if limiter_type == self.LIMITER_TYPE_MSGPACK:
+                return msgpack.packb({self.KEY_RESULT: self.RESULT_LIMIT_SERVER})
+            else:
+                return None
+
+        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
+            if limiter_type == self.LIMITER_TYPE_MSGPACK:
+                return msgpack.packb({self.KEY_RESULT: self.RESULT_LIMIT_PEER})
+            else:
+                return None
+
+        if limiter and not limiter.handle(str(remote_identity)):
+            if limiter_type == self.LIMITER_TYPE_MSGPACK:
+                return msgpack.packb({self.KEY_RESULT: self.RESULT_LIMIT_PEER})
+            else:
+                return None
+
+        data = callback(path, data, request_id, link_id, remote_identity, requested_at)
+
+        if self.limiter_server:
+            self.limiter_server.handle_size("server", len(data))
+
+        if self.limiter_peer:
+            self.limiter_peer.handle_size(str(remote_identity), len(data))
+
+        if limiter:
+            limiter.handle_size(str(remote_identity), len(data))
+
+        return data
 
 
     def peer_connected(self, link):
@@ -649,49 +709,52 @@ class ServerManagement:
 
 
     def peer_identified(self, link, identity):
-        if identity:
-            dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, identity)
-            if len(self.allow) == 0:
-                hop_interface = RNS_CONNECTION.get_next_hop_if_name(dest)
-                if self.default_user_interfaces == None or len(self.default_user_interfaces) == 0 or any(hop_interface.startswith(prefix) for prefix in self.default_user_interfaces):
-                    hop_count = RNS.Transport.hops_to(dest)
-                    #hop_interface_self = str(RNS.Transport.next_hop_interface(dest))
-                    #if hop_interface_self and hop_interface_self.startswith("LocalInterface"):
-                    #    hop_count -= 1
-                    if self.default_user_hops == None or self.default_user_hops == 0 or hop_count <= self.default_user_hops:
-                        RNS.log("Server - Create new user "+RNS.prettyhexrep(dest)+" connected via "+hop_interface+" with "+str(hop_count)+" hops", RNS.LOG_DEBUG)
-                        if self.default_user_callback:
-                            self.allow = self.default_user_callback(dest)
-
-            if dest in self.allow:
-                self.scripts_env = {}
-                self.console_env = {}
-                if identity != None:
-                    self.scripts_env["remote_identity"] = RNS.hexrep(identity.hash, delimit=False)
-                    self.console_env["remote_identity"] = RNS.hexrep(identity.hash, delimit=False)
-                if dest != None:
-                    self.scripts_env["dest"] = RNS.hexrep(dest, delimit=False)
-                    self.console_env["dest"] = RNS.hexrep(dest, delimit=False)
-                self.scripts_env.update(self.environment_variables)
-                self.console_env.update(self.environment_variables)
-
-                link.set_resource_strategy(RNS.Link.ACCEPT_APP)
-                link.set_resource_callback(self.files_upload_callback)
-                link.set_resource_started_callback(self.files_upload_started)
-                link.set_resource_concluded_callback(self.files_upload_concluded)
-                self.link = link
-                self.link_ts = time.time()
-                channel = link.get_channel()
-                if self.buffer:
-                    self.buffer.close()
-                self.buffer = RNS.Buffer.create_bidirectional_buffer(0, 0, channel, self.buffer_rx)
-                self.buffer_tx_thread = threading.Thread(target=self.buffer_tx, daemon=True)
-                self.buffer_tx_thread.start()
-                self.locales = None
-            else:
-                link.teardown()
-        else:
+        if not identity:
             link.teardown()
+            return
+
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, identity)
+
+        if len(self.allow) == 0:
+            hop_interface = RNS_CONNECTION.get_next_hop_if_name(dest)
+            if self.default_user_interfaces == None or len(self.default_user_interfaces) == 0 or any(hop_interface.startswith(prefix) for prefix in self.default_user_interfaces):
+                hop_count = RNS.Transport.hops_to(dest)
+                #hop_interface_self = str(RNS.Transport.next_hop_interface(dest))
+                #if hop_interface_self and hop_interface_self.startswith("LocalInterface"):
+                #    hop_count -= 1
+                if self.default_user_hops == None or self.default_user_hops == 0 or hop_count <= self.default_user_hops:
+                    RNS.log("Server - Create new user "+RNS.prettyhexrep(dest)+" connected via "+hop_interface+" with "+str(hop_count)+" hops", RNS.LOG_DEBUG)
+                    if self.default_user_callback:
+                        self.allow = self.default_user_callback(dest)
+
+        if dest not in self.allow:
+            link.teardown()
+            return
+
+        self.scripts_env = {}
+        self.console_env = {}
+        if identity != None:
+            self.scripts_env["remote_identity"] = RNS.hexrep(identity.hash, delimit=False)
+            self.console_env["remote_identity"] = RNS.hexrep(identity.hash, delimit=False)
+        if dest != None:
+            self.scripts_env["dest"] = RNS.hexrep(dest, delimit=False)
+            self.console_env["dest"] = RNS.hexrep(dest, delimit=False)
+        self.scripts_env.update(self.environment_variables)
+        self.console_env.update(self.environment_variables)
+
+        link.set_resource_strategy(RNS.Link.ACCEPT_APP)
+        link.set_resource_callback(self.files_upload_callback)
+        link.set_resource_started_callback(self.files_upload_started)
+        link.set_resource_concluded_callback(self.files_upload_concluded)
+        self.link = link
+        self.link_ts = time.time()
+        channel = link.get_channel()
+        if self.buffer:
+            self.buffer.close()
+        self.buffer = RNS.Buffer.create_bidirectional_buffer(0, 0, channel, self.buffer_rx)
+        self.buffer_tx_thread = threading.Thread(target=self.buffer_tx, daemon=True)
+        self.buffer_tx_thread.start()
+        self.locales = None
 
 
     #################################################
@@ -722,31 +785,21 @@ class ServerManagement:
 
 
     def configs_list(self, path, data, request_id, link_id, remote_identity, requested_at):
-        if not remote_identity:
-            return msgpack.packb({"result": self.RESULT_NO_IDENTITY})
-
-        if self.limiter_server and not self.limiter_server.handle("server"):
-            return msgpack.packb({"result": self.RESULT_LIMIT_SERVER})
-
-        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
-            return msgpack.packb({"result": self.RESULT_LIMIT_PEER})
-
         if not data:
-            return msgpack.packb({"result": self.RESULT_NO_DATA})
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_DATA})
+
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        if dest not in self.allow:
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_RIGHT})
 
         self.link_ts = time.time()
 
         data_return = {}
 
-        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-        if dest not in self.allow:
-            data_return["result"] = self.RESULT_NO_RIGHT
-            return msgpack.packb(data_return)
-
         if "locales" in data:
             self.locales_init(data["locales"])
 
-        data_return["result"] = self.RESULT_OK
+        data_return[self.KEY_RESULT] = self.RESULT_OK
 
         data_return["configs"] = {}
 
@@ -822,48 +875,32 @@ class ServerManagement:
 
         except Exception as e:
             self.log_exception(e, "Server - configs - List")
-            data_return["result"] = self.RESULT_ERROR
+            data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         if self.configs_reboot:
             data_return["configs_reboot"] = self.configs_reboot
 
         data_return = msgpack.packb(data_return)
 
-        if self.limiter_server:
-            self.limiter_server.handle_size("server", len(data_return))
-
-        if self.limiter_peer:
-             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
-
         return data_return
 
 
     def configs_cmd(self, path, data, request_id, link_id, remote_identity, requested_at):
-        if not remote_identity:
-            return msgpack.packb({"result": self.RESULT_NO_IDENTITY})
-
-        if self.limiter_server and not self.limiter_server.handle("server"):
-            return msgpack.packb({"result": self.RESULT_LIMIT_SERVER})
-
-        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
-            return msgpack.packb({"result": self.RESULT_LIMIT_PEER})
-
         if not data:
-            return msgpack.packb({"result": self.RESULT_NO_DATA})
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_DATA})
+
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        if dest not in self.allow:
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_RIGHT})
 
         self.link_ts = time.time()
 
         data_return = {}
 
-        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-        if dest not in self.allow:
-            data_return["result"] = self.RESULT_NO_RIGHT
-            return msgpack.packb(data_return)
-
         if "locales" in data:
             self.locales_init(data["locales"])
 
-        data_return["result"] = self.RESULT_OK
+        data_return[self.KEY_RESULT] = self.RESULT_OK
 
         if "cmd" in data and data["cmd"] == "apply" and "data" in data:
             try:
@@ -895,7 +932,7 @@ class ServerManagement:
                                 pass
             except Exception as e:
                 self.log_exception(e, "Server - Configs - CMD")
-                data_return["result"] = self.RESULT_ERROR
+                data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         elif "cmd" in data and data["cmd"] in self.configs_cmd_mapping:
             try:
@@ -907,21 +944,15 @@ class ServerManagement:
                     raise ValueError(result.returncode)
             except Exception as e:
                 self.log_exception(e, "Server - Configs - CMD")
-                data_return["result"] = self.RESULT_ERROR
+                data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         else:
-            data_return["result"] = self.RESULT_ERROR
+            data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         if self.configs_reboot:
             data_return["configs_reboot"] = self.configs_reboot
 
         data_return = msgpack.packb(data_return)
-
-        if self.limiter_server:
-            self.limiter_server.handle_size("server", len(data_return))
-
-        if self.limiter_peer:
-             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
 
         return data_return
 
@@ -932,31 +963,21 @@ class ServerManagement:
 
 
     def files_list(self, path, data, request_id, link_id, remote_identity, requested_at):
-        if not remote_identity:
-            return msgpack.packb({"result": self.RESULT_NO_IDENTITY})
-
-        if self.limiter_server and not self.limiter_server.handle("server"):
-            return msgpack.packb({"result": self.RESULT_LIMIT_SERVER})
-
-        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
-            return msgpack.packb({"result": self.RESULT_LIMIT_PEER})
-
         if not data:
-            return msgpack.packb({"result": self.RESULT_NO_DATA})
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_DATA})
+
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        if dest not in self.allow:
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_RIGHT})
 
         self.link_ts = time.time()
 
         data_return = {}
 
-        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-        if dest not in self.allow:
-            data_return["result"] = self.RESULT_NO_RIGHT
-            return msgpack.packb(data_return)
-
         if "locales" in data:
             self.locales_init(data["locales"])
 
-        data_return["result"] = self.RESULT_OK
+        data_return[self.KEY_RESULT] = self.RESULT_OK
 
         data_return["files"] = {}
 
@@ -1012,45 +1033,29 @@ class ServerManagement:
                 data_return["files"][file] = [os.path.getsize(full_path), file_stat.st_mode, file_stat.st_uid, file_stat.st_gid]
         except Exception as e:
             self.log_exception(e, "Server - Files - List")
-            data_return["result"] = self.RESULT_ERROR
+            data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         data_return = msgpack.packb(data_return)
-
-        if self.limiter_server:
-            self.limiter_server.handle_size("server", len(data_return))
-
-        if self.limiter_peer:
-             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
 
         return data_return
 
 
     def files_cmd(self, path, data, request_id, link_id, remote_identity, requested_at):
-        if not remote_identity:
-            return msgpack.packb({"result": self.RESULT_NO_IDENTITY})
-
-        if self.limiter_server and not self.limiter_server.handle("server"):
-            return msgpack.packb({"result": self.RESULT_LIMIT_SERVER})
-
-        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
-            return msgpack.packb({"result": self.RESULT_LIMIT_PEER})
-
         if not data:
-            return msgpack.packb({"result": self.RESULT_NO_DATA})
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_DATA})
+
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        if dest not in self.allow:
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_RIGHT})
 
         self.link_ts = time.time()
 
         data_return = {}
 
-        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-        if dest not in self.allow:
-            data_return["result"] = self.RESULT_NO_RIGHT
-            return msgpack.packb(data_return)
-
         if "locales" in data:
             self.locales_init(data["locales"])
 
-        data_return["result"] = self.RESULT_OK
+        data_return[self.KEY_RESULT] = self.RESULT_OK
 
         if "cmd" in data and (data["cmd"] == "move" or data["cmd"] == "mv") and "file_src" in data and "file_dst" in data:
             try:
@@ -1075,7 +1080,7 @@ class ServerManagement:
                     raise ValueError(file_src+" does not exist.")
             except Exception as e:
                 self.log_exception(e, "Server - Files - CMD")
-                data_return["result"] = self.RESULT_ERROR
+                data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         elif "cmd" in data and (data["cmd"] == "copy" or data["cmd"] == "cp" or data["cmd"] == "clone") and "file_src" in data and "file_dst" in data:
             try:
@@ -1100,7 +1105,7 @@ class ServerManagement:
                     raise ValueError(file_src+" does not exist.")
             except Exception as e:
                 self.log_exception(e, "Server - Files - CMD")
-                data_return["result"] = self.RESULT_ERROR
+                data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         elif "cmd" in data and (data["cmd"] == "del" or data["cmd"] == "rm") and "file" in data:
             try:
@@ -1115,7 +1120,7 @@ class ServerManagement:
                 data_return["files_del"][os.path.basename(file)] = True
             except Exception as e:
                 self.log_exception(e, "Server - Files - CMD")
-                data_return["result"] = self.RESULT_ERROR
+                data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         elif "cmd" in data and data["cmd"] == "rename" and "file" in data and "name" in data:
             try:
@@ -1138,7 +1143,7 @@ class ServerManagement:
                     data_return["files_update"][os.path.basename(file_dst)] = []
             except Exception as e:
                 self.log_exception(e, "Server - Files - CMD")
-                data_return["result"] = self.RESULT_ERROR
+                data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         elif "cmd" in data and (data["cmd"] == "new" or data["cmd"] == "create") and ("file" in data or "folder" in data):
             try:
@@ -1158,7 +1163,7 @@ class ServerManagement:
                     data_return["files_update"][os.path.basename(data["folder"])] = []
             except Exception as e:
                 self.log_exception(e, "Server - Files - CMD")
-                data_return["result"] = self.RESULT_ERROR
+                data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         elif "cmd" in data and data["cmd"] == "properties" and "file" in data:
             try:
@@ -1172,40 +1177,25 @@ class ServerManagement:
                 data_return["files_update"][os.path.basename(file)] = [os.path.getsize(file), file_stat.st_mode, file_stat.st_uid, file_stat.st_gid]
             except Exception as e:
                 self.log_exception(e, "Server - Files - CMD")
-                data_return["result"] = self.RESULT_ERROR
+                data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         else:
-            data_return["result"] = self.RESULT_ERROR
+            data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         data_return = msgpack.packb(data_return)
-
-        if self.limiter_server:
-            self.limiter_server.handle_size("server", len(data_return))
-
-        if self.limiter_peer:
-             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
 
         return data_return
 
 
-    def files_download(self, path, data, request_id, remote_identity, requested_at):
-        if not remote_identity:
-            return None
-
-        if self.limiter_server and not self.limiter_server.handle("server"):
-            return None
-
-        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
-            return None
-
+    def files_download(self, path, data, request_id, link_id, remote_identity, requested_at):
         if not data:
             return None
-
-        self.link_ts = time.time()
 
         dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
         if dest not in self.allow:
             return None
+
+        self.link_ts = time.time()
 
         if not "file" in data:
             return None
@@ -1296,31 +1286,21 @@ class ServerManagement:
 
 
     def infos_list(self, path, data, request_id, link_id, remote_identity, requested_at):
-        if not remote_identity:
-            return msgpack.packb({"result": self.RESULT_NO_IDENTITY})
-
-        if self.limiter_server and not self.limiter_server.handle("server"):
-            return msgpack.packb({"result": self.RESULT_LIMIT_SERVER})
-
-        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
-            return msgpack.packb({"result": self.RESULT_LIMIT_PEER})
-
         if not data:
-            return msgpack.packb({"result": self.RESULT_NO_DATA})
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_DATA})
+
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        if dest not in self.allow:
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_RIGHT})
 
         self.link_ts = time.time()
 
         data_return = {}
 
-        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-        if dest not in self.allow:
-            data_return["result"] = self.RESULT_NO_RIGHT
-            return msgpack.packb(data_return)
-
         if "locales" in data:
             self.locales_init(data["locales"])
 
-        data_return["result"] = self.RESULT_OK
+        data_return[self.KEY_RESULT] = self.RESULT_OK
 
         data_return["infos"] = {}
 
@@ -1404,15 +1384,9 @@ class ServerManagement:
 
         except Exception as e:
             self.log_exception(e, "Server - Infos - List")
-            data_return["result"] = self.RESULT_ERROR
+            data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         data_return = msgpack.packb(data_return)
-
-        if self.limiter_server:
-            self.limiter_server.handle_size("server", len(data_return))
-
-        if self.limiter_peer:
-             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
 
         return data_return
 
@@ -1423,31 +1397,21 @@ class ServerManagement:
 
 
     def logs_list(self, path, data, request_id, link_id, remote_identity, requested_at):
-        if not remote_identity:
-            return msgpack.packb({"result": self.RESULT_NO_IDENTITY})
-
-        if self.limiter_server and not self.limiter_server.handle("server"):
-            return msgpack.packb({"result": self.RESULT_LIMIT_SERVER})
-
-        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
-            return msgpack.packb({"result": self.RESULT_LIMIT_PEER})
-
         if not data:
-            return msgpack.packb({"result": self.RESULT_NO_DATA})
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_DATA})
+
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        if dest not in self.allow:
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_RIGHT})
 
         self.link_ts = time.time()
 
         data_return = {}
 
-        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-        if dest not in self.allow:
-            data_return["result"] = self.RESULT_NO_RIGHT
-            return msgpack.packb(data_return)
-
         if "locales" in data:
             self.locales_init(data["locales"])
 
-        data_return["result"] = self.RESULT_OK
+        data_return[self.KEY_RESULT] = self.RESULT_OK
 
         data_return["logs"] = {}
 
@@ -1504,45 +1468,29 @@ class ServerManagement:
                 data_return["logs"][file] = [name, True]
         except Exception as e:
             self.log_exception(e, "Server - Logs - List")
-            data_return["result"] = self.RESULT_ERROR
+            data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         data_return = msgpack.packb(data_return)
-
-        if self.limiter_server:
-            self.limiter_server.handle_size("server", len(data_return))
-
-        if self.limiter_peer:
-             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
 
         return data_return
 
 
     def logs_cmd(self, path, data, request_id, link_id, remote_identity, requested_at):
-        if not remote_identity:
-            return msgpack.packb({"result": self.RESULT_NO_IDENTITY})
-
-        if self.limiter_server and not self.limiter_server.handle("server"):
-            return msgpack.packb({"result": self.RESULT_LIMIT_SERVER})
-
-        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
-            return msgpack.packb({"result": self.RESULT_LIMIT_PEER})
-
         if not data:
-            return msgpack.packb({"result": self.RESULT_NO_DATA})
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_DATA})
+
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        if dest not in self.allow:
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_RIGHT})
 
         self.link_ts = time.time()
 
         data_return = {}
 
-        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-        if dest not in self.allow:
-            data_return["result"] = self.RESULT_NO_RIGHT
-            return msgpack.packb(data_return)
-
         if "locales" in data:
             self.locales_init(data["locales"])
 
-        data_return["result"] = self.RESULT_OK
+        data_return[self.KEY_RESULT] = self.RESULT_OK
         data_return["logs_o"] = []
 
         if "file" in data and "mode" in data:
@@ -1590,18 +1538,12 @@ class ServerManagement:
                             break
             except Exception as e:
                 self.log_exception(e, "Server - Logs - CMD")
-                data_return["result"] = self.RESULT_ERROR
+                data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         else:
-            data_return["result"] = self.RESULT_ERROR
+            data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         data_return = msgpack.packb(data_return)
-
-        if self.limiter_server:
-            self.limiter_server.handle_size("server", len(data_return))
-
-        if self.limiter_peer:
-             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
 
         return data_return
 
@@ -1612,31 +1554,21 @@ class ServerManagement:
 
 
     def notes_cmd(self, path, data, request_id, link_id, remote_identity, requested_at):
-        if not remote_identity:
-            return msgpack.packb({"result": self.RESULT_NO_IDENTITY})
-
-        if self.limiter_server and not self.limiter_server.handle("server"):
-            return msgpack.packb({"result": self.RESULT_LIMIT_SERVER})
-
-        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
-            return msgpack.packb({"result": self.RESULT_LIMIT_PEER})
-
         if not data:
-            return msgpack.packb({"result": self.RESULT_NO_DATA})
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_DATA})
+
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        if dest not in self.allow:
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_RIGHT})
 
         self.link_ts = time.time()
 
         data_return = {}
 
-        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-        if dest not in self.allow:
-            data_return["result"] = self.RESULT_NO_RIGHT
-            return msgpack.packb(data_return)
-
         if "locales" in data:
             self.locales_init(data["locales"])
 
-        data_return["result"] = self.RESULT_OK
+        data_return[self.KEY_RESULT] = self.RESULT_OK
 
         if "cmd" in data and data["cmd"] == "r":
             try:
@@ -1647,7 +1579,7 @@ class ServerManagement:
                         data_return["notes"] = fh.read()
             except Exception as e:
                 self.log_exception(e, "Server - Notes - CMD")
-                data_return["result"] = self.RESULT_ERROR
+                data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         elif "cmd" in data and data["cmd"] == "w" and "content" in data:
             try:
@@ -1656,18 +1588,12 @@ class ServerManagement:
                     fh.write(data["content"])
             except Exception as e:
                 self.log_exception(e, "Server - Notes - CMD")
-                data_return["result"] = self.RESULT_ERROR
+                data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         else:
-            data_return["result"] = self.RESULT_ERROR
+            data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         data_return = msgpack.packb(data_return)
-
-        if self.limiter_server:
-            self.limiter_server.handle_size("server", len(data_return))
-
-        if self.limiter_peer:
-             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
 
         return data_return
 
@@ -1678,31 +1604,21 @@ class ServerManagement:
 
 
     def scripts_list(self, path, data, request_id, link_id, remote_identity, requested_at):
-        if not remote_identity:
-            return msgpack.packb({"result": self.RESULT_NO_IDENTITY})
-
-        if self.limiter_server and not self.limiter_server.handle("server"):
-            return msgpack.packb({"result": self.RESULT_LIMIT_SERVER})
-
-        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
-            return msgpack.packb({"result": self.RESULT_LIMIT_PEER})
-
         if not data:
-            return msgpack.packb({"result": self.RESULT_NO_DATA})
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_DATA})
+
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        if dest not in self.allow:
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_RIGHT})
 
         self.link_ts = time.time()
 
         data_return = {}
 
-        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-        if dest not in self.allow:
-            data_return["result"] = self.RESULT_NO_RIGHT
-            return msgpack.packb(data_return)
-
         if "locales" in data:
             self.locales_init(data["locales"])
 
-        data_return["result"] = self.RESULT_OK
+        data_return[self.KEY_RESULT] = self.RESULT_OK
 
         data_return["scripts"] = {}
 
@@ -1759,15 +1675,9 @@ class ServerManagement:
                 data_return["scripts"][file] = [name, True]
         except Exception as e:
             self.log_exception(e, "Server - Scripts - List")
-            data_return["result"] = self.RESULT_ERROR
+            data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         data_return = msgpack.packb(data_return)
-
-        if self.limiter_server:
-            self.limiter_server.handle_size("server", len(data_return))
-
-        if self.limiter_peer:
-             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
 
         return data_return
 
@@ -1778,31 +1688,21 @@ class ServerManagement:
 
 
     def services_list(self, path, data, request_id, link_id, remote_identity, requested_at):
-        if not remote_identity:
-            return msgpack.packb({"result": self.RESULT_NO_IDENTITY})
-
-        if self.limiter_server and not self.limiter_server.handle("server"):
-            return msgpack.packb({"result": self.RESULT_LIMIT_SERVER})
-
-        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
-            return msgpack.packb({"result": self.RESULT_LIMIT_PEER})
-
         if not data:
-            return msgpack.packb({"result": self.RESULT_NO_DATA})
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_DATA})
+
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        if dest not in self.allow:
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_RIGHT})
 
         self.link_ts = time.time()
 
         data_return = {}
 
-        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-        if dest not in self.allow:
-            data_return["result"] = self.RESULT_NO_RIGHT
-            return msgpack.packb(data_return)
-
         if "locales" in data:
             self.locales_init(data["locales"])
 
-        data_return["result"] = self.RESULT_OK
+        data_return[self.KEY_RESULT] = self.RESULT_OK
 
         data_return["services"] = {}
 
@@ -1888,45 +1788,29 @@ class ServerManagement:
 
         except Exception as e:
             self.log_exception(e, "Server - Services - List")
-            data_return["result"] = self.RESULT_ERROR
+            data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         data_return = msgpack.packb(data_return)
-
-        if self.limiter_server:
-            self.limiter_server.handle_size("server", len(data_return))
-
-        if self.limiter_peer:
-             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
 
         return data_return
 
 
     def services_cmd(self, path, data, request_id, link_id, remote_identity, requested_at):
-        if not remote_identity:
-            return msgpack.packb({"result": self.RESULT_NO_IDENTITY})
-
-        if self.limiter_server and not self.limiter_server.handle("server"):
-            return msgpack.packb({"result": self.RESULT_LIMIT_SERVER})
-
-        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
-            return msgpack.packb({"result": self.RESULT_LIMIT_PEER})
-
         if not data:
-            return msgpack.packb({"result": self.RESULT_NO_DATA})
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_DATA})
+
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        if dest not in self.allow:
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_RIGHT})
 
         self.link_ts = time.time()
 
         data_return = {}
 
-        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-        if dest not in self.allow:
-            data_return["result"] = self.RESULT_NO_RIGHT
-            return msgpack.packb(data_return)
-
         if "locales" in data:
             self.locales_init(data["locales"])
 
-        data_return["result"] = self.RESULT_OK
+        data_return[self.KEY_RESULT] = self.RESULT_OK
 
         if "cmd" in data and data["cmd"] == "rename" and "service" in data and data["service"] != "" and "name" in data and data["name"] != "":
             try:
@@ -1979,7 +1863,7 @@ class ServerManagement:
                 data_return["services_update"][data["name"]] = self.services_state(data["name"])
             except Exception as e:
                 self.log_exception(e, "Server - Services - CMD")
-                data_return["result"] = self.RESULT_ERROR
+                data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         elif "cmd" in data and data["cmd"] == "clone" and "service" in data and data["service"] != "" and "name" in data and data["name"] != "":
             try:
@@ -2013,7 +1897,7 @@ class ServerManagement:
                 data_return["services_update"][data["name"]] = self.services_state(data["name"])
             except Exception as e:
                 self.log_exception(e, "Server - Services - CMD")
-                data_return["result"] = self.RESULT_ERROR
+                data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         elif "cmd" in data and data["cmd"] == "edit" and "service" in data and data["service"] != "" and "content" not in data:
             try:
@@ -2025,7 +1909,7 @@ class ServerManagement:
                 data_return["services_edit"] = [data["service"], "".join(lines)]
             except Exception as e:
                 self.log_exception(e, "Server - Services - CMD")
-                data_return["result"] = self.RESULT_ERROR
+                data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         elif "cmd" in data and data["cmd"] == "edit" and "service" in data and data["service"] != "" and "content" in data:
             try:
@@ -2039,7 +1923,7 @@ class ServerManagement:
                     raise ValueError(result.returncode)
             except Exception as e:
                 self.log_exception(e, "Server - Services - CMD")
-                data_return["result"] = self.RESULT_ERROR
+                data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         elif "cmd" in data and (data["cmd"] == "del" or data["cmd"] == "rm") and "service" in data and data["service"] != "":
             try:
@@ -2070,7 +1954,7 @@ class ServerManagement:
                 data_return["services_del"][data["service"]] = True
             except Exception as e:
                 self.log_exception(e, "Server - Services - CMD")
-                data_return["result"] = self.RESULT_ERROR
+                data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         elif "cmd" in data and data["cmd"] == "files" and "service" in data and data["service"] != "":
             try:
@@ -2092,7 +1976,7 @@ class ServerManagement:
                         path = match
                         break
                 if path:
-                    data_return["files"] = {}
+                    data_return["services_files"] = {}
                     data_return["path"] = path
                     files = []
                     folders = []
@@ -2106,16 +1990,16 @@ class ServerManagement:
                     files.sort()
                     folders.sort()
                     if path != "/":
-                        data_return["files"][".."] = []
+                        data_return["services_files"][".."] = []
                     for folder in folders:
-                        data_return["files"][folder] = []
+                        data_return["services_files"][folder] = []
                     for file in files:
                         full_path = os.path.join(path, file)
                         file_stat = os.stat(full_path)
-                        data_return["files"][file] = [os.path.getsize(full_path), file_stat.st_mode, file_stat.st_uid, file_stat.st_gid]
+                        data_return["services_files"][file] = [os.path.getsize(full_path), file_stat.st_mode, file_stat.st_uid, file_stat.st_gid]
             except Exception as e:
                 self.log_exception(e, "Server - Services - CMD")
-                data_return["result"] = self.RESULT_ERROR
+                data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         elif "cmd" in data and data["cmd"] != "" and "service" in data and data["service"] != "":
             try:
@@ -2126,48 +2010,32 @@ class ServerManagement:
                 data_return["services_update"][data["service"]] = self.services_state(data["service"])
             except Exception as e:
                 self.log_exception(e, "Server - Services - CMD")
-                data_return["result"] = self.RESULT_ERROR
+                data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         else:
-            data_return["result"] = self.RESULT_ERROR
+            data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         data_return = msgpack.packb(data_return)
-
-        if self.limiter_server:
-            self.limiter_server.handle_size("server", len(data_return))
-
-        if self.limiter_peer:
-             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
 
         return data_return
 
 
     def services_logs(self, path, data, request_id, link_id, remote_identity, requested_at):
-        if not remote_identity:
-            return msgpack.packb({"result": self.RESULT_NO_IDENTITY})
-
-        if self.limiter_server and not self.limiter_server.handle("server"):
-            return msgpack.packb({"result": self.RESULT_LIMIT_SERVER})
-
-        if self.limiter_peer and not self.limiter_peer.handle(str(remote_identity)):
-            return msgpack.packb({"result": self.RESULT_LIMIT_PEER})
-
         if not data:
-            return msgpack.packb({"result": self.RESULT_NO_DATA})
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_DATA})
+
+        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
+        if dest not in self.allow:
+            return msgpack.packb({self.KEY_RESULT: self.RESULT_NO_RIGHT})
 
         self.link_ts = time.time()
 
         data_return = {}
 
-        dest = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, remote_identity)
-        if dest not in self.allow:
-            data_return["result"] = self.RESULT_NO_RIGHT
-            return msgpack.packb(data_return)
-
         if "locales" in data:
             self.locales_init(data["locales"])
 
-        data_return["result"] = self.RESULT_OK
+        data_return[self.KEY_RESULT] = self.RESULT_OK
         data_return["logs_o"] = []
 
         if "file" in data and "mode" in data:
@@ -2183,18 +2051,12 @@ class ServerManagement:
                     raise ValueError(result.returncode)
             except Exception as e:
                 self.log_exception(e, "Server - Services - Logs")
-                data_return["result"] = self.RESULT_ERROR
+                data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         else:
-            data_return["result"] = self.RESULT_ERROR
+            data_return[self.KEY_RESULT] = self.RESULT_ERROR
 
         data_return = msgpack.packb(data_return)
-
-        if self.limiter_server:
-            self.limiter_server.handle_size("server", len(data_return))
-
-        if self.limiter_peer:
-             self.limiter_peer.handle_size(str(remote_identity), len(data_return))
 
         return data_return
 

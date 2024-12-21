@@ -521,9 +521,7 @@ class ServerShop:
 
 
     def peer_identified(self, link, identity):
-        if identity:
-            vendor_id = RNS.Destination.hash_from_name_and_identity(self.aspect_filter_conv, identity)
-        else:
+        if not identity:
             link.teardown()
 
 
