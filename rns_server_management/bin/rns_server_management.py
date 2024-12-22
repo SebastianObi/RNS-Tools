@@ -2159,12 +2159,19 @@ class ServerManagement:
                 if self.console:
                     self.console.set(data["c_i"])
 
+            if "c_path" in data:
+                self.console = None
+                self.console = ServerManagementConsole(path=data["c_path"], env=self.console_env)
+                self.console.set("")
+
             if "c_reset" in data:
                 self.console = None
                 self.console = ServerManagementConsole(path="/tmp", env=self.console_env)
+                self.console.set("")
 
             if "c_start" in data:
                 self.console = ServerManagementConsole(path="/tmp", env=self.console_env)
+                self.console.set("")
 
             if "c_stop" in data:
                 self.console = None
