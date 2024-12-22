@@ -64,6 +64,11 @@ import json
 #### Regex ####
 import re
 
+#### Archives ####
+import zipfile
+import tarfile
+import gzip
+
 #### Polib ####
 # Install: pip3 install polib
 try:
@@ -1175,6 +1180,89 @@ class ServerManagement:
                 file_stat = os.stat(file)
                 data_return["files_update"] = {}
                 data_return["files_update"][os.path.basename(file)] = [os.path.getsize(file), file_stat.st_mode, file_stat.st_uid, file_stat.st_gid]
+            except Exception as e:
+                self.log_exception(e, "Server - Files - CMD")
+                data_return[self.KEY_RESULT] = self.RESULT_ERROR
+
+        elif "cmd" in data and (data["cmd"] == "compress" or data["cmd"] == "pack") and "file_src" in data and "file_dst" in data:
+            try:
+                file_src = data["file_src"]
+                file_dst = data["file_dst"]
+                if file_src == file_dst:
+                    raise ValueError("Source/destination are the same.")
+                if os.path.isfile(file_dst):
+                    raise ValueError(file_dst+" does exist.")
+                if file_dst.lower().endswith(".zip"):
+                    if os.path.isdir(file_src):
+                        with zipfile.ZipFile(file_dst, "w", zipfile.ZIP_DEFLATED) as zipf:
+                            for foldername, subfolders, filenames in os.walk(file_src):
+                                for filename in filenames:
+                                    file_path = os.path.join(foldername, filename)
+                                    arcname = os.path.relpath(file_path, os.path.dirname(file_src))
+                                    zipf.write(file_path, arcname)
+                    else:
+                        with zipfile.ZipFile(file_dst, "w", zipfile.ZIP_DEFLATED) as zipf:
+                            zipf.write(file_src, os.path.basename(file_src))
+                elif file_dst.lower().endswith(".tar"):
+                    with tarfile.open(file_dst, "w") as tarf:
+                        if os.path.isdir(file_src):
+                            tarf.add(file_src, arcname=os.path.basename(file_src))
+                        else:
+                            tarf.add(file_src, arcname=os.path.basename(file_src))
+                elif file_dst.lower().endswith(".tar.gz") or file_dst.lower().endswith(".tgz"):
+                    with tarfile.open(file_dst, 'w:gz') as tarf:
+                        if os.path.isdir(file_src):
+                            tarf.add(file_src, arcname=os.path.basename(file_src))
+                        else:
+                            tarf.add(file_src, arcname=os.path.basename(file_src))
+                elif file_dst.lower().endswith(".gz"):
+                    if os.path.isdir(file_src):
+                        raise ValueError(f"Cannot compress a directory into a '.gz' file. Please use .tar.gz or .zip for directories.")
+                    else:
+                        with open(file_src, 'rb') as f_in:
+                            with gzip.open(file_dst, 'wb') as f_out:
+                                shutil.copyfileobj(f_in, f_out)
+                else:
+                    raise ValueError(f"Unsupported file extension for archive.")
+                data_return["files_update"] = {}
+                file_stat = os.stat(file_dst)
+                data_return["files_update"][os.path.basename(file_dst)] = [os.path.getsize(file_dst), file_stat.st_mode, file_stat.st_uid, file_stat.st_gid]
+            except Exception as e:
+                self.log_exception(e, "Server - Files - CMD")
+                data_return[self.KEY_RESULT] = self.RESULT_ERROR
+
+        elif "cmd" in data and (data["cmd"] == "decompress" or data["cmd"] == "unpack") and "file_src" in data and "file_dst" in data:
+            try:
+                file_src = data["file_src"]
+                file_dst = data["file_dst"]
+                if file_src == file_dst:
+                    raise ValueError("Source/destination are the same.")
+                if not os.path.isfile(file_src):
+                    raise ValueError(file_src+" does not exist.")
+                if os.path.isfile(file_dst):
+                    raise ValueError(file_dst+" is a file.")
+                if not os.path.exists(file_dst):
+                    os.makedirs(file_dst)
+                if file_src.lower().endswith(".zip"):
+                    with zipfile.ZipFile(file_src, "r") as zip_ref:
+                        zip_ref.extractall(file_dst)
+                    data_return["files_update"] = {}
+                    data_return["files_update"][os.path.basename(file_dst)] = []
+                elif file_src.lower().endswith(".tar") or file_src.lower().endswith(".tar.gz") or file_src.lower().endswith(".tgz"):
+                    with tarfile.open(file_src, "r:*") as tar_ref:
+                        tar_ref.extractall(file_dst)
+                    data_return["files_update"] = {}
+                    data_return["files_update"][os.path.basename(file_dst)] = []
+                elif file_src.lower().endswith(".gz"):
+                    file_dst = os.path.join(file_dst, os.path.basename(file_src)[:-3])
+                    with gzip.open(file_src, "rb") as f_in:
+                        with open(file_dst, "wb") as f_out:
+                            shutil.copyfileobj(f_in, f_out)
+                    data_return["files_update"] = {}
+                    file_stat = os.stat(file_dst)
+                    data_return["files_update"][os.path.basename(file_dst)] = [os.path.getsize(file_dst), file_stat.st_mode, file_stat.st_uid, file_stat.st_gid]
+                else:
+                    raise ValueError(f"Unsupported file extension for archive.")
             except Exception as e:
                 self.log_exception(e, "Server - Files - CMD")
                 data_return[self.KEY_RESULT] = self.RESULT_ERROR
