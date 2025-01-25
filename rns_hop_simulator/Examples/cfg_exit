@@ -1,0 +1,7 @@
+[[TCP Testnet]]
+type = TCPClientInterface
+enabled = True
+outgoing = True
+mode = boundary
+target_host = amsterdam.connect.reticulum.network
+target_port = 4965

@@ -1,0 +1,4 @@
+rns
+sqlite3
+psycopg2
+psycopg2-binary

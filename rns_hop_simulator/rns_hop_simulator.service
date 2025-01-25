@@ -1,0 +1,12 @@
+[Unit]
+Description=rns_hop_simulator
+After=multi-user.target
+[Service]
+ExecStartPre=/bin/sleep 5
+Type=simple
+Restart=always
+RestartSec=3
+User=root
+ExecStart=/root/RNS-Tools/rns_hop_simulator/rns_hop_simulator.py
+[Install]
+WantedBy=multi-user.target
