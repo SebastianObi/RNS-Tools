@@ -188,8 +188,9 @@ class AnnounceHandler:
                 metadata["node_enabled"] = unpacked[0]
                 metadata["node_ts"] = unpacked[1]
                 metadata["node_transfer_limit"] = unpacked[2]
-                app_data = unpacked[3] if len(unpacked) > 3 else  b""
-                fields = unpacked[4] if len(unpacked) > 4 and unpacked[4] != None and isinstance(unpacked[4], dict) else None
+                metadata["node_wanted_inbound_peers"] = unpacked[3] if len(unpacked) > 3 else 0
+                app_data = unpacked[4] if len(unpacked) > 4 else b""
+                fields = unpacked[5] if len(unpacked) > 5 and unpacked[5] != None and isinstance(unpacked[5], dict) else None
             except:
                 pass
 

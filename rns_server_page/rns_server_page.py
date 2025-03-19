@@ -354,9 +354,6 @@ class ServerPage:
 
 
     def start(self):
-        if self.announce_startup or self.announce_periodic:
-            self.announce(initial=True)
-
         if self.pages_enabled:
             if not self.pages_path.startswith("/") and self.storage_path:
                 self.pages_path = self.storage_path + "/" + self.pages_path
@@ -383,6 +380,9 @@ class ServerPage:
 
         if self.register_startup or self.register_periodic:
             self.register(True)
+
+        if self.announce_startup or self.announce_periodic:
+            self.announce(initial=True)
 
 
     def stop(self):
